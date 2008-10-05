@@ -49,7 +49,6 @@ public class BitmapString implements SceneGraphChild {
     	this.color = c;
     }
 
-	@Override
 	public void activate() {
 		glPrint(this.content);
 	}

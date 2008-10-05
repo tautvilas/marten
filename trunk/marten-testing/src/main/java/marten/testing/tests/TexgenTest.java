@@ -31,7 +31,6 @@ public class TexgenTest implements GLEventListener {
 		if (textureProvider == null) throw new RuntimeException("No texture selected");
 	}
 
-	@Override
 	public void display(GLAutoDrawable drawable) {
 		final GL gl = drawable.getGL();
 
@@ -76,12 +75,10 @@ public class TexgenTest implements GLEventListener {
 		gl.glPopMatrix();
 	}
 
-	@Override
 	public void displayChanged(GLAutoDrawable drawable, boolean modeChanged, boolean deviceChanged) {
 		// Unimplemented in JOGL
 	}
 
-	@Override
 	public void init(GLAutoDrawable drawable) {
 		GL gl = drawable.getGL();
 		glu = new GLU();
@@ -103,7 +100,6 @@ public class TexgenTest implements GLEventListener {
 		buffer = textureProvider.getBuffer();
 	}
 
-	@Override
 	public void reshape(GLAutoDrawable drawable, int x, int y, int width,
 			int height) {
 		GL gl = drawable.getGL();

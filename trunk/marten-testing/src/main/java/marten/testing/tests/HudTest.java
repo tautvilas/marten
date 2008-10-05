@@ -53,29 +53,23 @@ public class HudTest extends AgeApp {
 		sr.addBranch(sm);
 	}
 
-	@Override
 	public void keyDown(int key) {
 		
 	}
 
-	@Override
 	public void keyUp(int key) {
 	}
 
-	@Override
 	protected void mainLoop() {
 		sr.activate();
 	}
 
-	@Override
 	public void mouseDown(Point coords) {
 	}
 
-	@Override
 	public void mouseMove(Point coords) {
 	}
 
-	@Override
 	public void mouseUp(Point coords) {
 	}
 }

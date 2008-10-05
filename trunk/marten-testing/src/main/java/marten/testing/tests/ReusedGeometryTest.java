@@ -12,7 +12,6 @@ public class ReusedGeometryTest implements ConsoleTest {
 	Geometry g2;
 	Geometry g3;
 
-	@Override
 	public void run() {
 		g1 = new SphereGeometry(1.0);
 		g1 = new ReusedGeometry(g1);

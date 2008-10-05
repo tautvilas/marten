@@ -16,7 +16,6 @@ public class ComplexModel implements SceneGraphChild {
 	public ArrayList<SimpleModel> getParts() {
 		return parts;
 	}
-	@Override
 	public void activate() {
 		for (SimpleModel part : parts)
 			part.activate();

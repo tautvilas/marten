@@ -15,7 +15,6 @@ public class FpsCounter implements SceneGraphChild {
 	
 	private int interval = 2000;
 
-	@Override
 	public void activate() {
 		if (startTime == 0) {
 			startTime = System.currentTimeMillis() + interval;
