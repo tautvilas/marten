@@ -20,7 +20,6 @@ public class ReusedGeometry implements Geometry {
 		}
 	}
 
-	@Override
 	public void draw() {
 		this.geometry.draw();
 	}

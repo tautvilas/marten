@@ -4,7 +4,6 @@ import marten.testing.ConsoleTest;
 
 public class CpuBenchmark implements ConsoleTest {
 
-	@Override
 	public void run() {
 		long forIterationTime = 1000000000;
 		for (int i = 0; i < 1000; i++) {

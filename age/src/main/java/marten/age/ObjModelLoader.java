@@ -37,7 +37,6 @@ public class ObjModelLoader implements GenericModelLoader {
 	ComplexModel model = new ComplexModel();
 	SimpleModel modelPart;
 	
-	@Override
 	public ComplexModel load(BufferedReader reader, String path) throws Exception {
 		this.path = path;
 		

@@ -27,7 +27,6 @@ public class DebugBox implements SceneGraphChild {
 		objects.remove(key);
 	}
 	
-	@Override
 	public void activate() {
 		GL11.glPushMatrix();
 		Set<String> keys = objects.keySet();
