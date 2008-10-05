@@ -1,0 +1,36 @@
+package marten.age.util;
+
+import marten.age.BitmapFont;
+import marten.age.BitmapString;
+import marten.age.FontCache;
+import marten.age.SceneGraphChild;
+
+public class FpsCounter implements SceneGraphChild {
+
+	private BitmapFont font = FontCache.getFont(FontCache.COURIER_BOLD_20);
+
+	private long startTime = 0;
+	private long fps = 0;
+	private long fpsOut = 0;
+	
+	private int interval = 2000;
+
+	@Override
+	public void activate() {
+		if (startTime == 0) {
+			startTime = System.currentTimeMillis() + interval;
+		}
+
+		if (startTime > System.currentTimeMillis()) {
+			fps++;
+		} else {
+			long timeUsed = interval + (startTime - System.currentTimeMillis());
+			startTime = System.currentTimeMillis() + interval;
+			fpsOut = (long) (fps / (timeUsed / 1000f));
+			fps = 0;
+		}
+		
+		BitmapString string = new BitmapString(font, "" + fpsOut + "FPS");
+		string.activate();
+	}
+}
