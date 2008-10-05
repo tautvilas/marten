@@ -1,0 +1,16 @@
+<projectDescription>
+  <name>marten-testing</name>
+  <comment>A world take-over project</comment>
+  <projects>
+    <project>age</project>
+    <project>marten-util</project>
+  </projects>
+  <buildSpec>
+    <buildCommand>
+      <name>org.eclipse.jdt.core.javabuilder</name>
+    </buildCommand>
+  </buildSpec>
+  <natures>
+    <nature>org.eclipse.jdt.core.javanature</nature>
+  </natures>
+</projectDescription>
