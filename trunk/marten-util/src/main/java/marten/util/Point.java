@@ -9,18 +9,28 @@ public final class Point {
 		this.y = source.y;
 		this.z = source.z;
 	}
+	public Point (Vector source) {
+		this.x = source.x;
+		this.y = source.y;
+		this.z = source.z;
+	}
+	public Point (Rotation source) {
+		this.x = source.x;
+		this.y = source.y;
+		this.z = source.z;
+	}
 	public Point (double newX, double newY, double newZ) {
 		this.x = newX;
 		this.y = newY;
 		this.z = newZ;
 	}
-	public void setX(double x) {
+	@Deprecated public void setX(double x) {
 		this.x = x;
 	}
-	public void setY(double y) {
+	@Deprecated public void setY(double y) {
 		this.y = y;
 	}
-	public void setZ(double z) {
+	@Deprecated public void setZ(double z) {
 		this.z = z;
 	}
 	public synchronized boolean equals (Point other) {
@@ -38,7 +48,7 @@ public final class Point {
 		temp.z *= scaleFactor;
 		return temp;
 	}
-	public synchronized Point _scale (double scaleFactor) {
+	@Deprecated public synchronized Point _scale (double scaleFactor) {
 		this.x *= scaleFactor;
 		this.y *= scaleFactor;
 		this.z *= scaleFactor;
@@ -58,13 +68,13 @@ public final class Point {
 		temp.z += other.z;
 		return temp;
 	}
-	public synchronized Point _move (Vector other) {
+	@Deprecated public synchronized Point _move (Vector other) {
 		this.x += other.x;
 		this.y += other.y;
 		this.z += other.z;
 		return new Point (this);
 	}
-	public synchronized Point _move (Point other) {
+	@Deprecated public synchronized Point _move (Point other) {
 		this.x += other.x;
 		this.y += other.y;
 		this.z += other.z;
@@ -83,7 +93,7 @@ public final class Point {
 		temp.z = other.w * other.w * this.z + other.x * other.x * this.z - other.y * other.y * this.z + other.z * other.z * this.z + 2 * other.y * other.z * this.y - 2 * other.w * other.y * this.x;
 		return temp;
 	}
-	public synchronized Point _rotate (Rotation other) {
+	@Deprecated public synchronized Point _rotate (Rotation other) {
 		Point temp = new Point ();
 		temp.x = other.w * other.w * this.x + other.x * other.x * this.x + other.y * other.y * this.x - other.z * other.z * this.x + 2 * other.x * other.z * this.z - 2 * other.w * other.z * this.y;
 		temp.y = other.w * other.w * this.y - other.x * other.x * this.y + other.y * other.y * this.y + other.z * other.z * this.y + 2 * other.x * other.y * this.x - 2 * other.w * other.x * this.z;

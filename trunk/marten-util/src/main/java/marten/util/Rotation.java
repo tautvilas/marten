@@ -10,6 +10,18 @@ public final class Rotation {
 		this.z = source.z;
 		this.w = source.w;
 	}
+	public Rotation (Vector source) {
+		this.x = source.x;
+		this.y = source.y;
+		this.z = source.z;
+		this.w = 0.0;
+	}
+	public Rotation (Point source) {
+		this.x = source.x;
+		this.y = source.y;
+		this.z = source.z;
+		this.w = 0.0;
+	}
 	public Rotation (Vector axis, double angle) {
 		this.set(axis, angle);
 	}
@@ -45,7 +57,7 @@ public final class Rotation {
 		temp.set(this.getAxis(), this.getAngle() * scaleFactor);
 		return temp;
 	}
-	public synchronized Rotation _scale (double scaleFactor) {
+	@Deprecated public synchronized Rotation _scale (double scaleFactor) {
 		this.set(this.getAxis(), this.getAngle() * scaleFactor);
 		return new Rotation(this);
 	}
@@ -57,7 +69,7 @@ public final class Rotation {
 		temp.z = this.z * other.w + this.w * other.z + this.x * other.y - this.y * other.x;
 		return temp;
 	}
-	public synchronized Rotation _multiply (Rotation other) {
+	@Deprecated public synchronized Rotation _multiply (Rotation other) {
 		Rotation temp = new Rotation();
 		temp.w = this.w * other.w - this.x * other.x - this.y * other.y - this.z * other.z;
 		temp.x = this.x * other.w + this.w * other.x + this.y * other.z - this.z * other.y;
@@ -75,7 +87,7 @@ public final class Rotation {
 			temp = new Rotation (temp.getAxis(), Math.PI / 2);
 		return temp;
 	}
-	public synchronized Rotation _multiplyLimited (Rotation other) {
+	@Deprecated public synchronized Rotation _multiplyLimited (Rotation other) {
 		Rotation temp = this.multiply(other);
 		if (temp.getAngle() > Math.PI / 2)
 			temp = new Rotation (temp.getAxis(), Math.PI / 2);
@@ -93,7 +105,7 @@ public final class Rotation {
 		temp.w = this.w;
 		return temp;
 	}
-	public synchronized Rotation _inverse () {
+	@Deprecated public synchronized Rotation _inverse () {
 		this.x *= -1.0;
 		this.y *= -1.0;
 		this.z *= -1.0;

@@ -9,6 +9,16 @@ public final class Vector {
 		this.y = source.y;
 		this.z = source.z;
 	}
+	public Vector (Point source) {
+		this.x = source.x;
+		this.y = source.y;
+		this.z = source.z;
+	}
+	public Vector (Rotation source) {
+		this.x = source.x;
+		this.y = source.y;
+		this.z = source.z;
+	}
 	public Vector (double newX, double newY, double newZ) {
 		this.x = newX;
 		this.y = newY;
@@ -34,7 +44,7 @@ public final class Vector {
 		temp.z *= scaleFactor;
 		return temp;
 	}
-	public synchronized Vector _scale (double scaleFactor) {
+	@Deprecated public synchronized Vector _scale (double scaleFactor) {
 		this.x *= scaleFactor;
 		this.y *= scaleFactor;
 		this.z *= scaleFactor;
@@ -47,7 +57,7 @@ public final class Vector {
 		temp.z *= scaleZ;
 		return temp;
 	}
-	public synchronized Vector _scaleAssymetrically (double scaleX, double scaleY, double scaleZ) {
+	@Deprecated public synchronized Vector _scaleAssymetrically (double scaleX, double scaleY, double scaleZ) {
 		this.x *= scaleX;
 		this.y *= scaleY;
 		this.z *= scaleZ;
@@ -60,7 +70,7 @@ public final class Vector {
 		temp.z += other.z;
 		return temp;
 	}
-	public synchronized Vector _add (Vector other) {
+	@Deprecated public synchronized Vector _add (Vector other) {
 		this.x += other.x;
 		this.y += other.y;
 		this.z += other.z;
@@ -82,7 +92,7 @@ public final class Vector {
 		temp.z = this.x * other.y - this.y * other.x;
 		return temp;
 	}
-	public synchronized Vector _cross (Vector other) {
+	@Deprecated public synchronized Vector _cross (Vector other) {
 		Vector temp = new Vector ();
 		temp.x = this.y * other.z - this.z * other.y;
 		temp.y = this.z * other.x - this.x * other.z;
@@ -93,12 +103,12 @@ public final class Vector {
 		return temp;
 	}
 	public synchronized Vector rotate (Rotation other) {
-		Rotation temp = new Rotation (this.x, this.y, this.z, 0.0);
+		Rotation temp = new Rotation (this);
 		temp = other.multiply(temp);
-		temp._multiply(other.inverse());		
-		return new Vector(temp.x, temp.y, temp.z);
+		temp = temp.multiply(other.inverse());		
+		return new Vector(temp);
 	}	
-	public synchronized Vector _rotate (Rotation other) {
+	@Deprecated public synchronized Vector _rotate (Rotation other) {
 		Rotation temp = new Rotation (this.x, this.y, this.z, 0.0);
 		temp = other.multiply(temp);
 		temp._multiply(other.inverse());		
@@ -113,7 +123,7 @@ public final class Vector {
 			return new Vector();
 		return this.scale(1 / length);		
 	}
-	public synchronized Vector _normalize() {
+	@Deprecated public synchronized Vector _normalize() {
 		double length = this.length();
 		if (length == 0.0)
 			return new Vector();
@@ -122,7 +132,7 @@ public final class Vector {
 	public synchronized Vector negate() {
 		return this.scale(-1.0);
 	}
-	public synchronized Vector _negate() {
+	@Deprecated public synchronized Vector _negate() {
 		return this._scale(-1.0);
 	}
 	public synchronized double angle (Vector other) {
