@@ -1,18 +1,19 @@
 package marten.age;
 
-import marten.age.event.AgeKeyListener;
-import marten.age.event.AgeMouseListener;
+import java.util.HashSet;
+
+import marten.age.control.Controller;
 import marten.age.util.SelectionDialog;
-import marten.util.Point;
 
 import org.apache.log4j.Logger;
 import org.lwjgl.input.Keyboard;
-import org.lwjgl.input.Mouse;
 import org.lwjgl.opengl.Display;
 import org.lwjgl.opengl.DisplayMode;
 
-public abstract class AgeApp implements AgeKeyListener, AgeMouseListener {
+public abstract class AgeApp {
 	private static org.apache.log4j.Logger log = Logger.getLogger(AgeApp.class);
+	
+	private HashSet<Controller> controllers = new HashSet<Controller>();
 
 //	private Resource res = new FileSystemResource(Constants.UNIT_BEANS_PATH);
 //	private BeanFactory factory = new XmlBeanFactory(res);
@@ -21,7 +22,6 @@ public abstract class AgeApp implements AgeKeyListener, AgeMouseListener {
 	private static final int DEFAULT_HEIGHT = 600;
 
 	private String title = "";
-	private Point cursor = new Point();
 //	private DisplayMode displayMode;
 
 	private static final int FRAMERATE = 60;
@@ -50,9 +50,10 @@ public abstract class AgeApp implements AgeKeyListener, AgeMouseListener {
 		while (!Keyboard.isKeyDown(Keyboard.KEY_ESCAPE) && !Display.isCloseRequested()) {
 			Display.update();
 
-			// Handle key hits
-			handleKeyboard();
-			handleMouse();
+			// publish events to controller listeners
+			for (Controller c : controllers) {
+				c.publishEvents();
+			}
 
 			mainLoop();
 			Display.sync(FRAMERATE);
@@ -62,39 +63,13 @@ public abstract class AgeApp implements AgeKeyListener, AgeMouseListener {
 
 		destroy();
 	}
-
-	private void handleMouse() {
-		int wheelD = Mouse.getDWheel();
-		int mouseDX = Mouse.getDX();
-		int mouseDY = Mouse.getDY();
-		int mouseDW = Mouse.getDWheel();
-		cursor.x = Mouse.getX();
-		cursor.y = Mouse.getY();
-		if (wheelD != 0) {
-			mouseWheelRoll(wheelD);
-		}
-		if (mouseDX != 0 || mouseDY != 0 || mouseDW != 0) {
-			mouseMove(cursor);
-		}
-		while ( Mouse.next() ) {
-			if(Mouse.getEventButton() == 0 && Mouse.getEventButtonState() == true) {
-				mouseDown(cursor);
-			}
-			if(Mouse.getEventButton() == 0 && Mouse.getEventButtonState() == false) {
-				mouseUp(cursor);
-			}
-		}
+	
+	public void addController(Controller c) {
+		controllers.add(c);
 	}
-
-	private void handleKeyboard() {
-		while ( Keyboard.next() )  {
-			if (Keyboard.getEventKeyState()) {
-				keyDown(Keyboard.getEventKey());
-			}
-			else {
-				keyUp(Keyboard.getEventKey());
-			}
-		}
+	
+	public void removeController(Controller c) {
+		controllers.remove(c);
 	}
 
 	private void destroy() {
@@ -159,16 +134,6 @@ public abstract class AgeApp implements AgeKeyListener, AgeMouseListener {
 			i++;
 		}
 		return strings;
-	}
-
-	/*
-	protected Object getBean(String id) {
-		return factory.getBean(id);
-	}
-	 */
-
-	public void mouseWheelRoll(int delta) {
-
 	}
 
 	protected abstract void init();
