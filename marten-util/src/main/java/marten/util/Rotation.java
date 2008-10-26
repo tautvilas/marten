@@ -92,10 +92,6 @@ public final class Rotation {
 		temp.set(this.getAxis(), this.getAngle() * scaleFactor);
 		return temp;
 	}
-	@Deprecated public synchronized Rotation _scale (double scaleFactor) {
-		this.set(this.getAxis(), this.getAngle() * scaleFactor);
-		return new Rotation(this);
-	}
 	/**@param other a rotation, which is combined with this rotation.
 	 * @return a quaternion which represents a rotation acquired after combining this rotation and <b>other</b> rotation in sequence.*/
 	public synchronized Rotation multiply (Rotation other) {
@@ -106,34 +102,6 @@ public final class Rotation {
 		temp.z = this.z * other.w + this.w * other.z + this.x * other.y - this.y * other.x;
 		return temp;
 	}
-	@Deprecated public synchronized Rotation _multiply (Rotation other) {
-		Rotation temp = new Rotation();
-		temp.w = this.w * other.w - this.x * other.x - this.y * other.y - this.z * other.z;
-		temp.x = this.x * other.w + this.w * other.x + this.y * other.z - this.z * other.y;
-		temp.y = this.y * other.w + this.w * other.y + this.z * other.x - this.x * other.z;
-		temp.z = this.z * other.w + this.w * other.z + this.x * other.y - this.y * other.x;
-		this.x = temp.x;
-		this.y = temp.y;
-		this.z = temp.z;
-		this.w = temp.w;
-		return temp;
-	}
-	@Deprecated public synchronized Rotation multiplyLimited (Rotation other) {
-		Rotation temp = this.multiply(other);
-		if (temp.getAngle() > Math.PI / 2)
-			temp = new Rotation (temp.getAxis(), Math.PI / 2);
-		return temp;
-	}
-	@Deprecated public synchronized Rotation _multiplyLimited (Rotation other) {
-		Rotation temp = this.multiply(other);
-		if (temp.getAngle() > Math.PI / 2)
-			temp = new Rotation (temp.getAxis(), Math.PI / 2);
-		this.x = temp.x;
-		this.y = temp.y;
-		this.z = temp.z;
-		this.w = temp.w;		
-		return temp;
-	}
 	/**@return a quaternion, which represents a rotation to the opposite direction from this quaternion.*/
 	public synchronized Rotation inverse () {
 		Rotation temp = new Rotation();
@@ -142,12 +110,6 @@ public final class Rotation {
 		temp.z = -this.z;
 		temp.w = this.w;
 		return temp;
-	}
-	@Deprecated public synchronized Rotation _inverse () {
-		this.x *= -1.0;
-		this.y *= -1.0;
-		this.z *= -1.0;
-		return new Rotation(this);
 	}
 	/**Normalizes this quaternion.
 	 * This operation is very important since only quaternions with the length of 1 may represent rotations in three-dimensional space.
