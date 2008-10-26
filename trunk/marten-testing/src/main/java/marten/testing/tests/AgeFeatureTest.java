@@ -106,13 +106,11 @@ public class AgeFeatureTest extends AgeApp {
 	
 	/* Mouse lister for mouse events catching */
 	private class TestMouseListener implements MouseListener {
-		@Override
 		public void mouseDown(Point coords) {
 			mouseIsDown = true;
 			mouseCoords = coords;
 		}
 	
-		@Override
 		public void mouseMove(Point coords) {
 			if (mouseIsDown) {
 				double dx = mouseCoords.x - coords.x;
@@ -134,14 +132,12 @@ public class AgeFeatureTest extends AgeApp {
 			}
 		}
 	
-		@Override
 		public void mouseUp(Point coords) {
 			mouseIsDown = false;
 			mouseCoords = coords;
 		}
 	
 		/* Camera distance is being controlled by mouse wheel */
-		@Override
 		public void mouseWheelRoll(int delta) {
 			if (delta < 0) {
 				mainCameraDistance += 1;
