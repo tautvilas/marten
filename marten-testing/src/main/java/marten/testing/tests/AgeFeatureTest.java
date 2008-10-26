@@ -20,28 +20,42 @@ import marten.age.util.DebugBox;
 import marten.age.util.FpsCounter;
 import marten.util.Point;
 import marten.util.Rotation;
+import marten.util.Vector;
 
-import org.apache.log4j.Logger;
 import org.lwjgl.opengl.Display;
 
-public class AgeFeatureTest extends AgeApp implements MouseListener {
+public class AgeFeatureTest extends AgeApp {
 	
 	private SimpleRoot sr;
 	
-	private static Logger log = Logger.getLogger(AgeFeatureTest.class);
+//	private static Logger log = Logger.getLogger(AgeFeatureTest.class);
+	
+	private boolean mouseIsDown = false;
+	private Point mouseCoords = new Point();
+	
+	private Camera mainCamera;
+	
+	// TODO: Rotation methods : setXRotationAngle, Y, Z, get, setXYZroation(x, y, z)
+	private double mainCameraDistance = -10;
+	private double mainCameraRotationY = 0;
+	private double mainCameraRotationX = 0;
 
 	@Override
 	protected void init() {
 		/* Scene Init */
 		sr = new SimpleRoot();
 		
-		Camera frontCamera = new FrustumCamera();
-		frontCamera.setSettings(new Point(), new Rotation(), -10.0);
-		sr.addCamera("front", frontCamera);
+		mainCamera = new FrustumCamera();
+		Rotation r = new Rotation();
+		r.set(new Vector(0.0, 1.0, 0.0), mainCameraRotationY);
+		r.set(new Vector(1.0, 0.0, 0.0), mainCameraRotationX);
+		mainCamera.setSettings(new Point(), r, mainCameraDistance);
+		mainCamera.setClippingPlanes(1.0, 1000.0);
+		sr.addCamera("front", mainCamera);
 		sr.setActiveCamera("front");
 		
 		/* Set up controllers */
-		this.addController(new MouseController(this));
+		this.addController(new MouseController(new TestMouseListener()));
 		
 		/* Hud */
 		
@@ -78,33 +92,66 @@ public class AgeFeatureTest extends AgeApp implements MouseListener {
 		/* Model loading*/
 		
 		try {
-			ModelLoader loader = new ModelLoader("data/models/obj/destroyerx/destroyerx.obj");
-			ComplexModel model = loader.load();
+			ComplexModel model = ModelLoader.load("data/models/obj/destroyerx/destroyerx.obj");
 			sr.addBranch(model);
 		} catch (Exception e) {
 			throw new RuntimeException(e);
 		}
 	}
-
+	
 	@Override
 	protected void mainLoop() {
 		sr.activate();
 	}
-
-	@Override
-	public void mouseDown(Point coords) {
-		log.info("Mouse down");
-	}
-
-	@Override
-	public void mouseMove(Point coords) {
-	}
-
-	@Override
-	public void mouseUp(Point coords) {
-	}
-
-	@Override
-	public void mouseWheelRoll(int delta) {
+	
+	/* Mouse lister for mouse events catching */
+	private class TestMouseListener implements MouseListener {
+		@Override
+		public void mouseDown(Point coords) {
+			mouseIsDown = true;
+			mouseCoords = coords;
+		}
+	
+		@Override
+		public void mouseMove(Point coords) {
+			if (mouseIsDown) {
+				double dx = mouseCoords.x - coords.x;
+				double dy = mouseCoords.y - coords.y;
+				if (dx > 0) {
+					mainCameraRotationY= (mainCameraRotationY + 0.2) % 360;
+				} else {
+					mainCameraRotationY= (mainCameraRotationY - 0.2) % 360;
+				}
+				if (dy > 0) {
+					mainCameraRotationX= (mainCameraRotationX + 0.2) % 360;
+				} else {
+					mainCameraRotationX= (mainCameraRotationX - 0.2) % 360;
+				}
+				Rotation r = new Rotation();
+				r.set(new Vector(0.0, 1.0, 0.0), mainCameraRotationY);
+				r.set(new Vector(1.0, 0.0, 0.0), mainCameraRotationX);
+				mainCamera.setSettings(new Point(), r, mainCameraDistance);
+			}
+		}
+	
+		@Override
+		public void mouseUp(Point coords) {
+			mouseIsDown = false;
+			mouseCoords = coords;
+		}
+	
+		/* Camera distance is being controlled by mouse wheel */
+		@Override
+		public void mouseWheelRoll(int delta) {
+			if (delta < 0) {
+				mainCameraDistance += 1;
+			} else {
+				mainCameraDistance -= 1;
+			}
+			Rotation r = new Rotation();
+			r.set(new Vector(0.0, 1.0, 0.0), mainCameraRotationY);
+			r.set(new Vector(1.0, 0.0, 0.0), mainCameraRotationX);
+			mainCamera.setSettings(new Point(), r, mainCameraDistance);
+		}
 	}
 }
