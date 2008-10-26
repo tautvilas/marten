@@ -43,15 +43,6 @@ public final class Point {
 		this.y = newY;
 		this.z = newZ;
 	}
-	@Deprecated public void setX(double x) {
-		this.x = x;
-	}
-	@Deprecated public void setY(double y) {
-		this.y = y;
-	}
-	@Deprecated public void setZ(double z) {
-		this.z = z;
-	}
 	/**Compares the two points for equality.
 	 * @param other the point to which this point is compared to.
 	 * @return <code>true</code> if the points are identical, <code>false</code> otherwise.*/
@@ -73,12 +64,6 @@ public final class Point {
 	public synchronized Point scale (double scaleFactor) {
 		return new Point (this.x * scaleFactor, this.y * scaleFactor, this.z * scaleFactor);
 	}
-	@Deprecated public synchronized Point _scale (double scaleFactor) {
-		this.x *= scaleFactor;
-		this.y *= scaleFactor;
-		this.z *= scaleFactor;
-		return new Point (this);
-	}
 	/**@param other the vector according to which this point is moved.
 	 * @return a point that is a copy of this point, only moved away in the direction, given by the <b>other</b> vector.*/
 	public synchronized Point move (Vector other) {
@@ -88,18 +73,6 @@ public final class Point {
 	 * @return a point that is a copy of this point when the origin point is moved to the <b>other</b> point.*/
 	public synchronized Point move (Point other) {
 		return new Point (this.x + other.x, this.y + other.y, this.z + other.z);
-	}
-	@Deprecated public synchronized Point _move (Vector other) {
-		this.x += other.x;
-		this.y += other.y;
-		this.z += other.z;
-		return new Point (this);
-	}
-	@Deprecated public synchronized Point _move (Point other) {
-		this.x += other.x;
-		this.y += other.y;
-		this.z += other.z;
-		return new Point (this);
 	}
 	/**@param other the point to which the distance is measured.
 	 * @return the distance between this and <b>other</b> points. Use {@link #distanceSquared(Point)} if you need this value for comparison since it is calculated faster.*/
@@ -118,16 +91,6 @@ public final class Point {
 		temp = other.multiply(temp);
 		temp = temp.multiply(other.inverse());		
 		return new Point(temp);
-	}
-	@Deprecated public synchronized Point _rotate (Rotation other) {
-		Point temp = new Point ();
-		temp.x = other.w * other.w * this.x + other.x * other.x * this.x + other.y * other.y * this.x - other.z * other.z * this.x + 2 * other.x * other.z * this.z - 2 * other.w * other.z * this.y;
-		temp.y = other.w * other.w * this.y - other.x * other.x * this.y + other.y * other.y * this.y + other.z * other.z * this.y + 2 * other.x * other.y * this.x - 2 * other.w * other.x * this.z;
-		temp.z = other.w * other.w * this.z + other.x * other.x * this.z - other.y * other.y * this.z + other.z * other.z * this.z + 2 * other.y * other.z * this.y - 2 * other.w * other.y * this.x;
-		this.x = temp.x;
-		this.y = temp.y;
-		this.z = temp.z;
-		return temp;
 	}
 	/**@param other a point to which the mid-point is being calculated.
 	 * @return a point that is right in the middle between this and <b>other</b> points.*/

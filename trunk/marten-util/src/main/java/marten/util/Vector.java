@@ -5,6 +5,12 @@ package marten.util;
 public final class Vector {
 	/**A zero vector*/
 	public static final Vector ZERO = new Vector();
+	/**A unitary vector, pointing along the positive X axis*/
+	public static final Vector X_AXIS = new Vector(1.0, 0.0, 0.0);
+	/**A unitary vector, pointing along the positive Y axis*/
+	public static final Vector Y_AXIS = new Vector(0.0, 1.0, 0.0);
+	/**A unitary vector, pointing along the positive Z axis*/
+	public static final Vector Z_AXIS = new Vector(0.0, 0.0, 1.0);
 	/**The <code>x</code> coordinate of the vector.*/
 	public double x = 0.0;
 	/**The <code>y</code> coordinate of the vector.*/
@@ -72,12 +78,6 @@ public final class Vector {
 	public synchronized Vector scale (double scaleFactor) {
 		return new Vector (this.x * scaleFactor, this.y * scaleFactor, this.z * scaleFactor);
 	}
-	@Deprecated public synchronized Vector _scale (double scaleFactor) {
-		this.x *= scaleFactor;
-		this.y *= scaleFactor;
-		this.z *= scaleFactor;
-		return new Vector (this);
-	}
 	/**@param scaleX the warp factor along <code>x</code> axis.
 	 * @param scaleY the warp factor along <code>y</code> axis.
 	 * @param scaleZ the warp factor along <code>z</code> axis.
@@ -85,22 +85,10 @@ public final class Vector {
 	public synchronized Vector scaleAssymetrically (double scaleX, double scaleY, double scaleZ) {
 		return new Vector (this.x * scaleX, this.y * scaleY, this.z * scaleZ);
 	}
-	@Deprecated public synchronized Vector _scaleAssymetrically (double scaleX, double scaleY, double scaleZ) {
-		this.x *= scaleX;
-		this.y *= scaleY;
-		this.z *= scaleZ;
-		return new Vector (this);
-	}
 	/**@param other the vector, which is added to this vector.
 	 * @return the sum of this and <b>other</b> vectors.*/
 	public synchronized Vector add (Vector other) {
 		return new Vector (this.x + other.x, this.y + other.y, this.z + other.z);
-	}
-	@Deprecated public synchronized Vector _add (Vector other) {
-		this.x += other.x;
-		this.y += other.y;
-		this.z += other.z;
-		return new Vector (this);
 	}
 	/**@param other the vector, which is dot-multiplied with this vector.
 	 * @return the dot-product of this and <b>other</b> vectors.*/
@@ -120,16 +108,6 @@ public final class Vector {
 	public synchronized Vector cross (Vector other) {
 		return new Vector (this.y * other.z - this.z * other.y, this.z * other.x - this.x * other.z, this.x * other.y - this.y * other.x);
 	}
-	@Deprecated public synchronized Vector _cross (Vector other) {
-		Vector temp = new Vector ();
-		temp.x = this.y * other.z - this.z * other.y;
-		temp.y = this.z * other.x - this.x * other.z;
-		temp.z = this.z * other.y - this.y * other.x;
-		this.x = temp.x;
-		this.y = temp.y;
-		this.z = temp.z;
-		return temp;
-	}
 	/**@param rotation the quaternion that defines, how this vector should be rotated.
 	 * @return the rotated vector.*/
 	public synchronized Vector rotate (Rotation other) {
@@ -138,15 +116,6 @@ public final class Vector {
 		temp = temp.multiply(other.inverse());		
 		return new Vector(temp);
 	}	
-	@Deprecated public synchronized Vector _rotate (Rotation other) {
-		Rotation temp = new Rotation (this.x, this.y, this.z, 0.0);
-		temp = other.multiply(temp);
-		temp._multiply(other.inverse());		
-		this.x = temp.x;
-		this.y = temp.y;
-		this.z = temp.z;
-		return new Vector(temp.x, temp.y, temp.z);
-	}
 	/**@return the vector with length of 1 and codirectional with this vector.*/
 	public synchronized Vector normalize() {
 		double length = this.length();
@@ -154,18 +123,9 @@ public final class Vector {
 			return new Vector();
 		return this.scale(1 / length);		
 	}
-	@Deprecated public synchronized Vector _normalize() {
-		double length = this.length();
-		if (length == 0.0)
-			return new Vector();
-		return this._scale(1 / length);	
-	}
 	/**@return a vector that is of the same length but points in an exactly opposite direction than this vector.*/
 	public synchronized Vector negate() {
 		return this.scale(-1.0);
-	}
-	@Deprecated public synchronized Vector _negate() {
-		return this._scale(-1.0);
 	}
 	/**@param other a vector to which the angle is measured.
 	 * @return the angle between this and <b>other</b> vectors as a <code>double</code> value in radians.*/
