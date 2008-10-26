@@ -4,25 +4,19 @@ import java.io.BufferedReader;
 import java.io.DataInputStream;
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.InputStreamReader;
 
+public final class ModelLoader {
 
-
-
-public class ModelLoader {
-	private BufferedReader reader;
-	private GenericModelLoader loader;
-	private String path;
-	
-	public ModelLoader(String filename) throws FileNotFoundException {
+	public static final ComplexModel load(String filename) throws Exception {
 		File inputFile = new File(filename);
 		DataInputStream stream = new DataInputStream(new FileInputStream(inputFile));
-		reader = new BufferedReader(new InputStreamReader(stream));
+		BufferedReader reader = new BufferedReader(new InputStreamReader(stream));
 		
 		String[] words = filename.split("\\.");
 		String filetype = words[words.length - 1];
-			
+		
+		GenericModelLoader loader;
 		if (filetype.compareToIgnoreCase("obj") == 0) {
 			loader = new ObjModelLoader();
 		} else {
@@ -35,10 +29,8 @@ public class ModelLoader {
 			sb.append(words[i]);
 			sb.append("/");
 		}
-		path = sb.toString();
-	}
-	
-	public ComplexModel load() throws Exception {
+		String path = sb.toString();
+		
 		return loader.load(reader, path);
 	}
 }
