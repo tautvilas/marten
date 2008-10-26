@@ -1,7 +1,5 @@
 package marten.testing.tests;
 
-import org.lwjgl.opengl.Display;
-
 import marten.age.AgeApp;
 import marten.age.BitmapFont;
 import marten.age.BitmapString;
@@ -13,6 +11,8 @@ import marten.age.Hud;
 import marten.age.ModelLoader;
 import marten.age.SimpleModel;
 import marten.age.SimpleRoot;
+import marten.age.control.MouseController;
+import marten.age.control.MouseListener;
 import marten.age.geometry.OptimizedGeometry;
 import marten.age.geometry.SphereGeometry;
 import marten.age.util.Color;
@@ -21,9 +21,14 @@ import marten.age.util.FpsCounter;
 import marten.util.Point;
 import marten.util.Rotation;
 
-public class AgeFeatureTest extends AgeApp {
+import org.apache.log4j.Logger;
+import org.lwjgl.opengl.Display;
+
+public class AgeFeatureTest extends AgeApp implements MouseListener {
 	
 	private SimpleRoot sr;
+	
+	private static Logger log = Logger.getLogger(AgeFeatureTest.class);
 
 	@Override
 	protected void init() {
@@ -34,6 +39,9 @@ public class AgeFeatureTest extends AgeApp {
 		frontCamera.setSettings(new Point(), new Rotation(), -10.0);
 		sr.addCamera("front", frontCamera);
 		sr.setActiveCamera("front");
+		
+		/* Set up controllers */
+		this.addController(new MouseController(this));
 		
 		/* Hud */
 		
@@ -84,15 +92,8 @@ public class AgeFeatureTest extends AgeApp {
 	}
 
 	@Override
-	public void keyDown(int key) {
-	}
-
-	@Override
-	public void keyUp(int key) {
-	}
-
-	@Override
 	public void mouseDown(Point coords) {
+		log.info("Mouse down");
 	}
 
 	@Override
@@ -101,5 +102,9 @@ public class AgeFeatureTest extends AgeApp {
 
 	@Override
 	public void mouseUp(Point coords) {
+	}
+
+	@Override
+	public void mouseWheelRoll(int delta) {
 	}
 }
