@@ -9,7 +9,7 @@ import java.nio.IntBuffer;
 
 import javax.imageio.ImageIO;
 
-import marten.age.Constants;
+import marten.age.util.Constants;
 
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.glu.GLU;
