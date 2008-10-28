@@ -6,7 +6,7 @@ import marten.age.util.Color;
 import org.lwjgl.opengl.GL11;
 
 
-public class BitmapString implements SceneGraphChild {
+public class BitmapString extends SceneGraphChild {
 	private BitmapFont font;
 	private String content;
 	private Color color = new Color(255, 255, 255);

@@ -97,6 +97,8 @@ public class AgeFeatureTest extends AgeApp {
 		} catch (Exception e) {
 			throw new RuntimeException(e);
 		}
+		
+//		sr.compile();
 	}
 	
 	@Override

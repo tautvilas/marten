@@ -3,7 +3,7 @@ package marten.age.geometry;
 import marten.age.SceneGraphChild;
 import marten.age.appearance.Appearance;
 
-public class SimpleModel implements SceneGraphChild {
+public class SimpleModel extends SceneGraphChild {
 	private Appearance appearance = new Appearance();
 	private Geometry geometry = null;
 	public SimpleModel(Geometry geometry) {

@@ -11,7 +11,7 @@ import marten.age.text.FontCache;
 import org.lwjgl.opengl.GL11;
 
 
-public class DebugBox implements SceneGraphChild {
+public class DebugBox extends SceneGraphChild {
 	
 	private HashMap<String, Object> objects = new HashMap<String, Object>();
 
