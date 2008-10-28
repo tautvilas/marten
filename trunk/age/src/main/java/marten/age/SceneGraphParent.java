@@ -3,18 +3,18 @@ package marten.age;
 import java.util.ArrayList;
 
 public abstract class SceneGraphParent implements SceneGraphNode {
-    private ArrayList<SceneGraphChild> branches = new ArrayList<SceneGraphChild>();
+    private ArrayList<SceneGraphChildImpl> branches = new ArrayList<SceneGraphChildImpl>();
     
-    public void addBranch(SceneGraphChild newBranch) {
+    public void addBranch(SceneGraphChildImpl newBranch) {
 	newBranch.setRoot(this);
 	this.branches.add(newBranch);
     }
     
-    public ArrayList<SceneGraphChild> getBranches() {
+    public ArrayList<SceneGraphChildImpl> getBranches() {
 	return this.branches;
     }
     
-    public void removeBranch(SceneGraphChild oldBranch) {
+    public void removeBranch(SceneGraphChildImpl oldBranch) {
 	this.branches.remove(oldBranch);
     }
     
@@ -29,7 +29,7 @@ public abstract class SceneGraphParent implements SceneGraphNode {
     public void activateChildren() {
 	if (this.branches.isEmpty())
 		throw new RuntimeException ("Attempted to activate childless parent.");
-	for (SceneGraphChild branch : this.branches)
+	for (SceneGraphChildImpl branch : this.branches)
 		branch.activate();
     }
 }

@@ -2,7 +2,7 @@ package marten.age.root;
 
 import java.util.ArrayList;
 
-import marten.age.SceneGraphChild;
+import marten.age.SceneGraphChildImpl;
 import marten.age.SceneGraphNode;
 import marten.age.SceneGraphParent;
 import marten.age.geometry.Geometry;
@@ -21,11 +21,11 @@ public abstract class Root extends SceneGraphParent {
 	}
 	
 	private void compileSceneParent(SceneGraphParent parent) {
-		ArrayList<SceneGraphChild> parentBranches = parent.getBranches();
+		ArrayList<SceneGraphChildImpl> parentBranches = parent.getBranches();
 		for (SceneGraphNode child : parentBranches) {
 			if (child instanceof SceneGraphParent) {
 				compileSceneParent((SceneGraphParent)child);
-			} else if (child instanceof SceneGraphChild) {
+			} else if (child instanceof SceneGraphChildImpl) {
 				compileSceneNode(child);
 			}
 		}
