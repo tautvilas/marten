@@ -1,6 +1,5 @@
 package marten.age.geometry;
 
-
 public class ReusedGeometry implements Geometry {
 	
 	private Geometry geometry;

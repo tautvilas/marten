@@ -5,7 +5,7 @@ import marten.age.text.BitmapFont;
 import marten.age.text.BitmapString;
 import marten.age.text.FontCache;
 
-public class FpsCounter implements SceneGraphChild {
+public class FpsCounter extends SceneGraphChild {
 
 	private BitmapFont font = FontCache.getFont(FontCache.COURIER_BOLD_20);
 
