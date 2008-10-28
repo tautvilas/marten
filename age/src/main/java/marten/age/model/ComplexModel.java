@@ -2,10 +2,10 @@ package marten.age.model;
 
 import java.util.ArrayList;
 
-import marten.age.SceneGraphChild;
+import marten.age.SceneGraphChildImpl;
 import marten.age.geometry.SimpleModel;
 
-public class ComplexModel extends SceneGraphChild {
+public class ComplexModel extends SceneGraphChildImpl {
 	private ArrayList<SimpleModel> parts = new ArrayList<SimpleModel>();
 	public void addPart (SimpleModel newPart) {
 		parts.add (newPart);

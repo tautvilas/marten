@@ -1,11 +1,11 @@
 package marten.age.transform;
 
-import marten.age.Branch;
+import marten.age.SceneGraphBranch;
 
 import org.lwjgl.opengl.GL11;
 
 
-public final class SymetricScaleGroup extends Branch {
+public final class SymetricScaleGroup extends SceneGraphBranch {
 	private double scaleFactor = 1.0;
 	public SymetricScaleGroup () {}
 	public SymetricScaleGroup (double newScaleFactor) {

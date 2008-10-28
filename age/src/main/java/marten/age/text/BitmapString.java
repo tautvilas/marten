@@ -1,12 +1,12 @@
 package marten.age.text;
 
-import marten.age.SceneGraphChild;
+import marten.age.SceneGraphChildImpl;
 import marten.age.util.Color;
 
 import org.lwjgl.opengl.GL11;
 
 
-public class BitmapString extends SceneGraphChild {
+public class BitmapString extends SceneGraphChildImpl {
 	private BitmapFont font;
 	private String content;
 	private Color color = new Color(255, 255, 255);

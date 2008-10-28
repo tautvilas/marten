@@ -1,13 +1,13 @@
 package marten.age.transform;
 
-import marten.age.Branch;
+import marten.age.SceneGraphBranch;
 import marten.util.Rotation;
 import marten.util.Vector;
 
 import org.lwjgl.opengl.GL11;
 
 
-public final class RotationGroup extends Branch {
+public final class RotationGroup extends SceneGraphBranch {
 	private double angle;
 	private Vector axis = new Vector();
 	public RotationGroup () {}

@@ -1,9 +1,9 @@
 package marten.age.geometry;
 
-import marten.age.SceneGraphChild;
+import marten.age.SceneGraphChildImpl;
 import marten.age.appearance.Appearance;
 
-public class SimpleModel extends SceneGraphChild {
+public class SimpleModel extends SceneGraphChildImpl {
 	private Appearance appearance = new Appearance();
 	private Geometry geometry = null;
 	public SimpleModel(Geometry geometry) {
