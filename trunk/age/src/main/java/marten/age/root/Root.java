@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import marten.age.BasicSceneGraphChild;
 import marten.age.SceneGraphNode;
 import marten.age.BasicSceneGraphParent;
+import marten.age.geometry.GeneratedGeometry;
 import marten.age.geometry.Geometry;
 import marten.age.geometry.OptimizedGeometry;
 import marten.age.geometry.ReusedGeometry;
@@ -47,7 +48,7 @@ public abstract class Root extends BasicSceneGraphParent {
 	
 	private ReusedGeometry optimizeGeometry(Geometry g) {
 		if (!(g instanceof ReusedGeometry)) {
-			if (!(g instanceof OptimizedGeometry)) {
+			if (!(g instanceof GeneratedGeometry)) {
 				log.debug("Optimizing geometry " + g);
 				g = new OptimizedGeometry(g);
 				((OptimizedGeometry)g).generate();
