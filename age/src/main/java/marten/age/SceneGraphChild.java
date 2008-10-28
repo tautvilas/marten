@@ -1,7 +1,7 @@
 package marten.age;
 
 public interface SceneGraphChild extends SceneGraphNode {
-    public SceneGraphParent getRoot();
+    public BasicSceneGraphParent getRoot();
     
-    public void setRoot(SceneGraphParent newRoot);
+    public void setRoot(BasicSceneGraphParent newRoot);
 }

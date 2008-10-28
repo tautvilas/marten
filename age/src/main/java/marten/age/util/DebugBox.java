@@ -3,7 +3,7 @@ package marten.age.util;
 import java.util.HashMap;
 import java.util.Set;
 
-import marten.age.SceneGraphChildImpl;
+import marten.age.BasicSceneGraphChild;
 import marten.age.text.BitmapFont;
 import marten.age.text.BitmapString;
 import marten.age.text.FontCache;
@@ -11,7 +11,7 @@ import marten.age.text.FontCache;
 import org.lwjgl.opengl.GL11;
 
 
-public class DebugBox extends SceneGraphChildImpl {
+public class DebugBox extends BasicSceneGraphChild {
 	
 	private HashMap<String, Object> objects = new HashMap<String, Object>();
 

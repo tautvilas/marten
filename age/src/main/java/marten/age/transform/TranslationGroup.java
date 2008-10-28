@@ -1,12 +1,12 @@
 package marten.age.transform;
 
-import marten.age.SceneGraphBranch;
+import marten.age.BasicSceneGraphBranch;
 import marten.util.Point;
 
 import org.lwjgl.opengl.GL11;
 
 
-public final class TranslationGroup extends SceneGraphBranch {
+public final class TranslationGroup extends BasicSceneGraphBranch {
 	private Point coordinates = new Point();
 	public TranslationGroup () {};
 	public TranslationGroup (Point newCoordinates) {

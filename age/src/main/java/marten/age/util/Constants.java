@@ -1,4 +1,4 @@
-package marten.age;
+package marten.age.util;
 
 public final class Constants {
 	public static final int RGB_NUM_BYTES = 3;

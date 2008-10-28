@@ -2,9 +2,9 @@ package marten.age.root;
 
 import java.util.ArrayList;
 
-import marten.age.SceneGraphChildImpl;
+import marten.age.BasicSceneGraphChild;
 import marten.age.SceneGraphNode;
-import marten.age.SceneGraphParent;
+import marten.age.BasicSceneGraphParent;
 import marten.age.geometry.Geometry;
 import marten.age.geometry.OptimizedGeometry;
 import marten.age.geometry.ReusedGeometry;
@@ -13,19 +13,19 @@ import marten.age.model.ComplexModel;
 
 import org.apache.log4j.Logger;
 
-public abstract class Root extends SceneGraphParent {
+public abstract class Root extends BasicSceneGraphParent {
 	private static org.apache.log4j.Logger log = Logger.getLogger(Root.class);
 
 	public void compile() {
 		compileSceneParent(this);
 	}
 	
-	private void compileSceneParent(SceneGraphParent parent) {
-		ArrayList<SceneGraphChildImpl> parentBranches = parent.getBranches();
+	private void compileSceneParent(BasicSceneGraphParent parent) {
+		ArrayList<BasicSceneGraphChild> parentBranches = parent.getBranches();
 		for (SceneGraphNode child : parentBranches) {
-			if (child instanceof SceneGraphParent) {
-				compileSceneParent((SceneGraphParent)child);
-			} else if (child instanceof SceneGraphChildImpl) {
+			if (child instanceof BasicSceneGraphParent) {
+				compileSceneParent((BasicSceneGraphParent)child);
+			} else if (child instanceof BasicSceneGraphChild) {
 				compileSceneNode(child);
 			}
 		}

@@ -1,11 +1,11 @@
 package marten.age.util;
 
-import marten.age.SceneGraphChildImpl;
+import marten.age.BasicSceneGraphChild;
 import marten.age.text.BitmapFont;
 import marten.age.text.BitmapString;
 import marten.age.text.FontCache;
 
-public class FpsCounter extends SceneGraphChildImpl {
+public class FpsCounter extends BasicSceneGraphChild {
 
 	private BitmapFont font = FontCache.getFont(FontCache.COURIER_BOLD_20);
 
