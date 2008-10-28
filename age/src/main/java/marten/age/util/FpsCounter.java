@@ -1,9 +1,9 @@
 package marten.age.util;
 
-import marten.age.BitmapFont;
-import marten.age.BitmapString;
-import marten.age.FontCache;
 import marten.age.SceneGraphChild;
+import marten.age.text.BitmapFont;
+import marten.age.text.BitmapString;
+import marten.age.text.FontCache;
 
 public class FpsCounter implements SceneGraphChild {
 

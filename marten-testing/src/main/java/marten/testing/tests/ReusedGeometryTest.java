@@ -1,6 +1,6 @@
 package marten.testing.tests;
 
-import marten.age.Geometry;
+import marten.age.geometry.Geometry;
 import marten.age.geometry.OptimizedGeometry;
 import marten.age.geometry.ReusedGeometry;
 import marten.age.geometry.SphereGeometry;

@@ -3,10 +3,10 @@ package marten.age.util;
 import java.util.HashMap;
 import java.util.Set;
 
-import marten.age.BitmapFont;
-import marten.age.BitmapString;
-import marten.age.FontCache;
 import marten.age.SceneGraphChild;
+import marten.age.text.BitmapFont;
+import marten.age.text.BitmapString;
+import marten.age.text.FontCache;
 
 import org.lwjgl.opengl.GL11;
 
