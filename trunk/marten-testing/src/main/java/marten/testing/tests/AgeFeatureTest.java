@@ -47,8 +47,6 @@ public class AgeFeatureTest extends AgeApp {
 		
 		mainCamera = new FrustumCamera();
 		Rotation r = new Rotation();
-		r.set(new Vector(0.0, 1.0, 0.0), mainCameraRotationY);
-		r.set(new Vector(1.0, 0.0, 0.0), mainCameraRotationX);
 		mainCamera.setSettings(new Point(), r, mainCameraDistance);
 		mainCamera.setClippingPlanes(1.0, 1000.0);
 		sr.addCamera("front", mainCamera);
@@ -103,6 +101,11 @@ public class AgeFeatureTest extends AgeApp {
 	
 	@Override
 	protected void mainLoop() {
+	    	Rotation r = new Rotation();
+		r.set(new Vector(1.0, 0.0, 0.0), mainCameraRotationX);
+		r = r.multiply(new Rotation(new Vector(0.0, 1.0, 0.0), mainCameraRotationY));
+		mainCamera.setSettings(new Point(), r, mainCameraDistance);
+	    
 		sr.activate();
 	}
 	
@@ -110,7 +113,6 @@ public class AgeFeatureTest extends AgeApp {
 	private class TestMouseListener implements MouseListener {
 		public void mouseDown(Point coords) {
 			mouseIsDown = true;
-			mouseCoords = coords;
 		}
 	
 		public void mouseMove(Point coords) {
@@ -118,25 +120,23 @@ public class AgeFeatureTest extends AgeApp {
 				double dx = mouseCoords.x - coords.x;
 				double dy = mouseCoords.y - coords.y;
 				if (dx > 0) {
-					mainCameraRotationY= (mainCameraRotationY + 0.2) % 360;
+					mainCameraRotationY= (mainCameraRotationY + 0.05) % (2 * Math.PI);
 				} else {
-					mainCameraRotationY= (mainCameraRotationY - 0.2) % 360;
+					mainCameraRotationY= (mainCameraRotationY - 0.05) % (2 * Math.PI);
 				}
+//				System.out.println(mouseCoords.y + ":" + coords.y);
 				if (dy > 0) {
-					mainCameraRotationX= (mainCameraRotationX + 0.2) % 360;
+					mainCameraRotationX= (mainCameraRotationX - 0.05) % (2 * Math.PI);
 				} else {
-					mainCameraRotationX= (mainCameraRotationX - 0.2) % 360;
+					mainCameraRotationX= (mainCameraRotationX + 0.05) % (2 * Math.PI);
 				}
-				Rotation r = new Rotation();
-				r.set(new Vector(0.0, 1.0, 0.0), mainCameraRotationY);
-				r.set(new Vector(1.0, 0.0, 0.0), mainCameraRotationX);
-				mainCamera.setSettings(new Point(), r, mainCameraDistance);
 			}
+			mouseCoords.x = coords.x;
+			mouseCoords.y = coords.y;
 		}
 	
 		public void mouseUp(Point coords) {
 			mouseIsDown = false;
-			mouseCoords = coords;
 		}
 	
 		/* Camera distance is being controlled by mouse wheel */
@@ -146,10 +146,6 @@ public class AgeFeatureTest extends AgeApp {
 			} else {
 				mainCameraDistance -= 1;
 			}
-			Rotation r = new Rotation();
-			r.set(new Vector(0.0, 1.0, 0.0), mainCameraRotationY);
-			r.set(new Vector(1.0, 0.0, 0.0), mainCameraRotationX);
-			mainCamera.setSettings(new Point(), r, mainCameraDistance);
 		}
 	}
 }
