@@ -11,7 +11,7 @@ import javax.media.opengl.GLJPanel;
 import javax.media.opengl.glu.GLU;
 import javax.media.opengl.glu.GLUquadric;
 
-import marten.age.texgen.TextureProvider;
+import marten.age.texture.TextureProvider;
 import marten.age.util.SelectionDialog;
 import marten.testing.Constants;
 

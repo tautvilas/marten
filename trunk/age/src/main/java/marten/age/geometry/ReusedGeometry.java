@@ -1,7 +1,5 @@
 package marten.age.geometry;
 
-import marten.age.Geometry;
-import marten.age.GeometryCache;
 
 public class ReusedGeometry implements Geometry {
 	

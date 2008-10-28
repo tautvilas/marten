@@ -1,6 +1,5 @@
 package marten.age.geometry;
 
-import marten.age.Geometry;
 
 import org.lwjgl.opengl.GL11;
 
