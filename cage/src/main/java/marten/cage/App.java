@@ -1,4 +1,4 @@
-package marten;
+package marten.cage;
 
 /**
  * Hello world!
