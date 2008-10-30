@@ -1,4 +1,4 @@
-package marten;
+package marten.physics;
 
 import java.util.ArrayList;
 
