@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 public interface SceneGraphParent extends SceneGraphNode {
     public void removeBranches();
-    public void removeBranch(BasicSceneGraphChild oldBranch);
-    public ArrayList<BasicSceneGraphChild> getBranches();
-    public void addBranch(BasicSceneGraphChild newBranch);
+    public void removeBranch(SceneGraphChild oldBranch);
+    public ArrayList<SceneGraphChild> getBranches();
+    public void addBranch(SceneGraphChild newBranch);
 }
