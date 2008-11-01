@@ -18,6 +18,7 @@ import marten.age.util.AgeApp;
 import marten.age.util.Color;
 import marten.age.util.DebugBox;
 import marten.age.util.FpsCounter;
+import marten.testing.util.Body;
 import marten.util.Point;
 import marten.util.Rotation;
 import marten.util.Vector;
@@ -37,8 +38,12 @@ public class AgeFeatureTest extends AgeApp {
 	
 	// TODO: Rotation methods : setXRotationAngle, Y, Z, get, setXYZroation(x, y, z)
 	private double mainCameraDistance = -10;
-	private double mainCameraRotationY = 0;
-	private double mainCameraRotationX = 0;
+	private double shipRotationY = 0;
+	private double shipRotationX = Math.PI / 2;
+	
+	DebugBox box;
+	
+	private Body spaceship;
 
 	@Override
 	protected void init() {
@@ -46,7 +51,7 @@ public class AgeFeatureTest extends AgeApp {
 		sr = new SimpleRoot();
 		
 		mainCamera = new FrustumCamera();
-		Rotation r = new Rotation();
+		Rotation r = new Rotation(new Vector());
 		mainCamera.setSettings(new Point(), r, mainCameraDistance);
 		mainCamera.setClippingPlanes(1.0, 1000.0);
 		sr.addCamera("front", mainCamera);
@@ -73,9 +78,7 @@ public class AgeFeatureTest extends AgeApp {
 		
 		/* Debug box */
 
-		DebugBox box = new DebugBox();
-		box.addObject("Speed", new Integer(200));
-		box.addObject("Something", new Point());
+		box = new DebugBox();
 		hud.add(box, 0, 0);
 		
 		/* FPS counter */
@@ -89,12 +92,16 @@ public class AgeFeatureTest extends AgeApp {
 		
 		/* Model loading*/
 		
+		ComplexModel model;
 		try {
-			ComplexModel model = ModelLoader.load("data/models/obj/destroyerx/destroyerx.obj");
-			sr.addBranch(model);
+			model = ModelLoader.load("data/models/obj/destroyerx/destroyerx.obj");
 		} catch (Exception e) {
 			throw new RuntimeException(e);
 		}
+		
+		
+		spaceship = new Body(model);
+		sr.addBranch(spaceship.getSceneGraph());
 		
 		sr.compile();
 	}
@@ -102,9 +109,12 @@ public class AgeFeatureTest extends AgeApp {
 	@Override
 	protected void mainLoop() {
 	    	Rotation r = new Rotation();
-		r.set(new Vector(1.0, 0.0, 0.0), mainCameraRotationX);
-		r = r.multiply(new Rotation(new Vector(0.0, 1.0, 0.0), mainCameraRotationY));
-		mainCamera.setSettings(new Point(), r, mainCameraDistance);
+		r.set(new Vector(0.0, 1.0, 0.0), shipRotationY);
+		r = r.multiply(new Rotation(new Vector(1.0, 0.0, 0.0), shipRotationX));
+		spaceship.setHeading(r);
+		
+		box.addObject("Ship heading", spaceship.getHeading());
+		box.addObject("Ship position", spaceship.getPosition());
 	    
 		sr.activate();
 	}
@@ -120,15 +130,15 @@ public class AgeFeatureTest extends AgeApp {
 				double dx = mouseCoords.x - coords.x;
 				double dy = mouseCoords.y - coords.y;
 				if (dx > 0) {
-					mainCameraRotationY= (mainCameraRotationY + 0.05) % (2 * Math.PI);
+					shipRotationY= (shipRotationY - 0.05) % (2 * Math.PI);
 				} else {
-					mainCameraRotationY= (mainCameraRotationY - 0.05) % (2 * Math.PI);
+					shipRotationY= (shipRotationY + 0.05) % (2 * Math.PI);
 				}
 //				System.out.println(mouseCoords.y + ":" + coords.y);
 				if (dy > 0) {
-					mainCameraRotationX= (mainCameraRotationX - 0.05) % (2 * Math.PI);
+					shipRotationX= (shipRotationX + 0.05) % (2 * Math.PI);
 				} else {
-					mainCameraRotationX= (mainCameraRotationX + 0.05) % (2 * Math.PI);
+					shipRotationX= (shipRotationX - 0.05) % (2 * Math.PI);
 				}
 			}
 			mouseCoords.x = coords.x;
