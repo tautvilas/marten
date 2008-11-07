@@ -19,7 +19,7 @@ public class ChangeableMass extends Mass {
 			this.notifyListeners("MASS");
 		}
 		else
-			throw new RuntimeException ("Attempted to set unknown parameter.");
+			throw new RuntimeException ("Attempted to set unknown parameter " + param + ".");
 	}
 	@Override public void setDouble (String param, double value) {
 		if (param.equalsIgnoreCase("MASS")) {
@@ -28,6 +28,6 @@ public class ChangeableMass extends Mass {
 			this.notifyListeners("MASS");
 		}
 		else
-			throw new RuntimeException ("Attempted to set unknown parameter.");
+			throw new RuntimeException ("Attempted to set unknown parameter " + param + ".");
 	}
 }

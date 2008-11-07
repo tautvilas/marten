@@ -6,51 +6,51 @@ import marten.util.Point;
 import marten.util.Rotation;
 import marten.util.Vector;
 
-public class Mass extends Feature {
-	protected double mass;
-	public Mass (PhysicsObject owner, double newMass) {
-		super(owner);
-		if (newMass < 0.0)
-			throw new RuntimeException ("Attempted to set negative mass for the object.");
-		this.mass = newMass;
+public class Radius extends Feature {
+	protected double radius = 0.0;
+	public Radius (PhysicsObject owner, double newRadius) {
+		super (owner);
+		if (newRadius < 0.0)
+			throw new RuntimeException ("Attempted to set negative radius.");
+		this.radius = newRadius;
 	}
 	@Override public void execute(double time) {}
 	@Override public Object get(String param) {
-		if (param.equalsIgnoreCase("MASS"))
-			return new Double(mass);
+		if (param.equalsIgnoreCase("RADIUS"))
+			return new Double(radius);
 		throw new RuntimeException ("Unsupported parameter " + param + " requested.");
 	}
-	@Override public double getDouble (String param) {
-		if (param.equalsIgnoreCase("MASS"))
-			return this.mass;
+	@Override public double getDouble(String param) {
+		if (param.equalsIgnoreCase("RADIUS"))
+			return this.radius;
 		throw new RuntimeException ("Unsupported parameter " + param + " requested.");
 	}
-	@Override public Point getPoint (String param) {
+	@Override public Point getPoint(String param) {
 		throw new RuntimeException ("Unsupported parameter " + param + " requested.");
 	}
-	@Override public Rotation getRotation (String param) {
+	@Override public Rotation getRotation(String param) {
 		throw new RuntimeException ("Unsupported parameter " + param + " requested.");
-	}
-	@Override public String getType() {
-		return "MASS";
 	}
 	@Override public String getSubtype() {
 		return "GENERIC";
+	}
+	@Override public String getType() {
+		return "RADIUS";
 	}
 	@Override public Vector getVector(String param) {
 		throw new RuntimeException ("Unsupported parameter " + param + " requested.");
 	}
 	@Override public void set(String param, Object value) {
-		throw new RuntimeException ("Attempted to set unknown parameter " + param + ".");		
+		throw new RuntimeException ("Attempted to set unknown parameter " + param + ".");
 	}
 	@Override public void setDouble(String param, double value) {
-		throw new RuntimeException ("Attempted to set unknown parameter " + param + ".");		
+		throw new RuntimeException ("Attempted to set unknown parameter " + param + ".");
 	}
 	@Override public void setPoint(String param, Point value) {
 		throw new RuntimeException ("Attempted to set unknown parameter " + param + ".");
 	}
 	@Override public void setRotation(String param, Rotation value) {
-		throw new RuntimeException ("Attempted to set unknown parameter " + param + ".");		
+		throw new RuntimeException ("Attempted to set unknown parameter " + param + ".");
 	}
 	@Override public void setVector(String param, Vector value) {
 		throw new RuntimeException ("Attempted to set unknown parameter " + param + ".");
