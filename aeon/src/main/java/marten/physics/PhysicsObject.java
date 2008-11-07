@@ -32,6 +32,9 @@ public final class PhysicsObject {
 	public void compile () {
 		this.lock = true;
 	}
+	public boolean hasFeature (String feature) {
+		return this.features.containsKey(feature);
+	}
 	public boolean prereq (Iterable<String> prereqList) {
 		for (String featurePrereq : prereqList)
 			if (!this.features.containsKey(featurePrereq))
