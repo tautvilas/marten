@@ -34,9 +34,6 @@ public class Mass extends Feature {
 	@Override public String getType() {
 		return "MASS";
 	}
-	@Override public String getSubtype() {
-		return "GENERIC";
-	}
 	@Override public Vector getVector(String param) {
 		throw new RuntimeException ("Unsupported parameter " + param + " requested.");
 	}

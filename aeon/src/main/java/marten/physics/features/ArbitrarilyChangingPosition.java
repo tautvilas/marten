@@ -9,9 +9,6 @@ public class ArbitrarilyChangingPosition extends ConstantlyChangingPosition {
 	public ArbitrarilyChangingPosition (PhysicsObject owner, Point initialPosition, Vector initialVelocity) {
 		super (owner, initialPosition, initialVelocity);
 	}
-	@Override public String getSubtype () {
-		return "CHANGING VELOCITY";
-	}
 	@Override public void execute (double time) {
 		if (this.lastActivation != Double.NEGATIVE_INFINITY) {
 			this.velocity = this.velocity.add(this.accelerationAccumulator.scale(time - this.lastActivation));

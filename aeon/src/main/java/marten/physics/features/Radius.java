@@ -31,9 +31,6 @@ public class Radius extends Feature {
 	@Override public Rotation getRotation(String param) {
 		throw new RuntimeException ("Unsupported parameter " + param + " requested.");
 	}
-	@Override public String getSubtype() {
-		return "GENERIC";
-	}
 	@Override public String getType() {
 		return "RADIUS";
 	}

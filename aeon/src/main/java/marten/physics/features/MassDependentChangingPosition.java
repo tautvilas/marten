@@ -19,9 +19,6 @@ public class MassDependentChangingPosition extends ArbitrarilyChangingPosition i
 		if (parameter.equalsIgnoreCase("MASS"))
 			this.massBackup = this.owner.getFeature("MASS").getDouble("MASS");
 	}
-	@Override public String getSubtype () {
-		return "MASS DEPENDENT";
-	}
 	@Override public void set (String param, Object value) {
 		if (param.equalsIgnoreCase("FORCE"))
 			this.accelerationAccumulator = this.accelerationAccumulator.add(((Vector)value).scale(this.massBackup));

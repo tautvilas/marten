@@ -11,9 +11,6 @@ public class ConstantlyChangingPosition extends Position {
 		super (owner, initialPosition);
 		this.velocity = newVelocity;
 	}
-	@Override public String getSubtype () {
-		return "CONSTANT VELOCITY";
-	}
 	@Override public void execute (double time) {
 		if (this.lastActivation != Double.NEGATIVE_INFINITY) {
 			this.position = this.position.move(this.velocity.scale(time - this.lastActivation));
