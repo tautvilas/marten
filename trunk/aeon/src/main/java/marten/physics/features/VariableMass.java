@@ -24,6 +24,6 @@ public class VariableMass extends Mass {
 			throw new RuntimeException ("Attempted to remove more mass than is present.");
 		this.mass += this.deltaMass;
 		this.deltaMass = 0.0;
-		this.notifyListeners("MASS");
+		this.notifyListeners("MASS", this.mass);
 	}
 }
