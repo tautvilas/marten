@@ -21,7 +21,6 @@ public abstract class Feature {
 	}
 	public abstract void execute (double time);
 	public abstract String getType ();
-	public abstract String getSubtype ();
 	public abstract double getDouble (String param);
 	public abstract Vector getVector (String param);
 	public abstract Point getPoint (String param);

@@ -31,9 +31,6 @@ public class Position extends Feature {
 	@Override public Rotation getRotation(String param) {
 		throw new RuntimeException ("Unsupported parameter " + param + " requested.");
 	}
-	@Override public String getSubtype() {
-		return "STATIONARY";
-	}
 	@Override public String getType() {
 		return "POSITION";
 	}

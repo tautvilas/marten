@@ -7,9 +7,6 @@ public class VariableMass extends Mass {
 	public VariableMass(PhysicsObject owner, double newMass) {
 		super(owner, newMass);
 	}
-	@Override public String getSubtype () {
-		return "VARIABLE";
-	}
 	@Override public void set (String param, Object value) {
 		if (param.equalsIgnoreCase("DELTAMASS"))			
 			this.deltaMass = ((Double)value).doubleValue();
