@@ -13,7 +13,7 @@ public class ArbitrarilyChangingPosition extends ConstantlyChangingPosition {
 		if (this.lastActivation != Double.NEGATIVE_INFINITY) {
 			this.velocity = this.velocity.add(this.accelerationAccumulator.scale(time - this.lastActivation));
 			this.accelerationAccumulator = new Vector();
-			this.notifyListeners("VELOCITY");
+			this.notifyListeners("VELOCITY", this.velocity);
 		}
 		super.execute(time);
 	}

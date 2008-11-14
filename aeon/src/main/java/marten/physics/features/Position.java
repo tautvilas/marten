@@ -40,18 +40,18 @@ public class Position extends Feature {
 		throw new RuntimeException ("Unsupported parameter " + param + " requested.");
 	}
 	@Override public void set(String param, Object value) {
-		throw new RuntimeException ("Attempted to set unknown parameter " + param + ".");
+		throw new RuntimeException ("Attempted to set unknown or read-only parameter " + param + ".");
 	}
 	@Override public void setDouble(String param, double value) {
-		throw new RuntimeException ("Attempted to set unknown parameter " + param + ".");
+		throw new RuntimeException ("Attempted to set unknown or read-only parameter " + param + ".");
 	}
 	@Override public void setPoint(String param, Point value) {
-		throw new RuntimeException ("Attempted to set unknown parameter " + param + ".");
+		throw new RuntimeException ("Attempted to set unknown or read-only parameter " + param + ".");
 	}
 	@Override public void setRotation(String param, Rotation value) {
-		throw new RuntimeException ("Attempted to set unknown parameter " + param + ".");
+		throw new RuntimeException ("Attempted to set unknown or read-only parameter " + param + ".");
 	}
 	@Override public void setVector(String param, Vector value) {
-		throw new RuntimeException ("Attempted to set unknown parameter " + param + ".");
+		throw new RuntimeException ("Attempted to set unknown or read-only parameter " + param + ".");
 	}
 }

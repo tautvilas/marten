@@ -7,25 +7,25 @@ public abstract class Interaction extends Feature{
 	private boolean integrityChecked = false;
 	public Interaction (PhysicsObject owner, Iterable<PhysicsObject> newAffectedObjects) {
 		super (owner);
-		if (!this.owner.prereq(this.ownerPrereq()))
+		if (!this.getOwner().prereq(this.ownerPrereq()))
 			throw new RuntimeException ("Owner failed to fulfil interaction requirements.");
 		for (PhysicsObject object : newAffectedObjects)
 			this.affectedObjects.add(object);
 	}
-	public void addAffectedObject (PhysicsObject object) {
+	public final void addAffectedObject (PhysicsObject object) {
 		this.affectedObjects.add(object);
 		this.integrityChecked = false;
 	}
-	public void addAffectedObjects (Iterable<PhysicsObject> objects) {
+	public final void addAffectedObjects (Iterable<PhysicsObject> objects) {
 		for (PhysicsObject object : objects)
 			this.affectedObjects.add(object);
 		this.integrityChecked = false;
 	}
-	@Override public void execute (double time) {
+	@Override public final void execute (double time) {
 		if (!this.integrityChecked) {
 			for (PhysicsObject object : this.affectedObjects)
 				if (!object.prereq(this.affectedPrereq()))
-					throw new RuntimeException ("Affected object to fulfil interaction requirements.");
+					throw new RuntimeException ("Affected object failed to fulfil interaction requirements.");
 			this.integrityChecked = true;
 		}			
 		for (PhysicsObject object : this.affectedObjects)

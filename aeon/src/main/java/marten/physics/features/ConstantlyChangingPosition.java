@@ -14,7 +14,7 @@ public class ConstantlyChangingPosition extends Position {
 	@Override public void execute (double time) {
 		if (this.lastActivation != Double.NEGATIVE_INFINITY) {
 			this.position = this.position.move(this.velocity.scale(time - this.lastActivation));
-			this.notifyListeners("POSITION");
+			this.notifyListeners("POSITION", this.position);
 		}
 		this.lastActivation = time;
 	}
