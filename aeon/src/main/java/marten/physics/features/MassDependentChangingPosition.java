@@ -11,8 +11,6 @@ public class MassDependentChangingPosition extends ArbitrarilyChangingPosition i
 	private double massBackup;
 	public MassDependentChangingPosition (PhysicsObject newOwner, Point initialPosition, Vector initialVelocity) {
 		super (newOwner, initialPosition, initialVelocity);
-		if (!this.getOwner().hasFeature("MASS"))
-			throw new RuntimeException ("Required feature \'MASS\' not found in the owning object.");
 		this.getOwner().getFeature("MASS").addListener(this);
 		this.massBackup = this.getOwner().getFeature("MASS").getDouble("MASS");
 	}

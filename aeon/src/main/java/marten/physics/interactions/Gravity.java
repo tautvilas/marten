@@ -1,7 +1,5 @@
 package marten.physics.interactions;
 
-import java.util.ArrayList;
-
 import marten.physics.Feature;
 import marten.physics.FeatureListener;
 import marten.physics.Interaction;
@@ -21,20 +19,9 @@ public class Gravity extends Interaction implements FeatureListener {
 		this.gravitationalParameter = owner.getFeature("MASS").getDouble("MASS") * Gravity.GRAVITY_CONSTANT;
 		this.positionBackup = owner.getFeature("POSITION").getPoint("POSITION");
 	}
-	@Override protected Iterable<String> affectedPrereq() {
-		ArrayList<String> prereq = new ArrayList<String>();
-		prereq.add("POSITION");
-		return prereq;
-	}
 	@Override protected void interact(PhysicsObject target, double time) {
 		Vector direction = new Vector (target.getFeature("POSITION").getPoint("POSITION"), this.positionBackup);
 		target.getFeature("POSITION").setVector("ACCELERATION", direction.normalize().scale(this.gravitationalParameter / direction.lengthSquared()));
-	}
-	@Override protected Iterable<String> ownerPrereq() {
-		ArrayList<String> prereq = new ArrayList<String>();
-		prereq.add("POSITION");
-		prereq.add("MASS");
-		return prereq;
 	}
 	@Override public Object get(String param) {
 		throw new RuntimeException ("Unsupported parameter " + param + " requested.");

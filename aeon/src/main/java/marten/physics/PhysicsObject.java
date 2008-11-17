@@ -10,7 +10,7 @@ public final class PhysicsObject {
 	public Feature getFeature (String name) {
 		if (this.features.containsKey(name))
 			return this.features.get(name);
-		throw new RuntimeException ("Attempted to get an unexisting feature.");
+		throw new RuntimeException ("Attempted to get an unexisting feature " + name + ".");
 	}
 	public void addFunctionality (Feature functionality) {
 		if (this.lock)
@@ -34,11 +34,5 @@ public final class PhysicsObject {
 	}
 	public boolean hasFeature (String feature) {
 		return this.features.containsKey(feature);
-	}
-	public boolean prereq (Iterable<String> prereqList) {
-		for (String featurePrereq : prereqList)
-			if (!this.features.containsKey(featurePrereq))
-				return false;
-		return true;
 	}
 }
