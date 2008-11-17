@@ -11,8 +11,6 @@ public class MassDependentRadius extends Radius implements FeatureListener {
 	protected double density = 0.0;
 	public MassDependentRadius (PhysicsObject newOwner, double newDensity) {
 		super (newOwner, 0.0);
-		if (!this.getOwner().hasFeature("MASS"))
-			throw new RuntimeException ("Required feature \'MASS\' not found in the owning object.");
 		this.getOwner().getFeature("MASS").addListener(this);
 		if (newDensity < 0.0)
 			throw new RuntimeException ("Attempted to set negative density.");
