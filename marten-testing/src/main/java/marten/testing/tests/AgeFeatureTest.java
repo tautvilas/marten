@@ -158,4 +158,9 @@ public class AgeFeatureTest extends AgeApp {
 			}
 		}
 	}
+
+	@Override
+	protected void finalize() {
+	    
+	}
 }
