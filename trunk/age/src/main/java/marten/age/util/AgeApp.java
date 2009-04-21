@@ -74,7 +74,7 @@ public abstract class AgeApp {
 	private void destroy() {
 		Display.destroy();
 		Keyboard.destroy();
-
+		finalize();
 		System.exit(0);
 	}
 
@@ -138,4 +138,6 @@ public abstract class AgeApp {
 	protected abstract void init();
 
 	protected abstract void mainLoop();
+	
+	protected abstract void finalize();
 }
