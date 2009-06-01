@@ -42,7 +42,7 @@ public abstract class AgeApp {
 			init();
 		} catch (Exception le) {
 			le.printStackTrace();
-			log.fatal("Failed to initialize test");
+			log.fatal("Failed to initialize Age app");
 			return;
 		}
 

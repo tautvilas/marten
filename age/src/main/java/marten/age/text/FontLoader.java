@@ -35,7 +35,7 @@ public class FontLoader {
 		 * maximum size font that will fit in the size allocated.
 		 */
 		while(!sizeFound) {
-			font = new Font(fontName, fontStyle, fontSize);  // Font Name
+			font = new Font(fontName, fontStyle, fontSize);
 			fontImage = new BufferedImage(bitmapSize, bitmapSize, BufferedImage.TYPE_4BYTE_ABGR);
 			Graphics2D g = (Graphics2D)fontImage.getGraphics();
 			g.setFont(font);
@@ -55,7 +55,7 @@ public class FontLoader {
 		/* Now that a font size has been determined, create the final image, set the font and draw the
 		 * standard/extended ASCII character set for that font.
 		 */
-		font = new Font(fontName, font.getStyle(), fontSize);
+		font = new Font(fontName, fontStyle, fontSize);
 		fontImage = new BufferedImage(bitmapSize, bitmapSize, BufferedImage.TYPE_4BYTE_ABGR);
 		Graphics2D g = (Graphics2D)fontImage.getGraphics();
 		g.setFont(font);
@@ -64,7 +64,7 @@ public class FontLoader {
 		g.setColor(OPAQUE_WHITE);
 		g.setBackground(TRANSPARENT_BLACK);
 		FontMetrics fm = g.getFontMetrics();
-		for(int i=0;i<256;i++) {
+		for(int i = 0; i < 256; i++) {
 			int x = i % 16;
 			int y = i / 16;
 			char ch[] = {(char)i};
