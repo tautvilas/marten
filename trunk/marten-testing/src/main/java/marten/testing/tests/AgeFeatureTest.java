@@ -6,7 +6,7 @@ import marten.age.control.MouseController;
 import marten.age.control.MouseListener;
 import marten.age.geometry.OptimizedGeometry;
 import marten.age.geometry.SimpleModel;
-import marten.age.geometry.SphereGeometry;
+import marten.age.geometry.primitives.Sphere;
 import marten.age.hud.Hud;
 import marten.age.model.ComplexModel;
 import marten.age.model.ModelLoader;
@@ -36,7 +36,6 @@ public class AgeFeatureTest extends AgeApp {
 	
 	private Camera mainCamera;
 	
-	// TODO: Rotation methods : setXRotationAngle, Y, Z, get, setXYZroation(x, y, z)
 	private double mainCameraDistance = -10;
 	private double shipRotationY = 0;
 	private double shipRotationX = Math.PI / 2;
@@ -87,7 +86,7 @@ public class AgeFeatureTest extends AgeApp {
 		
 		/* Simple model */
 		
-		SimpleModel sm = new SimpleModel(new OptimizedGeometry(new SphereGeometry(2.0)));
+		SimpleModel sm = new SimpleModel(new OptimizedGeometry(new Sphere(2.0)));
 		sr.addBranch(sm);
 		
 		/* Model loading*/
