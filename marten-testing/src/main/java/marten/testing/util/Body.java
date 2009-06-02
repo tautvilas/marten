@@ -49,9 +49,9 @@ public class Body {
 		scaleGroup.setScaleFactor(this.radius);
 		translationGroup.setCoordinates(this.position);
 		rotationGroup.setRotation(this.heading);
-		scaleGroup.addBranch(model);
-		rotationGroup.addBranch(scaleGroup);
-		translationGroup.addBranch(rotationGroup);
+		scaleGroup.addChild(model);
+		rotationGroup.addChild(scaleGroup);
+		translationGroup.addChild(rotationGroup);
 		
 		graphCreated = true;
 	}
@@ -61,7 +61,7 @@ public class Body {
 			rotationGroup.removeBranch(model);
 			hidden = true;
 		} else if (hidden && !hide) {
-			rotationGroup.addBranch(model);
+			rotationGroup.addChild(model);
 			hidden = false;
 		}
 	}

@@ -6,5 +6,5 @@ public interface SceneGraphParent extends SceneGraphNode {
     public void removeBranches();
     public void removeBranch(SceneGraphChild oldBranch);
     public ArrayList<SceneGraphChild> getBranches();
-    public void addBranch(SceneGraphChild newBranch);
+    public void addChild(SceneGraphChild newBranch);
 }

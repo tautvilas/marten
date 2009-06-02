@@ -41,6 +41,7 @@ public final class TextureLoader {
     }
 
     public static Texture loadTexture(byte[] buffer, int width, int height) {
+        // TODO(zv): texture caching
         int test = 0;
         int textureId;
         int pixelType;
