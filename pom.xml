@@ -11,6 +11,7 @@
     <module>marten-util</module>
     <module>age</module>
     <module>marten-testing</module>
+    <module>game</module>
   </modules>
 
   <name>Marten</name>
