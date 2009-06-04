@@ -1,6 +1,6 @@
 package marten.game;
 
-/**This class should be everywhere a location on the map is to be referenced.
+/**This class should be used everywhere a location on the map is to be referenced.
  * @author carnifex*/
 public class MapCoordinates {
     /**The x coordinate (from bottom up)*/
