@@ -1,4 +1,4 @@
-package marten.game;
+package marten.game.map;
 
 /** Allows a class to monitor changes in map tiles.
  * @author carnifex*/

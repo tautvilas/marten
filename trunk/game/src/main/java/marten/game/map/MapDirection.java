@@ -1,4 +1,4 @@
-package marten.game;
+package marten.game.map;
 
 /**Defines all possible map directions.
  * @author carnifex*/
