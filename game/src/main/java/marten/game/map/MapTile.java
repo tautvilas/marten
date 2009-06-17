@@ -1,4 +1,4 @@
-package marten.game;
+package marten.game.map;
 
 import java.util.ArrayList;
 
@@ -39,6 +39,11 @@ public class MapTile {
      * @param listener The listener to be removed.*/
     public void removeListener(MapTileListener listener) {
         this.listeners.remove(listener);
+    }
+    
+    /** Removes all listeners from the subscription list.*/
+    public void removeAllListeners() {
+        this.listeners = new ArrayList<MapTileListener>();
     }
     
     /** Changes the current terrain of the map tile temporarily.

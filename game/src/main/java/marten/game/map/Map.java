@@ -1,4 +1,4 @@
-package marten.game;
+package marten.game.map;
 
 import java.util.ArrayList;
 
@@ -33,6 +33,26 @@ public class Map implements MapTileListener {
                 this.map[x][y] = new MapTile(Terrain.VOID, new MapCoordinates(x,y));
                 this.map[x][y].addListener(this);
             }
+    }
+    
+    /** Subscribes a listener to this map.
+     * @param listener The listener to be registered.
+     * @throws NullPointerException if the listener is <code>null</code>*/
+    public void addListener(MapListener listener) {
+        if (listener == null)
+            throw new NullPointerException ("Null listener.");
+        this.listeners.add(listener);
+    }
+    
+    /** Removes a listener from the subscription list.
+     * @param listener The listener to be removed.*/
+    public void removeListener(MapListener listener) {
+        this.listeners.remove(listener);
+    }
+    
+    /** Removes all listeners from the subscription list.*/
+    public void removeAllListeners() {
+        this.listeners = new ArrayList<MapListener>();
     }
     
     /**Returns a reference to the map tile in the given location.

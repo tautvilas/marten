@@ -1,4 +1,4 @@
-package marten.game;
+package marten.game.map;
 
 /** Defines the different generic types of terrain, recognized by the game.
  * @author carnifex*/

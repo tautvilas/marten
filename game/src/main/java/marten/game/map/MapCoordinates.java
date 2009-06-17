@@ -1,4 +1,4 @@
-package marten.game;
+package marten.game.map;
 
 /**This class should be used everywhere a location on the map is to be referenced.
  * @author carnifex*/
