@@ -41,7 +41,7 @@ public class CpuBenchmark implements ConsoleTest {
 			intMultiplicationTime = tempIntMultiplicationTime;
 		}
 		System.out.println ("Integer multiplication: ~" + intMultiplicationTime + " nanoseconds (carnifex - 7 ns)");
-		@SuppressWarnings({ "unused", "unused" })
+		@SuppressWarnings({ "unused" })
 		double d, e, f;
 		long randomGenerationTime = 1000000000;
 		for (int i = 0; i < 1000; i++) {
