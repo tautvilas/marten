@@ -8,6 +8,7 @@ public class Texture {
 
     public Texture(int textureId, Dimension dimension) {
         this.textureId = textureId;
+        this.dimension = dimension;
     }
 
     public int getTextureId() {
