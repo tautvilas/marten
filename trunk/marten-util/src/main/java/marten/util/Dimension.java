@@ -5,6 +5,9 @@ public class Dimension {
     public float height = 0;
     public float depth = 0;
 
+    public Dimension() {
+    }
+
     public Dimension(float width, float height) {
         this.width = width;
         this.height = height;
