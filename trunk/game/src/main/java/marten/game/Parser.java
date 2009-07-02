@@ -28,6 +28,12 @@ public class Parser {
     private static final String END = "\\s*$";
     /**A regexp that matches anything*/
     private static final String ANYTHING = ".*$";
+    /**A regexp that matches quote marks*/
+    private static final String QUOTE = "\"";
+    /**A regexp that matches square brackets*/
+    private static final String SQUARE_BRACKETS = "[\\[\\]]";
+    /**A regexp that matches comma*/
+    private static final String COMMA = ",";
     
     /**A regexp that matches DEFINE command*/    
     private static final String DEFINE = "^\\s*DEFINE";
@@ -45,7 +51,16 @@ public class Parser {
         this.definedTiles.remove(variableName);
     }
     private boolean isDefinedVariable (String variableName) {
-        return this.definedIntegers.containsKey(variableName) || this.definedStrings.containsKey(variableName) || this.definedTiles.containsKey(variableName);
+        return this.isDefinedInteger(variableName) || this.isDefinedString(variableName) || this.isDefinedTile(variableName);
+    }
+    private boolean isDefinedInteger (String variableName) {
+        return this.definedIntegers.containsKey(variableName);
+    }
+    private boolean isDefinedString (String variableName) {
+        return this.definedStrings.containsKey(variableName);
+    }
+    private boolean isDefinedTile (String variableName) {
+        return this.definedTiles.containsKey(variableName);
     }
     
     public Return parseLine (String scriptLine) {
@@ -55,8 +70,6 @@ public class Parser {
             return this.parseDefineString(scriptLine);        
         if (scriptLine.matches(DEFINE+VARIABLE+AS+TILE+END))
             return this.parseDefineTile(scriptLine);
-        if (scriptLine.matches(DEFINE+VARIABLE+AS+VARIABLE+END))
-            return this.parseDefineCopy(scriptLine);
         if (scriptLine.matches(DROP+VARIABLE+END))
             return this.parseDropVariable(scriptLine);
         if (scriptLine.matches(COMMENT+ANYTHING))
@@ -65,29 +78,34 @@ public class Parser {
     }
     
     private Return parseDefineInteger(String scriptLine) {
-        String variableName = scriptLine.split(DEFINE)[1].split(AS)[0];
-        int integerValue = Integer.parseInt(scriptLine.split(DEFINE+VARIABLE+AS)[1].split(END)[0]);
+        String variableName = scriptLine.split(DEFINE)[1].split(AS)[0].trim();
+        int integerValue = Integer.parseInt(scriptLine.split(AS)[1].trim());
         Return returnValue = (this.isDefinedVariable(variableName)) ? new Return(ParserState.WARNING, "Variable is already defined, previous definition dropped implicitly.") : new Return();            
         this.dropVariable(variableName);
         this.definedIntegers.put(variableName, new Integer(integerValue));
         return returnValue;
     }
     private Return parseDefineString(String scriptLine) {
-        //TODO: method stub
-        return new Return();
+        String variableName = scriptLine.split(DEFINE)[1].split(AS)[0].trim();
+        String stringValue = scriptLine.split(AS)[1].trim().split(QUOTE)[1];
+        Return returnValue = (this.isDefinedVariable(variableName)) ? new Return(ParserState.WARNING, "Variable is already defined, previous definition dropped implicitly.") : new Return();
+        this.dropVariable(variableName);
+        this.definedStrings.put(variableName, stringValue);
+        return returnValue;
     }
     private Return parseDefineTile(String scriptLine) {
-        //TODO: method stub
-        return new Return();
+        String variableName = scriptLine.split(DEFINE)[1].split(AS)[0].trim();
+        String[] intermediateValue = scriptLine.split(AS)[1].trim().split(SQUARE_BRACKETS)[1].split(COMMA);
+        MapCoordinates tileValue = new MapCoordinates(Integer.parseInt(intermediateValue[0]), Integer.parseInt(intermediateValue[1]));
+        Return returnValue = (this.isDefinedVariable(variableName)) ? new Return(ParserState.WARNING, "Variable is already defined, previous definition dropped implicitly.") : new Return();
+        this.dropVariable(variableName);
+        this.definedTiles.put(variableName, tileValue);
+        return returnValue;
     }
     private Return parseDropVariable(String scriptLine) {
-        String variableName = scriptLine.split(DROP)[1].split(END)[0];
+        String variableName = scriptLine.split(DROP)[1].trim();
         Return returnValue = (this.isDefinedVariable(variableName)) ? new Return() : new Return(ParserState.WARNING, "Variable is undefined, DROP statement ignored");
         this.dropVariable(variableName);
         return returnValue;
-    }
-    private Return parseDefineCopy(String scriptLine) {
-        //TODO: method stub
-        return new Return();
     }
 }
