@@ -93,8 +93,8 @@ public final class TextureLoader {
                 GL11.GL_LINEAR_MIPMAP_NEAREST);
         GLU.gluBuild2DMipmaps(GL11.GL_TEXTURE_2D, GL11.GL_RGBA, width, height,
                 pixelType, GL11.GL_UNSIGNED_BYTE, byteBuffer);
-        // GL11.glTexImage2D(GL11.GL_TEXTURE_2D, 0, pixelType, width, height, 0,
-        // pixelType, GL11.GL_UNSIGNED_BYTE, byteBuffer);
+//         GL11.glTexImage2D(GL11.GL_TEXTURE_2D, 0, pixelType, width, height, 0,
+//         pixelType, GL11.GL_UNSIGNED_BYTE, byteBuffer);
         // TODO(zv): why does glTexImage2D does not work?
 
         return new Texture(textureId, new Dimension(width, height));

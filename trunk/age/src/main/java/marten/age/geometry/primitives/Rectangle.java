@@ -14,20 +14,17 @@ public class Rectangle implements Geometry {
 
     @Override
     public void draw() {
-        // TODO(zv): do we need to push here?
-        GL11.glPushMatrix();
         GL11.glBegin(GL11.GL_QUADS);
         {
-            GL11.glTexCoord2f(0, dimension.height);
-            GL11.glVertex2f(0, dimension.height);
-            GL11.glTexCoord2f(0, 0);
-            GL11.glVertex2f(0, 0);
-            GL11.glTexCoord2f(dimension.width, 0);
-            GL11.glVertex2f(dimension.width, 0);
-            GL11.glTexCoord2f(dimension.width, dimension.height);
-            GL11.glVertex2f(dimension.width, dimension.height);
+            GL11.glTexCoord2d(0, 0);
+            GL11.glVertex2d(0, 0);
+            GL11.glTexCoord2d(1.0, 0);
+            GL11.glVertex2d(dimension.width, 0);
+            GL11.glTexCoord2d(1.0, 1.0);
+            GL11.glVertex2d(dimension.width, dimension.height);
+            GL11.glTexCoord2d(0, 1.0);
+            GL11.glVertex2d(0, dimension.height);
         }
         GL11.glEnd();
-        GL11.glPopMatrix();
     }
 }
