@@ -135,11 +135,9 @@ public class Appearance {
                 this.shininess);
         GL11.glMaterial(GL11.GL_FRONT_AND_BACK, GL11.GL_AMBIENT, this.ambient);
         GL11.glMaterial(GL11.GL_FRONT_AND_BACK, GL11.GL_DIFFUSE, this.diffuse);
-        GL11
-                .glMaterial(GL11.GL_FRONT_AND_BACK, GL11.GL_EMISSION,
+        GL11.glMaterial(GL11.GL_FRONT_AND_BACK, GL11.GL_EMISSION,
                         this.emission);
-        GL11
-                .glMaterial(GL11.GL_FRONT_AND_BACK, GL11.GL_SPECULAR,
+        GL11.glMaterial(GL11.GL_FRONT_AND_BACK, GL11.GL_SPECULAR,
                         this.specular);
         if (texture != null && texture.getTextureId() != -1) {
             GL11.glEnable(GL11.GL_TEXTURE_2D);

@@ -46,9 +46,11 @@ public class Sprite extends BasicSceneGraphChild{
         if (data.length == dimension.width *
                 dimension.height * Constants.RGB_NUM_BYTES) {
             format = GL11.GL_RGB;
+            log.info("RGB");
         } else if (data.length == dimension.width * dimension.height
                 * Constants.RGBA_NUM_BYTES) {
             format = GL11.GL_RGBA;
+            log.info("RGBA");
         } else {
             throw new RuntimeException("Image data mismatch.");
         }
@@ -63,6 +65,6 @@ public class Sprite extends BasicSceneGraphChild{
     public void activate() {
         GL11.glRasterPos2d(position.x, position.y);
         GL11.glDrawPixels((int)dimension.width, (int)dimension.height,
-                format, GL11.GL_BYTE, byteBuffer);
+                format, GL11.GL_UNSIGNED_BYTE, byteBuffer);
     }
 }
