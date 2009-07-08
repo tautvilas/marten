@@ -14,7 +14,9 @@ public class TexturedSprite extends BasicSceneGraphBranch {
 
     public TexturedSprite(Texture texture) {
         model = new SimpleModel(new Rectangle(texture.getDimension()));
-        model.getAppearance().setColor(new Color(1.0, 0.5, 0.0));
+        // glTexEnv(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_BLEND)
+        // gl<...same shit...>, GL_REPLACE) for no background blending
+        model.getAppearance().setColor(new Color(1.0, 1.0, 1.0));
         model.getAppearance().setTexture(texture);
         tg.addChild(model);
         this.addChild(tg);
