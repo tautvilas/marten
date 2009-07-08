@@ -1,5 +1,7 @@
 package marten.testing.tests;
 
+import java.io.IOException;
+
 import marten.age.camera.Camera;
 import marten.age.camera.FrustumCamera;
 import marten.age.flat.Sprite;
@@ -8,6 +10,7 @@ import marten.age.geometry.OptimizedGeometry;
 import marten.age.geometry.SimpleModel;
 import marten.age.geometry.primitives.Sphere;
 import marten.age.hud.Hud;
+import marten.age.image.ImageData;
 import marten.age.root.SimpleRoot;
 import marten.age.texture.Texture;
 import marten.age.texture.TextureLoader;
@@ -49,12 +52,18 @@ public class SpriteTest extends AgeApp {
 
         /* Sprite */
 
-        Texture spriteTexture = TextureLoader.loadTexture("data/textures/sprite.png");
+        ImageData data = null;
+        try {
+            data = new ImageData("data/textures/sprite.png");
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        Texture spriteTexture = TextureLoader.loadTexture(data);
         TexturedSprite sprite = new TexturedSprite(spriteTexture, new Point(0, 0));
-        Sprite sp = new Sprite("data/textures/sprite.png");
-        sp.setPosition(new Point(10, 10));
-        hud.addChild(sp);
+        Sprite sp = new Sprite(data);
+        sp.setPosition(new Point(10, 0));
         hud.addChild(sprite);
+        hud.addChild(sp);
 
         /* Simple model */
 

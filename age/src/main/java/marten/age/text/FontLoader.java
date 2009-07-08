@@ -7,6 +7,7 @@ import java.awt.Graphics2D;
 import java.awt.RenderingHints;
 import java.awt.image.BufferedImage;
 
+import marten.age.image.ImageData;
 import marten.age.texture.TextureLoader;
 
 import org.lwjgl.opengl.GL11;
@@ -78,7 +79,8 @@ public class FontLoader {
             g.drawString(temp, (x * 32) + 1, (y * 32) + fm.getAscent());
         }
 
-        int texture = TextureLoader.loadTexture(fontImage).getTextureId();
+        int texture = TextureLoader.loadTexture(new ImageData(fontImage))
+            .getTextureId();
 
         int base = GL11.glGenLists(256); // Storage For 256 Characters
 

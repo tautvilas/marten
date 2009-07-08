@@ -1,80 +1,24 @@
 package marten.age.texture;
 
-import java.awt.image.BufferedImage;
-import java.awt.image.DataBufferByte;
-import java.io.File;
-import java.io.IOException;
 import java.nio.ByteBuffer;
 import java.nio.IntBuffer;
 
-import javax.imageio.ImageIO;
-
-import marten.age.util.Constants;
+import marten.age.image.ImageData;
+import marten.age.image.Transformations;
 import marten.util.Dimension;
 
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.glu.GLU;
 
 public final class TextureLoader {
-    public static Texture loadTexture(String fileName) {
-        return loadTexture(new File(fileName));
-    }
-
-    public static Texture loadTexture(File file) {
-        try {
-            return loadTexture(ImageIO.read(file));
-        } catch (IOException e) {
-            e.printStackTrace();
-            throw new RuntimeException(
-                    "The image failed to load from the file.");
-        }
-    }
-
-    public static Texture loadTexture(BufferedImage image) {
-        byte[] bytes = ((DataBufferByte) (image).getRaster().getDataBuffer())
-                .getData();
-        return loadTexture(bytes, image.getWidth(), image.getHeight());
-    }
-
-    public static Texture setImage(ByteBuffer buffer, int width, int height) {
-        return loadTexture(buffer.array(), width, height);
-    }
-
-    public static Texture loadTexture(byte[] buffer, int width, int height) {
-        // TODO(zv): texture caching
-        int test = 0;
+    public static Texture loadTexture(ImageData data) {
+        data = Transformations.flip(data);
         int textureId;
-        int pixelType;
+        int pixelType = data.getType();
+        int width = data.width;
+        int height = data.height;
 
-        while (width >> test != 1)
-            test++;
-        if (width >> test << test != width)
-            throw new RuntimeException("Image width is not a power of two.");
-        test = 0;
-        while (height >> test != 1)
-            test++;
-        if (height >> test << test != height)
-            throw new RuntimeException("Image height is not a power of two.");
-
-        if (buffer.length == width * height * Constants.RGB_NUM_BYTES) {
-            pixelType = GL11.GL_RGB;
-        } else if (buffer.length == width * height * Constants.RGBA_NUM_BYTES) {
-            pixelType = GL11.GL_RGBA;
-        } else {
-            throw new RuntimeException("Image data mismatch.");
-        }
-
-        buffer = flip(buffer, width, height, pixelType);
-
-        /*
-         * ByteBuffer byteBuffer = BufferUtil.newByteBuffer(buffer.length);
-         * byteBuffer.put(buffer); byteBuffer.rewind();
-         */
-
-        ByteBuffer byteBuffer = ByteBuffer.wrap(buffer);
-        byteBuffer.rewind();
-
-        // IntBuffer textureIDBuffer = BufferUtil.newIntBuffer(1);
+        ByteBuffer byteBuffer = data.getByteBuffer();
 
         IntBuffer textureIDBuffer = IntBuffer.allocate(1);
 
@@ -98,49 +42,5 @@ public final class TextureLoader {
         // TODO(zv): why does glTexImage2D does not work?
 
         return new Texture(textureId, new Dimension(width, height));
-    }
-
-    @SuppressWarnings("unused")
-    private byte[] rotate(byte[] buffer, int width, int height, int pixelType) {
-        int pixelSize = Constants.RGB_NUM_BYTES;
-        if (pixelType == GL11.GL_RGBA) {
-            pixelSize = Constants.RGBA_NUM_BYTES;
-        }
-
-        byte[] newbuffer = new byte[width * height * pixelSize];
-
-        for (int y = 0; y < height; y++) {
-            for (int x = 0; x < width; x++) {
-                for (int i = 0; i < pixelSize; i++) {
-                    newbuffer[(((x + 1) * height - 1) - y) * pixelSize + i] = buffer[(y
-                            * width + x)
-                            * pixelSize + i];
-                }
-            }
-        }
-
-        return newbuffer;
-    }
-
-    private static byte[] flip(byte[] buffer, int width, int height,
-            int pixelType) {
-        int pixelSize = Constants.RGB_NUM_BYTES;
-        if (pixelType == GL11.GL_RGBA) {
-            pixelSize = Constants.RGBA_NUM_BYTES;
-        }
-
-        byte[] newbuffer = new byte[width * height * pixelSize];
-
-        for (int y = 0; y < height; y++) {
-            for (int x = 0; x < width; x++) {
-                for (int i = 0; i < pixelSize; i++) {
-                    newbuffer[((height - y - 1) * width + x) * pixelSize + i] = buffer[(y
-                            * width + x)
-                            * pixelSize + i];
-                }
-            }
-        }
-
-        return newbuffer;
     }
 }
