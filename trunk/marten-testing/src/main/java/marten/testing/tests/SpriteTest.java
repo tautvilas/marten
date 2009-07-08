@@ -4,12 +4,12 @@ import java.io.IOException;
 
 import marten.age.camera.Camera;
 import marten.age.camera.FrustumCamera;
+import marten.age.flat.Hud;
 import marten.age.flat.Sprite;
 import marten.age.flat.TexturedSprite;
 import marten.age.geometry.OptimizedGeometry;
 import marten.age.geometry.SimpleModel;
 import marten.age.geometry.primitives.Sphere;
-import marten.age.hud.Hud;
 import marten.age.image.ImageData;
 import marten.age.root.SimpleRoot;
 import marten.age.texture.Texture;
