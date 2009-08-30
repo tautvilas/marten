@@ -19,8 +19,8 @@ public class ComplexModel extends BasicSceneGraphChild {
 	public ArrayList<SimpleModel> getParts() {
 		return parts;
 	}
-	public void activate() {
+	public void render() {
 		for (SimpleModel part : parts)
-			part.activate();
+			part.render();
 	}	
 }

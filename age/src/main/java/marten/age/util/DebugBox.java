@@ -27,13 +27,13 @@ public class DebugBox extends BasicSceneGraphChild {
 		objects.remove(key);
 	}
 	
-	public void activate() {
+	public void render() {
 		GL11.glPushMatrix();
 		Set<String> keys = objects.keySet();
 		for (String key : keys) {
 			Object o = objects.get(key);
 			BitmapString string = new BitmapString(font, key + ": " + o.toString());
-			string.activate();
+			string.render();
 			GL11.glTranslated(0.0, font.getSize(), 0.0);
 		}
 		GL11.glPopMatrix();

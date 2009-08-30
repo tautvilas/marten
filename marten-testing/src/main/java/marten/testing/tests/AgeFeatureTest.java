@@ -114,7 +114,7 @@ public class AgeFeatureTest extends AgeApp implements AgeScene {
         box.addObject("Ship heading", spaceship.getHeading());
         box.addObject("Ship position", spaceship.getPosition());
 
-        sr.activate();
+        sr.render();
     }
 
     /* Mouse lister for mouse events catching */

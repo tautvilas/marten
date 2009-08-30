@@ -2,37 +2,28 @@ package marten.testing.tests.loadingtest;
 
 import marten.age.core.AgeScene;
 import marten.age.event.AgeEvent;
+import marten.age.loading.Loadable;
 
-public class SecondScene implements AgeScene {
-
-    @Override
-    public void cleanup() {
-        // TODO Auto-generated method stub
-        
-    }
+public class SecondScene implements AgeScene, Loadable {
 
     @Override
-    public void compute() {
-        // TODO Auto-generated method stub
-        
+    public void init() {
     }
 
     @Override
     public void handle(AgeEvent e) {
-        // TODO Auto-generated method stub
-        
     }
 
     @Override
-    public void init() {
-        // TODO Auto-generated method stub
-        
+    public void compute() {
     }
 
     @Override
     public void render() {
-        // TODO Auto-generated method stub
-        
+    }
+
+    @Override
+    public void cleanup() {
     }
 
 }

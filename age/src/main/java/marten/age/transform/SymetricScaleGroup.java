@@ -17,10 +17,10 @@ public final class SymetricScaleGroup extends BasicSceneGraphBranch {
 	public double getScaleFactor () {
 		return this.scaleFactor;
 	}
-	@Override public void activate () {
+	@Override public void render () {
 		GL11.glPushMatrix();
 		GL11.glScaled(this.scaleFactor, this.scaleFactor, this.scaleFactor);
-		super.activate();
+		super.render();
 		GL11.glPopMatrix();
 	}
 }

@@ -49,7 +49,7 @@ public class SimpleRoot extends Root {
         this.activeCamera = cameras.get(title);
     }
 
-    public void activate() {
+    public void render() {
         if (this.cameras.isEmpty())
             throw new RuntimeException(
                     "Attempted to activate the root without initialized cameras.");
@@ -58,7 +58,7 @@ public class SimpleRoot extends Root {
                     "Attempted to activate the root without an active camera.");
         GL11.glClear(GL11.GL_COLOR_BUFFER_BIT | GL11.GL_DEPTH_BUFFER_BIT);
         activeCamera.set();
-        super.activate();
+        super.render();
         GL11.glFlush();
     }
 }

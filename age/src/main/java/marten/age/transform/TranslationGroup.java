@@ -24,11 +24,11 @@ public final class TranslationGroup extends BasicSceneGraphBranch {
     }
 
     @Override
-    public void activate() {
+    public void render() {
         GL11.glPushMatrix();
         GL11.glTranslated(this.coordinates.x, this.coordinates.y,
                 this.coordinates.z);
-        super.activate();
+        super.render();
         GL11.glPopMatrix();
     }
 }

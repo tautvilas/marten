@@ -19,7 +19,7 @@ public class Sprite extends BasicSceneGraphChild{
     }
 
     @Override
-    public void activate() {
+    public void render() {
         GL11.glRasterPos2d(position.x, position.y);
         GL11.glDrawPixels((int)data.width, (int)data.height,
                 data.getType(), GL11.GL_UNSIGNED_BYTE, data.getByteBuffer());

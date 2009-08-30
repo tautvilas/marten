@@ -69,6 +69,7 @@ public abstract class AgeApp {
             }
 
             activeScene.compute();
+            activeScene.render();
             Display.sync(FRAMERATE);
         }
     }

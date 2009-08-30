@@ -32,9 +32,9 @@ public class SimplestRoot extends Root {
 		GL11.glMatrixMode(GL11.GL_MODELVIEW);
 	}
 	
-	public void activate() {
+	public void render() {
 		GL11.glClear(GL11.GL_COLOR_BUFFER_BIT | GL11.GL_DEPTH_BUFFER_BIT);
-		super.activate();
+		super.render();
 		GL11.glFlush();
 	}
 }
