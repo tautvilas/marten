@@ -31,7 +31,7 @@ public class FirstScene implements AgeScene {
 
     @Override
     public void render() {
-        flatland.activate();
+        flatland.render();
     }
 
     @Override
