@@ -16,6 +16,7 @@ import marten.age.text.BitmapFont;
 import marten.age.text.BitmapString;
 import marten.age.text.FontCache;
 import marten.age.util.AgeApp;
+import marten.age.util.AgeScene;
 import marten.age.util.Color;
 import marten.age.util.DebugBox;
 import marten.age.util.FpsCounter;
@@ -24,7 +25,7 @@ import marten.util.Point;
 import marten.util.Rotation;
 import marten.util.Vector;
 
-public class AgeFeatureTest extends AgeApp {
+public class AgeFeatureTest extends AgeApp implements AgeScene {
 
     private SimpleRoot sr;
 
@@ -44,7 +45,7 @@ public class AgeFeatureTest extends AgeApp {
     private Body spaceship;
 
     @Override
-    protected void init() {
+    public void init() {
         /* Scene Init */
         sr = new SimpleRoot();
 
@@ -104,7 +105,7 @@ public class AgeFeatureTest extends AgeApp {
     }
 
     @Override
-    protected void compute() {
+    public void compute() {
         Rotation r = new Rotation();
         r.set(new Vector(0.0, 1.0, 0.0), shipRotationY);
         r = r.multiply(new Rotation(new Vector(1.0, 0.0, 0.0), shipRotationX));
@@ -157,18 +158,29 @@ public class AgeFeatureTest extends AgeApp {
     }
 
     @Override
-    protected void cleanup() {
+    public void cleanup() {
 
     }
 
     @Override
-    protected void handle(AgeEvent e) {
+    public void handle(AgeEvent e) {
         // TODO Auto-generated method stub
         
     }
 
     @Override
-    protected void render() {
+    public void render() {
+        // TODO Auto-generated method stub
+        
+    }
+
+    @Override
+    public void configure() {
+        this.setActiveScene(this);
+    }
+
+    @Override
+    public void finalize() {
         // TODO Auto-generated method stub
         
     }
