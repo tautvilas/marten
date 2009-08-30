@@ -2,7 +2,6 @@ package marten.testing.tests.loadingtest;
 
 import marten.age.core.AgeScene;
 import marten.age.event.AgeEvent;
-import marten.age.loading.Loadable;
 
 public class SecondScene implements AgeScene, Loadable {
 
