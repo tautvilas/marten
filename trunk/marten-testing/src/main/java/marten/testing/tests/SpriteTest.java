@@ -4,6 +4,8 @@ import java.io.IOException;
 
 import marten.age.camera.Camera;
 import marten.age.camera.FrustumCamera;
+import marten.age.core.AgeApp;
+import marten.age.core.AgeScene;
 import marten.age.event.AgeEvent;
 import marten.age.flat.Hud;
 import marten.age.flat.Sprite;
@@ -15,8 +17,6 @@ import marten.age.image.ImageData;
 import marten.age.root.SimpleRoot;
 import marten.age.texture.Texture;
 import marten.age.texture.TextureLoader;
-import marten.age.util.AgeApp;
-import marten.age.util.AgeScene;
 import marten.age.util.FpsCounter;
 import marten.util.Point;
 import marten.util.Rotation;
