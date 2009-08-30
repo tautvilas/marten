@@ -1,8 +1,9 @@
-package marten.age.util;
+package marten.age.core;
 
 import java.util.HashSet;
 
 import marten.age.control.Controller;
+import marten.age.util.SelectionDialog;
 
 import org.apache.log4j.Logger;
 import org.lwjgl.input.Keyboard;
