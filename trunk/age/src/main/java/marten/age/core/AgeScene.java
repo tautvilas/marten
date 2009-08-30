@@ -1,4 +1,4 @@
-package marten.age.util;
+package marten.age.core;
 
 import marten.age.event.AgeEvent;
 
