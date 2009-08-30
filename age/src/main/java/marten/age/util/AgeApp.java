@@ -3,7 +3,6 @@ package marten.age.util;
 import java.util.HashSet;
 
 import marten.age.control.Controller;
-import marten.age.event.AgeEvent;
 
 import org.apache.log4j.Logger;
 import org.lwjgl.input.Keyboard;
@@ -14,6 +13,7 @@ public abstract class AgeApp {
     private static org.apache.log4j.Logger log = Logger.getLogger(AgeApp.class);
 
     private HashSet<Controller> controllers = new HashSet<Controller>();
+    private AgeScene activeScene = null;
 
     // private Resource res = new FileSystemResource(Constants.UNIT_BEANS_PATH);
     // private BeanFactory factory = new XmlBeanFactory(res);
@@ -38,14 +38,25 @@ public abstract class AgeApp {
     }
 
     public void execute() {
+        configure();
         try {
             initDisplay();
-            init();
         } catch (Exception le) {
             le.printStackTrace();
             log.fatal("Failed to initialize Age app");
             return;
         }
+
+        runScene();
+        destroy();
+    }
+
+    private void runScene() {
+        if (this.activeScene == null) {
+            log.error("No active scene provided for AGE. Exiting...");
+            destroy();
+        }
+        activeScene.init();
 
         while (!Keyboard.isKeyDown(Keyboard.KEY_ESCAPE)
                 && !Display.isCloseRequested()) {
@@ -56,13 +67,19 @@ public abstract class AgeApp {
                 c.publishEvents();
             }
 
-            compute();
+            activeScene.compute();
             Display.sync(FRAMERATE);
         }
+    }
 
-        log.info("Exiting...");
+    protected void setActiveScene(AgeScene scene) {
+        this.activeScene = scene;
+    }
 
-        destroy();
+    protected void switchScene(AgeScene scene) {
+        this.activeScene.cleanup();
+        this.activeScene = scene;
+        runScene();
     }
 
     public void addController(Controller c) {
@@ -76,7 +93,8 @@ public abstract class AgeApp {
     private void destroy() {
         Display.destroy();
         Keyboard.destroy();
-        cleanup();
+        finalize();
+        log.info("Exiting normally...");
         System.exit(0);
     }
 
@@ -139,13 +157,11 @@ public abstract class AgeApp {
         return strings;
     }
 
-    protected abstract void init();
+    /*** Methods for overriding below ***/
 
-    protected abstract void handle(AgeEvent e);
+    /* User has to override this method and do AGE configuration here*/
+    public abstract void configure();
 
-    protected abstract void compute();
-
-    protected abstract void render();
-
-    protected abstract void cleanup();
+    /* Do some final cleanup */
+    public abstract void finalize();
 }

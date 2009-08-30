@@ -16,22 +16,23 @@ import marten.age.root.SimpleRoot;
 import marten.age.texture.Texture;
 import marten.age.texture.TextureLoader;
 import marten.age.util.AgeApp;
+import marten.age.util.AgeScene;
 import marten.age.util.FpsCounter;
 import marten.util.Point;
 import marten.util.Rotation;
 import marten.util.Vector;
 
-public class SpriteTest extends AgeApp {
+public class SpriteTest extends AgeApp implements AgeScene {
 
     @Override
-    protected void finalize() {
+    public void finalize() {
     }
 
     private SimpleRoot sr;
     private Camera mainCamera;
 
     @Override
-    protected void init() {
+    public void init() {
         /* Scene Init */
         sr = new SimpleRoot();
 
@@ -76,25 +77,26 @@ public class SpriteTest extends AgeApp {
     }
 
     @Override
-    protected void compute() {
+    public void compute() {
         sr.activate();
     }
 
     @Override
-    protected void cleanup() {
+    public void cleanup() {
         // TODO Auto-generated method stub
         
     }
 
     @Override
-    protected void handle(AgeEvent e) {
-        // TODO Auto-generated method stub
-        
+    public void handle(AgeEvent e) {
     }
 
     @Override
-    protected void render() {
-        // TODO Auto-generated method stub
-        
+    public void render() {
+    }
+
+    @Override
+    public void configure() {
+        this.setActiveScene(this);
     }
 }
