@@ -123,6 +123,14 @@ public abstract class AgeApp {
 
     }
 
+    public int getWidth() {
+        return this.width;
+    }
+
+    public int getHeight() {
+        return this.height;
+    }
+
     private DisplayMode selectMode() throws Exception {
         DisplayMode[] modes = Display.getAvailableDisplayModes();
         DisplayMode mode = null;
