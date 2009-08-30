@@ -4,7 +4,7 @@ import java.nio.ByteBuffer;
 import java.nio.IntBuffer;
 
 import marten.age.image.ImageData;
-import marten.age.image.Transformations;
+import marten.age.image.ImageTransformations;
 import marten.util.Dimension;
 
 import org.lwjgl.opengl.GL11;
@@ -12,7 +12,7 @@ import org.lwjgl.opengl.glu.GLU;
 
 public final class TextureLoader {
     public static Texture loadTexture(ImageData data) {
-        data = Transformations.flip(data);
+        data = ImageTransformations.flip(data);
         int textureId;
         int pixelType = data.getType();
         int width = data.width;

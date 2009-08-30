@@ -24,7 +24,7 @@ public class Flatland {
         sr.addChild(hud);
     }
 
-    public void activate() {
+    public void render() {
         sr.render();
     }
 

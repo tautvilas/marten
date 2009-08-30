@@ -4,7 +4,7 @@ import marten.age.util.Constants;
 
 import org.lwjgl.opengl.GL11;
 
-public final class Transformations {
+public final class ImageTransformations {
     public static ImageData rotate(ImageData data) {
         int pixelSize = Constants.RGB_NUM_BYTES;
         if (data.getType() == GL11.GL_RGBA) {
