@@ -8,7 +8,7 @@ import org.lwjgl.opengl.GL11;
 
 public class Hud extends BasicSceneGraphBranch {
     @Override
-    public void activate() {
+    public void render() {
         int width = Display.getDisplayMode().getWidth();
         int height = Display.getDisplayMode().getHeight();
 
@@ -35,7 +35,7 @@ public class Hud extends BasicSceneGraphBranch {
         GL11.glLoadIdentity();
 
         for (SceneGraphNode node : this.getBranches()) {
-            node.activate();
+            node.render();
         }
 
         GL11.glPopMatrix();

@@ -21,10 +21,10 @@ public final class RotationGroup extends BasicSceneGraphBranch {
 	public Rotation getRotation () {
 		return new Rotation (axis, angle * Math.PI / 180.0);
 	}
-	@Override public void activate () {
+	@Override public void render () {
 		GL11.glPushMatrix ();
 		GL11.glRotatef ((float)angle, (float)axis.x, (float)axis.y, (float)axis.z);
-		super.activate();
+		super.render();
 		GL11.glPopMatrix();
 	}
 }

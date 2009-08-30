@@ -49,7 +49,7 @@ public class BitmapString extends BasicSceneGraphChild {
         this.color = c;
     }
 
-    public void activate() {
+    public void render() {
         glPrint(this.content);
     }
 }

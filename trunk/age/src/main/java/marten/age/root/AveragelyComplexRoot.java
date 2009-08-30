@@ -45,7 +45,7 @@ public class AveragelyComplexRoot extends Root {
 	public void removeLight (Light oldLight) {
 		lights.remove(oldLight);
 	}
-	public void activate() {
+	public void render() {
 		if (this.cameras.isEmpty())
 			throw new RuntimeException ("Attempted to activate the root without initialized cameras.");
 		if (this.activeCamera == null)
@@ -64,7 +64,7 @@ public class AveragelyComplexRoot extends Root {
 				log.debug("Light number " + lightNumbers[index] + " disabled.");
 			}
 		this.cameras.get(this.activeCamera).set();
-		super.activate();
+		super.render();
 		GL11.glFlush();
 	}
 }

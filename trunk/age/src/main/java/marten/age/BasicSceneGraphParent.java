@@ -17,17 +17,17 @@ public abstract class BasicSceneGraphParent implements SceneGraphParent {
     }
 
     @Override
-    public void removeBranch(SceneGraphChild oldBranch) {
+    public void removeChild(SceneGraphChild oldBranch) {
         this.branches.remove(oldBranch);
     }
 
     @Override
-    public void removeBranches() {
+    public void removeChildren() {
         branches.clear();
     }
 
     @Override
-    public void activate() {
+    public void render() {
         activateChildren();
     }
 
@@ -36,6 +36,6 @@ public abstract class BasicSceneGraphParent implements SceneGraphParent {
             throw new RuntimeException(
                     "Attempted to activate childless parent.");
         for (SceneGraphChild branch : this.branches)
-            branch.activate();
+            branch.render();
     }
 }

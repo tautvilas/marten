@@ -15,7 +15,7 @@ public class FpsCounter extends BasicSceneGraphChild {
 	
 	private int interval = 2000;
 
-	public void activate() {
+	public void render() {
 		if (startTime == 0) {
 			startTime = System.currentTimeMillis() + interval;
 		}
@@ -30,6 +30,6 @@ public class FpsCounter extends BasicSceneGraphChild {
 		}
 		
 		BitmapString string = new BitmapString(font, "" + fpsOut + "FPS");
-		string.activate();
+		string.render();
 	}
 }

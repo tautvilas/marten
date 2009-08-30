@@ -78,7 +78,7 @@ public class SpriteTest extends AgeApp implements AgeScene {
 
     @Override
     public void compute() {
-        sr.activate();
+        sr.render();
     }
 
     @Override

@@ -58,7 +58,7 @@ public class Body {
 
 	public void hide(boolean hide) {
 		if (!hidden && hide) {
-			rotationGroup.removeBranch(model);
+			rotationGroup.removeChild(model);
 			hidden = true;
 		} else if (hidden && !hide) {
 			rotationGroup.addChild(model);

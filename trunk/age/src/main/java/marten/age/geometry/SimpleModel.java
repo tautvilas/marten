@@ -27,7 +27,7 @@ public class SimpleModel extends BasicSceneGraphChild {
         return geometry;
     }
 
-    public void activate() {
+    public void render() {
         appearance.set();
         geometry.draw();
     }

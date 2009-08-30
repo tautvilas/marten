@@ -19,10 +19,10 @@ public final class AssymetricScaleGroup extends BasicSceneGraphBranch {
 	public double[] getScaleFactors () {
 		return new double[] {this.scaleFactorX, this.scaleFactorY, this.scaleFactorZ};
 	}
-	@Override public void activate () {
+	@Override public void render () {
 		GL11.glPushMatrix();
 		GL11.glScaled(this.scaleFactorX, this.scaleFactorY, this.scaleFactorZ);
-		super.activate();
+		super.render();
 		GL11.glPopMatrix();
 	}
 }
