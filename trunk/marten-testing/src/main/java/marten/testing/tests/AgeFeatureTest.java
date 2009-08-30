@@ -4,6 +4,7 @@ import marten.age.camera.Camera;
 import marten.age.camera.FrustumCamera;
 import marten.age.control.MouseController;
 import marten.age.control.MouseListener;
+import marten.age.event.AgeEvent;
 import marten.age.flat.Hud;
 import marten.age.geometry.OptimizedGeometry;
 import marten.age.geometry.SimpleModel;
@@ -103,7 +104,7 @@ public class AgeFeatureTest extends AgeApp {
     }
 
     @Override
-    protected void mainLoop() {
+    protected void compute() {
         Rotation r = new Rotation();
         r.set(new Vector(0.0, 1.0, 0.0), shipRotationY);
         r = r.multiply(new Rotation(new Vector(1.0, 0.0, 0.0), shipRotationX));
@@ -156,7 +157,19 @@ public class AgeFeatureTest extends AgeApp {
     }
 
     @Override
-    protected void finalize() {
+    protected void cleanup() {
 
+    }
+
+    @Override
+    protected void handle(AgeEvent e) {
+        // TODO Auto-generated method stub
+        
+    }
+
+    @Override
+    protected void render() {
+        // TODO Auto-generated method stub
+        
     }
 }

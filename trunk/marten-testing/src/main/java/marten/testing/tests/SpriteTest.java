@@ -4,6 +4,7 @@ import java.io.IOException;
 
 import marten.age.camera.Camera;
 import marten.age.camera.FrustumCamera;
+import marten.age.event.AgeEvent;
 import marten.age.flat.Hud;
 import marten.age.flat.Sprite;
 import marten.age.flat.TexturedSprite;
@@ -75,7 +76,25 @@ public class SpriteTest extends AgeApp {
     }
 
     @Override
-    protected void mainLoop() {
+    protected void compute() {
         sr.activate();
+    }
+
+    @Override
+    protected void cleanup() {
+        // TODO Auto-generated method stub
+        
+    }
+
+    @Override
+    protected void handle(AgeEvent e) {
+        // TODO Auto-generated method stub
+        
+    }
+
+    @Override
+    protected void render() {
+        // TODO Auto-generated method stub
+        
     }
 }
