@@ -6,7 +6,6 @@ import marten.age.control.MouseController;
 import marten.age.control.MouseListener;
 import marten.age.core.AgeApp;
 import marten.age.core.AgeScene;
-import marten.age.event.AgeEvent;
 import marten.age.flat.Hud;
 import marten.age.geometry.OptimizedGeometry;
 import marten.age.geometry.SimpleModel;
@@ -112,12 +111,6 @@ public class AgeFeatureTest extends AgeApp {
             box.addObject("Ship position", spaceship.getPosition());
 
             sr.render();
-        }
-
-        @Override
-        public void handle(AgeEvent e) {
-            // TODO Auto-generated method stub
-
         }
 
         @Override

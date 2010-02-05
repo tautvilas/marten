@@ -12,9 +12,6 @@ public abstract class AgeScene {
     /* Method for initializing the app */
     public abstract void init();
 
-    /* This method is called each time an event happens */
-    public abstract void handle(AgeEvent e);
-
     /* Game "business" logic should go here */
     public abstract void compute();
 
@@ -30,5 +27,10 @@ public abstract class AgeScene {
         for (AgeEventListener l : listeners) {
             l.handle(e);
         }
+    }
+
+    /* Method for listener registration */
+    public void registerListener(AgeEventListener listener) {
+        this.listeners.add(listener);
     }
 }

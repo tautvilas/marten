@@ -6,7 +6,6 @@ import marten.age.camera.Camera;
 import marten.age.camera.FrustumCamera;
 import marten.age.core.AgeApp;
 import marten.age.core.AgeScene;
-import marten.age.event.AgeEvent;
 import marten.age.flat.Hud;
 import marten.age.flat.Sprite;
 import marten.age.flat.TexturedSprite;
@@ -85,10 +84,6 @@ public class SpriteTest extends AgeApp {
         public void cleanup() {
             // TODO Auto-generated method stub
 
-        }
-
-        @Override
-        public void handle(AgeEvent e) {
         }
 
         @Override
