@@ -22,81 +22,87 @@ import marten.util.Point;
 import marten.util.Rotation;
 import marten.util.Vector;
 
-public class SpriteTest extends AgeApp implements AgeScene {
+public class SpriteTest extends AgeApp {
+
+    private class Scene extends AgeScene {
+
+        private SimpleRoot sr;
+        private Camera mainCamera;
+
+        @Override
+        public void init() {
+            /* Scene Init */
+            sr = new SimpleRoot();
+
+            mainCamera = new FrustumCamera();
+            Rotation r = new Rotation(new Vector());
+            mainCamera.setSettings(new Point(), r, -10);
+            mainCamera.setClippingPlanes(1.0, 1000.0);
+            sr.addCamera("front", mainCamera);
+            sr.setActiveCamera("front");
+
+            /* Hud */
+
+            Hud hud = new Hud();
+            sr.addChild(hud);
+
+            /* FPS counter */
+
+            hud.addChild(new FpsCounter());
+
+            /* Sprite */
+
+            ImageData data = null;
+            try {
+                data = new ImageData("data/textures/sprite.png");
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+            Texture spriteTexture = TextureLoader.loadTexture(data);
+            TexturedSprite sprite = new TexturedSprite(spriteTexture,
+                    new Point(0, 0));
+            Sprite sp = new Sprite(data);
+            sp.setPosition(new Point(10, 0));
+            hud.addChild(sprite);
+            hud.addChild(sp);
+
+            /* Simple model */
+
+            SimpleModel sm = new SimpleModel(new OptimizedGeometry(new Sphere(
+                    2.0)));
+            sm.getAppearance().setTexture(spriteTexture);
+            sr.addChild(sm);
+
+            // sr.compile();
+        }
+
+        @Override
+        public void compute() {
+            sr.render();
+        }
+
+        @Override
+        public void cleanup() {
+            // TODO Auto-generated method stub
+
+        }
+
+        @Override
+        public void handle(AgeEvent e) {
+        }
+
+        @Override
+        public void render() {
+        }
+
+    }
 
     @Override
     public void finalize() {
     }
 
-    private SimpleRoot sr;
-    private Camera mainCamera;
-
-    @Override
-    public void init() {
-        /* Scene Init */
-        sr = new SimpleRoot();
-
-        mainCamera = new FrustumCamera();
-        Rotation r = new Rotation(new Vector());
-        mainCamera.setSettings(new Point(), r, -10);
-        mainCamera.setClippingPlanes(1.0, 1000.0);
-        sr.addCamera("front", mainCamera);
-        sr.setActiveCamera("front");
-
-        /* Hud */
-
-        Hud hud = new Hud();
-        sr.addChild(hud);
-
-        /* FPS counter */
-
-        hud.addChild(new FpsCounter());
-
-        /* Sprite */
-
-        ImageData data = null;
-        try {
-            data = new ImageData("data/textures/sprite.png");
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-        Texture spriteTexture = TextureLoader.loadTexture(data);
-        TexturedSprite sprite = new TexturedSprite(spriteTexture, new Point(0, 0));
-        Sprite sp = new Sprite(data);
-        sp.setPosition(new Point(10, 0));
-        hud.addChild(sprite);
-        hud.addChild(sp);
-
-        /* Simple model */
-
-        SimpleModel sm = new SimpleModel(new OptimizedGeometry(new Sphere(2.0)));
-        sm.getAppearance().setTexture(spriteTexture);
-        sr.addChild(sm);
-
-//        sr.compile();
-    }
-
-    @Override
-    public void compute() {
-        sr.render();
-    }
-
-    @Override
-    public void cleanup() {
-        // TODO Auto-generated method stub
-        
-    }
-
-    @Override
-    public void handle(AgeEvent e) {
-    }
-
-    @Override
-    public void render() {
-    }
-
     @Override
     public void configure() {
-        this.setActiveScene(this);
+        this.setActiveScene(new Scene());
     }
 }

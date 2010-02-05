@@ -25,100 +25,115 @@ import marten.util.Point;
 import marten.util.Rotation;
 import marten.util.Vector;
 
-public class AgeFeatureTest extends AgeApp implements AgeScene {
-
-    private SimpleRoot sr;
-
-    // private static Logger log = Logger.getLogger(AgeFeatureTest.class);
-
-    private boolean mouseIsDown = false;
-    private Point mouseCoords = new Point();
-
-    private Camera mainCamera;
+public class AgeFeatureTest extends AgeApp {
 
     private double mainCameraDistance = -10;
     private double shipRotationY = 0;
     private double shipRotationX = Math.PI / 2;
 
-    DebugBox box;
+    private class Scene extends AgeScene {
+        private SimpleRoot sr;
 
-    private Body spaceship;
+        // private static Logger log = Logger.getLogger(AgeFeatureTest.class);
 
-    @Override
-    public void init() {
-        /* Scene Init */
-        sr = new SimpleRoot();
+        private Camera mainCamera;
 
-        mainCamera = new FrustumCamera();
-        Rotation r = new Rotation(new Vector());
-        mainCamera.setSettings(new Point(), r, mainCameraDistance);
-        mainCamera.setClippingPlanes(1.0, 1000.0);
-        sr.addCamera("front", mainCamera);
-        sr.setActiveCamera("front");
+        DebugBox box;
 
-        /* Set up controllers */
-        this.addController(new MouseController(new TestMouseListener()));
+        private Body spaceship;
 
-        /* Hud */
+        @Override
+        public void init() {
+            /* Scene Init */
+            sr = new SimpleRoot();
 
-        Hud hud = new Hud();
-        sr.addChild(hud);
+            mainCamera = new FrustumCamera();
+            Rotation r = new Rotation(new Vector());
+            mainCamera.setSettings(new Point(), r, mainCameraDistance);
+            mainCamera.setClippingPlanes(1.0, 1000.0);
+            sr.addCamera("front", mainCamera);
+            sr.setActiveCamera("front");
 
-        /* Bitmap Font */
+            /* Hud */
 
-        FontCache.generate();
-        BitmapFont bfont = FontCache.getFont(FontCache.COURIER_BOLD_20);
+            Hud hud = new Hud();
+            sr.addChild(hud);
 
-        BitmapString string = new BitmapString(bfont, "AEON");
-        string.setColor(new Color(1.0, 0.0, 0.0));
+            /* Bitmap Font */
 
-        hud.addChild(string);
+            FontCache.generate();
+            BitmapFont bfont = FontCache.getFont(FontCache.COURIER_BOLD_20);
 
-        /* Debug box */
+            BitmapString string = new BitmapString(bfont, "AEON");
+            string.setColor(new Color(1.0, 0.0, 0.0));
 
-        box = new DebugBox();
-        hud.addChild(box);
+            hud.addChild(string);
 
-        /* FPS counter */
+            /* Debug box */
 
-        hud.addChild(new FpsCounter());
+            box = new DebugBox();
+            hud.addChild(box);
 
-        /* Simple model */
+            /* FPS counter */
 
-        SimpleModel sm = new SimpleModel(new OptimizedGeometry(new Sphere(2.0)));
-        sr.addChild(sm);
+            hud.addChild(new FpsCounter());
 
-        /* Model loading */
+            /* Simple model */
 
-        ComplexModel model;
-        try {
-            model = ModelLoader
-                    .load("data/models/obj/destroyerx/destroyerx.obj");
-        } catch (Exception e) {
-            throw new RuntimeException(e);
+            SimpleModel sm = new SimpleModel(new OptimizedGeometry(new Sphere(
+                    2.0)));
+            sr.addChild(sm);
+
+            /* Model loading */
+
+            ComplexModel model;
+            try {
+                model = ModelLoader
+                        .load("data/models/obj/destroyerx/destroyerx.obj");
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
+
+            spaceship = new Body(model);
+            sr.addChild(spaceship.getSceneGraph());
+
+            sr.compile();
         }
 
-        spaceship = new Body(model);
-        sr.addChild(spaceship.getSceneGraph());
+        @Override
+        public void compute() {
+            Rotation r = new Rotation();
+            r.set(new Vector(0.0, 1.0, 0.0), shipRotationY);
+            r = r.multiply(new Rotation(new Vector(1.0, 0.0, 0.0),
+                    shipRotationX));
+            spaceship.setHeading(r);
 
-        sr.compile();
-    }
+            box.addObject("Ship heading", spaceship.getHeading());
+            box.addObject("Ship position", spaceship.getPosition());
 
-    @Override
-    public void compute() {
-        Rotation r = new Rotation();
-        r.set(new Vector(0.0, 1.0, 0.0), shipRotationY);
-        r = r.multiply(new Rotation(new Vector(1.0, 0.0, 0.0), shipRotationX));
-        spaceship.setHeading(r);
+            sr.render();
+        }
 
-        box.addObject("Ship heading", spaceship.getHeading());
-        box.addObject("Ship position", spaceship.getPosition());
+        @Override
+        public void handle(AgeEvent e) {
+            // TODO Auto-generated method stub
 
-        sr.render();
+        }
+
+        @Override
+        public void render() {
+            // TODO Auto-generated method stub
+
+        }
+
     }
 
     /* Mouse lister for mouse events catching */
     private class TestMouseListener implements MouseListener {
+
+        private boolean mouseIsDown = false;
+        private Point mouseCoords = new Point();
+
         public void mouseDown(Point coords) {
             mouseIsDown = true;
         }
@@ -158,30 +173,16 @@ public class AgeFeatureTest extends AgeApp implements AgeScene {
     }
 
     @Override
-    public void cleanup() {
-
-    }
-
-    @Override
-    public void handle(AgeEvent e) {
-        // TODO Auto-generated method stub
-        
-    }
-
-    @Override
-    public void render() {
-        // TODO Auto-generated method stub
-        
-    }
-
-    @Override
     public void configure() {
-        this.setActiveScene(this);
+        /* Set up controllers */
+        this.addController(new MouseController(new TestMouseListener()));
+        this.setActiveScene(new Scene());
+
     }
 
     @Override
     public void finalize() {
         // TODO Auto-generated method stub
-        
+
     }
 }
