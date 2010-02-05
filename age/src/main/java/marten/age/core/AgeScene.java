@@ -1,20 +1,34 @@
 package marten.age.core;
 
-import marten.age.event.AgeEvent;
+import java.util.HashSet;
 
-public interface AgeScene {
+import marten.age.event.AgeEvent;
+import marten.age.event.AgeEventListener;
+
+public abstract class AgeScene {
+
+    private HashSet<AgeEventListener> listeners = new HashSet<AgeEventListener>();
+
     /* Method for initializing the app */
-    public void init();
+    public abstract void init();
 
     /* This method is called each time an event happens */
-    public void handle(AgeEvent e);
+    public abstract void handle(AgeEvent e);
 
     /* Game "business" logic should go here */
-    public void compute();
+    public abstract void compute();
 
     /* All the graphics related code goes here */
-    public void render();
+    public abstract void render();
 
     /* Method for destroying unwanted stuff */
-    public void cleanup();
+    public void cleanup() {
+    }
+
+    /* Method for publishing events */
+    public void fireEvent(AgeEvent e) {
+        for (AgeEventListener l : listeners) {
+            l.handle(e);
+        }
+    }
 }
