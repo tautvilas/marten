@@ -3,6 +3,8 @@ package marten.age.core;
 import java.util.HashSet;
 
 import marten.age.control.Controller;
+import marten.age.event.AgeEvent;
+import marten.age.event.AgeEventListener;
 import marten.age.util.SelectionDialog;
 
 import org.apache.log4j.Logger;
@@ -75,13 +77,14 @@ public abstract class AgeApp {
     }
 
     protected void setActiveScene(AgeScene scene) {
+        scene.registerListener(new CoreAgeEventListener());
         this.activeScene = scene;
     }
 
     protected void switchScene(AgeScene scene) {
         this.activeScene.cleanup();
-        this.activeScene = scene;
-        runScene();
+        this.setActiveScene(scene);
+        this.runScene();
     }
 
     public void addController(Controller c) {
@@ -154,12 +157,12 @@ public abstract class AgeApp {
             // native method
             // the program crashes because bpp is included in string
             // we can include bpp in this string by mode.getBpp();
-            //if we include bpp in this string the program crashes as well
-            //bpp is int.
-            //strange thing is that the program crashes only if there is
-            //dialog.waitFor() method called in parent method, if
-            //dialog.waitFor() is not called program does not crash.
-            //must be some thread synchronization issue
+            // if we include bpp in this string the program crashes as well
+            // bpp is int.
+            // strange thing is that the program crashes only if there is
+            // dialog.waitFor() method called in parent method, if
+            // dialog.waitFor() is not called program does not crash.
+            // must be some thread synchronization issue
             strings[i] = "" + mode.getWidth() + "x" + mode.getHeight() + "@"
                     + mode.getFrequency() + "Hz";
             i++;
@@ -167,9 +170,18 @@ public abstract class AgeApp {
         return strings;
     }
 
+    private class CoreAgeEventListener implements AgeEventListener {
+
+        @Override
+        public void handle(AgeEvent e) {
+            log.info("Event was fired!");
+        }
+
+    }
+
     /*** Methods for overriding below ***/
 
-    /* User has to override this method and do AGE configuration here*/
+    /* User has to override this method and do AGE configuration here */
     public abstract void configure();
 
     /* Do some final cleanup */

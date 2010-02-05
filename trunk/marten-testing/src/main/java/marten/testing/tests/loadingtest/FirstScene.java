@@ -23,13 +23,9 @@ public class FirstScene extends AgeScene {
     }
 
     @Override
-    public void handle(AgeEvent e) {
-    }
-
-    @Override
     public void compute() {
         AgeScene scene2 = new SecondScene();
-        scene2.fireEvent(new AgeEvent("SWITCH SCENE", scene2));
+        this.fireEvent(new AgeEvent("SWITCH SCENE", scene2));
     }
 
     @Override
