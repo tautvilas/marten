@@ -84,7 +84,6 @@ public abstract class AgeApp {
     protected void switchScene(AgeScene scene) {
         this.activeScene.cleanup();
         this.setActiveScene(scene);
-        this.runScene();
     }
 
     public void addController(Controller c) {
@@ -174,7 +173,13 @@ public abstract class AgeApp {
 
         @Override
         public void handle(AgeEvent e) {
-            log.info("Event was fired!");
+            if (e.id == "SCENE SWITCH") {
+                AgeScene scene = (AgeScene)e.parameters[0];
+                switchScene(scene);
+                log.info("AGE scene switced to " + scene);
+            } else {
+                log.warn("Unrecognized Age event id: " + e.id);
+            }
         }
 
     }
