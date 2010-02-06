@@ -5,7 +5,7 @@ import java.nio.IntBuffer;
 
 import marten.age.graphics.image.ImageData;
 import marten.age.graphics.image.ImageTransformations;
-import marten.util.Dimension;
+import marten.age.graphics.util.Dimension;
 
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.glu.GLU;

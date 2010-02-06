@@ -16,11 +16,11 @@ import marten.age.graphics.image.ImageData;
 import marten.age.graphics.texture.Texture;
 import marten.age.graphics.texture.TextureLoader;
 import marten.age.graphics.util.Color;
+import marten.age.graphics.util.Point;
 import marten.age.graphics.util.TextureCoordinate;
 import marten.age.graphics.util.Triangle;
+import marten.age.graphics.util.Vector;
 import marten.age.graphics.util.Vertex;
-import marten.util.Point;
-import marten.util.Vector;
 
 import org.apache.log4j.Logger;
 

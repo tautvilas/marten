@@ -3,8 +3,8 @@ package marten.age.graphics.light;
 import java.nio.FloatBuffer;
 
 import marten.age.graphics.util.Color;
-import marten.util.Point;
-import marten.util.Vector;
+import marten.age.graphics.util.Point;
+import marten.age.graphics.util.Vector;
 
 import org.lwjgl.opengl.GL11;
 

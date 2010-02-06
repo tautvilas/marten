@@ -1,4 +1,4 @@
-package marten.util;
+package marten.age.graphics.util;
 
 /**An interface to help emulating higher order functions, when a <code>double</code> to <code>double</code> function needs to be passed into the body of another function.
  * @author Petras Razanskas*/

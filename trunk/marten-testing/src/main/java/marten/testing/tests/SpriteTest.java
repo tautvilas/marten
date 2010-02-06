@@ -17,9 +17,9 @@ import marten.age.graphics.root.SimpleRoot;
 import marten.age.graphics.texture.Texture;
 import marten.age.graphics.texture.TextureLoader;
 import marten.age.graphics.util.FpsCounter;
-import marten.util.Point;
-import marten.util.Rotation;
-import marten.util.Vector;
+import marten.age.graphics.util.Point;
+import marten.age.graphics.util.Rotation;
+import marten.age.graphics.util.Vector;
 
 public class SpriteTest extends AgeApp {
 

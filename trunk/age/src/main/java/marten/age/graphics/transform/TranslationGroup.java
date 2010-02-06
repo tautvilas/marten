@@ -1,7 +1,7 @@
 package marten.age.graphics.transform;
 
 import marten.age.graphics.BasicSceneGraphBranch;
-import marten.util.Point;
+import marten.age.graphics.util.Point;
 
 import org.lwjgl.opengl.GL11;
 
