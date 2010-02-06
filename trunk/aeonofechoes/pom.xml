@@ -25,18 +25,6 @@
     </dependency>
     <dependency>
       <groupId>marten</groupId>
-      <artifactId>wage</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>marten</groupId>
-      <artifactId>ion</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>marten</groupId>
-      <artifactId>ape</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>marten</groupId>
       <artifactId>marten-util</artifactId>
     </dependency>
   </dependencies>
