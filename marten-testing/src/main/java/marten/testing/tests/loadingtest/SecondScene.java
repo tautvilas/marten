@@ -14,11 +14,7 @@ public class SecondScene extends AgeScene implements Loadable {
     private Flatland flatland;
 
     public SecondScene() {
-        ImageData buttonImage = ImageLoader
-                .loadImage("data/textures/sprite.png");
         flatland = new Flatland();
-        Sprite button = new Sprite(buttonImage);
-        flatland.addSprite(button, new Point(200, 200));
     }
 
     @Override
@@ -45,6 +41,10 @@ public class SecondScene extends AgeScene implements Loadable {
                 loader.setStatus("[" + percentage + "]");
             }
         }
+        ImageData buttonImage = ImageLoader
+                .loadImage("data/textures/sprite.png");
+        Sprite button = new Sprite(buttonImage);
+        flatland.addSprite(button, new Point(200, 200));
     }
 
 }
