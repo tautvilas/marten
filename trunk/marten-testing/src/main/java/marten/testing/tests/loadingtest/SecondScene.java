@@ -7,7 +7,7 @@ import marten.age.graphics.image.ImageData;
 import marten.age.graphics.image.ImageLoader;
 import marten.age.graphics.util.Point;
 import marten.age.io.Loadable;
-import marten.age.io.SimpleLoader;
+import marten.age.io.LoadingState;
 
 public class SecondScene extends AgeScene implements Loadable {
 
@@ -27,9 +27,9 @@ public class SecondScene extends AgeScene implements Loadable {
     }
 
     @Override
-    public void load(SimpleLoader loader) {
-        loader.setEstimatable(true);
-        loader.setStatus("Starting up...");
+    public void load(LoadingState state) {
+        state.setEstimatable(true);
+        state.setStatus("Starting up...");
         long tag = System.currentTimeMillis();
         int percentage = 0;
         while (percentage != 100) {
@@ -37,8 +37,8 @@ public class SecondScene extends AgeScene implements Loadable {
             if (now - 100 > tag) {
                 tag = now;
                 percentage += 10;
-                loader.setPercentage(percentage);
-                loader.setStatus("[" + percentage + "]");
+                state.setPercentage(percentage);
+                state.setStatus("[" + percentage + "]");
             }
         }
         ImageData buttonImage = ImageLoader

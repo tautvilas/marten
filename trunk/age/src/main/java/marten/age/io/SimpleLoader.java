@@ -1,6 +1,6 @@
 package marten.age.io;
 
-public class SimpleLoader extends Thread implements Loader {
+public class SimpleLoader extends Thread implements Loader, LoadingState {
     private String status = "";
     private int percentage = 0;
     private boolean estimatable = false;
@@ -42,14 +42,17 @@ public class SimpleLoader extends Thread implements Loader {
         this.loadingFinished = true;
     }
 
+    @Override
     public void setStatus(String status) {
         this.status = status;
     }
 
+    @Override
     public void setPercentage(int percentage) {
         this.percentage = percentage;
     }
 
+    @Override
     public void setEstimatable(boolean estimatable) {
         this.estimatable = estimatable;
     }
