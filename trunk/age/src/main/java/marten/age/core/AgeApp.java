@@ -41,7 +41,6 @@ public abstract class AgeApp {
     }
 
     public void execute() {
-        configure();
         try {
             initDisplay();
         } catch (Exception le) {
@@ -50,6 +49,7 @@ public abstract class AgeApp {
             return;
         }
 
+        configure();
         runScene();
         destroy();
     }
@@ -59,7 +59,6 @@ public abstract class AgeApp {
             log.error("No active scene provided for AGE. Exiting...");
             destroy();
         }
-        activeScene.init();
 
         while (!Keyboard.isKeyDown(Keyboard.KEY_ESCAPE)
                 && !Display.isCloseRequested()) {

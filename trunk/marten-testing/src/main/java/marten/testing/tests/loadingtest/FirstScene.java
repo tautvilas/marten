@@ -7,35 +7,43 @@ import marten.age.graphics.flat.Sprite;
 import marten.age.graphics.image.ImageData;
 import marten.age.graphics.image.ImageLoader;
 import marten.age.graphics.util.Point;
+import marten.age.io.Loader;
 
 public class FirstScene extends AgeScene {
 
     private Flatland flatland = null;
+    private SecondScene scene2 = new SecondScene();
+    private Loader loader = new Loader(scene2);
+    private boolean loading = false;
 
-    @Override
-    public void init() {
+    public FirstScene() {
+        this.flatland = new Flatland();
+
         // TODO:zv:develop a decent image loading/caching system
         ImageData buttonImage = ImageLoader
                 .loadImage("data/testloading/button.png");
-        flatland = new Flatland();
         Sprite button = new Sprite(buttonImage);
-        flatland.addSprite(button, new Point(200, 200));
+        this.flatland.addSprite(button, new Point(200, 200));
     }
 
     @Override
     public void compute() {
-        AgeScene scene2 = new SecondScene();
-        scene2.init();
-        this.fireEvent(new AgeEvent("SCENE SWITCH", scene2));
+        if (!loading) {
+            loader.load();
+            loading = true;
+        }
+        System.out.println(loader.getStatus() + loader.getPercentage());
+        if (loader.loadingFinished()) {
+            this.fireEvent(new AgeEvent("SCENE SWITCH", scene2));
+        }
     }
 
     @Override
     public void render() {
-        flatland.render();
+        this.flatland.render();
     }
 
     @Override
     public void cleanup() {
     }
-
 }

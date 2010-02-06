@@ -41,8 +41,7 @@ public class AgeFeatureTest extends AgeApp {
 
         private Body spaceship;
 
-        @Override
-        public void init() {
+        public Scene() {
             /* Scene Init */
             sr = new SimpleRoot();
 
