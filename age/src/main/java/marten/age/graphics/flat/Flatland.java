@@ -3,9 +3,9 @@ package marten.age.graphics.flat;
 import marten.age.graphics.camera.Camera;
 import marten.age.graphics.camera.FrustumCamera;
 import marten.age.graphics.root.SimpleRoot;
-import marten.util.Point;
-import marten.util.Rotation;
-import marten.util.Vector;
+import marten.age.graphics.util.Point;
+import marten.age.graphics.util.Rotation;
+import marten.age.graphics.util.Vector;
 
 public class Flatland {
 

@@ -5,8 +5,8 @@ import marten.age.graphics.model.ComplexModel;
 import marten.age.graphics.transform.RotationGroup;
 import marten.age.graphics.transform.SymetricScaleGroup;
 import marten.age.graphics.transform.TranslationGroup;
-import marten.util.Point;
-import marten.util.Rotation;
+import marten.age.graphics.util.Point;
+import marten.age.graphics.util.Rotation;
 
 // Implements Visual, Collidable, Physical turi but.
 public class Body {

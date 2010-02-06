@@ -1,6 +1,6 @@
 package marten.age.graphics.texture;
 
-import marten.util.Dimension;
+import marten.age.graphics.util.Dimension;
 
 public class Texture {
     private Dimension dimension;

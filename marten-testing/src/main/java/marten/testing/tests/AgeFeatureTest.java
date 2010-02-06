@@ -19,10 +19,10 @@ import marten.age.graphics.text.FontCache;
 import marten.age.graphics.util.Color;
 import marten.age.graphics.util.DebugBox;
 import marten.age.graphics.util.FpsCounter;
+import marten.age.graphics.util.Point;
+import marten.age.graphics.util.Rotation;
+import marten.age.graphics.util.Vector;
 import marten.testing.util.Body;
-import marten.util.Point;
-import marten.util.Rotation;
-import marten.util.Vector;
 
 public class AgeFeatureTest extends AgeApp {
 

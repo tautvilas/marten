@@ -1,6 +1,6 @@
 package marten.age.graphics.camera;
 
-import marten.util.Point;
+import marten.age.graphics.util.Point;
 
 import org.lwjgl.opengl.GL11;
 

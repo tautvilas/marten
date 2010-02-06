@@ -1,4 +1,4 @@
-package marten.util;
+package marten.age.graphics.util;
 
 /**A class to simulate the three-dimensional vectors.
  * @author Petras Razanskas*/

@@ -1,4 +1,4 @@
-package marten.util;
+package marten.age.graphics.util;
 
 /**A class used to pass sine function into the body of another function.
  * @author Petras Razanskas*/

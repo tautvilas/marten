@@ -6,7 +6,7 @@ import marten.age.graphics.flat.Flatland;
 import marten.age.graphics.flat.Sprite;
 import marten.age.graphics.image.ImageData;
 import marten.age.graphics.image.ImageLoader;
-import marten.util.Point;
+import marten.age.graphics.util.Point;
 
 public class FirstScene extends AgeScene {
 

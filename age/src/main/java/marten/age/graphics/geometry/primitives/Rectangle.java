@@ -1,7 +1,7 @@
 package marten.age.graphics.geometry.primitives;
 
 import marten.age.graphics.geometry.Geometry;
-import marten.util.Dimension;
+import marten.age.graphics.util.Dimension;
 
 import org.lwjgl.opengl.GL11;
 

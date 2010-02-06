@@ -1,7 +1,5 @@
 package marten.age.graphics.util;
 
-import marten.util.Point;
-import marten.util.Vector;
 
 public final class Vertex {
 	public Point coordinates = new Point();

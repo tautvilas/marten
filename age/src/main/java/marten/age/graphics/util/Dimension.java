@@ -1,4 +1,4 @@
-package marten.util;
+package marten.age.graphics.util;
 
 public class Dimension {
     public float width = 0;

@@ -1,6 +1,6 @@
 package marten.age.control;
 
-import marten.util.Point;
+import marten.age.graphics.util.Point;
 
 import org.lwjgl.input.Mouse;
 

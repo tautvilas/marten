@@ -1,4 +1,4 @@
-package marten.util;
+package marten.age.graphics.util;
 
 /**A class to simulate rotations in three-dimensional environment by the means of quaternions.
  * @author Petras Razanskas*/
