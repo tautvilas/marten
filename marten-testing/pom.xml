@@ -28,10 +28,6 @@
     <!-- marten deps -->
     <dependency>
       <groupId>marten</groupId>
-      <artifactId>marten-util</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>marten</groupId>
       <artifactId>age</artifactId>
     </dependency>
 

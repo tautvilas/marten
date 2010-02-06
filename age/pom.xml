@@ -23,10 +23,6 @@
       <groupId>log4j</groupId>
       <artifactId>log4j</artifactId>
     </dependency>
-    <dependency>
-      <groupId>marten</groupId>
-      <artifactId>marten-util</artifactId>
-    </dependency>
     <!-- Lwjgl deps -->
     <dependency>
       <groupId>org.lwjgl</groupId>
