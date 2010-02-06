@@ -23,9 +23,5 @@
       <groupId>marten</groupId>
       <artifactId>age</artifactId>
     </dependency>
-    <dependency>
-      <groupId>marten</groupId>
-      <artifactId>marten-util</artifactId>
-    </dependency>
   </dependencies>
 </project>

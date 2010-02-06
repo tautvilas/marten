@@ -8,7 +8,6 @@
   <version>1.0-SNAPSHOT</version>
 
   <modules>
-    <module>marten-util</module>
     <module>age</module>
     <module>marten-testing</module>
     <module>aeonofechoes</module>
@@ -48,12 +47,6 @@
   <dependencyManagement>
     <dependencies>
         <!-- inner modules -->
-        <dependency>
-          <groupId>marten</groupId>
-          <artifactId>marten-util</artifactId>
-          <scope>compile</scope>
-          <version>1.0-SNAPSHOT</version>
-        </dependency>
         <dependency>
           <groupId>marten</groupId>
           <artifactId>age</artifactId>
