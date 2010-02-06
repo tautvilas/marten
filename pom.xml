@@ -11,10 +11,6 @@
     <module>marten-util</module>
     <module>age</module>
     <module>marten-testing</module>
-    <module>game</module>
-    <module>wage</module>
-    <module>ion</module>
-    <module>ape</module>
     <module>aeonofechoes</module>
   </modules>
 
@@ -61,24 +57,6 @@
         <dependency>
           <groupId>marten</groupId>
           <artifactId>age</artifactId>
-          <scope>compile</scope>
-          <version>1.0-SNAPSHOT</version>
-        </dependency>
-        <dependency>
-          <groupId>marten</groupId>
-          <artifactId>wage</artifactId>
-          <scope>compile</scope>
-          <version>1.0-SNAPSHOT</version>
-        </dependency>
-        <dependency>
-          <groupId>marten</groupId>
-          <artifactId>ion</artifactId>
-          <scope>compile</scope>
-          <version>1.0-SNAPSHOT</version>
-        </dependency>
-        <dependency>
-          <groupId>marten</groupId>
-          <artifactId>ape</artifactId>
           <scope>compile</scope>
           <version>1.0-SNAPSHOT</version>
         </dependency>
