@@ -9,9 +9,6 @@ public abstract class AgeScene {
 
     private HashSet<AgeEventListener> listeners = new HashSet<AgeEventListener>();
 
-    /* Method for initializing the app */
-    public abstract void init();
-
     /* Game "business" logic should go here */
     public abstract void compute();
 

@@ -28,8 +28,7 @@ public class SpriteTest extends AgeApp {
         private SimpleRoot sr;
         private Camera mainCamera;
 
-        @Override
-        public void init() {
+        public Scene() {
             /* Scene Init */
             sr = new SimpleRoot();
 
