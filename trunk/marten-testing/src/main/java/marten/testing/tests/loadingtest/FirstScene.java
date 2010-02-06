@@ -8,12 +8,13 @@ import marten.age.graphics.image.ImageData;
 import marten.age.graphics.image.ImageLoader;
 import marten.age.graphics.util.Point;
 import marten.age.io.Loader;
+import marten.age.io.SimpleLoader;
 
 public class FirstScene extends AgeScene {
 
     private Flatland flatland = null;
     private SecondScene scene2 = new SecondScene();
-    private Loader loader = new Loader(scene2);
+    private Loader loader = new SimpleLoader(scene2);
     private boolean loading = false;
 
     public FirstScene() {
@@ -41,9 +42,5 @@ public class FirstScene extends AgeScene {
     @Override
     public void render() {
         this.flatland.render();
-    }
-
-    @Override
-    public void cleanup() {
     }
 }
