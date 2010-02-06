@@ -1,10 +1,10 @@
 package marten.testing.tests.loadingtest;
 
 import marten.age.core.AgeScene;
-import marten.age.flat.Flatland;
-import marten.age.flat.Sprite;
-import marten.age.image.ImageData;
-import marten.age.image.ImageLoader;
+import marten.age.graphics.flat.Flatland;
+import marten.age.graphics.flat.Sprite;
+import marten.age.graphics.image.ImageData;
+import marten.age.graphics.image.ImageLoader;
 import marten.util.Point;
 
 public class SecondScene extends AgeScene implements Loadable {

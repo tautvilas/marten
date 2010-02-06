@@ -13,7 +13,7 @@ import javax.media.opengl.GLCanvas;
 import javax.media.opengl.GLEventListener;
 
 import marten.age.core.AgeApp;
-import marten.age.util.SelectionDialog;
+import marten.age.graphics.util.SelectionDialog;
 import marten.testing.util.DisplayManager;
 
 import com.sun.opengl.util.Animator;
