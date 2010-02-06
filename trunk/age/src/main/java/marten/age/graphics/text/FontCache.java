@@ -1,35 +1,31 @@
 package marten.age.graphics.text;
 
 import java.awt.Font;
+import java.util.HashMap;
+
+import org.apache.log4j.Logger;
 
 public class FontCache {
-    private static boolean cacheGenerated = false;
+    private static org.apache.log4j.Logger log = Logger.getLogger(FontCache.class);
+    private static HashMap<Font, BitmapFont> fonts = new HashMap<Font, BitmapFont>();
 
-    public static final String COURIER_BOLD_20 = "courierBold20";
-    public static final String COURIER_14 = "courier14";
-
-    private static BitmapFont CourierBold20;
-    private static BitmapFont Courier14;
-
-    public static void generate() {
-        Font font = new Font("Courier New", Font.BOLD, 20);
-        CourierBold20 = FontLoader.loadFont(font);
-        font = new Font("Courier New", Font.PLAIN, 14);
-        Courier14 = FontLoader.loadFont(font);
-
-        cacheGenerated = true;
+    public static BitmapFont loadFont(Font font) {
+        BitmapFont result = null;
+        if (!fonts.containsKey(font)) {
+            result = FontLoader.loadFont(font);
+            fonts.put(font, result);
+            log.info("Font " + font + " added to font cache.");
+        } else {
+            log.info("Font " + font + " is allready in font cache.");
+        }
+        return result;
     }
 
-    public static BitmapFont getFont(String fontId) {
-        if (!cacheGenerated)
-            FontCache.generate();
-
-        if (fontId.equals(COURIER_BOLD_20)) {
-            return CourierBold20;
-        } else if (fontId.equals(COURIER_14)) {
-            return Courier14;
+    public static BitmapFont getFont(Font font) {
+        if (fonts.containsKey(font)) {
+            return fonts.get(font);
         } else {
-            throw new RuntimeException("No such font exists - " + fontId);
+            return loadFont(font);
         }
     }
 }

@@ -15,6 +15,11 @@ public class BitmapString extends BasicSceneGraphChild {
         this.content = content;
     }
 
+    public BitmapString(BitmapFont font, String content, Color color) {
+        this(font, content);
+        this.color = color;
+    }
+
     public void setContent(String content) {
         this.content = content;
     }

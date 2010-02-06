@@ -1,5 +1,7 @@
 package marten.testing.tests;
 
+import java.awt.Font;
+
 import marten.age.control.MouseController;
 import marten.age.control.MouseListener;
 import marten.age.core.AgeApp;
@@ -59,11 +61,11 @@ public class AgeFeatureTest extends AgeApp {
 
             /* Bitmap Font */
 
-            FontCache.generate();
-            BitmapFont bfont = FontCache.getFont(FontCache.COURIER_BOLD_20);
+            BitmapFont bfont = FontCache.getFont(new Font("Courier New",
+                    Font.BOLD, 20));
 
-            BitmapString string = new BitmapString(bfont, "AEON");
-            string.setColor(new Color(1.0, 0.0, 0.0));
+            BitmapString string = new BitmapString(bfont, "AEON", new Color(
+                    1.0, 0.0, 0.0));
 
             hud.addChild(string);
 
