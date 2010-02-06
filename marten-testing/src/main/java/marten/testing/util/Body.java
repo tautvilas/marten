@@ -1,10 +1,10 @@
 package marten.testing.util;
 
-import marten.age.SceneGraphChild;
-import marten.age.model.ComplexModel;
-import marten.age.transform.RotationGroup;
-import marten.age.transform.SymetricScaleGroup;
-import marten.age.transform.TranslationGroup;
+import marten.age.graphics.SceneGraphChild;
+import marten.age.graphics.model.ComplexModel;
+import marten.age.graphics.transform.RotationGroup;
+import marten.age.graphics.transform.SymetricScaleGroup;
+import marten.age.graphics.transform.TranslationGroup;
 import marten.util.Point;
 import marten.util.Rotation;
 

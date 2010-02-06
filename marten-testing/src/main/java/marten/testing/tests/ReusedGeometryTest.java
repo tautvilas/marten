@@ -1,9 +1,9 @@
 package marten.testing.tests;
 
-import marten.age.geometry.Geometry;
-import marten.age.geometry.OptimizedGeometry;
-import marten.age.geometry.ReusedGeometry;
-import marten.age.geometry.primitives.Sphere;
+import marten.age.graphics.geometry.Geometry;
+import marten.age.graphics.geometry.OptimizedGeometry;
+import marten.age.graphics.geometry.ReusedGeometry;
+import marten.age.graphics.geometry.primitives.Sphere;
 import marten.testing.ConsoleTest;
 
 public class ReusedGeometryTest implements ConsoleTest {
