@@ -7,7 +7,7 @@ import marten.age.graphics.image.ImageData;
 import marten.age.graphics.image.ImageLoader;
 import marten.age.graphics.util.Point;
 import marten.age.io.Loadable;
-import marten.age.io.Loader;
+import marten.age.io.SimpleLoader;
 
 public class SecondScene extends AgeScene implements Loadable {
 
@@ -31,7 +31,7 @@ public class SecondScene extends AgeScene implements Loadable {
     }
 
     @Override
-    public void load(Loader loader) {
+    public void load(SimpleLoader loader) {
         loader.setEstimatable(true);
         loader.setStatus("Starting up...");
         long tag = System.currentTimeMillis();
