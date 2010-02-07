@@ -7,14 +7,13 @@ import marten.age.graphics.flat.Sprite;
 import marten.age.graphics.image.ImageData;
 import marten.age.graphics.image.ImageLoader;
 import marten.age.graphics.util.Point;
-import marten.age.io.Loader;
 import marten.age.io.SimpleLoader;
 
 public class FirstScene extends AgeScene {
 
     private Flatland flatland = null;
     private SecondScene scene2 = new SecondScene();
-    private Loader loader = new SimpleLoader(scene2);
+    private SimpleLoader loader = new SimpleLoader(scene2);
     private boolean loading = false;
 
     public FirstScene() {
@@ -33,6 +32,7 @@ public class FirstScene extends AgeScene {
             loader.load();
             loading = true;
         }
+
         System.out.println(loader.getStatus() + loader.getPercentage());
         if (loader.loadingFinished()) {
             this.fireEvent(new AgeEvent("SCENE SWITCH", scene2));

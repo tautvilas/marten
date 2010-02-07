@@ -7,7 +7,5 @@ public interface Loader extends Runnable{
 
     public int getPercentage();
 
-    public boolean estimatable();
-
     public boolean loadingFinished();
 }
