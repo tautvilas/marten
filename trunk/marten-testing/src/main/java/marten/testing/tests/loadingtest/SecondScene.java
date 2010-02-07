@@ -28,8 +28,7 @@ public class SecondScene extends AgeScene implements Loadable {
 
     @Override
     public void load(LoadingState state) {
-        state.setEstimatable(true);
-        state.setStatus("Starting up...");
+        state.status = "Starting up...";
         long tag = System.currentTimeMillis();
         int percentage = 0;
         while (percentage != 100) {
@@ -37,8 +36,8 @@ public class SecondScene extends AgeScene implements Loadable {
             if (now - 100 > tag) {
                 tag = now;
                 percentage += 10;
-                state.setPercentage(percentage);
-                state.setStatus("[" + percentage + "]");
+                state.percentage = percentage;
+                state.status = "[" + percentage + "]";
             }
         }
         ImageData buttonImage = ImageLoader

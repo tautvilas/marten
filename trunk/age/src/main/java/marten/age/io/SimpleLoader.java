@@ -1,11 +1,10 @@
 package marten.age.io;
 
-public class SimpleLoader extends Thread implements Loader, LoadingState {
-    private String status = "";
-    private int percentage = 0;
-    private boolean estimatable = false;
+public class SimpleLoader implements Loader {
     private boolean loadingFinished = false;
+    private LoadingState loadingState = new LoadingState();
     private Loadable loadable;
+    private Thread loadThread;
 
     public SimpleLoader(Loadable loadable) {
         this.loadable = loadable;
@@ -13,22 +12,18 @@ public class SimpleLoader extends Thread implements Loader, LoadingState {
 
     @Override
     public void load() {
-        this.start();
+        loadThread = new Thread(this);
+        loadThread.start();
     }
 
     @Override
     public String getStatus() {
-        return this.status;
+        return loadingState.status;
     }
 
     @Override
     public int getPercentage() {
-        return this.percentage;
-    }
-
-    @Override
-    public boolean estimatable() {
-        return this.estimatable;
+        return loadingState.percentage;
     }
 
     @Override
@@ -38,22 +33,7 @@ public class SimpleLoader extends Thread implements Loader, LoadingState {
 
     @Override
     public void run() {
-        loadable.load(this);
+        loadable.load(loadingState);
         this.loadingFinished = true;
-    }
-
-    @Override
-    public void setStatus(String status) {
-        this.status = status;
-    }
-
-    @Override
-    public void setPercentage(int percentage) {
-        this.percentage = percentage;
-    }
-
-    @Override
-    public void setEstimatable(boolean estimatable) {
-        this.estimatable = estimatable;
     }
 }
