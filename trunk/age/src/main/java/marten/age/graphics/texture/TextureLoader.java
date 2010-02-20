@@ -5,14 +5,16 @@ import java.nio.ByteOrder;
 import java.nio.IntBuffer;
 
 import marten.age.graphics.image.ImageData;
+import marten.age.graphics.image.ImageTransformations;
 import marten.age.graphics.util.Dimension;
 
 import org.lwjgl.opengl.GL11;
 
 public final class TextureLoader {
     public static Texture loadTexture(ImageData data) {
-        // TODO:zv: not flipping! And why do we need to flip??
-        // data = ImageTransformations.flip(data);
+        // TODO:zv: why do we need to flip?
+        data = ImageTransformations.flip(data);
+
         int textureId;
         int pixelType = data.getType();
 

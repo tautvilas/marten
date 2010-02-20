@@ -2,6 +2,7 @@ package marten.age.graphics.flat;
 
 import marten.age.graphics.BasicSceneGraphChild;
 import marten.age.graphics.image.ImageData;
+import marten.age.graphics.image.ImageTransformations;
 import marten.age.graphics.util.Point;
 
 import org.lwjgl.opengl.GL11;
@@ -11,7 +12,7 @@ public class Sprite extends BasicSceneGraphChild{
     private ImageData data;
 
     public Sprite(ImageData data) {
-        this.data = data;
+        this.data = ImageTransformations.flip(data);
     }
 
     public void setPosition(Point point) {
