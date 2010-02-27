@@ -27,8 +27,7 @@ public class BitmapString extends BasicSceneGraphChild {
     // TODO(zv):check about glCallLists
     private void glPrint(String msg) {
         if (msg != null) {
-            GL11.glPushAttrib(GL11.GL_LIGHTING);
-            GL11.glPushAttrib(GL11.GL_TEXTURE_2D);
+            GL11.glPushAttrib(GL11.GL_ENABLE_BIT);
             GL11.glDisable(GL11.GL_LIGHTING);
             GL11.glEnable(GL11.GL_TEXTURE_2D);
             GL11.glPushMatrix();
@@ -42,7 +41,6 @@ public class BitmapString extends BasicSceneGraphChild {
                 }
             }
             GL11.glPopMatrix();
-            GL11.glPopAttrib();
             GL11.glPopAttrib();
         } else {
             throw new RuntimeException("The value for the message was not set.");
