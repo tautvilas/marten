@@ -12,9 +12,9 @@ public class Hud extends BasicSceneGraphBranch {
         int width = Display.getDisplayMode().getWidth();
         int height = Display.getDisplayMode().getHeight();
 
-        boolean lightingEnabled = GL11.glIsEnabled(GL11.GL_LIGHTING);
-        boolean blendEnabled = GL11.glIsEnabled(GL11.GL_BLEND);
-        boolean depthEnabled = GL11.glIsEnabled(GL11.GL_DEPTH_TEST);
+        GL11.glPushAttrib(GL11.GL_LIGHTING);
+        GL11.glPushAttrib(GL11.GL_BLEND);
+        GL11.glPushAttrib(GL11.GL_DEPTH_TEST);
 
         GL11.glDisable(GL11.GL_LIGHTING);
         GL11.glDisable(GL11.GL_DEPTH_TEST);
@@ -41,11 +41,8 @@ public class Hud extends BasicSceneGraphBranch {
         GL11.glPopMatrix();
         GL11.glMatrixMode(GL11.GL_MODELVIEW);
 
-        if (lightingEnabled)
-            GL11.glEnable(GL11.GL_LIGHTING);
-        if (depthEnabled)
-            GL11.glEnable(GL11.GL_DEPTH_TEST);
-        if (!blendEnabled)
-            GL11.glDisable(GL11.GL_BLEND);
+        GL11.glPopAttrib();
+        GL11.glPopAttrib();
+        GL11.glPopAttrib();
     }
 }

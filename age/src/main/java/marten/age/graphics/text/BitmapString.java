@@ -27,18 +27,10 @@ public class BitmapString extends BasicSceneGraphChild {
     // TODO(zv):check about glCallLists
     private void glPrint(String msg) {
         if (msg != null) {
-            boolean lightingEnabled = false;
-            boolean texture2dEnabled = false;
+            GL11.glPushAttrib(GL11.GL_LIGHTING);
+            GL11.glPushAttrib(GL11.GL_TEXTURE_2D);
+            GL11.glDisable(GL11.GL_LIGHTING);
             GL11.glEnable(GL11.GL_TEXTURE_2D);
-            if (GL11.glIsEnabled(GL11.GL_LIGHTING)) {
-                lightingEnabled = true;
-                GL11.glDisable(GL11.GL_LIGHTING);
-            }
-            if (GL11.glIsEnabled(GL11.GL_TEXTURE_2D)) {
-                texture2dEnabled = true;
-            } else {
-                GL11.glEnable(GL11.GL_TEXTURE_2D);
-            }
             GL11.glPushMatrix();
             GL11.glColor3d(color.r, color.g, color.b);
             for (int i = 0; i < msg.length(); i++) {
@@ -50,12 +42,10 @@ public class BitmapString extends BasicSceneGraphChild {
                 }
             }
             GL11.glPopMatrix();
-            if (lightingEnabled) {
-                GL11.glEnable(GL11.GL_LIGHTING);
-            }
-            if (!texture2dEnabled) {
-                GL11.glDisable(GL11.GL_TEXTURE_2D);
-            }
+            GL11.glPopAttrib();
+            GL11.glPopAttrib();
+        } else {
+            throw new RuntimeException("The value for the message was not set.");
         }
     }
 

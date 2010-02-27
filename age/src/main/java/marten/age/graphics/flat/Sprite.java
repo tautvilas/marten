@@ -21,12 +21,11 @@ public class Sprite extends BasicSceneGraphChild {
 
     @Override
     public void render() {
-        boolean tex2dEnabled = GL11.glIsEnabled(GL11.GL_TEXTURE_2D);
+        GL11.glPushAttrib(GL11.GL_TEXTURE_2D);
         GL11.glDisable(GL11.GL_TEXTURE_2D);
         GL11.glRasterPos2d(position.x, position.y);
         GL11.glDrawPixels((int) data.width, (int) data.height, data.getType(),
                 GL11.GL_UNSIGNED_BYTE, data.getByteBuffer());
-        if (tex2dEnabled)
-            GL11.glEnable(GL11.GL_TEXTURE_2D);
+        GL11.glPopAttrib();
     }
 }
