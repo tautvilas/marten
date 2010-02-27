@@ -3,6 +3,8 @@ package marten.age.graphics.flat;
 import marten.age.graphics.camera.Camera;
 import marten.age.graphics.camera.FrustumCamera;
 import marten.age.graphics.root.SimpleRoot;
+import marten.age.graphics.text.BitmapString;
+import marten.age.graphics.transform.TranslationGroup;
 import marten.age.graphics.util.Point;
 import marten.age.graphics.util.Rotation;
 import marten.age.graphics.util.Vector;
@@ -39,5 +41,12 @@ public class Flatland {
 
     public void removeSprite(Sprite sprite) {
         hud.removeChild(sprite);
+    }
+
+    public void addText(BitmapString text, Point position) {
+        TranslationGroup translation = new TranslationGroup();
+        translation.setCoordinates(position);
+        translation.addChild(text);
+        hud.addChild(translation);
     }
 }

@@ -1,11 +1,16 @@
 package marten.testing.tests.loadingtest;
 
+import java.awt.Font;
+
 import marten.age.core.AgeScene;
 import marten.age.event.AgeEvent;
 import marten.age.graphics.flat.Flatland;
 import marten.age.graphics.flat.Sprite;
 import marten.age.graphics.image.ImageData;
 import marten.age.graphics.image.ImageLoader;
+import marten.age.graphics.text.BitmapFont;
+import marten.age.graphics.text.BitmapString;
+import marten.age.graphics.text.FontCache;
 import marten.age.graphics.util.Point;
 import marten.age.io.SimpleLoader;
 
@@ -23,7 +28,11 @@ public class FirstScene extends AgeScene {
         ImageData buttonImage = ImageLoader
                 .loadImage("data/testloading/button.png");
         Sprite button = new Sprite(buttonImage);
+        BitmapFont font = FontCache.getFont(new Font("Courier New",
+                Font.BOLD, 20));
+        BitmapString info = new BitmapString(font, "Click 'load' to load.");
         this.flatland.addSprite(button, new Point(200, 200));
+        this.flatland.addText(info, new Point(200, 400));
     }
 
     @Override
