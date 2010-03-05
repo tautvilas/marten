@@ -16,7 +16,7 @@ public class SimpleRoot extends Root {
     private Camera activeCamera = null;
 
     public SimpleRoot() {
-        FloatBuffer pos = FloatBuffer.wrap(new float[] { 5.0f, 5.0f, -10.0f,
+        FloatBuffer pos = FloatBuffer.wrap(new float[] { 5.0f, 5.0f, 10.0f,
                 0.0f });
         GL11.glLight(GL11.GL_LIGHT0, GL11.GL_POSITION, pos);
         // XXX(zv): it is strange that org.lwjgl.opengl.glu.Sphere is drawn CW

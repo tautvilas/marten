@@ -14,7 +14,7 @@ public final class TextureLoader {
         data = ImageTransformations.flip(data);
 
         int textureId;
-        int pixelType = data.getType();
+        int pixelType = data.getPixelType();
 
         ByteBuffer byteBuffer = data.getByteBuffer();
 

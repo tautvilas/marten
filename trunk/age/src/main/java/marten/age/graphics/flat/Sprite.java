@@ -24,7 +24,7 @@ public class Sprite extends BasicSceneGraphChild {
         GL11.glPushAttrib(GL11.GL_ENABLE_BIT);
         GL11.glDisable(GL11.GL_TEXTURE_2D);
         GL11.glRasterPos2d(position.x, position.y);
-        GL11.glDrawPixels((int) data.width, (int) data.height, data.getType(),
+        GL11.glDrawPixels((int) data.width, (int) data.height, data.getPixelType(),
                 GL11.GL_UNSIGNED_BYTE, data.getByteBuffer());
         GL11.glPopAttrib();
     }
