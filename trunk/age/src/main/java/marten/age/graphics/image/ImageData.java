@@ -9,9 +9,12 @@ import javax.imageio.ImageIO;
 
 import marten.age.graphics.util.Constants;
 
+import org.apache.log4j.Logger;
 import org.lwjgl.opengl.GL11;
 
 public class ImageData {
+    private static org.apache.log4j.Logger log = Logger
+            .getLogger(ImageData.class);
     private byte[] buffer;
     private ByteBuffer byteBuffer;
     public int height;
@@ -29,37 +32,47 @@ public class ImageData {
         int[] pixels = image.getRGB(0, 0, image.getWidth(), image.getHeight(),
                 null, 0, image.getWidth());
         int type = image.getType();
+        if (type == BufferedImage.TYPE_CUSTOM) {
+            log.warn("BufferedImage type is TYPE_CUSTOM. "
+                    + "Enforncing ABGR type.");
+        }
         byte[] data = new byte[pixels.length << 2];
         for (int i = 0; i < pixels.length; i++) {
             int x = pixels[i];
             int j = i << 2;
-            if (type == BufferedImage.TYPE_4BYTE_ABGR) {
-                data[j + 2] = (byte)(x & 0xff);
-                data[j + 1] = (byte)((x >>> 8) & 0xff);
-                data[j + 0] = (byte)((x >>> 16) & 0xff);
-                data[j + 3] = (byte)((x >>> 24) & 0xff);
+            if (type == BufferedImage.TYPE_CUSTOM) {
+                data[j + 2] = (byte) (x & 0xff);
+                data[j + 1] = (byte) ((x >>> 8) & 0xff);
+                data[j + 0] = (byte) ((x >>> 16) & 0xff);
+                data[j + 3] = (byte) ((x >>> 24) & 0xff);
+            } else if (type == BufferedImage.TYPE_4BYTE_ABGR) {
+                data[j + 2] = (byte) (x & 0xff);
+                data[j + 1] = (byte) ((x >>> 8) & 0xff);
+                data[j + 0] = (byte) ((x >>> 16) & 0xff);
+                data[j + 3] = (byte) ((x >>> 24) & 0xff);
             } else if (type == BufferedImage.TYPE_3BYTE_BGR) {
-                data[j + 2] = (byte)(x & 0xff);
-                data[j + 1] = (byte)((x >>> 8) & 0xff);
-                data[j + 0] = (byte)((x >>> 16) & 0xff);
-                data[j + 3] = (byte)0xff;
+                data[j + 2] = (byte) (x & 0xff);
+                data[j + 1] = (byte) ((x >>> 8) & 0xff);
+                data[j + 0] = (byte) ((x >>> 16) & 0xff);
+                data[j + 3] = (byte) 0xff;
             } else if (type == BufferedImage.TYPE_INT_ARGB) {
-                data[j + 0] = (byte)(x & 0xff);
-                data[j + 1] = (byte)((x >>> 8) & 0xff);
-                data[j + 2] = (byte)((x >>> 16) & 0xff);
-                data[j + 3] = (byte)((x >>> 24) & 0xff);
+                data[j + 0] = (byte) (x & 0xff);
+                data[j + 1] = (byte) ((x >>> 8) & 0xff);
+                data[j + 2] = (byte) ((x >>> 16) & 0xff);
+                data[j + 3] = (byte) ((x >>> 24) & 0xff);
             } else if (type == BufferedImage.TYPE_INT_BGR) {
-                data[j + 2] = (byte)(x & 0xff);
-                data[j + 1] = (byte)((x >>> 8) & 0xff);
-                data[j + 0] = (byte)((x >>> 16) & 0xff);
-                data[j + 3] = (byte)0xff;
+                data[j + 2] = (byte) (x & 0xff);
+                data[j + 1] = (byte) ((x >>> 8) & 0xff);
+                data[j + 0] = (byte) ((x >>> 16) & 0xff);
+                data[j + 3] = (byte) 0xff;
             } else if (type == BufferedImage.TYPE_INT_RGB) {
-                data[j + 0] = (byte)(x & 0xff);
-                data[j + 1] = (byte)((x >>> 8) & 0xff);
-                data[j + 2] = (byte)((x >>> 16) & 0xff);
-                data[j + 3] = (byte)0xff;
+                data[j + 0] = (byte) (x & 0xff);
+                data[j + 1] = (byte) ((x >>> 8) & 0xff);
+                data[j + 2] = (byte) ((x >>> 16) & 0xff);
+                data[j + 3] = (byte) 0xff;
             } else {
-                throw new RuntimeException("Unsupported BufferedImage type: " + type);
+                throw new RuntimeException("Unsupported BufferedImage type: "
+                        + type);
             }
             j += 4;
         }
