@@ -7,6 +7,7 @@ import marten.age.graphics.image.ImageData;
 import marten.age.graphics.image.ImageTransformations;
 import marten.age.graphics.util.Dimension;
 
+import org.lwjgl.BufferUtils;
 import org.lwjgl.opengl.GL11;
 
 public final class TextureLoader {
@@ -18,7 +19,7 @@ public final class TextureLoader {
 
         ByteBuffer byteBuffer = data.getByteBuffer();
 
-        IntBuffer textureIdBuffer = IntBuffer.allocate(1);
+        IntBuffer textureIdBuffer = BufferUtils.createIntBuffer(1);
 
         GL11.glGenTextures(textureIdBuffer);
         textureId = textureIdBuffer.get(0);

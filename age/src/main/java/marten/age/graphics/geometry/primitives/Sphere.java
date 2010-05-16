@@ -7,8 +7,8 @@ public class Sphere implements Geometry {
     private int stacks = 32;
     private int slices = 64;
 
-    private org.lwjgl.opengl.glu.Sphere sphere =
-            new org.lwjgl.opengl.glu.Sphere();
+    private org.lwjgl.util.glu.Sphere sphere =
+            new org.lwjgl.util.glu.Sphere();
 
     public Sphere() {
     }

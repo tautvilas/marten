@@ -6,40 +6,47 @@ import java.nio.IntBuffer;
 import marten.age.graphics.util.Point;
 
 import org.lwjgl.opengl.GL11;
-import org.lwjgl.opengl.glu.GLU;
+import org.lwjgl.util.glu.Project;
 
 public class Projection {
     public static Point unproject(Point windowCoords) {
         float[] position = new float[3];
-        GLU.gluUnProject((float) windowCoords.x, (float) windowCoords.y,
-                (float) windowCoords.z, getModelviewMatrix(),
-                getProjectionMatrix(), getViewport(), position);
+        Project.gluUnProject((float) windowCoords.x,
+                (float) windowCoords.y,
+                (float) windowCoords.z,
+                getModelviewMatrix(),
+                getProjectionMatrix(),
+                getViewport(),
+                FloatBuffer.wrap(position));
         return new Point(position[0], position[1], position[2]);
     }
 
-    private static float[][] getModelviewMatrix() {
+    private static FloatBuffer getModelviewMatrix() {
         float[][] modelViewMatrix = new float[4][4];
         FloatBuffer bufferModelviewMatrix = FloatBuffer.allocate(16);
         bufferModelviewMatrix.clear();
         GL11.glGetFloat(GL11.GL_MODELVIEW_MATRIX, bufferModelviewMatrix);
         bufferToArray(bufferModelviewMatrix, modelViewMatrix);
-        return modelViewMatrix;
+//        return modelViewMatrix;
+        return bufferModelviewMatrix;
     }
 
-    private static float[][] getProjectionMatrix() {
+    private static FloatBuffer getProjectionMatrix() {
         float[][] projectionMatrix = new float[4][4];
         FloatBuffer bufferProjectionMatrix = FloatBuffer.allocate(16);
         bufferProjectionMatrix.clear();
         GL11.glGetFloat(GL11.GL_PROJECTION_MATRIX, bufferProjectionMatrix);
         bufferToArray(bufferProjectionMatrix, projectionMatrix);
-        return projectionMatrix;
+//        return projectionMatrix;
+        return bufferProjectionMatrix;
     }
 
-    private static int[] getViewport() {
+    private static IntBuffer getViewport() {
         IntBuffer bufferViewport = IntBuffer.allocate(16);
         bufferViewport.clear();
         GL11.glGetInteger(GL11.GL_VIEWPORT, bufferViewport);
-        return bufferViewport.array();
+//        return bufferViewport.array();
+        return bufferViewport;
     }
 
     private static void bufferToArray(FloatBuffer fb, float[][] fa) {
