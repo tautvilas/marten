@@ -5,25 +5,31 @@ import java.nio.FloatBuffer;
 import marten.age.graphics.texture.Texture;
 import marten.age.graphics.util.Color;
 
+import org.lwjgl.BufferUtils;
 import org.lwjgl.opengl.GL11;
 
 public class Appearance {
-    private FloatBuffer specular = FloatBuffer.wrap(new float[] { 0.0f, 0.0f,
-            0.0f, 1.0f });
-    private FloatBuffer diffuse = FloatBuffer.wrap(new float[] { 0.8f, 0.8f,
-            0.8f, 1.0f });
-    private FloatBuffer ambient = FloatBuffer.wrap(new float[] { 0.2f, 0.2f,
-            0.2f, 1.0f });
-    private FloatBuffer emission = FloatBuffer.wrap(new float[] { 0.0f, 0.0f,
-            0.0f, 1.0f });
+    private FloatBuffer specular = BufferUtils.createFloatBuffer(4);
+    private FloatBuffer diffuse = BufferUtils.createFloatBuffer(4);
+    private FloatBuffer ambient = BufferUtils.createFloatBuffer(4);
+    private FloatBuffer emission = BufferUtils.createFloatBuffer(4);
     private Color color = new Color(0.0, 0.0, 0.0);
     private float shininess = 0.0f;
     private Texture texture;
 
     public Appearance() {
+        this.specular.put(new float[] { 0.0f, 0.0f, 0.0f, 1.0f });
+        this.specular.rewind();
+        this.diffuse.put(new float[] { 0.8f, 0.8f, 0.8f, 1.0f });
+        this.diffuse.rewind();
+        this.ambient.put(new float[] { 0.2f, 0.2f, 0.2f, 1.0f });
+        this.ambient.rewind();
+        this.emission.put(new float[] { 0.0f, 0.0f, 0.0f, 1.0f });
+        this.emission.rewind();
     }
 
     public Appearance(Texture texture) {
+        this();
         this.texture = texture;
     }
 
@@ -46,7 +52,8 @@ public class Appearance {
             else if (channel > 1.0f)
                 channel = 1.0f;
         }
-        this.specular = FloatBuffer.wrap(buffer);
+        this.specular.put(buffer);
+        this.specular.rewind();
     }
 
     public Color getSpecular() {
@@ -63,7 +70,8 @@ public class Appearance {
             else if (channel > 1.0f)
                 channel = 1.0f;
         }
-        this.diffuse = FloatBuffer.wrap(buffer);
+        this.diffuse.put(buffer);
+        this.diffuse.rewind();
     }
 
     public void setColor(Color newColor) {
@@ -88,7 +96,8 @@ public class Appearance {
             else if (channel > 1.0f)
                 channel = 1.0f;
         }
-        this.ambient = FloatBuffer.wrap(buffer);
+        this.ambient.put(buffer);
+        this.ambient.rewind();
     }
 
     public Color getAmbient() {
@@ -105,7 +114,8 @@ public class Appearance {
             else if (channel > 1.0f)
                 channel = 1.0f;
         }
-        this.emission = FloatBuffer.wrap(buffer);
+        this.emission.put(buffer);
+        this.emission.rewind();
     }
 
     public Color getEmission() {
@@ -135,9 +145,11 @@ public class Appearance {
                 this.shininess);
         GL11.glMaterial(GL11.GL_FRONT_AND_BACK, GL11.GL_AMBIENT, this.ambient);
         GL11.glMaterial(GL11.GL_FRONT_AND_BACK, GL11.GL_DIFFUSE, this.diffuse);
-        GL11.glMaterial(GL11.GL_FRONT_AND_BACK, GL11.GL_EMISSION,
+        GL11
+                .glMaterial(GL11.GL_FRONT_AND_BACK, GL11.GL_EMISSION,
                         this.emission);
-        GL11.glMaterial(GL11.GL_FRONT_AND_BACK, GL11.GL_SPECULAR,
+        GL11
+                .glMaterial(GL11.GL_FRONT_AND_BACK, GL11.GL_SPECULAR,
                         this.specular);
         if (texture != null && texture.getTextureId() != -1) {
             GL11.glEnable(GL11.GL_TEXTURE_2D);

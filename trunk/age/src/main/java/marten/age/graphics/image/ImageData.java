@@ -10,6 +10,7 @@ import javax.imageio.ImageIO;
 import marten.age.graphics.util.Constants;
 
 import org.apache.log4j.Logger;
+import org.lwjgl.BufferUtils;
 import org.lwjgl.opengl.GL11;
 
 public class ImageData {
@@ -79,7 +80,8 @@ public class ImageData {
         this.width = image.getWidth();
         this.height = image.getHeight();
         this.buffer = data;
-        byteBuffer = ByteBuffer.wrap(buffer);
+        byteBuffer = BufferUtils.createByteBuffer(height * width * Constants.RGBA_NUM_BYTES);
+        byteBuffer.put(data);
         byteBuffer.rewind();
         sanityCheck();
     }
@@ -88,7 +90,8 @@ public class ImageData {
         this.width = width;
         this.height = height;
         this.buffer = buffer;
-        byteBuffer = ByteBuffer.wrap(buffer);
+        byteBuffer = BufferUtils.createByteBuffer(height * width * Constants.RGBA_NUM_BYTES);
+        byteBuffer.put(buffer);
         byteBuffer.rewind();
         sanityCheck();
     }
