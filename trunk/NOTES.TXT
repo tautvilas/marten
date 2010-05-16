@@ -5,7 +5,7 @@ zv@tower> cat ~/.m2/settings.xml
 <servers>
     <server>
         <id>diki</id>
-        <username>tautvilas</username>
+        <username>user</username>
     </server>
 </servers>
 </settings>
@@ -16,5 +16,5 @@ zv@tower> mvn deploy:deploy-file -DgroupId=org.lwjgl \
   -Dpackaging=jar \
   -Dfile=lwjgl.jar \
   -DrepositoryId=diki \
-  -Durl=scp://secondary.ktug.lt/home/tautvilas/public_html/diki.ktug.lt/maven2
+  -Durl=scp://serverurl/home/user/maven2
 
