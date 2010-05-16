@@ -1,0 +1,20 @@
+# 2010 05 16 # How to deploy lwjgl dependency to remote maven server
+
+zv@tower> cat ~/.m2/settings.xml
+<settings>
+<servers>
+    <server>
+        <id>diki</id>
+        <username>tautvilas</username>
+    </server>
+</servers>
+</settings>
+
+zv@tower> mvn deploy:deploy-file -DgroupId=org.lwjgl \
+  -DartifactId=lwjgl \
+  -Dversion=2.4.2 \
+  -Dpackaging=jar \
+  -Dfile=lwjgl.jar \
+  -DrepositoryId=diki \
+  -Durl=scp://secondary.ktug.lt/home/tautvilas/public_html/diki.ktug.lt/maven2
+
