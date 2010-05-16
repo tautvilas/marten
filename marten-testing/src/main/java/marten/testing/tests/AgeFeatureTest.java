@@ -2,6 +2,7 @@ package marten.testing.tests;
 
 import java.awt.Font;
 
+import marten.age.control.KeyboardController;
 import marten.age.control.MouseController;
 import marten.age.control.MouseListener;
 import marten.age.core.AgeApp;
@@ -98,6 +99,10 @@ public class AgeFeatureTest extends AgeApp {
             sr.addChild(spaceship.getSceneGraph());
 
             sr.compile();
+
+            this.addController(new MouseController());
+            this.addController(new KeyboardController());
+            this.registerControllable(new TestMouseListener());
         }
 
         @Override
@@ -169,7 +174,6 @@ public class AgeFeatureTest extends AgeApp {
     @Override
     public void configure() {
         /* Set up controllers */
-        this.addController(new MouseController(new TestMouseListener()));
         this.setActiveScene(new Scene());
 
     }

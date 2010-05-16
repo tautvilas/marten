@@ -1,7 +1,5 @@
 package marten.age.core;
 
-import java.util.HashSet;
-
 import marten.age.control.Controller;
 import marten.age.event.AgeEvent;
 import marten.age.event.AgeEventListener;
@@ -15,7 +13,6 @@ import org.lwjgl.opengl.DisplayMode;
 public abstract class AgeApp {
     private static org.apache.log4j.Logger log = Logger.getLogger(AgeApp.class);
 
-    private HashSet<Controller> controllers = new HashSet<Controller>();
     private AgeScene activeScene = null;
 
     // private Resource res = new FileSystemResource(Constants.UNIT_BEANS_PATH);
@@ -65,7 +62,7 @@ public abstract class AgeApp {
             Display.update();
 
             // publish events to controller listeners
-            for (Controller c : controllers) {
+            for (Controller c : activeScene.getControllers()) {
                 c.publishEvents();
             }
 
@@ -83,14 +80,6 @@ public abstract class AgeApp {
     protected void switchScene(AgeScene scene) {
         this.activeScene.cleanup();
         this.setActiveScene(scene);
-    }
-
-    public void addController(Controller c) {
-        controllers.add(c);
-    }
-
-    public void removeController(Controller c) {
-        controllers.remove(c);
     }
 
     private void destroy() {
