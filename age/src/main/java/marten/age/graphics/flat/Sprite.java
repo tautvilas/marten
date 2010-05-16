@@ -19,6 +19,34 @@ public class Sprite extends BasicSceneGraphChild {
         this.position = point;
     }
 
+    public void setX(double x) {
+        this.position.x = x;
+    }
+
+    public void setY(double y) {
+        this.position.y = y;
+    }
+
+    public Point getPosition() {
+        return this.position;
+    }
+
+    public double getX() {
+        return this.position.x;
+    }
+
+    public double getY() {
+        return this.position.y;
+    }
+
+    public int getWidth() {
+        return this.data.width;
+    }
+
+    public int getHeight() {
+        return this.data.height;
+    }
+
     @Override
     public void render() {
         GL11.glPushAttrib(GL11.GL_ENABLE_BIT);
