@@ -121,8 +121,6 @@ public class AgeFeatureTest extends AgeApp {
 
         @Override
         public void render() {
-            // TODO Auto-generated method stub
-
         }
 
     }
@@ -180,7 +178,5 @@ public class AgeFeatureTest extends AgeApp {
 
     @Override
     public void finalize() {
-        // TODO Auto-generated method stub
-
     }
 }

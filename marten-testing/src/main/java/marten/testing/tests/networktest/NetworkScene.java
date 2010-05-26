@@ -13,8 +13,6 @@ public class NetworkScene extends AgeScene {
 
     @Override
     public void compute() {
-        // TODO Auto-generated method stub
-        
     }
 
     @Override
