@@ -81,8 +81,6 @@ public class SpriteTest extends AgeApp {
 
         @Override
         public void cleanup() {
-            // TODO Auto-generated method stub
-
         }
 
         @Override
