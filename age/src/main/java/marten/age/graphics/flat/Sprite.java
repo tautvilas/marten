@@ -15,6 +15,11 @@ public class Sprite extends BasicSceneGraphChild {
         this.data = ImageTransformations.flip(data);
     }
 
+    public Sprite(ImageData data, Point position) {
+        this(data);
+        this.position = position;
+    }
+
     public void setPosition(Point point) {
         this.position = point;
     }
