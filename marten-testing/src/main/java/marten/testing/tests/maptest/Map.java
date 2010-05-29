@@ -17,10 +17,12 @@ public class Map extends AgeScene {
 
         for (int i = 0; i < 10; i++) {
             for (int j = 0; j < 10; j++) {
-                flatland.addSprite(new Sprite(tileImage, new Point(i
-                        * (65 + 32), j * 65)));
-                flatland.addSprite(new Sprite(tileImage), new Point(48 + i
-                        * (65 + 32), 32 + j * 65));
+                Sprite tile = new Sprite(tileImage);
+                tile.setPosition(new Point(i * (65 + 32), j * 65));
+                flatland.addChild(tile);
+                tile = new Sprite(tileImage);
+                tile.setPosition(new Point(48 + i * (65 + 32), 32 + j * 65));
+                flatland.addChild(tile);
             }
         }
     }

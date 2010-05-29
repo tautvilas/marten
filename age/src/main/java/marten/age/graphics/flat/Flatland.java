@@ -1,5 +1,6 @@
 package marten.age.graphics.flat;
 
+import marten.age.graphics.SceneGraphChild;
 import marten.age.graphics.camera.Camera;
 import marten.age.graphics.camera.FrustumCamera;
 import marten.age.graphics.root.SimpleRoot;
@@ -30,16 +31,11 @@ public class Flatland {
         sr.render();
     }
 
-    public void addSprite(Sprite sprite, Point position) {
-        sprite.setPosition(position);
+    public void addChild(SceneGraphChild sprite) {
         hud.addChild(sprite);
     }
 
-    public void addSprite(Sprite sprite) {
-        hud.addChild(sprite);
-    }
-
-    public void removeSprite(Sprite sprite) {
+    public void removeChild(Sprite sprite) {
         hud.removeChild(sprite);
     }
 
