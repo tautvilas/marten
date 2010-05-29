@@ -21,6 +21,6 @@ public final class Terrain {
         if (!(other instanceof Terrain))
             return false;
         Terrain otherTile = (Terrain)other;
-        return otherTile.name.equals(this.name) && otherTile.features.equals(this.features); 
+        return otherTile.name.equals(this.name); 
     }
 }
