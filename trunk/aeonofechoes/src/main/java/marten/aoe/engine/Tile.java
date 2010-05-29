@@ -57,6 +57,8 @@ public final class Tile {
         for (TileListener listener : this.listeners)
             listener.onNameChange(this, oldValue);
     }
+    /** @return <code>true</code> if and only if the object is an instance of tile with exactly the same terrain type, name and coordinates.
+     * @param other the object this tile is being compared to.*/
     public boolean equals(Object other) {
         if (!(other instanceof Tile))
             return false;
