@@ -3,15 +3,24 @@ package marten.aoe.engine;
 import java.util.HashMap;
 import java.util.Map;
 
+/** The database to store all configurations of terrain in the game.
+ * This database does not allow its entries to be removed and attempts at duplicate entries will cause immediate termination.
+ * @author Petras Ražanskas */
 public final class TerrainDatabase {
     private static Map<String, Terrain> database = new HashMap<String, Terrain>();
-    private TerrainDatabase() {} // Prevent TileDatabase objects from being created
-    public static void add(Terrain tile) {
-        if (database.containsKey(tile.name()))
+    private TerrainDatabase() {}
+    /** Adds a new terrain entry to the database.
+     * @param terrain the new type of terrain.
+     * @throws IllegalArgumentException when terrain has a duplicate name but is different from another terrain in database. */
+    public static void add(Terrain terrain) {
+        if (database.containsValue(terrain))
+            return;
+        if (database.containsKey(terrain.name()))
             throw new IllegalArgumentException("Duplicate terrain names in the database");
-        database.put(tile.name(), tile);
+        database.put(terrain.name(), terrain);
     }
-    public static void fetch(String name) {
+    /** @return the complete definition of terrain with the given name */
+    public static void get(String name) {
         database.get(name);
     }
 }
