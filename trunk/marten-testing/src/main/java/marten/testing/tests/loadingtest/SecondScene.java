@@ -42,8 +42,8 @@ public class SecondScene extends AgeScene implements Loadable {
         }
         ImageData buttonImage = ImageLoader
                 .loadImage("data/textures/sprite.png");
-        Sprite button = new Sprite(buttonImage);
-        flatland.addSprite(button, new Point(200, 200));
+        Sprite button = new Sprite(buttonImage, new Point(200, 200));
+        flatland.addChild(button);
     }
 
 }

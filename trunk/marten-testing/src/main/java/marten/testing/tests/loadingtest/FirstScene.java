@@ -37,6 +37,7 @@ public class FirstScene extends AgeScene {
         this.flatland.addText(info, new Point(200, 400));
 
         button = new Button(buttonImage);
+        button.setPosition(new Point(200, 200));
         button.setAction(new Action() {
             @Override
             public void perform() {
@@ -44,11 +45,11 @@ public class FirstScene extends AgeScene {
                     loader.load();
                     loading = true;
                     info.setContent("Loading...................");
-                    flatland.removeSprite(button);
+                    flatland.removeChild(button);
                 }
             }
         });
-        this.flatland.addSprite(button, new Point(200, 200));
+        this.flatland.addChild(button);
         this.addController(new MouseController());
         this.registerControllable(button);
     }
