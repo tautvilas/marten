@@ -1,0 +1,38 @@
+# This file is to be used for testing purposes only.
+
+Terrain:
+    Name = grassland
+    
+Terrain:
+    Name = forest
+    Features:
+        Covered
+        Difficult
+        
+Terrain:
+    Name = water
+    Features:
+        Impassable
+        Water
+        
+Terrain:
+    Name = hill
+    Features:
+        High
+        
+Terrain:
+    Name = fort
+    Features:
+        Fortified
+        
+Terrain:
+    Name = mountain
+    Features:
+        Mountain
+        Difficult
+        
+Terrain:
+    Name = ford
+    Features:
+        Difficult
+        ShallowWater    

@@ -2,6 +2,7 @@ package marten.aoe.engine;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
 
 /** The database to store all configurations of terrain in the game.
  * This database does not allow its entries to be removed and attempts at duplicate entries will cause immediate termination.
@@ -20,7 +21,11 @@ public final class TerrainDatabase {
         database.put(terrain.name(), terrain);
     }
     /** @return the complete definition of terrain with the given name */
-    public static void get(String name) {
-        database.get(name);
+    public static Terrain get(String name) {
+        return database.get(name);
+    }
+    /** @return the complete list of currently defined terrain types */
+    public static Set<String> definedTerrain() {
+        return database.keySet();
     }
 }
