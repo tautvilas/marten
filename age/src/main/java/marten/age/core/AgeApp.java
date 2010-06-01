@@ -84,7 +84,6 @@ public abstract class AgeApp {
 
     private void destroy() {
         Display.destroy();
-        Keyboard.destroy();
         finalize();
         log.info("Exiting normally...");
         System.exit(0);

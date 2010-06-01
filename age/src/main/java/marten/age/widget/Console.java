@@ -1,6 +1,7 @@
 package marten.age.widget;
 
 import java.awt.Font;
+import java.util.ArrayList;
 
 import marten.age.control.KeyboardListener;
 import marten.age.graphics.BasicSceneGraphChild;
@@ -8,16 +9,27 @@ import marten.age.graphics.text.BitmapFont;
 import marten.age.graphics.text.BitmapString;
 import marten.age.graphics.text.FontCache;
 
+import org.apache.log4j.Logger;
+import org.lwjgl.input.Keyboard;
+
 public class Console extends BasicSceneGraphChild implements Widget,
         KeyboardListener {
+    private static org.apache.log4j.Logger log = Logger
+            .getLogger(Console.class);
 
-    private BitmapFont font = FontCache.getFont(new Font("Courier New", Font.BOLD, 12));
-//    private ArrayList<String> log = new ArrayList<String>();
+    private ArrayList<String> consoleLog = new ArrayList<String>();
+
     private String command = "";
     private String prompt = "> ";
+
+    private BitmapFont font = FontCache.getFont(new Font("Courier New",
+            Font.BOLD, 12));
     private BitmapString text = new BitmapString(font, prompt);
 
-    public Console() {
+    private ConsoleListener listener = null;
+
+    public Console(ConsoleListener listener) {
+        this.listener = listener;
     }
 
     @Override
@@ -27,16 +39,25 @@ public class Console extends BasicSceneGraphChild implements Widget,
     }
 
     @Override
-    public void keyDown(int key) {
-        System.out.println(key);
-        if (key >= 32 && key <= 126) {
-            char c = (char)(key + '0');
-            command += c;
+    public void keyDown(int key, char character) {
+        if (character >= 32 && character <= 126) {
+            command += character;
+        } else if (key == Keyboard.KEY_BACK) {
+            if (command.length() != 0) {
+                command = command.substring(0, command.length() - 1);
+            }
+        } else if (key == Keyboard.KEY_RETURN) {
+            consoleLog.add(command);
+            listener.handleCommand(command);
+            command = "";
+        } else {
+            log.warn("Unrecognized key pressed: " + key + " ("
+                    + Keyboard.getKeyName(key) + ")");
         }
     }
 
     @Override
-    public void keyUp(int key) {
+    public void keyUp(int key, char character) {
     }
 
 }
