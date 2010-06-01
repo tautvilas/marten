@@ -14,10 +14,29 @@ public enum TerrainFeatures {
     /** Ground units on a high ground should generally have a defensive and offensive advantage over units below. */
     HIGH,
     /** Ground units on a higher ground should have significant defensive and offensive advantage over units below and some advantage over units on a high ground. This flag overrides <code>HIGH</code>. */
-    HIGHER,
+    MOUNTAIN,
     /** Marine ground units may enter this tile (overrides <code>IMPASSABLE</code> for these units).*/
     SHALLOW_WATER,
     /** Marine ground units may enter this tile (overrides <code>DIFFICULT</code> and <code>IMPASSABLE</code> for these units). */
-    WATER
+    WATER;
     // XXX: could be extended with additional features should necessity arise.
+    public static TerrainFeatures fromString(String string) {
+        if (string.equals("Difficult"))
+            return DIFFICULT;
+        if (string.equals("Impassable"))
+            return IMPASSABLE;
+        if (string.equals("Covered"))
+            return COVERED;
+        if (string.equals("Fortified"))
+            return FORTIFIED;
+        if (string.equals("High"))
+            return HIGH;
+        if (string.equals("Mountain"))
+            return MOUNTAIN;
+        if (string.equals("ShallowWater"))
+            return SHALLOW_WATER;
+        if (string.equals("Water"))
+            return WATER;
+        return null;
+    }
 }
