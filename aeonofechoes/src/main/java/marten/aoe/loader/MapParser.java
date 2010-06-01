@@ -24,8 +24,8 @@ final class MapParser implements Parser {
                             String terrain = "";
                             for (DataTree subsubbranch : subbranch.branches())
                                 if (subsubbranch.value().equals("KEYVALUE")) {
-                                    String key = subbranch.branches().get(0).value();
-                                    String value = subbranch.branches().get(1).value();
+                                    String key = subsubbranch.branches().get(0).value();
+                                    String value = subsubbranch.branches().get(1).value();
                                     if (key.equals("Name"))
                                         name = value;
                                     if (key.equals("X"))
@@ -35,7 +35,7 @@ final class MapParser implements Parser {
                                     if (key.equals("Terrain"))
                                         terrain = value;
                                 }
-                            TileMap.add(new Tile(TerrainDatabase.get(terrain), new TileCoordinate(x, y), name));
+                            new Tile(TerrainDatabase.get(terrain), new TileCoordinate(x, y), name);
                         }
                     }                    
                 }

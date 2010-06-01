@@ -15,5 +15,6 @@ public final class Loader {
     }
     static {
         database.add(new TerrainParser());
+        database.add(new MapParser());
     }
 }
