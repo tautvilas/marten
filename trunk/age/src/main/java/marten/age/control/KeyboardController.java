@@ -1,10 +1,17 @@
 package marten.age.control;
 
+import org.lwjgl.LWJGLException;
 import org.lwjgl.input.Keyboard;
 
 public class KeyboardController extends Controller {
 
     public KeyboardController() {
+        try {
+            Keyboard.create();
+        } catch (LWJGLException e) {
+            throw new RuntimeException(e);
+        }
+        Keyboard.enableRepeatEvents(true);
     }
 
     public KeyboardController(KeyboardListener l) {
@@ -20,9 +27,11 @@ public class KeyboardController extends Controller {
         KeyboardListener listener = (KeyboardListener) l;
         while (Keyboard.next()) {
             if (Keyboard.getEventKeyState()) {
-                listener.keyDown(Keyboard.getEventKey());
+                listener.keyDown(Keyboard.getEventKey(), Keyboard
+                        .getEventCharacter());
             } else {
-                listener.keyUp(Keyboard.getEventKey());
+                listener.keyUp(Keyboard.getEventKey(), Keyboard
+                        .getEventCharacter());
             }
         }
     }
