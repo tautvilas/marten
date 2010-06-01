@@ -62,7 +62,7 @@ public final class TileMap {
     /** @return all tiles which are within the given rectangle. These are actual tiles and not their copies.
      * @param topLeft the top-left corner of the rectangle
      * @param bottomRight the bottom-right corner of the rectangle*/
-    // TODO(carnifex): to make this more flexible, some kind of general way of filtering should be defined later, and this method deprecated.
+    // TODO: to make this more flexible, some kind of general way of filtering should be defined later, and this method deprecated.
     public static Collection<Tile> selectRect(TileCoordinate topLeft, TileCoordinate bottomRight) {
         ArrayList<Tile> selectedTiles = new ArrayList<Tile>();
         for (Tile tile : map.values())

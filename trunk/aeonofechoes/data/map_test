@@ -1,0 +1,175 @@
+# Behold the power of encapsulating map-specific terrain types!
+# This file should be used for testing purposes only.
+
+Terrain:
+    Name = mountain
+    Features:
+        Mountain
+        Difficult
+Terrain:
+    Name = hill
+    Features:
+        High
+Terrain:
+    Name = plain
+Terrain:
+    Name = sea
+    Features:
+        Water
+        Impassable
+        
+Map:
+    Name = test
+    # The mountain in the center of the island
+    Tile:
+        X = 0
+        Y = 0
+        Name = The Dwelling of the Mountain God
+        Terrain = mountain
+    # The ring of hills around the island
+    Tile:
+        X = 0
+        Y = -1
+        Terrain = hill
+    Tile:
+        X = 1
+        Y = 0
+        Terrain = hill
+    Tile:
+        X = 1
+        Y = 1
+        Terrain = hill
+    Tile:
+        X = 0
+        Y = 1
+        Terrain = hill
+    Tile:
+        X = -1
+        Y = 1
+        Terrain = hill
+    Tile:
+        X = -1
+        Y = 0
+        Terrain = hill
+    # The shores of the island
+    Tile:
+        X = 0
+        Y = -2
+        Terrain = plain
+    Tile:
+        X = 1
+        Y = -1
+        Terrain = plain
+    Tile:
+        X = 2
+        Y = -1
+        Terrain = plain
+    Tile:
+        X = 2
+        Y = 0
+        Terrain = plain
+    Tile:
+        X = 2
+        Y = 1
+        Terrain = plain
+    Tile:
+        X = 1
+        Y = 2
+        Terrain = plain
+    Tile:
+        X = 0
+        Y = 2
+        Terrain = plain
+    Tile:
+        X = -1
+        Y = 2
+        Terrain = plain
+    Tile:
+        X = -2
+        Y = 1
+        Terrain = plain
+    Tile:
+        X = -2
+        Y = 0
+        Terrain = plain
+    Tile:
+        X = -2
+        Y = -1
+        Terrain = plain
+    Tile:
+        X = -1
+        Y = -1
+        Terrain = plain
+    # The waters surrounding the island
+    Tile:
+        X = 0
+        Y = -3
+        Terrain = sea
+    Tile:
+        X = 1
+        Y = -2
+        Terrain = sea
+    Tile:
+        X = 2
+        Y = -2
+        Terrain = sea
+    Tile:
+        X = 3
+        Y = -1
+        Terrain = sea
+    Tile:
+        X = 3
+        Y = 0
+        Terrain = sea
+    Tile:
+        X = 3
+        Y = 1
+        Terrain = sea
+    Tile:
+        X = 3
+        Y = 2
+        Terrain = sea
+    Tile:
+        X = 2
+        Y = 2
+        Terrain = sea
+    Tile:
+        X = 1
+        Y = 3
+        Terrain = sea
+    Tile:
+        X = 0
+        Y = 3
+        Terrain = sea
+    Tile:
+        X = -1
+        Y = 3
+        Terrain = sea
+    Tile:
+        X = -2
+        Y = 2
+        Terrain = sea
+    Tile:
+        X = -3
+        Y = 2
+        Terrain = sea
+    Tile:
+        X = -3
+        Y = 1
+        Terrain = sea
+    Tile:
+        X = -3
+        Y = 0
+        Terrain = sea
+    Tile:
+        X = -3
+        Y = -1
+        Terrain = sea
+    Tile:
+        X = -2
+        Y = -2
+        Terrain = sea
+    Tile:
+        X = -1
+        Y = -3
+        Terrain = sea         

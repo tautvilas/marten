@@ -63,10 +63,16 @@ public final class TileCoordinate {
         }        
         return new TileCoordinate(newX, newY);
     }
+    /** @param other The other set of coordinate this is compared to. 
+     * @return <code>true</code> if and only if both sets of coordinates match exactly */
     public boolean equals(Object other) {
-        if (!(other instanceof TileCoordinate))
+        if (other == null || this.hashCode() != other.hashCode() || !(other instanceof TileCoordinate))
             return false;
         TileCoordinate otherCoordinate = (TileCoordinate)other;
         return this.x == otherCoordinate.x && this.y == otherCoordinate.y;
+    }
+    /** @return an identifier which quasi-uniquely describes the contents of the object for hashing purposes */
+    public int hashCode() {
+        return (this.x << 8) ^ this.y;
     }
 }
