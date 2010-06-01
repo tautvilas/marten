@@ -10,6 +10,7 @@ import java.util.HashMap;
 public final class TileMap {
     private static HashMap<TileCoordinate, Tile> map = new HashMap<TileCoordinate, Tile>();
     private static ArrayList<TileMapListener> listeners = new ArrayList<TileMapListener>();
+    private static String name = "";
     private TileMap() {}
     /** Adds a listener to the database, which will track addition and removal of tiles from it.
      * @param listener the listener to track changes in the database */
@@ -46,6 +47,7 @@ public final class TileMap {
             for (TileMapListener listener : listeners)
                 listener.onTileRemoved(tile);
         map.clear();
+        name = "";
     }
     // TODO: to make this more flexible, there should be a way to remove tiles according to some arbitrary filter.
     /** @return the tile at the given location. It is an actual tile and not its copy.
@@ -67,5 +69,13 @@ public final class TileMap {
             if (tile.at().x() > topLeft.x() && tile.at().x() < bottomRight.x() && tile.at().y() > topLeft.y() && tile.at().y() < bottomRight.y())
                 selectedTiles.add(tile);
         return selectedTiles;
+    }
+    /** @return the name of the currently loaded tile map.*/
+    public static String name() {
+        return name;
+    }
+    /** Sets the name for the currently loaded map.*/
+    public static void name(String newName) {
+        name = newName;
     }
 }

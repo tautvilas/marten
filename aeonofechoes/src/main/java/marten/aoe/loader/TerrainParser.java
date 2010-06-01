@@ -6,7 +6,6 @@ import marten.aoe.engine.Terrain;
 import marten.aoe.engine.TerrainFeatures;
 
 final class TerrainParser implements Parser {
-    public TerrainParser() {}
     public void parse (DataTree data) {
         if (data.value().equals("FILE"))
             for (DataTree branch : data.branches())
