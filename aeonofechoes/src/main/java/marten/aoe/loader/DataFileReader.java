@@ -24,20 +24,22 @@ final class DataFileReader {
         file.mark(MAX_LINE_LENGTH);
         line = file.readLine();
         while (line != null && (line.matches(identRegExp) || line.matches(EMPTY_LINE) || line.matches(COMMENT))) {
-            if (line.matches(LIST_START))
-                answer.addBranch(read(file, level + 1, line.split(":")[0].trim()));                
+            if (line.matches(LIST_START)) {
+                answer.addBranch(read(file, level + 1, line.split(":")[0].trim().replace('_', ' ')));
+            }
             else if (line.matches(KEY_VALUE_PAIR)) {
                 String[] pair = line.split("=");
-                String key = pair[0].trim();
+                String key = pair[0].trim().replace('_', ' ');
                 String value = "";
                 for (int index = 1; index < pair.length; index++)
                     value += pair[index];
                 DataTree branch = new DataTree("KEYVALUE");
                 branch.addBranch(new DataTree(key));
-                branch.addBranch(new DataTree(value.trim()));
+                branch.addBranch(new DataTree(value.trim().replace('_', ' ')));
                 answer.addBranch(branch);                
-            } else if (line.matches(SINGLETON))
-                answer.addBranch(new DataTree(line.trim()));                
+            } else if (line.matches(SINGLETON)) {
+                answer.addBranch(new DataTree(line.trim().replace('_', ' ')));
+            }
             file.mark(MAX_LINE_LENGTH);
             line = file.readLine();                       
         }
