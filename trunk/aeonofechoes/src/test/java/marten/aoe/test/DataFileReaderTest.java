@@ -19,7 +19,7 @@ public final class DataFileReaderTest {
     /** Reads "data/terrain_test" file and parses its contents, then tests its correctness 
      * @throws IOException if the an I/O failure occured while reading the test file*/
     @Test public void terrainLoaded () throws IOException {
-        Loader.load("data/terrain_test");
+        Loader.load("data/TerrainTest");
         Set<String> definedTerrain = TerrainDatabase.definedTerrain();
         Assert.assertTrue(definedTerrain.contains("grassland"));
         Assert.assertTrue(definedTerrain.contains("forest"));
@@ -37,7 +37,7 @@ public final class DataFileReaderTest {
     @Test public void mapLoaded () throws IOException {
         // Testing if the whole map is loaded correctly would be rather tedious.
         // Therefore we will test only one of the loaded tiles.
-        Loader.load("data/map_test");
+        Loader.load("data/MapTest");
         Assert.assertTrue(TileMap.name().equals("test"));
         Tile tile = TileMap.get(new TileCoordinate(0, 0));
         Assert.assertTrue(tile.name().equals("The Dwelling of the Mountain God"));
