@@ -24,7 +24,7 @@ Map:
     Tile:
         X = 0
         Y = 0
-        Name = The Dwelling of the Mountain God
+        Name = The_Dwelling_of_the_Mountain_God
         Terrain = mountain
     # The ring of hills around the island
     Tile:
