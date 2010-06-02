@@ -6,24 +6,40 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-/** The database to store all configurations of terrain in the game.
- * This database does not allow its entries to be removed and attempts at duplicate entries will cause immediate termination.
+/** The database to store all configurations of terrain currently used in the game.
  * @author Petras Ražanskas */
 public final class TerrainDatabase {
     private static Map<String, Terrain> database = new HashMap<String, Terrain>();
     private static List<TerrainDatabaseListener> listeners = new ArrayList<TerrainDatabaseListener>();
     private TerrainDatabase() {}
     /** Adds a new terrain entry to the database.
-     * @param terrain the new type of terrain.
-     * @throws IllegalArgumentException when terrain has a duplicate name but is different from another terrain in database. */
+     * If there is a pre-existing terrain type with the same name, it is implicitly removed unless it is equivalent to the terrain type being added.
+     * @param terrain the new type of terrain. */
     public static void add(Terrain terrain) {
         if (database.containsValue(terrain))
             return;
         if (database.containsKey(terrain.name()))
-            throw new IllegalArgumentException("Duplicate terrain names in the database");
+            for (TerrainDatabaseListener listener : listeners)
+                listener.onTerrainRemoved(database.get(terrain.name()));
         database.put(terrain.name(), terrain);
         for (TerrainDatabaseListener listener : listeners)
             listener.onTerrainAdded(terrain);
+    }
+    /** Removes an old terrain entry from the database.
+     * @param terrain the old type of terrain. */
+    public static void remove(Terrain terrain) {
+        if (!database.containsKey(terrain.name()))
+            return;
+        database.remove(terrain.name());
+        for (TerrainDatabaseListener listener : listeners)
+            listener.onTerrainRemoved(terrain);
+    }
+    /** Purges all terrain entries from the database.*/
+    public static void removeAll() {
+        for (Terrain terrain : database.values())
+            for (TerrainDatabaseListener listener : listeners)
+                listener.onTerrainRemoved(terrain);
+        database.clear();
     }
     /** Adds a new listener to track information on database changes 
      * @param listener the new listener to be connected to the database.*/

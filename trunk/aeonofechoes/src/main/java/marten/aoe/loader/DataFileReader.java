@@ -7,9 +7,9 @@ import java.io.IOException;
 final class DataFileReader {
     private DataFileReader() {}
     private static final int MAX_LINE_LENGTH = 1024;
-    private static final String LIST_START = "\\s*\\w+\\s*:\\s*";
-    private static final String KEY_VALUE_PAIR = "\\s*\\w+\\s*=.*";
-    private static final String SINGLETON = "\\s*\\w+\\s*";
+    private static final String LIST_START = "\\s*\\S+\\s*:\\s*";
+    private static final String KEY_VALUE_PAIR = "\\s*\\S+?\\s*=\\s*\\S+\\s*";
+    private static final String SINGLETON = "\\s*\\S+\\s*";
     private static final String EMPTY_LINE = "\\s*";
     private static final String COMMENT = "\\s*#.*";
     

@@ -3,13 +3,16 @@ package marten.aoe.engine;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 /** The full database of tiles currently on the map.
  * This class is a singleton and no instances of it can be created.
  * @author Petras Ražanskas */
 public final class TileMap {
-    private static HashMap<TileCoordinate, Tile> map = new HashMap<TileCoordinate, Tile>();
-    private static ArrayList<TileMapListener> listeners = new ArrayList<TileMapListener>();
+    private static Map<TileCoordinate, Tile> map = new HashMap<TileCoordinate, Tile>();
+    private static List<TileMapListener> listeners = new ArrayList<TileMapListener>();
     private static String name = "";
     private TileMap() {}
     /** Adds a listener to the database, which will track addition and removal of tiles from it.
@@ -27,6 +30,8 @@ public final class TileMap {
      * This method notifies the listeners both of the removal and addition of the tiles involved. 
      * @param tile the new tile to be added into the database. */
     public static void add(Tile tile) {
+        if (map.containsValue(tile))
+            return;
         if (map.containsKey(tile.at()))
             for (TileMapListener listener : listeners)
                 listener.onTileRemoved(map.get(tile.at()));
@@ -37,6 +42,8 @@ public final class TileMap {
     /** Removes a tile from the database. Listeners are notified accordingly.
      * @param the tile to be removed.*/
     public static void remove(Tile tile) {
+        if (!map.containsKey(tile.at()))
+            return;
         map.remove(tile.at());
         for (TileMapListener listener : listeners)
             listener.onTileRemoved(map.get(tile.at()));
@@ -69,6 +76,9 @@ public final class TileMap {
             if (tile.at().x() > topLeft.x() && tile.at().x() < bottomRight.x() && tile.at().y() > topLeft.y() && tile.at().y() < bottomRight.y())
                 selectedTiles.add(tile);
         return selectedTiles;
+    }
+    public static Set<TileCoordinate> definedCoordinates() {
+        return map.keySet();
     }
     /** @return the name of the currently loaded tile map.*/
     public static String name() {
