@@ -1,0 +1,6 @@
+#!/bin/bash
+
+export CLASSPATH=./aeonofechoes/target/classes
+echo "Starting JAVA RMI registry..."
+rmiregistry&
+echo "Started."
