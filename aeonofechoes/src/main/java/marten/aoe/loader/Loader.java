@@ -17,6 +17,8 @@ public final class Loader {
                     TerrainParser.parse(branch);
                 else if (branch.value().equals("Map"))
                     MapParser.parse(branch);
+                else if (branch.value().equals("ClearMap"))
+                    ClearMapParser.parse(branch);
                 else if (branch.value().equals("Import"))
                     ImportParser.parse(branch);
                 else if (branch.value().equals("CleanData")) {

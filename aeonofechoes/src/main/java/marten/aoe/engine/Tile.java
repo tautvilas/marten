@@ -65,4 +65,8 @@ public final class Tile {
         Tile otherTile = (Tile)other;
         return this.at.equals(otherTile.at) && this.name.equals(otherTile.name) && this.terrain.equals(otherTile.terrain);
     }
+    /** @return the hashcode of this instance (the sum of the hashcodes of its publicly accessible fields).*/
+    public int hashCode() {
+        return this.at.hashCode() + this.name.hashCode() + this.terrain.hashCode();
+    }
 }

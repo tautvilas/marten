@@ -32,4 +32,8 @@ public final class Terrain {
         Terrain otherTile = (Terrain)other;
         return otherTile.name.equals(this.name) && otherTile.features.equals(this.features); 
     }
+    /** @return the hashcode of this instance (the sum of hashcodes of the publicly accessible fields)*/
+    public int hashCode() {
+        return this.name.hashCode() + this.features.hashCode();
+    }
 }

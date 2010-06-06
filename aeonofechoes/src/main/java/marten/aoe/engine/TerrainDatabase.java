@@ -26,13 +26,13 @@ public final class TerrainDatabase {
             listener.onTerrainAdded(terrain);
     }
     /** Removes an old terrain entry from the database.
-     * @param terrain the old type of terrain. */
-    public static void remove(Terrain terrain) {
-        if (!database.containsKey(terrain.name()))
+     * @param terrain the name of the terrain being removed. */
+    public static void remove(String terrain) {
+        if (!database.containsKey(terrain))
             return;
-        database.remove(terrain.name());
+        Terrain removedTerrain = database.remove(terrain);
         for (TerrainDatabaseListener listener : listeners)
-            listener.onTerrainRemoved(terrain);
+            listener.onTerrainRemoved(removedTerrain);
     }
     /** Purges all terrain entries from the database.*/
     public static void removeAll() {
