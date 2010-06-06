@@ -40,13 +40,13 @@ public final class TileMap {
             listener.onTileAdded(tile);
     }
     /** Removes a tile from the database. Listeners are notified accordingly.
-     * @param the tile to be removed.*/
-    public static void remove(Tile tile) {
-        if (!map.containsKey(tile.at()))
+     * @param the coordinates of the tile to be removed.*/
+    public static void remove(TileCoordinate tile) {
+        if (!map.containsKey(tile))
             return;
-        map.remove(tile.at());
+        Tile removedTile = map.remove(tile);
         for (TileMapListener listener : listeners)
-            listener.onTileRemoved(map.get(tile.at()));
+            listener.onTileRemoved(removedTile);
     }
     /** Removes all tiles from the database. Listeners are notified accordingly. */
     public static void removeAll() {
