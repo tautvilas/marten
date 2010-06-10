@@ -8,15 +8,17 @@ public final class Tile {
     private Terrain terrain;
     private TileCoordinate at;
     private String name;
+    private boolean access;
     private ArrayList<TileListener> listeners = new ArrayList<TileListener>();
     /** Creates a new tile with defined terrain and name at a given location and registers it on a map.
      * @param terrain The terrain at this tile
      * @param at The location of this tile on a hexagonal grid
      * @param name The name of the location*/
-    public Tile(Terrain terrain, TileCoordinate at, String name) {
+    public Tile(Terrain terrain, TileCoordinate at, String name, boolean access) {
         this.terrain = terrain;
         this.at = at;
         this.name = name;
+        this.access = access;
         TileMap.add(this);
     }
     /** Adds a listener to this tile which will track the changes in the tile
@@ -41,8 +43,12 @@ public final class Tile {
     public String name() {
         return this.name;
     }
+    /** @return <code>true</code> if the tile is accessible for game purposes */
+    public boolean access() {
+        return this.access;
+    }
     /** Changes the current terrain of the location and informs all of the listeners about that
-     * @param the new type of terrain in this location */
+     * @param terrain the new type of terrain in this location */
     public void changeTerrain(Terrain terrain) {
         Terrain oldValue = this.terrain;
         this.terrain = terrain;
@@ -50,12 +56,20 @@ public final class Tile {
             listener.onTerrainChange(this, oldValue);
     }
     /** Changes the name of this location and informs all of the listeners about that
-     * @param the new name of this location */
+     * @param name the new name of this location */
     public void changeName(String name) {
         String oldValue = this.name;
         this.name = name;
         for (TileListener listener : this.listeners)
             listener.onNameChange(this, oldValue);
+    }
+    /** Switches tile accessibility of this location. Useful for creating invisible walls.
+     * @param access the new accessibility mode for this location.*/
+    public void changeAccess(boolean access) {
+        boolean oldValue = this.access;
+        this.access = access;
+        for (TileListener listener : this.listeners)
+            listener.onAccessChange(this, oldValue);
     }
     /** @return <code>true</code> if and only if the object is an instance of tile with exactly the same terrain type, name and coordinates.
      * @param other the object this tile is being compared to.*/
