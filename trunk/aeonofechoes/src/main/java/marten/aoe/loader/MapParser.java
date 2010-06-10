@@ -21,6 +21,7 @@ final class MapParser {
                     int y = 0;
                     String name = "";
                     String terrain = "";
+                    boolean access = true;
                     for (DataTree subsubbranch : subbranch.branches())
                         if (subsubbranch.value().equals("KEYVALUE")) {
                             String key = subsubbranch.branches().get(0).value();
@@ -33,8 +34,11 @@ final class MapParser {
                                 y = Integer.parseInt(value);
                             if (key.equals("Terrain"))
                                 terrain = value;
-                        }
-                    new Tile(TerrainDatabase.get(terrain), new TileCoordinate(x, y), name);
+                        } else if (subsubbranch.value().equals("Inaccessable"))
+                            access = false;
+                        else if (subsubbranch.value().equals("Accessable"))
+                            access = true;
+                    new Tile(TerrainDatabase.get(terrain), new TileCoordinate(x, y), name, access);
                 }
             }                    
         }
