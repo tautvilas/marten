@@ -18,7 +18,15 @@ public enum TerrainFeatures {
     /** Marine ground units may enter this tile (overrides <code>IMPASSABLE</code> for these units).*/
     SHALLOW_WATER,
     /** Marine ground units may enter this tile (overrides <code>DIFFICULT</code> and <code>IMPASSABLE</code> for these units). */
-    WATER;
+    WATER,
+    /** Detrimental defense effects for units with weakness for cold.*/
+    COLD,
+    /** Detrimental defense effects for units with weakness for hotness.*/
+    HOT,
+    /** Air units cannot enter this location */
+    CAVE,
+    /** Detrimental defense effects for units without night-vision.*/
+    DARK;
     // XXX: could be extended with additional features should necessity arise.
     public static TerrainFeatures fromString(String string) {
         if (string.equals("Difficult"))
@@ -37,6 +45,14 @@ public enum TerrainFeatures {
             return SHALLOW_WATER;
         if (string.equals("Water"))
             return WATER;
+        if (string.equals("Cold"))
+            return COLD;
+        if (string.equals("Hot"))
+            return HOT;
+        if (string.equals("Cave"))
+            return CAVE;
+        if (string.equals("Dark"))
+            return DARK;
         return null;
     }
 }
