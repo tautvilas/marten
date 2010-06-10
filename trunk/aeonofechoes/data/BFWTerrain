@@ -1,0 +1,515 @@
+# code "Ai"
+Terrain:
+    Name = ice
+    Features:
+        Difficult
+        Cold
+        
+# code "Aa"
+Terrain:
+    Name = snow
+    Features:
+        Difficult
+        Cold
+
+# code "Ww^Bw|"
+Terrain:
+    Name = shallow_bridge_|
+    Features:
+        ShallowWater
+        
+# code "Ww^Bw/"
+Terrain:
+    Name = shallow_bridge_/
+    Features:
+        ShallowWater
+
+# code "Ww^Bw\"
+Terrain:
+    Name = shallow_bridge_\
+    Features:
+        ShallowWater
+        
+# code "Wo^Bw|"
+Terrain:
+    Name = bridge_|
+    Features:
+        Water
+        
+# code "Wo^Bw/"
+Terrain:
+    Name = bridge_/
+    Features:
+        Water
+
+# code "Wo^Bw\"
+Terrain:
+    Name = bridge_\
+    Features:
+        Water
+        
+# code "Ss^Bw|"
+Terrain:
+    Name = swamp_bridge_|
+        
+# code "Ss^Bw/"
+Terrain:
+    Name = swamp_bridge_/
+
+# code "Ss^Bw\"
+Terrain:
+    Name = swamp_bridge_\
+    
+# code "Ce"
+Terrain:
+    Name = encampment
+    Features:
+        Fortified
+        
+# code "Ch"
+Terrain:
+    Name = castle
+    Features:
+        Fortified
+        
+# code "Cv"
+Terrain:
+    Name = elven_castle
+    Features:
+        Fortified
+        
+# code "Cud"
+Terrain:
+    Name = dwarven_castle
+    Features:
+        Fortified
+        
+# code "Chr"
+Terrain:
+    Name = ruins
+    Features:
+        Covered
+        
+# code "Chw"
+Terrain:
+    Name = sunken_ruins
+    Features:
+        Covered
+        ShallowWater
+        Difficult
+        
+# code "Chs"
+Terrain:
+    Name = swamp_ruins
+    Features:
+        Covered
+        Difficult
+
+# code "Ke"        
+Terrain:
+    Name = encampment_keep
+    Features:
+        Fortified
+        
+# code "Kh"
+Terrain:
+    Name = keep
+    Features:
+        Fortified
+        
+# code "Kv"
+Terrain:
+    Name = elven_keep
+    Features:
+        Fortified
+        
+# code "Kud"
+Terrain:
+    Name = dwarven_keep
+    Features:
+        Fortified
+
+# code "Khr"        
+Terrain:
+    Name = ruined_keep
+    Features:
+        Covered
+        
+# code "Khw"
+Terrain:
+    Name = sunken_keep
+    Features:
+        Covered
+        ShallowWater
+        Difficult
+        
+# code "Khs"
+Terrain:
+    Name = swamp_keep
+    Features:
+        Covered
+        Difficult
+        
+# code "Dd^Dc"
+Terrain:
+    Name = crater
+    Features:
+        Difficult
+        Hot
+        
+# code "Dd"
+Terrain:
+    Name = desert
+    Features:
+        Difficult
+        Hot
+        
+# code "Dd^Dr"
+Terrain:
+    Name = rubble
+    Features:
+        Difficult
+        Covered
+        Hot
+        
+# code "Ds"
+Terrain:
+    Name = sand
+    Features:
+        Difficult
+        
+# code "Dd^Do"
+Terrain:
+    Name = oasis
+    Features:
+        Difficult
+        Covered
+        Hot
+        
+# code "Aa^Fpa"
+Terrain:
+    Name = snowy_forest
+    Features:
+        Difficult
+        Covered
+        Cold
+        
+# code "Gg^Fet"
+Terrain:
+    Name = great_tree
+    Features:
+        Covered
+
+# code "Gs^Fp"
+Terrain:
+    Name = forest
+    Features:
+        Covered
+
+# code "Gs^Ft"
+Terrain:
+    Name = tropical_forest
+    Features:
+        Covered
+        Hot
+        
+# code "Gg"
+Terrain:
+    Name = grassland
+
+# code "Ggf"
+Terrain:
+    Name = meadow
+
+# code "Gs"
+Terrain:
+    Name = savanna
+    Features:
+        Hot
+
+# code "Ha"
+Terrain:
+    Name = snowy_hills
+    Features:
+        High
+        Difficult
+        Cold
+
+# code "Hd"        
+Terrain:
+    Name = dunes
+    Features:
+        High
+        Difficult
+        Hot
+
+# code "Hh"        
+Terrain:
+    Name = hills
+    Features:
+        High
+        
+# code "Md"
+Terrain:
+    Name = desert_mountain
+    Features:
+        Mountain
+        Difficult
+        
+# code "Mm"
+Terrain:
+    Name = mountain
+    Features:
+        Mountain
+        Cold
+        
+# code "Qxu"
+Terrain:
+    Name = chasm
+    Features:
+        Impassable
+        
+# code "Ql"
+Terrain:
+    Name = lava_chasm
+    Features:
+        Impassable
+        Hot
+        
+# code "Qlf"
+Terrain:
+    Name = lava
+    Features:
+        Impassable
+        Hot
+
+# code "Rd"
+Terrain:
+    Name = desert_road
+    Features:
+        Hot
+        
+# code "Re"
+Terrain:
+    Name = dirt
+
+# code "Rr"
+Terrain:
+    Name = road
+
+# code "Rp"
+Terrain:
+    Name = path
+
+# code "Re^Gvs"
+Terrain:
+    Name = farmland
+    
+# code "Gg^Wm"
+Terrain:
+    Name = windmill
+    Features:
+        Fortified
+
+# code "Ss"
+Terrain:
+    Name = swamp
+    Features:
+        Difficult
+        
+# code "Uu"
+Terrain:
+    Name = cave
+    Features:
+        Cave
+        Dark
+        
+# code "Uu^Ii"
+Terrain:
+    Name = lit_cave
+    Features:
+        Cave
+        
+# code "Uu^Uf"
+Terrain:
+    Name = cave_fungi
+    Features:
+        Covered
+        Cave
+        Dark
+        
+# code "Re^Uf"
+Terrain:
+    Name = mushroom_grove
+    Features:
+        Covered
+        
+# code "Uh"
+Terrain:
+    Name = rocky_cave
+    Features:
+        High
+        Cave
+        Dark
+        
+# code "Uh^Ii"
+Terrain:
+    Name = lit_rocky_cave
+    Features:
+        High
+        Cave
+
+# code "Dd^Vda" / "Dd^Vdt"
+Terrain:
+    Name = desert_village
+    Features:
+        Fortified
+        Hot
+        Difficult
+        
+# code "Aa^Vea"
+Terrain:
+    Name = snowy_elven_village
+    Features:
+        Fortified
+        Cold
+        Difficult
+        
+# code "Gg^Vea"
+Terrain:
+    Name = elven_village
+    Features:
+        Fortified
+        
+# code "Aa^Vha"
+Terrain:
+    Name = snowy_village
+    Features:
+        Fortified
+        Cold
+        Difficult
+        
+# code "Hh^Vhh"
+Terrain:
+    Name = hill_village
+    Features:
+        Fortified
+        High
+        
+# code "Ha^Vhha"
+Terrain:
+    Name = snowy_hill_village
+    Features:
+        Fortified
+        High
+        Difficult
+        Cold
+        
+# code "Mm^Vhh"
+Terrain:
+    Name = mountain_village
+    Features:
+        Fortified
+        Mountain
+        Cold
+        
+# code "Gs^Vht"
+Terrain:
+    Name = savanna_village
+    Features:
+        Hot
+        Fortified
+        
+# code "Uu^Vu"
+Terrain:
+    Name = cave_village
+    Features:
+        Fortified
+        Cave
+        Dark
+        
+# code "Uu^Vud"
+Terrain:
+    Name = dwarven_cave_village
+    Features:
+        Fortified
+        Cave
+        Dark
+        
+# code "Ww^Vm"
+Terrain:
+    Name = marine_village
+    Features:
+        Fortified
+        ShallowWater
+        Difficult
+        
+# code "Ss^Vhs"
+Terrain:
+    Name = swamp_village
+    Features:
+        Fortified
+        Difficult
+        
+# code "Ss^Vm"
+Terrain:
+    Name = marine_swamp_village
+    Features:
+        Fortified
+        Difficult
+        
+# code "Wo"
+Terrain:
+    Name = deep_water
+    Features:
+        Water
+        Impassable
+
+# code "Ww"
+Terrain:
+    Name = shallow_water
+    Features:
+        ShallowWater
+        Impassable
+        
+# code "Wwf"
+Terrain:
+    Name = ford
+    Features:
+        ShallowWater
+        Difficult
+        
+# code "Wwr"
+Terrain:
+    Name = reef
+    Features:
+        ShallowWater
+        Impassable
+        
+# code "Mm^Xm"
+Terrain:
+    Name = high_mountains
+    Features:
+        Impassable
+        Cave
+        
+# code "Md^Xm"
+Terrain:
+    Name = high_desert_mountains
+    Features:
+        Impassable
+        Cave
+        
+# code "Xu"
+Terrain:
+    Name = cave_wall
+    Features:
+        Impassable
+        Cave
+        
+# code "Xv"
+Terrain:
+    Name = void
+    Features:
+        Impassable
+        Cave
