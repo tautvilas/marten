@@ -20,9 +20,13 @@ final class ClearMapParser {
                             String value = subsubbranch.branches().get(1).value();
                             if (key.equals("X"))
                                 x = Integer.parseInt(value);
-                            if (key.equals("Y"))
-                                y = Integer.parseInt(value);                            
+                            else if (key.equals("Y"))
+                                y = Integer.parseInt(value);
+                            else
+                                System.err.println("Unknown option: "+key+" = "+value);
                         }
+                        else
+                            System.err.println("Unknown option: "+subsubbranch.value());
                     TileMap.remove(new TileCoordinate(x, y));
                 }
             }                    

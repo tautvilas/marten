@@ -1,0 +1,3009 @@
+CleanData
+Import:
+    data/BFWTerrain
+Map:
+    Name=data/1_Village
+    Tile:
+        X = 1
+        Y = 1
+        Terrain = grassland
+        Inaccessible
+    Tile:
+        X = 2
+        Y = 1
+        Terrain = grassland
+        Inaccessible
+    Tile:
+        X = 3
+        Y = 1
+        Terrain = path
+        Inaccessible
+    Tile:
+        X = 4
+        Y = 1
+        Terrain = grassland
+        Inaccessible
+    Tile:
+        X = 5
+        Y = 1
+        Terrain = grassland
+        Inaccessible
+    Tile:
+        X = 6
+        Y = 1
+        Terrain = grassland
+        Inaccessible
+    Tile:
+        X = 7
+        Y = 1
+        Terrain = grassland
+        Inaccessible
+    Tile:
+        X = 8
+        Y = 1
+        Terrain = grassland
+        Inaccessible
+    Tile:
+        X = 9
+        Y = 1
+        Terrain = grassland
+        Inaccessible
+    Tile:
+        X = 10
+        Y = 1
+        Terrain = grassland
+        Inaccessible
+    Tile:
+        X = 11
+        Y = 1
+        Terrain = grassland
+        Inaccessible
+    Tile:
+        X = 12
+        Y = 1
+        Terrain = grassland
+        Inaccessible
+    Tile:
+        X = 13
+        Y = 1
+        Terrain = grassland
+        Inaccessible
+    Tile:
+        X = 14
+        Y = 1
+        Terrain = grassland
+        Inaccessible
+    Tile:
+        X = 15
+        Y = 1
+        Terrain = grassland
+        Inaccessible
+    Tile:
+        X = 16
+        Y = 1
+        Terrain = grassland
+        Inaccessible
+    Tile:
+        X = 17
+        Y = 1
+        Terrain = grassland
+        Inaccessible
+    Tile:
+        X = 18
+        Y = 1
+        Terrain = cave_wall
+        Inaccessible
+    Tile:
+        X = 19
+        Y = 1
+        Terrain = cave_wall
+        Inaccessible
+    Tile:
+        X = 20
+        Y = 1
+        Terrain = cave
+        Inaccessible
+    Tile:
+        X = 21
+        Y = 1
+        Terrain = cave
+        Inaccessible
+    Tile:
+        X = 22
+        Y = 1
+        Terrain = cave
+        Inaccessible
+    Tile:
+        X = 23
+        Y = 1
+        Terrain = dirt
+        Inaccessible
+    Tile:
+        X = 24
+        Y = 1
+        Terrain = dirt
+        Inaccessible
+    Tile:
+        X = 25
+        Y = 1
+        Terrain = cave
+        Inaccessible
+    Tile:
+        X = 26
+        Y = 1
+        Terrain = cave_wall
+        Inaccessible
+    Tile:
+        X = 27
+        Y = 1
+        Terrain = cave_wall
+        Inaccessible
+    Tile:
+        X = 28
+        Y = 1
+        Terrain = cave
+        Inaccessible
+    Tile:
+        X = 29
+        Y = 1
+        Terrain = cave
+        Inaccessible
+    Tile:
+        X = 1
+        Y = 2
+        Terrain = grassland
+        Inaccessible
+    Tile:
+        X = 2
+        Y = 2
+        Terrain = grassland
+    Tile:
+        X = 3
+        Y = 2
+        Terrain = path
+    Tile:
+        X = 4
+        Y = 2
+        Terrain = grassland
+    Tile:
+        X = 5
+        Y = 2
+        Terrain = grassland
+    Tile:
+        X = 6
+        Y = 2
+        Terrain = grassland
+    Tile:
+        X = 7
+        Y = 2
+        Terrain = grassland
+    Tile:
+        X = 8
+        Y = 2
+        Terrain = grassland
+    Tile:
+        X = 9
+        Y = 2
+        Terrain = grassland
+    Tile:
+        X = 10
+        Y = 2
+        Terrain = grassland
+    Tile:
+        X = 11
+        Y = 2
+        Terrain = grassland
+    Tile:
+        X = 12
+        Y = 2
+        Terrain = grassland
+    Tile:
+        X = 13
+        Y = 2
+        Terrain = grassland
+    Tile:
+        X = 14
+        Y = 2
+        Terrain = grassland
+    Tile:
+        X = 15
+        Y = 2
+        Terrain = grassland
+    Tile:
+        X = 16
+        Y = 2
+        Terrain = grassland
+    Tile:
+        X = 17
+        Y = 2
+        Terrain = grassland
+    Tile:
+        X = 18
+        Y = 2
+        Terrain = grassland
+    Tile:
+        X = 19
+        Y = 2
+        Terrain = grassland
+    Tile:
+        X = 20
+        Y = 2
+        Terrain = cave_wall
+    Tile:
+        X = 21
+        Y = 2
+        Terrain = cave_wall
+    Tile:
+        X = 22
+        Y = 2
+        Terrain = cave
+    Tile:
+        X = 23
+        Y = 2
+        Terrain = cave
+    Tile:
+        X = 24
+        Y = 2
+        Terrain = dirt
+    Tile:
+        X = 25
+        Y = 2
+        Terrain = cave_wall
+    Tile:
+        X = 26
+        Y = 2
+        Terrain = cave
+    Tile:
+        X = 27
+        Y = 2
+        Terrain = cave
+    Tile:
+        X = 28
+        Y = 2
+        Terrain = cave
+    Tile:
+        X = 29
+        Y = 2
+        Terrain = dirt
+        Inaccessible
+    Tile:
+        X = 1
+        Y = 3
+        Terrain = grassland
+        Inaccessible
+    Tile:
+        X = 2
+        Y = 3
+        Terrain = grassland
+    Tile:
+        X = 3
+        Y = 3
+        Terrain = grassland
+    Tile:
+        X = 4
+        Y = 3
+        Terrain = path
+    Tile:
+        X = 5
+        Y = 3
+        Terrain = grassland
+    Tile:
+        X = 6
+        Y = 3
+        Terrain = grassland
+    Tile:
+        X = 7
+        Y = 3
+        Terrain = grassland
+    Tile:
+        X = 8
+        Y = 3
+        Terrain = grassland
+    Tile:
+        X = 9
+        Y = 3
+        Terrain = grassland
+    Tile:
+        X = 10
+        Y = 3
+        Terrain = grassland
+    Tile:
+        X = 11
+        Y = 3
+        Terrain = grassland
+    Tile:
+        X = 12
+        Y = 3
+        Terrain = forest
+    Tile:
+        X = 13
+        Y = 3
+        Terrain = grassland
+    Tile:
+        X = 14
+        Y = 3
+        Terrain = grassland
+    Tile:
+        X = 15
+        Y = 3
+        Terrain = grassland
+    Tile:
+        X = 16
+        Y = 3
+        Terrain = grassland
+    Tile:
+        X = 17
+        Y = 3
+        Terrain = castle
+    Tile:
+        X = 18
+        Y = 3
+        Terrain = keep
+    Tile:
+        X = 19
+        Y = 3
+        Terrain = castle
+    Tile:
+        X = 20
+        Y = 3
+        Terrain = grassland
+    Tile:
+        X = 21
+        Y = 3
+        Terrain = cave
+    Tile:
+        X = 22
+        Y = 3
+        Terrain = cave_wall
+    Tile:
+        X = 23
+        Y = 3
+        Terrain = cave_wall
+    Tile:
+        X = 24
+        Y = 3
+        Terrain = cave_wall
+    Tile:
+        X = 25
+        Y = 3
+        Terrain = cave
+    Tile:
+        X = 26
+        Y = 3
+        Terrain = cave
+    Tile:
+        X = 27
+        Y = 3
+        Terrain = cave_wall
+    Tile:
+        X = 28
+        Y = 3
+        Terrain = dirt
+    Tile:
+        X = 29
+        Y = 3
+        Terrain = cave_wall
+        Inaccessible
+    Tile:
+        X = 1
+        Y = 4
+        Terrain = grassland
+        Inaccessible
+    Tile:
+        X = 2
+        Y = 4
+        Terrain = grassland
+    Tile:
+        X = 3
+        Y = 4
+        Terrain = grassland
+    Tile:
+        X = 4
+        Y = 4
+        Terrain = path
+    Tile:
+        X = 5
+        Y = 4
+        Terrain = grassland
+    Tile:
+        X = 6
+        Y = 4
+        Terrain = grassland
+    Tile:
+        X = 7
+        Y = 4
+        Terrain = grassland
+    Tile:
+        X = 8
+        Y = 4
+        Terrain = elven_village
+    Tile:
+        X = 9
+        Y = 4
+        Terrain = grassland
+    Tile:
+        X = 10
+        Y = 4
+        Terrain = grassland
+    Tile:
+        X = 11
+        Y = 4
+        Terrain = grassland
+    Tile:
+        X = 12
+        Y = 4
+        Terrain = grassland
+    Tile:
+        X = 13
+        Y = 4
+        Terrain = grassland
+    Tile:
+        X = 14
+        Y = 4
+        Terrain = grassland
+    Tile:
+        X = 15
+        Y = 4
+        Terrain = forest
+    Tile:
+        X = 16
+        Y = 4
+        Terrain = grassland
+    Tile:
+        X = 17
+        Y = 4
+        Terrain = grassland
+    Tile:
+        X = 18
+        Y = 4
+        Terrain = castle
+    Tile:
+        X = 19
+        Y = 4
+        Terrain = grassland
+    Tile:
+        X = 20
+        Y = 4
+        Terrain = grassland
+    Tile:
+        X = 21
+        Y = 4
+        Terrain = cave_wall
+    Tile:
+        X = 22
+        Y = 4
+        Terrain = cave
+    Tile:
+        X = 23
+        Y = 4
+        Terrain = cave
+    Tile:
+        X = 24
+        Y = 4
+        Terrain = cave
+    Tile:
+        X = 25
+        Y = 4
+        Terrain = cave_wall
+    Tile:
+        X = 26
+        Y = 4
+        Terrain = cave
+    Tile:
+        X = 27
+        Y = 4
+        Terrain = cave
+    Tile:
+        X = 28
+        Y = 4
+        Terrain = cave_wall
+    Tile:
+        X = 29
+        Y = 4
+        Terrain = grassland
+        Inaccessible
+    Tile:
+        X = 1
+        Y = 5
+        Terrain = grassland
+        Inaccessible
+    Tile:
+        X = 2
+        Y = 5
+        Terrain = grassland
+    Tile:
+        X = 3
+        Y = 5
+        Terrain = grassland
+    Tile:
+        X = 4
+        Y = 5
+        Terrain = path
+    Tile:
+        X = 5
+        Y = 5
+        Terrain = path
+    Tile:
+        X = 6
+        Y = 5
+        Terrain = grassland
+    Tile:
+        X = 7
+        Y = 5
+        Terrain = grassland
+    Tile:
+        X = 8
+        Y = 5
+        Terrain = grassland
+    Tile:
+        X = 9
+        Y = 5
+        Terrain = grassland
+    Tile:
+        X = 10
+        Y = 5
+        Terrain = grassland
+    Tile:
+        X = 11
+        Y = 5
+        Terrain = forest
+    Tile:
+        X = 12
+        Y = 5
+        Terrain = grassland
+    Tile:
+        X = 13
+        Y = 5
+        Terrain = forest
+    Tile:
+        X = 14
+        Y = 5
+        Terrain = forest
+    Tile:
+        X = 15
+        Y = 5
+        Terrain = forest
+    Tile:
+        X = 16
+        Y = 5
+        Terrain = forest
+    Tile:
+        X = 17
+        Y = 5
+        Terrain = grassland
+    Tile:
+        X = 18
+        Y = 5
+        Terrain = grassland
+    Tile:
+        X = 19
+        Y = 5
+        Terrain = grassland
+    Tile:
+        X = 20
+        Y = 5
+        Terrain = grassland
+    Tile:
+        X = 21
+        Y = 5
+        Terrain = grassland
+    Tile:
+        X = 22
+        Y = 5
+        Terrain = cave_wall
+    Tile:
+        X = 23
+        Y = 5
+        Terrain = cave_wall
+    Tile:
+        X = 24
+        Y = 5
+        Terrain = cave_wall
+    Tile:
+        X = 25
+        Y = 5
+        Terrain = cave_wall
+    Tile:
+        X = 26
+        Y = 5
+        Terrain = cave_wall
+    Tile:
+        X = 27
+        Y = 5
+        Terrain = grassland
+    Tile:
+        X = 28
+        Y = 5
+        Terrain = grassland
+    Tile:
+        X = 29
+        Y = 5
+        Terrain = grassland
+        Inaccessible
+    Tile:
+        X = 1
+        Y = 6
+        Terrain = grassland
+        Inaccessible
+    Tile:
+        X = 2
+        Y = 6
+        Terrain = grassland
+    Tile:
+        X = 3
+        Y = 6
+        Terrain = grassland
+    Tile:
+        X = 4
+        Y = 6
+        Terrain = grassland
+    Tile:
+        X = 5
+        Y = 6
+        Terrain = path
+    Tile:
+        X = 6
+        Y = 6
+        Terrain = grassland
+    Tile:
+        X = 7
+        Y = 6
+        Terrain = grassland
+    Tile:
+        X = 8
+        Y = 6
+        Terrain = forest
+    Tile:
+        X = 9
+        Y = 6
+        Terrain = grassland
+    Tile:
+        X = 10
+        Y = 6
+        Terrain = forest
+    Tile:
+        X = 11
+        Y = 6
+        Terrain = forest
+    Tile:
+        X = 12
+        Y = 6
+        Terrain = grassland
+    Tile:
+        X = 13
+        Y = 6
+        Terrain = grassland
+    Tile:
+        X = 14
+        Y = 6
+        Terrain = grassland
+    Tile:
+        X = 15
+        Y = 6
+        Terrain = forest
+    Tile:
+        X = 16
+        Y = 6
+        Terrain = grassland
+    Tile:
+        X = 17
+        Y = 6
+        Terrain = grassland
+    Tile:
+        X = 18
+        Y = 6
+        Terrain = grassland
+    Tile:
+        X = 19
+        Y = 6
+        Terrain = forest
+    Tile:
+        X = 20
+        Y = 6
+        Terrain = grassland
+    Tile:
+        X = 21
+        Y = 6
+        Terrain = grassland
+    Tile:
+        X = 22
+        Y = 6
+        Terrain = grassland
+    Tile:
+        X = 23
+        Y = 6
+        Terrain = grassland
+    Tile:
+        X = 24
+        Y = 6
+        Terrain = grassland
+    Tile:
+        X = 25
+        Y = 6
+        Terrain = grassland
+    Tile:
+        X = 26
+        Y = 6
+        Terrain = cave_wall
+    Tile:
+        X = 27
+        Y = 6
+        Terrain = grassland
+    Tile:
+        X = 28
+        Y = 6
+        Terrain = grassland
+    Tile:
+        X = 29
+        Y = 6
+        Terrain = grassland
+        Inaccessible
+    Tile:
+        X = 1
+        Y = 7
+        Terrain = grassland
+        Inaccessible
+    Tile:
+        X = 2
+        Y = 7
+        Terrain = grassland
+    Tile:
+        X = 3
+        Y = 7
+        Terrain = grassland
+    Tile:
+        X = 4
+        Y = 7
+        Terrain = grassland
+    Tile:
+        X = 5
+        Y = 7
+        Terrain = grassland
+    Tile:
+        X = 6
+        Y = 7
+        Terrain = path
+    Tile:
+        X = 7
+        Y = 7
+        Terrain = path
+    Tile:
+        X = 8
+        Y = 7
+        Terrain = forest
+    Tile:
+        X = 9
+        Y = 7
+        Terrain = forest
+    Tile:
+        X = 10
+        Y = 7
+        Terrain = grassland
+    Tile:
+        X = 11
+        Y = 7
+        Terrain = forest
+    Tile:
+        X = 12
+        Y = 7
+        Terrain = grassland
+    Tile:
+        X = 13
+        Y = 7
+        Terrain = grassland
+    Tile:
+        X = 14
+        Y = 7
+        Terrain = forest
+    Tile:
+        X = 15
+        Y = 7
+        Terrain = grassland
+    Tile:
+        X = 16
+        Y = 7
+        Terrain = grassland
+    Tile:
+        X = 17
+        Y = 7
+        Terrain = grassland
+    Tile:
+        X = 18
+        Y = 7
+        Terrain = forest
+    Tile:
+        X = 19
+        Y = 7
+        Terrain = hills
+    Tile:
+        X = 20
+        Y = 7
+        Terrain = grassland
+    Tile:
+        X = 21
+        Y = 7
+        Terrain = grassland
+    Tile:
+        X = 22
+        Y = 7
+        Terrain = elven_village
+    Tile:
+        X = 23
+        Y = 7
+        Terrain = grassland
+    Tile:
+        X = 24
+        Y = 7
+        Terrain = grassland
+    Tile:
+        X = 25
+        Y = 7
+        Terrain = grassland
+    Tile:
+        X = 26
+        Y = 7
+        Terrain = grassland
+    Tile:
+        X = 27
+        Y = 7
+        Terrain = marine_village
+    Tile:
+        X = 28
+        Y = 7
+        Terrain = grassland
+    Tile:
+        X = 29
+        Y = 7
+        Terrain = shallow_water
+        Inaccessible
+    Tile:
+        X = 1
+        Y = 8
+        Terrain = grassland
+        Inaccessible
+    Tile:
+        X = 2
+        Y = 8
+        Terrain = grassland
+    Tile:
+        X = 3
+        Y = 8
+        Terrain = shallow_water
+    Tile:
+        X = 4
+        Y = 8
+        Terrain = shallow_water
+    Tile:
+        X = 5
+        Y = 8
+        Terrain = shallow_water
+    Tile:
+        X = 6
+        Y = 8
+        Terrain = grassland
+    Tile:
+        X = 7
+        Y = 8
+        Terrain = grassland
+    Tile:
+        X = 8
+        Y = 8
+        Terrain = path
+    Tile:
+        X = 9
+        Y = 8
+        Terrain = path
+    Tile:
+        X = 10
+        Y = 8
+        Terrain = forest
+    Tile:
+        X = 11
+        Y = 8
+        Terrain = grassland
+    Tile:
+        X = 12
+        Y = 8
+        Terrain = grassland
+    Tile:
+        X = 13
+        Y = 8
+        Terrain = grassland
+    Tile:
+        X = 14
+        Y = 8
+        Terrain = forest
+    Tile:
+        X = 15
+        Y = 8
+        Terrain = grassland
+    Tile:
+        X = 16
+        Y = 8
+        Terrain = grassland
+    Tile:
+        X = 17
+        Y = 8
+        Terrain = grassland
+    Tile:
+        X = 18
+        Y = 8
+        Terrain = grassland
+    Tile:
+        X = 19
+        Y = 8
+        Terrain = hills
+    Tile:
+        X = 20
+        Y = 8
+        Terrain = mountain
+    Tile:
+        X = 21
+        Y = 8
+        Terrain = mountain
+    Tile:
+        X = 22
+        Y = 8
+        Terrain = mountain
+    Tile:
+        X = 23
+        Y = 8
+        Terrain = mountain
+    Tile:
+        X = 24
+        Y = 8
+        Terrain = grassland
+    Tile:
+        X = 25
+        Y = 8
+        Terrain = shallow_water
+    Tile:
+        X = 26
+        Y = 8
+        Terrain = shallow_water
+    Tile:
+        X = 27
+        Y = 8
+        Terrain = shallow_water
+    Tile:
+        X = 28
+        Y = 8
+        Terrain = shallow_water
+    Tile:
+        X = 29
+        Y = 8
+        Terrain = grassland
+        Inaccessible
+    Tile:
+        X = 1
+        Y = 9
+        Terrain = shallow_water
+        Inaccessible
+    Tile:
+        X = 2
+        Y = 9
+        Terrain = shallow_water
+    Tile:
+        X = 3
+        Y = 9
+        Terrain = grassland
+    Tile:
+        X = 4
+        Y = 9
+        Terrain = grassland
+    Tile:
+        X = 5
+        Y = 9
+        Terrain = grassland
+    Tile:
+        X = 6
+        Y = 9
+        Terrain = shallow_water
+    Tile:
+        X = 7
+        Y = 9
+        Terrain = shallow_water
+    Tile:
+        X = 8
+        Y = 9
+        Terrain = grassland
+    Tile:
+        X = 9
+        Y = 9
+        Terrain = path
+    Tile:
+        X = 10
+        Y = 9
+        Terrain = forest
+    Tile:
+        X = 11
+        Y = 9
+        Terrain = grassland
+    Tile:
+        X = 12
+        Y = 9
+        Terrain = grassland
+    Tile:
+        X = 13
+        Y = 9
+        Terrain = grassland
+    Tile:
+        X = 14
+        Y = 9
+        Terrain = grassland
+    Tile:
+        X = 15
+        Y = 9
+        Terrain = forest
+    Tile:
+        X = 16
+        Y = 9
+        Terrain = grassland
+    Tile:
+        X = 17
+        Y = 9
+        Terrain = grassland
+    Tile:
+        X = 18
+        Y = 9
+        Terrain = grassland
+    Tile:
+        X = 19
+        Y = 9
+        Terrain = forest
+    Tile:
+        X = 20
+        Y = 9
+        Terrain = mountain
+    Tile:
+        X = 21
+        Y = 9
+        Terrain = forest
+    Tile:
+        X = 22
+        Y = 9
+        Terrain = mountain
+    Tile:
+        X = 23
+        Y = 9
+        Terrain = hills
+    Tile:
+        X = 24
+        Y = 9
+        Terrain = shallow_water
+    Tile:
+        X = 25
+        Y = 9
+        Terrain = grassland
+    Tile:
+        X = 26
+        Y = 9
+        Terrain = forest
+    Tile:
+        X = 27
+        Y = 9
+        Terrain = forest
+    Tile:
+        X = 28
+        Y = 9
+        Terrain = grassland
+    Tile:
+        X = 29
+        Y = 9
+        Terrain = grassland
+        Inaccessible
+    Tile:
+        X = 1
+        Y = 10
+        Terrain = grassland
+        Inaccessible
+    Tile:
+        X = 2
+        Y = 10
+        Terrain = grassland
+    Tile:
+        X = 3
+        Y = 10
+        Terrain = grassland
+    Tile:
+        X = 4
+        Y = 10
+        Terrain = grassland
+    Tile:
+        X = 5
+        Y = 10
+        Terrain = grassland
+    Tile:
+        X = 6
+        Y = 10
+        Terrain = grassland
+    Tile:
+        X = 7
+        Y = 10
+        Terrain = path
+    Tile:
+        X = 8
+        Y = 10
+        Terrain = shallow_bridge_/
+    Tile:
+        X = 9
+        Y = 10
+        Terrain = shallow_water
+    Tile:
+        X = 10
+        Y = 10
+        Terrain = forest
+    Tile:
+        X = 11
+        Y = 10
+        Terrain = shallow_water
+    Tile:
+        X = 12
+        Y = 10
+        Terrain = forest
+    Tile:
+        X = 13
+        Y = 10
+        Terrain = shallow_water
+    Tile:
+        X = 14
+        Y = 10
+        Terrain = grassland
+    Tile:
+        X = 15
+        Y = 10
+        Terrain = shallow_water
+    Tile:
+        X = 16
+        Y = 10
+        Terrain = forest
+    Tile:
+        X = 17
+        Y = 10
+        Terrain = shallow_bridge_|
+    Tile:
+        X = 18
+        Y = 10
+        Terrain = grassland
+    Tile:
+        X = 19
+        Y = 10
+        Terrain = grassland
+    Tile:
+        X = 20
+        Y = 10
+        Terrain = grassland
+    Tile:
+        X = 21
+        Y = 10
+        Terrain = grassland
+    Tile:
+        X = 22
+        Y = 10
+        Terrain = hills
+    Tile:
+        X = 23
+        Y = 10
+        Terrain = grassland
+    Tile:
+        X = 24
+        Y = 10
+        Terrain = shallow_water
+    Tile:
+        X = 25
+        Y = 10
+        Terrain = forest
+    Tile:
+        X = 26
+        Y = 10
+        Terrain = grassland
+    Tile:
+        X = 27
+        Y = 10
+        Terrain = grassland
+    Tile:
+        X = 28
+        Y = 10
+        Terrain = forest
+    Tile:
+        X = 29
+        Y = 10
+        Terrain = grassland
+        Inaccessible
+    Tile:
+        X = 1
+        Y = 11
+        Terrain = path
+        Inaccessible
+    Tile:
+        X = 2
+        Y = 11
+        Terrain = path
+    Tile:
+        X = 3
+        Y = 11
+        Terrain = path
+    Tile:
+        X = 4
+        Y = 11
+        Terrain = grassland
+    Tile:
+        X = 5
+        Y = 11
+        Terrain = path
+    Tile:
+        X = 6
+        Y = 11
+        Terrain = path
+    Tile:
+        X = 7
+        Y = 11
+        Terrain = grassland
+    Tile:
+        X = 8
+        Y = 11
+        Terrain = grassland
+    Tile:
+        X = 9
+        Y = 11
+        Terrain = grassland
+    Tile:
+        X = 10
+        Y = 11
+        Terrain = shallow_water
+    Tile:
+        X = 11
+        Y = 11
+        Terrain = hills
+    Tile:
+        X = 12
+        Y = 11
+        Terrain = shallow_water
+    Tile:
+        X = 13
+        Y = 11
+        Terrain = hills
+    Tile:
+        X = 14
+        Y = 11
+        Terrain = shallow_water
+    Tile:
+        X = 15
+        Y = 11
+        Terrain = forest
+    Tile:
+        X = 16
+        Y = 11
+        Terrain = shallow_water
+    Tile:
+        X = 17
+        Y = 11
+        Terrain = grassland
+    Tile:
+        X = 18
+        Y = 11
+        Terrain = shallow_water
+    Tile:
+        X = 19
+        Y = 11
+        Terrain = shallow_water
+    Tile:
+        X = 20
+        Y = 11
+        Terrain = forest
+    Tile:
+        X = 21
+        Y = 11
+        Terrain = shallow_water
+    Tile:
+        X = 22
+        Y = 11
+        Terrain = forest
+    Tile:
+        X = 23
+        Y = 11
+        Terrain = shallow_bridge_|
+    Tile:
+        X = 24
+        Y = 11
+        Terrain = shallow_water
+    Tile:
+        X = 25
+        Y = 11
+        Terrain = forest
+    Tile:
+        X = 26
+        Y = 11
+        Terrain = forest
+    Tile:
+        X = 27
+        Y = 11
+        Terrain = grassland
+    Tile:
+        X = 28
+        Y = 11
+        Terrain = forest
+    Tile:
+        X = 29
+        Y = 11
+        Terrain = forest
+        Inaccessible
+    Tile:
+        X = 1
+        Y = 12
+        Terrain = grassland
+        Inaccessible
+    Tile:
+        X = 2
+        Y = 12
+        Terrain = grassland
+    Tile:
+        X = 3
+        Y = 12
+        Terrain = grassland
+    Tile:
+        X = 4
+        Y = 12
+        Terrain = path
+    Tile:
+        X = 5
+        Y = 12
+        Terrain = path
+    Tile:
+        X = 6
+        Y = 12
+        Terrain = forest
+    Tile:
+        X = 7
+        Y = 12
+        Terrain = grassland
+    Tile:
+        X = 8
+        Y = 12
+        Terrain = grassland
+    Tile:
+        X = 9
+        Y = 12
+        Terrain = hills
+    Tile:
+        X = 10
+        Y = 12
+        Terrain = hills
+    Tile:
+        X = 11
+        Y = 12
+        Terrain = hills
+    Tile:
+        X = 12
+        Y = 12
+        Terrain = hills
+    Tile:
+        X = 13
+        Y = 12
+        Terrain = mountain
+    Tile:
+        X = 14
+        Y = 12
+        Terrain = hills
+    Tile:
+        X = 15
+        Y = 12
+        Terrain = grassland
+    Tile:
+        X = 16
+        Y = 12
+        Terrain = shallow_bridge_/
+    Tile:
+        X = 17
+        Y = 12
+        Terrain = swamp
+    Tile:
+        X = 18
+        Y = 12
+        Terrain = swamp
+    Tile:
+        X = 19
+        Y = 12
+        Terrain = swamp
+    Tile:
+        X = 20
+        Y = 12
+        Terrain = shallow_water
+    Tile:
+        X = 21
+        Y = 12
+        Terrain = swamp
+    Tile:
+        X = 22
+        Y = 12
+        Terrain = shallow_water
+    Tile:
+        X = 23
+        Y = 12
+        Terrain = grassland
+    Tile:
+        X = 24
+        Y = 12
+        Terrain = grassland
+    Tile:
+        X = 25
+        Y = 12
+        Terrain = grassland
+    Tile:
+        X = 26
+        Y = 12
+        Terrain = forest
+    Tile:
+        X = 27
+        Y = 12
+        Terrain = grassland
+    Tile:
+        X = 28
+        Y = 12
+        Terrain = forest
+    Tile:
+        X = 29
+        Y = 12
+        Terrain = grassland
+        Inaccessible
+    Tile:
+        X = 1
+        Y = 13
+        Terrain = grassland
+        Inaccessible
+    Tile:
+        X = 2
+        Y = 13
+        Terrain = grassland
+    Tile:
+        X = 3
+        Y = 13
+        Terrain = grassland
+    Tile:
+        X = 4
+        Y = 13
+        Terrain = forest
+    Tile:
+        X = 5
+        Y = 13
+        Terrain = forest
+    Tile:
+        X = 6
+        Y = 13
+        Terrain = path
+    Tile:
+        X = 7
+        Y = 13
+        Terrain = path
+    Tile:
+        X = 8
+        Y = 13
+        Terrain = grassland
+    Tile:
+        X = 9
+        Y = 13
+        Terrain = village
+    Tile:
+        X = 10
+        Y = 13
+        Terrain = hills
+    Tile:
+        X = 11
+        Y = 13
+        Terrain = mountain
+    Tile:
+        X = 12
+        Y = 13
+        Terrain = mountain
+    Tile:
+        X = 13
+        Y = 13
+        Terrain = hills
+    Tile:
+        X = 14
+        Y = 13
+        Terrain = mountain
+    Tile:
+        X = 15
+        Y = 13
+        Terrain = grassland
+    Tile:
+        X = 16
+        Y = 13
+        Terrain = shallow_water
+    Tile:
+        X = 17
+        Y = 13
+        Terrain = shallow_water
+    Tile:
+        X = 18
+        Y = 13
+        Terrain = swamp
+    Tile:
+        X = 19
+        Y = 13
+        Terrain = swamp
+    Tile:
+        X = 20
+        Y = 13
+        Terrain = swamp
+    Tile:
+        X = 21
+        Y = 13
+        Terrain = shallow_water
+    Tile:
+        X = 22
+        Y = 13
+        Terrain = shallow_water
+    Tile:
+        X = 23
+        Y = 13
+        Terrain = shallow_water
+    Tile:
+        X = 24
+        Y = 13
+        Terrain = grassland
+    Tile:
+        X = 25
+        Y = 13
+        Terrain = shallow_water
+    Tile:
+        X = 26
+        Y = 13
+        Terrain = grassland
+    Tile:
+        X = 27
+        Y = 13
+        Terrain = grassland
+    Tile:
+        X = 28
+        Y = 13
+        Terrain = forest
+    Tile:
+        X = 29
+        Y = 13
+        Terrain = grassland
+        Inaccessible
+    Tile:
+        X = 1
+        Y = 14
+        Terrain = grassland
+        Inaccessible
+    Tile:
+        X = 2
+        Y = 14
+        Terrain = grassland
+    Tile:
+        X = 3
+        Y = 14
+        Terrain = grassland
+    Tile:
+        X = 4
+        Y = 14
+        Terrain = forest
+    Tile:
+        X = 5
+        Y = 14
+        Terrain = forest
+    Tile:
+        X = 6
+        Y = 14
+        Terrain = grassland
+    Tile:
+        X = 7
+        Y = 14
+        Terrain = grassland
+    Tile:
+        X = 8
+        Y = 14
+        Terrain = path
+    Tile:
+        X = 9
+        Y = 14
+        Terrain = path
+    Tile:
+        X = 10
+        Y = 14
+        Terrain = hills
+    Tile:
+        X = 11
+        Y = 14
+        Terrain = hills
+    Tile:
+        X = 12
+        Y = 14
+        Terrain = mountain
+    Tile:
+        X = 13
+        Y = 14
+        Terrain = hills
+    Tile:
+        X = 14
+        Y = 14
+        Terrain = grassland
+    Tile:
+        X = 15
+        Y = 14
+        Terrain = grassland
+    Tile:
+        X = 16
+        Y = 14
+        Terrain = grassland
+    Tile:
+        X = 17
+        Y = 14
+        Terrain = swamp
+    Tile:
+        X = 18
+        Y = 14
+        Terrain = shallow_water
+    Tile:
+        X = 19
+        Y = 14
+        Terrain = shallow_water
+    Tile:
+        X = 20
+        Y = 14
+        Terrain = shallow_water
+    Tile:
+        X = 21
+        Y = 14
+        Terrain = deep_water
+    Tile:
+        X = 22
+        Y = 14
+        Terrain = deep_water
+    Tile:
+        X = 23
+        Y = 14
+        Terrain = shallow_water
+    Tile:
+        X = 24
+        Y = 14
+        Terrain = shallow_water
+    Tile:
+        X = 25
+        Y = 14
+        Terrain = shallow_water
+    Tile:
+        X = 26
+        Y = 14
+        Terrain = grassland
+    Tile:
+        X = 27
+        Y = 14
+        Terrain = grassland
+    Tile:
+        X = 28
+        Y = 14
+        Terrain = grassland
+    Tile:
+        X = 29
+        Y = 14
+        Terrain = grassland
+        Inaccessible
+    Tile:
+        X = 1
+        Y = 15
+        Terrain = grassland
+        Inaccessible
+    Tile:
+        X = 2
+        Y = 15
+        Terrain = grassland
+    Tile:
+        X = 3
+        Y = 15
+        Terrain = grassland
+    Tile:
+        X = 4
+        Y = 15
+        Terrain = forest
+    Tile:
+        X = 5
+        Y = 15
+        Terrain = grassland
+    Tile:
+        X = 6
+        Y = 15
+        Terrain = forest
+    Tile:
+        X = 7
+        Y = 15
+        Terrain = grassland
+    Tile:
+        X = 8
+        Y = 15
+        Terrain = grassland
+    Tile:
+        X = 9
+        Y = 15
+        Terrain = grassland
+    Tile:
+        X = 10
+        Y = 15
+        Terrain = path
+    Tile:
+        X = 11
+        Y = 15
+        Terrain = path
+    Tile:
+        X = 12
+        Y = 15
+        Terrain = hills
+    Tile:
+        X = 13
+        Y = 15
+        Terrain = grassland
+    Tile:
+        X = 14
+        Y = 15
+        Terrain = village
+    Tile:
+        X = 15
+        Y = 15
+        Terrain = forest
+    Tile:
+        X = 16
+        Y = 15
+        Terrain = forest
+    Tile:
+        X = 17
+        Y = 15
+        Terrain = grassland
+    Tile:
+        X = 18
+        Y = 15
+        Terrain = swamp
+    Tile:
+        X = 19
+        Y = 15
+        Terrain = shallow_water
+    Tile:
+        X = 20
+        Y = 15
+        Terrain = deep_water
+    Tile:
+        X = 21
+        Y = 15
+        Terrain = deep_water
+    Tile:
+        X = 22
+        Y = 15
+        Terrain = deep_water
+    Tile:
+        X = 23
+        Y = 15
+        Terrain = shallow_water
+    Tile:
+        X = 24
+        Y = 15
+        Terrain = shallow_water
+    Tile:
+        X = 25
+        Y = 15
+        Terrain = forest
+    Tile:
+        X = 26
+        Y = 15
+        Terrain = grassland
+    Tile:
+        X = 27
+        Y = 15
+        Terrain = forest
+    Tile:
+        X = 28
+        Y = 15
+        Terrain = grassland
+    Tile:
+        X = 29
+        Y = 15
+        Terrain = grassland
+        Inaccessible
+    Tile:
+        X = 1
+        Y = 16
+        Terrain = grassland
+        Inaccessible
+    Tile:
+        X = 2
+        Y = 16
+        Terrain = grassland
+    Tile:
+        X = 3
+        Y = 16
+        Terrain = grassland
+    Tile:
+        X = 4
+        Y = 16
+        Terrain = grassland
+    Tile:
+        X = 5
+        Y = 16
+        Terrain = farmland
+    Tile:
+        X = 6
+        Y = 16
+        Terrain = farmland
+    Tile:
+        X = 7
+        Y = 16
+        Terrain = farmland
+    Tile:
+        X = 8
+        Y = 16
+        Terrain = forest
+    Tile:
+        X = 9
+        Y = 16
+        Terrain = forest
+    Tile:
+        X = 10
+        Y = 16
+        Terrain = grassland
+    Tile:
+        X = 11
+        Y = 16
+        Terrain = grassland
+    Tile:
+        X = 12
+        Y = 16
+        Terrain = path
+    Tile:
+        X = 13
+        Y = 16
+        Terrain = path
+    Tile:
+        X = 14
+        Y = 16
+        Terrain = grassland
+    Tile:
+        X = 15
+        Y = 16
+        Terrain = grassland
+    Tile:
+        X = 16
+        Y = 16
+        Terrain = grassland
+    Tile:
+        X = 17
+        Y = 16
+        Terrain = forest
+    Tile:
+        X = 18
+        Y = 16
+        Terrain = shallow_water
+    Tile:
+        X = 19
+        Y = 16
+        Terrain = shallow_water
+    Tile:
+        X = 20
+        Y = 16
+        Terrain = deep_water
+    Tile:
+        X = 21
+        Y = 16
+        Terrain = shallow_water
+    Tile:
+        X = 22
+        Y = 16
+        Terrain = shallow_water
+    Tile:
+        X = 23
+        Y = 16
+        Terrain = grassland
+    Tile:
+        X = 24
+        Y = 16
+        Terrain = forest
+    Tile:
+        X = 25
+        Y = 16
+        Terrain = grassland
+    Tile:
+        X = 26
+        Y = 16
+        Terrain = forest
+    Tile:
+        X = 27
+        Y = 16
+        Terrain = forest
+    Tile:
+        X = 28
+        Y = 16
+        Terrain = grassland
+    Tile:
+        X = 29
+        Y = 16
+        Terrain = grassland
+        Inaccessible
+    Tile:
+        X = 1
+        Y = 17
+        Terrain = grassland
+        Inaccessible
+    Tile:
+        X = 2
+        Y = 17
+        Terrain = grassland
+    Tile:
+        X = 3
+        Y = 17
+        Terrain = farmland
+    Tile:
+        X = 4
+        Y = 17
+        Terrain = farmland
+    Tile:
+        X = 5
+        Y = 17
+        Terrain = farmland
+    Tile:
+        X = 6
+        Y = 17
+        Terrain = farmland
+    Tile:
+        X = 7
+        Y = 17
+        Terrain = farmland
+    Tile:
+        X = 8
+        Y = 17
+        Terrain = farmland
+    Tile:
+        X = 9
+        Y = 17
+        Terrain = grassland
+    Tile:
+        X = 10
+        Y = 17
+        Terrain = grassland
+    Tile:
+        X = 11
+        Y = 17
+        Terrain = grassland
+    Tile:
+        X = 12
+        Y = 17
+        Terrain = forest
+    Tile:
+        X = 13
+        Y = 17
+        Terrain = path
+    Tile:
+        X = 14
+        Y = 17
+        Terrain = grassland
+    Tile:
+        X = 15
+        Y = 17
+        Terrain = forest
+    Tile:
+        X = 16
+        Y = 17
+        Terrain = forest
+    Tile:
+        X = 17
+        Y = 17
+        Terrain = forest
+    Tile:
+        X = 18
+        Y = 17
+        Terrain = grassland
+    Tile:
+        X = 19
+        Y = 17
+        Terrain = grassland
+    Tile:
+        X = 20
+        Y = 17
+        Terrain = shallow_water
+    Tile:
+        X = 21
+        Y = 17
+        Terrain = grassland
+    Tile:
+        X = 22
+        Y = 17
+        Terrain = grassland
+    Tile:
+        X = 23
+        Y = 17
+        Terrain = grassland
+    Tile:
+        X = 24
+        Y = 17
+        Terrain = grassland
+    Tile:
+        X = 25
+        Y = 17
+        Terrain = grassland
+    Tile:
+        X = 26
+        Y = 17
+        Terrain = forest
+    Tile:
+        X = 27
+        Y = 17
+        Terrain = forest
+    Tile:
+        X = 28
+        Y = 17
+        Terrain = grassland
+    Tile:
+        X = 29
+        Y = 17
+        Terrain = farmland
+        Inaccessible
+    Tile:
+        X = 1
+        Y = 18
+        Terrain = farmland
+        Inaccessible
+    Tile:
+        X = 2
+        Y = 18
+        Terrain = farmland
+    Tile:
+        X = 3
+        Y = 18
+        Terrain = farmland
+    Tile:
+        X = 4
+        Y = 18
+        Terrain = farmland
+    Tile:
+        X = 5
+        Y = 18
+        Terrain = farmland
+    Tile:
+        X = 6
+        Y = 18
+        Terrain = farmland
+    Tile:
+        X = 7
+        Y = 18
+        Terrain = farmland
+    Tile:
+        X = 8
+        Y = 18
+        Terrain = farmland
+    Tile:
+        X = 9
+        Y = 18
+        Terrain = grassland
+    Tile:
+        X = 10
+        Y = 18
+        Terrain = village
+    Tile:
+        X = 11
+        Y = 18
+        Terrain = grassland
+    Tile:
+        X = 12
+        Y = 18
+        Terrain = grassland
+    Tile:
+        X = 13
+        Y = 18
+        Terrain = path
+    Tile:
+        X = 14
+        Y = 18
+        Terrain = grassland
+    Tile:
+        X = 15
+        Y = 18
+        Terrain = grassland
+    Tile:
+        X = 16
+        Y = 18
+        Terrain = forest
+    Tile:
+        X = 17
+        Y = 18
+        Terrain = grassland
+    Tile:
+        X = 18
+        Y = 18
+        Terrain = grassland
+    Tile:
+        X = 19
+        Y = 18
+        Terrain = grassland
+    Tile:
+        X = 20
+        Y = 18
+        Terrain = grassland
+    Tile:
+        X = 21
+        Y = 18
+        Terrain = grassland
+    Tile:
+        X = 22
+        Y = 18
+        Terrain = grassland
+    Tile:
+        X = 23
+        Y = 18
+        Terrain = grassland
+    Tile:
+        X = 24
+        Y = 18
+        Terrain = grassland
+    Tile:
+        X = 25
+        Y = 18
+        Terrain = forest
+    Tile:
+        X = 26
+        Y = 18
+        Terrain = forest
+    Tile:
+        X = 27
+        Y = 18
+        Terrain = farmland
+    Tile:
+        X = 28
+        Y = 18
+        Terrain = farmland
+    Tile:
+        X = 29
+        Y = 18
+        Terrain = farmland
+        Inaccessible
+    Tile:
+        X = 1
+        Y = 19
+        Terrain = farmland
+        Inaccessible
+    Tile:
+        X = 2
+        Y = 19
+        Terrain = farmland
+    Tile:
+        X = 3
+        Y = 19
+        Terrain = farmland
+    Tile:
+        X = 4
+        Y = 19
+        Terrain = farmland
+    Tile:
+        X = 5
+        Y = 19
+        Terrain = farmland
+    Tile:
+        X = 6
+        Y = 19
+        Terrain = farmland
+    Tile:
+        X = 7
+        Y = 19
+        Terrain = grassland
+    Tile:
+        X = 8
+        Y = 19
+        Terrain = grassland
+    Tile:
+        X = 9
+        Y = 19
+        Terrain = forest
+    Tile:
+        X = 10
+        Y = 19
+        Terrain = forest
+    Tile:
+        X = 11
+        Y = 19
+        Terrain = forest
+    Tile:
+        X = 12
+        Y = 19
+        Terrain = path
+    Tile:
+        X = 13
+        Y = 19
+        Terrain = grassland
+    Tile:
+        X = 14
+        Y = 19
+        Terrain = grassland
+    Tile:
+        X = 15
+        Y = 19
+        Terrain = forest
+    Tile:
+        X = 16
+        Y = 19
+        Terrain = forest
+    Tile:
+        X = 17
+        Y = 19
+        Terrain = grassland
+    Tile:
+        X = 18
+        Y = 19
+        Terrain = grassland
+    Tile:
+        X = 19
+        Y = 19
+        Terrain = forest
+    Tile:
+        X = 20
+        Y = 19
+        Terrain = grassland
+    Tile:
+        X = 21
+        Y = 19
+        Terrain = forest
+    Tile:
+        X = 22
+        Y = 19
+        Terrain = forest
+    Tile:
+        X = 23
+        Y = 19
+        Terrain = forest
+    Tile:
+        X = 24
+        Y = 19
+        Terrain = forest
+    Tile:
+        X = 25
+        Y = 19
+        Terrain = farmland
+    Tile:
+        X = 26
+        Y = 19
+        Terrain = farmland
+    Tile:
+        X = 27
+        Y = 19
+        Terrain = farmland
+    Tile:
+        X = 28
+        Y = 19
+        Terrain = farmland
+    Tile:
+        X = 29
+        Y = 19
+        Terrain = farmland
+        Inaccessible
+    Tile:
+        X = 1
+        Y = 20
+        Terrain = farmland
+        Inaccessible
+    Tile:
+        X = 2
+        Y = 20
+        Terrain = farmland
+    Tile:
+        X = 3
+        Y = 20
+        Terrain = farmland
+    Tile:
+        X = 4
+        Y = 20
+        Terrain = farmland
+    Tile:
+        X = 5
+        Y = 20
+        Terrain = windmill
+    Tile:
+        X = 6
+        Y = 20
+        Terrain = grassland
+    Tile:
+        X = 7
+        Y = 20
+        Terrain = grassland
+    Tile:
+        X = 8
+        Y = 20
+        Terrain = forest
+    Tile:
+        X = 9
+        Y = 20
+        Terrain = forest
+    Tile:
+        X = 10
+        Y = 20
+        Terrain = forest
+    Tile:
+        X = 11
+        Y = 20
+        Terrain = grassland
+    Tile:
+        X = 12
+        Y = 20
+        Terrain = path
+    Tile:
+        X = 13
+        Y = 20
+        Terrain = grassland
+    Tile:
+        X = 14
+        Y = 20
+        Terrain = grassland
+    Tile:
+        X = 15
+        Y = 20
+        Terrain = grassland
+    Tile:
+        X = 16
+        Y = 20
+        Terrain = grassland
+    Tile:
+        X = 17
+        Y = 20
+        Terrain = forest
+    Tile:
+        X = 18
+        Y = 20
+        Terrain = grassland
+    Tile:
+        X = 19
+        Y = 20
+        Terrain = grassland
+    Tile:
+        X = 20
+        Y = 20
+        Terrain = forest
+    Tile:
+        X = 21
+        Y = 20
+        Terrain = grassland
+    Tile:
+        X = 22
+        Y = 20
+        Terrain = grassland
+    Tile:
+        X = 23
+        Y = 20
+        Terrain = farmland
+    Tile:
+        X = 24
+        Y = 20
+        Terrain = farmland
+    Tile:
+        X = 25
+        Y = 20
+        Terrain = farmland
+    Tile:
+        X = 26
+        Y = 20
+        Terrain = farmland
+    Tile:
+        X = 27
+        Y = 20
+        Terrain = farmland
+    Tile:
+        X = 28
+        Y = 20
+        Terrain = farmland
+    Tile:
+        X = 29
+        Y = 20
+        Terrain = farmland
+        Inaccessible
+    Tile:
+        X = 1
+        Y = 21
+        Terrain = farmland
+        Inaccessible
+    Tile:
+        X = 2
+        Y = 21
+        Terrain = farmland
+    Tile:
+        X = 3
+        Y = 21
+        Terrain = forest
+    Tile:
+        X = 4
+        Y = 21
+        Terrain = grassland
+    Tile:
+        X = 5
+        Y = 21
+        Terrain = forest
+    Tile:
+        X = 6
+        Y = 21
+        Terrain = grassland
+    Tile:
+        X = 7
+        Y = 21
+        Terrain = grassland
+    Tile:
+        X = 8
+        Y = 21
+        Terrain = grassland
+    Tile:
+        X = 9
+        Y = 21
+        Terrain = grassland
+    Tile:
+        X = 10
+        Y = 21
+        Terrain = grassland
+    Tile:
+        X = 11
+        Y = 21
+        Terrain = grassland
+    Tile:
+        X = 12
+        Y = 21
+        Terrain = path
+    Tile:
+        X = 13
+        Y = 21
+        Terrain = grassland
+    Tile:
+        X = 14
+        Y = 21
+        Terrain = elven_village
+    Tile:
+        X = 15
+        Y = 21
+        Terrain = grassland
+    Tile:
+        X = 16
+        Y = 21
+        Terrain = grassland
+    Tile:
+        X = 17
+        Y = 21
+        Terrain = grassland
+    Tile:
+        X = 18
+        Y = 21
+        Terrain = grassland
+    Tile:
+        X = 19
+        Y = 21
+        Terrain = elven_village
+    Tile:
+        X = 20
+        Y = 21
+        Terrain = grassland
+    Tile:
+        X = 21
+        Y = 21
+        Terrain = grassland
+    Tile:
+        X = 22
+        Y = 21
+        Terrain = grassland
+    Tile:
+        X = 23
+        Y = 21
+        Terrain = grassland
+    Tile:
+        X = 24
+        Y = 21
+        Terrain = farmland
+    Tile:
+        X = 25
+        Y = 21
+        Terrain = farmland
+    Tile:
+        X = 26
+        Y = 21
+        Terrain = farmland
+    Tile:
+        X = 27
+        Y = 21
+        Terrain = farmland
+    Tile:
+        X = 28
+        Y = 21
+        Terrain = farmland
+    Tile:
+        X = 29
+        Y = 21
+        Terrain = farmland
+        Inaccessible
+    Tile:
+        X = 1
+        Y = 22
+        Terrain = grassland
+        Inaccessible
+    Tile:
+        X = 2
+        Y = 22
+        Terrain = forest
+    Tile:
+        X = 3
+        Y = 22
+        Terrain = forest
+    Tile:
+        X = 4
+        Y = 22
+        Terrain = forest
+    Tile:
+        X = 5
+        Y = 22
+        Terrain = grassland
+    Tile:
+        X = 6
+        Y = 22
+        Terrain = grassland
+    Tile:
+        X = 7
+        Y = 22
+        Terrain = castle
+    Tile:
+        X = 8
+        Y = 22
+        Terrain = castle
+    Tile:
+        X = 9
+        Y = 22
+        Terrain = castle
+    Tile:
+        X = 10
+        Y = 22
+        Terrain = grassland
+    Tile:
+        X = 11
+        Y = 22
+        Terrain = grassland
+    Tile:
+        X = 12
+        Y = 22
+        Terrain = path
+    Tile:
+        X = 13
+        Y = 22
+        Terrain = grassland
+    Tile:
+        X = 14
+        Y = 22
+        Terrain = grassland
+    Tile:
+        X = 15
+        Y = 22
+        Terrain = forest
+    Tile:
+        X = 16
+        Y = 22
+        Terrain = forest
+    Tile:
+        X = 17
+        Y = 22
+        Terrain = grassland
+    Tile:
+        X = 18
+        Y = 22
+        Terrain = grassland
+    Tile:
+        X = 19
+        Y = 22
+        Terrain = farmland
+    Tile:
+        X = 20
+        Y = 22
+        Terrain = farmland
+    Tile:
+        X = 21
+        Y = 22
+        Terrain = farmland
+    Tile:
+        X = 22
+        Y = 22
+        Terrain = grassland
+    Tile:
+        X = 23
+        Y = 22
+        Terrain = grassland
+    Tile:
+        X = 24
+        Y = 22
+        Terrain = grassland
+    Tile:
+        X = 25
+        Y = 22
+        Terrain = grassland
+    Tile:
+        X = 26
+        Y = 22
+        Terrain = farmland
+    Tile:
+        X = 27
+        Y = 22
+        Terrain = farmland
+    Tile:
+        X = 28
+        Y = 22
+        Terrain = farmland
+    Tile:
+        X = 29
+        Y = 22
+        Terrain = grassland
+        Inaccessible
+    Tile:
+        X = 1
+        Y = 23
+        Terrain = grassland
+        Inaccessible
+    Tile:
+        X = 2
+        Y = 23
+        Terrain = grassland
+    Tile:
+        X = 3
+        Y = 23
+        Terrain = grassland
+    Tile:
+        X = 4
+        Y = 23
+        Terrain = grassland
+    Tile:
+        X = 5
+        Y = 23
+        Terrain = grassland
+    Tile:
+        X = 6
+        Y = 23
+        Terrain = grassland
+    Tile:
+        X = 7
+        Y = 23
+        Terrain = castle
+    Tile:
+        X = 8
+        Y = 23
+        Terrain = keep
+    Tile:
+        X = 9
+        Y = 23
+        Terrain = castle
+    Tile:
+        X = 10
+        Y = 23
+        Terrain = grassland
+    Tile:
+        X = 11
+        Y = 23
+        Terrain = grassland
+    Tile:
+        X = 12
+        Y = 23
+        Terrain = path
+    Tile:
+        X = 13
+        Y = 23
+        Terrain = path
+    Tile:
+        X = 14
+        Y = 23
+        Terrain = grassland
+    Tile:
+        X = 15
+        Y = 23
+        Terrain = grassland
+    Tile:
+        X = 16
+        Y = 23
+        Terrain = grassland
+    Tile:
+        X = 17
+        Y = 23
+        Terrain = farmland
+    Tile:
+        X = 18
+        Y = 23
+        Terrain = farmland
+    Tile:
+        X = 19
+        Y = 23
+        Terrain = farmland
+    Tile:
+        X = 20
+        Y = 23
+        Terrain = farmland
+    Tile:
+        X = 21
+        Y = 23
+        Terrain = farmland
+    Tile:
+        X = 22
+        Y = 23
+        Terrain = farmland
+    Tile:
+        X = 23
+        Y = 23
+        Terrain = farmland
+    Tile:
+        X = 24
+        Y = 23
+        Terrain = grassland
+    Tile:
+        X = 25
+        Y = 23
+        Terrain = grassland
+    Tile:
+        X = 26
+        Y = 23
+        Terrain = grassland
+    Tile:
+        X = 27
+        Y = 23
+        Terrain = windmill
+    Tile:
+        X = 28
+        Y = 23
+        Terrain = grassland
+    Tile:
+        X = 29
+        Y = 23
+        Terrain = grassland
+        Inaccessible
+    Tile:
+        X = 1
+        Y = 24
+        Terrain = grassland
+        Inaccessible
+    Tile:
+        X = 2
+        Y = 24
+        Terrain = grassland
+    Tile:
+        X = 3
+        Y = 24
+        Terrain = grassland
+    Tile:
+        X = 4
+        Y = 24
+        Terrain = grassland
+    Tile:
+        X = 5
+        Y = 24
+        Terrain = grassland
+    Tile:
+        X = 6
+        Y = 24
+        Terrain = grassland
+    Tile:
+        X = 7
+        Y = 24
+        Terrain = grassland
+    Tile:
+        X = 8
+        Y = 24
+        Terrain = castle
+    Tile:
+        X = 9
+        Y = 24
+        Terrain = grassland
+    Tile:
+        X = 10
+        Y = 24
+        Terrain = grassland
+    Tile:
+        X = 11
+        Y = 24
+        Terrain = grassland
+    Tile:
+        X = 12
+        Y = 24
+        Terrain = grassland
+    Tile:
+        X = 13
+        Y = 24
+        Terrain = path
+    Tile:
+        X = 14
+        Y = 24
+        Terrain = grassland
+    Tile:
+        X = 15
+        Y = 24
+        Terrain = farmland
+    Tile:
+        X = 16
+        Y = 24
+        Terrain = farmland
+    Tile:
+        X = 17
+        Y = 24
+        Terrain = farmland
+    Tile:
+        X = 18
+        Y = 24
+        Terrain = farmland
+    Tile:
+        X = 19
+        Y = 24
+        Terrain = farmland
+    Tile:
+        X = 20
+        Y = 24
+        Terrain = farmland
+    Tile:
+        X = 21
+        Y = 24
+        Terrain = farmland
+    Tile:
+        X = 22
+        Y = 24
+        Terrain = farmland
+    Tile:
+        X = 23
+        Y = 24
+        Terrain = farmland
+    Tile:
+        X = 24
+        Y = 24
+        Terrain = farmland
+    Tile:
+        X = 25
+        Y = 24
+        Terrain = grassland
+    Tile:
+        X = 26
+        Y = 24
+        Terrain = grassland
+    Tile:
+        X = 27
+        Y = 24
+        Terrain = grassland
+    Tile:
+        X = 28
+        Y = 24
+        Terrain = grassland
+    Tile:
+        X = 29
+        Y = 24
+        Terrain = grassland
+        Inaccessible
+    Tile:
+        X = 1
+        Y = 25
+        Terrain = grassland
+        Inaccessible
+    Tile:
+        X = 2
+        Y = 25
+        Terrain = grassland
+        Inaccessible
+    Tile:
+        X = 3
+        Y = 25
+        Terrain = grassland
+        Inaccessible
+    Tile:
+        X = 4
+        Y = 25
+        Terrain = grassland
+        Inaccessible
+    Tile:
+        X = 5
+        Y = 25
+        Terrain = grassland
+        Inaccessible
+    Tile:
+        X = 6
+        Y = 25
+        Terrain = grassland
+        Inaccessible
+    Tile:
+        X = 7
+        Y = 25
+        Terrain = grassland
+        Inaccessible
+    Tile:
+        X = 8
+        Y = 25
+        Terrain = grassland
+        Inaccessible
+    Tile:
+        X = 9
+        Y = 25
+        Terrain = grassland
+        Inaccessible
+    Tile:
+        X = 10
+        Y = 25
+        Terrain = grassland
+        Inaccessible
+    Tile:
+        X = 11
+        Y = 25
+        Terrain = grassland
+        Inaccessible
+    Tile:
+        X = 12
+        Y = 25
+        Terrain = grassland
+        Inaccessible
+    Tile:
+        X = 13
+        Y = 25
+        Terrain = path
+        Inaccessible
+    Tile:
+        X = 14
+        Y = 25
+        Terrain = farmland
+        Inaccessible
+    Tile:
+        X = 15
+        Y = 25
+        Terrain = farmland
+        Inaccessible
+    Tile:
+        X = 16
+        Y = 25
+        Terrain = farmland
+        Inaccessible
+    Tile:
+        X = 17
+        Y = 25
+        Terrain = farmland
+        Inaccessible
+    Tile:
+        X = 18
+        Y = 25
+        Terrain = farmland
+        Inaccessible
+    Tile:
+        X = 19
+        Y = 25
+        Terrain = farmland
+        Inaccessible
+    Tile:
+        X = 20
+        Y = 25
+        Terrain = farmland
+        Inaccessible
+    Tile:
+        X = 21
+        Y = 25
+        Terrain = farmland
+        Inaccessible
+    Tile:
+        X = 22
+        Y = 25
+        Terrain = farmland
+        Inaccessible
+    Tile:
+        X = 23
+        Y = 25
+        Terrain = grassland
+        Inaccessible
+    Tile:
+        X = 24
+        Y = 25
+        Terrain = grassland
+        Inaccessible
+    Tile:
+        X = 25
+        Y = 25
+        Terrain = grassland
+        Inaccessible
+    Tile:
+        X = 26
+        Y = 25
+        Terrain = grassland
+        Inaccessible
+    Tile:
+        X = 27
+        Y = 25
+        Terrain = grassland
+        Inaccessible
+    Tile:
+        X = 28
+        Y = 25
+        Terrain = grassland
+        Inaccessible
+    Tile:
+        X = 29
+        Y = 25
+        Terrain = grassland
+        Inaccessible
