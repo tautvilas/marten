@@ -28,17 +28,24 @@ final class MapParser {
                             String value = subsubbranch.branches().get(1).value();
                             if (key.equals("Name"))
                                 name = value;
-                            if (key.equals("X"))
+                            else if (key.equals("X"))
                                 x = Integer.parseInt(value);
-                            if (key.equals("Y"))
+                            else if (key.equals("Y"))
                                 y = Integer.parseInt(value);
-                            if (key.equals("Terrain"))
+                            else if (key.equals("Terrain"))
                                 terrain = value;
+                            else
+                                System.err.println("Unknown option: "+key+" = "+value);
                         } else if (subsubbranch.value().equals("Inaccessable"))
                             access = false;
                         else if (subsubbranch.value().equals("Accessable"))
                             access = true;
-                    new Tile(TerrainDatabase.get(terrain), new TileCoordinate(x, y), name, access);
+                        else
+                            System.err.println("Unknown option: "+subsubbranch.value());
+                    if (TerrainDatabase.definedTerrain().contains(terrain))
+                        new Tile(TerrainDatabase.get(terrain), new TileCoordinate(x, y), name, access);
+                    else
+                        System.err.println("Unknown terrain type: "+terrain);
                 }
             }                    
         }

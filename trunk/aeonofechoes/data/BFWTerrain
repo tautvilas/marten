@@ -208,7 +208,7 @@ Terrain:
 
 # code "Gs^Ft"
 Terrain:
-    Name = tropical_forest
+    Name = jungle
     Features:
         Covered
         Hot
@@ -359,11 +359,19 @@ Terrain:
         High
         Cave
 
-# code "Dd^Vda" / "Dd^Vdt"
+# code "Dd^Vda"
 Terrain:
     Name = desert_village
     Features:
         Fortified
+        Hot
+        Difficult
+        
+# code "Dd^Vdt"
+Terrain:
+    Name = desert_tents
+    Features:
+        Covered
         Hot
         Difficult
         
@@ -375,7 +383,7 @@ Terrain:
         Cold
         Difficult
         
-# code "Gg^Vea"
+# code "Gg^Ve"
 Terrain:
     Name = elven_village
     Features:
@@ -388,6 +396,12 @@ Terrain:
         Fortified
         Cold
         Difficult
+        
+# code "Gg^Vh"
+Terrain:
+    Name = village
+    Features:
+        Fortified
         
 # code "Hh^Vhh"
 Terrain:
@@ -430,7 +444,7 @@ Terrain:
         
 # code "Uu^Vud"
 Terrain:
-    Name = dwarven_cave_village
+    Name = dwarven_village
     Features:
         Fortified
         Cave
@@ -488,14 +502,14 @@ Terrain:
         
 # code "Mm^Xm"
 Terrain:
-    Name = high_mountains
+    Name = high_mountain
     Features:
         Impassable
         Cave
         
 # code "Md^Xm"
 Terrain:
-    Name = high_desert_mountains
+    Name = high_desert_mountain
     Features:
         Impassable
         Cave

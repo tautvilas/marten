@@ -24,6 +24,8 @@ public final class Loader {
                 else if (branch.value().equals("CleanData")) {
                     TileMap.removeAll();
                     TerrainDatabase.removeAll();
-                }            
+                }
+                else
+                    System.err.println("Unknown option: "+branch.value());
     }
 }

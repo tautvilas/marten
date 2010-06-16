@@ -88,4 +88,36 @@ public final class TileMap {
     public static void name(String newName) {
         name = newName;
     }
+    /** @return the minimum x coordinate in this map.*/
+    public static int minX() {
+        int minX = Integer.MAX_VALUE;
+        for (TileCoordinate coordinate : map.keySet())
+            if (minX > coordinate.x())
+                minX = coordinate.x();
+        return minX;
+    }
+    /** @return the maximum x coordinate in this map.*/
+    public static int maxX() {
+        int maxX = Integer.MIN_VALUE;
+        for (TileCoordinate coordinate : map.keySet())
+            if (maxX < coordinate.x())
+                maxX = coordinate.x();
+        return maxX;
+    }
+    /** @return the minimum y coordinate in this map.*/
+    public static int minY() {
+        int minY = Integer.MAX_VALUE;
+        for (TileCoordinate coordinate : map.keySet())
+            if (minY > coordinate.y())
+                minY = coordinate.y();
+        return minY;
+    }
+    /** @return the maximum y coordinate in this map.*/
+    public static int maxY() {
+        int maxY = Integer.MIN_VALUE;
+        for (TileCoordinate coordinate : map.keySet())
+            if (maxY < coordinate.y())
+                maxY = coordinate.y();
+        return maxY;
+    }
 }

@@ -46,4 +46,8 @@ public final class DataFileReaderTest {
         Assert.assertTrue(features.contains(TerrainFeatures.DIFFICULT));
         Assert.assertFalse(features.contains(TerrainFeatures.WATER));
     }
+    @Test public void bfwTerrainCorrectness () throws IOException {
+        // Not a test per se. Keep a lookout for console messages for unknown options.
+        Loader.load("data/BFWTerrain");
+    }
 }

@@ -17,12 +17,16 @@ final class TerrainParser {
                     String value = subbranch.branches().get(1).value();
                     if (key.equals("Name"))
                         name = value;
+                    else
+                        System.err.println("Unknown option: "+key+" = "+value);
                 } else if (subbranch.value().equals("Features"))
                     for (DataTree subsubbranch : subbranch.branches()) {
                         TerrainFeatures feature = TerrainFeatures.fromString(subsubbranch.value());
                         if (feature != null)
                             features.add(feature);
                     }
+                else
+                    System.err.println("Unknown option: "+subbranch.value());
             new Terrain(features, name);
         }
     }
