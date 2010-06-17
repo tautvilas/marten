@@ -36,9 +36,9 @@ final class MapParser {
                                 terrain = value;
                             else
                                 System.err.println("Unknown option: "+key+" = "+value);
-                        } else if (subsubbranch.value().equals("Inaccessable"))
+                        } else if (subsubbranch.value().equals("Inaccessible"))
                             access = false;
-                        else if (subsubbranch.value().equals("Accessable"))
+                        else if (subsubbranch.value().equals("Accessible"))
                             access = true;
                         else
                             System.err.println("Unknown option: "+subsubbranch.value());

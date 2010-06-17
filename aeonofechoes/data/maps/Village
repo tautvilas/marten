@@ -1,8 +1,8 @@
 CleanData
 Import:
-    data/BFWTerrain
+    data/terrain/BFWTerrain
 Map:
-    Name=data/1_Village
+    Name=1_Village
     Tile:
         X = 1
         Y = 1

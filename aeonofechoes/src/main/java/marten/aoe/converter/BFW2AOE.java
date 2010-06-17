@@ -46,8 +46,9 @@ public final class BFW2AOE {
         bfwFile.readLine();
         bfwFile.readLine();
         // Create AOE file header
-        aoeFile.write("CleanData\nImport:\n    data/BFWTerrain\nMap:\n");
-        aoeFile.write("    Name="+args[0].split("\\.")[0].replace(" ", "_")+"\n");
+        aoeFile.write("CleanData\nImport:\n    data/terrain/BFWTerrain\nMap:\n");
+        String[] mapPath = args[0].split("/"); 
+        aoeFile.write("    Name="+mapPath[mapPath.length-1].split("\\.")[0].replace(" ", "_")+"\n");
         // Tile matrix parsing
         while (row <= mapHeight) {
             currentLine = bfwFile.readLine().split(",\\s*\\d*");
