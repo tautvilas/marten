@@ -1,0 +1,235 @@
+### A
+Terrain:
+    Name = arctic
+    Features:
+        HardToWalk
+        Cold
+        Unswimmable
+
+### WB        
+Terrain:
+    Name = bridge        
+        
+### SB
+Terrain:
+    Name = swamp_bridge
+    Features:
+        HardToSwim
+        
+### C
+Terrain:
+    Name = city
+    Features:
+        Fortified
+        Unswimmable
+        City
+        
+### K
+Terrain:
+    Name = base
+    Features:
+        Fortified
+        Unswimmable
+        Base
+        
+### D
+Terrain:
+    Name = desert
+    Features:
+        HardToWalk
+        Unswimmable
+        Hot
+        
+### AF
+Terrain:
+    Name = arctic_forest
+    Features:
+        HardToWalk
+        Unswimmable
+        Covered
+        Cold
+        
+### GF
+Terrain:
+    Name = forest
+    Features:
+        Covered
+        Unswimmable
+        
+### G
+Terrain:
+    Name = grass
+    Features:
+        Unswimmable
+        
+### H
+Terrain:
+    Name = hill
+    Features:
+        Unswimmable
+        High
+
+### HF
+Terrain:
+    Name = hilly_forest
+    Features:
+        Unswimmable
+        High
+        Covered        
+### M
+Terrain:
+    Name = mountain
+    Features:
+        HardToWalk
+        Unswimmable
+        HardToFly
+        VeryHigh
+        
+### Q
+Terrain:
+    Name = lava
+    Features:
+        Unwalkable
+        Unswimmable
+        HardToFly
+        
+### R
+Terrain:
+    Name = road
+    Features:
+        Unswimmable
+        Road
+        
+### GW
+Terrain:
+    Name = structure
+    Features:
+        Unswimmable
+        Fortified
+        
+### RG
+Terrain:
+    Name = farmland
+    Features:
+        Unswimmable
+        HardToWalk
+        Covered
+
+### S
+Terrain:
+    Name = swamp
+    Features:
+        HardToSwim
+        HardToWalk
+        
+### U
+Terrain:
+    Name = cave
+    Features:
+        Dark
+        Unswimmable
+        Unflyable
+        
+### RU
+Terrain:
+    Name = rubble
+    Features:
+        Unswimmable
+        HardToWalk
+        Covered
+        
+### DV
+Terrain:
+    Name = desert_village
+    Features:
+        Unswimmable
+        Fortified
+        Hot
+        Village
+        
+### AV
+Terrain:
+    Name = arctic_village
+    Features:
+        Unswimmable
+        Fortified
+        Cold
+        Village
+        
+### GV
+Terrain:
+    Name = village
+    Features:
+        Unswimmable
+        Fortified
+        Village
+        
+### HV
+Terrain:
+    Name = hill_village
+    Features:
+        High
+        Unswimmable
+        Fortified
+        Village
+        
+### MV
+Terrain:
+    Name = mountain_village
+    Features:
+        VeryHigh
+        Unswimmable
+        HardToWalk
+        HardToFly
+        Fortified
+        Village
+        
+### UV
+Terrain:
+    Name = cave_village
+    Features:
+        Unswimmable
+        Unflyable
+        Fortified
+        Dark
+        Village
+        
+### WV
+Terrain:
+    Name = water_village
+    Features:
+        HardToSwim
+        Unwalkable
+        Fortified
+        Village
+        
+### SV
+Terrain:
+    Name = swamp_village
+    Features:
+        HardToSwim
+        HardToWalk
+        Fortified
+        Village
+        
+### W
+Terrain:
+    Name = water
+    Features:
+        Unwalkable
+
+### MX
+Terrain:
+    Name = high_mountain
+    Features:
+        Unwalkable
+        Unswimmable
+        Unflyable
+        
+### X
+Terrain:
+    Name = void
+    Features:
+        Unwalkable
+        Unswimmable
+        Unflyable

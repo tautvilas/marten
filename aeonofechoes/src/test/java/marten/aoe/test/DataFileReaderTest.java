@@ -30,8 +30,7 @@ public final class DataFileReaderTest {
         Assert.assertTrue(definedTerrain.contains("fort"));
         Assert.assertFalse(definedTerrain.contains("lava"));
         Set<TerrainFeatures> sampleFeatures = TerrainDatabase.get("water").features();
-        Assert.assertTrue(sampleFeatures.contains(TerrainFeatures.IMPASSABLE));
-        Assert.assertTrue(sampleFeatures.contains(TerrainFeatures.WATER));
+        Assert.assertTrue(sampleFeatures.contains(TerrainFeatures.UNWALKABLE));        
         Assert.assertFalse(sampleFeatures.contains(TerrainFeatures.FORTIFIED));
     }
     @Test public void mapLoaded () throws IOException {
@@ -42,13 +41,13 @@ public final class DataFileReaderTest {
         Tile tile = TileMap.get(new TileCoordinate(0, 0));
         Assert.assertTrue(tile.name().equals("The Dwelling of the Mountain God"));
         Set<TerrainFeatures> features = tile.terrain().features();
-        Assert.assertTrue(features.contains(TerrainFeatures.MOUNTAIN));
-        Assert.assertTrue(features.contains(TerrainFeatures.DIFFICULT));
-        Assert.assertFalse(features.contains(TerrainFeatures.WATER));
+        Assert.assertTrue(features.contains(TerrainFeatures.VERY_HIGH));
+        Assert.assertTrue(features.contains(TerrainFeatures.HARD_TO_WALK));
+        Assert.assertFalse(features.contains(TerrainFeatures.HARD_TO_SWIM));
     }
     @Test public void bfwTerrainCorrectness () throws IOException {
         // Not a test per se. Keep a lookout for console messages for unknown options.
-        Loader.load("data/terrain/BFWTerrain");
+        Loader.load("data/terrain/BasicTerrain");
     }
     @Test public void bfw2aoeMapConverterCorrectness () throws IOException {
         // Ditto

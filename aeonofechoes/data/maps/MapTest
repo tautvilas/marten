@@ -4,19 +4,22 @@
 Terrain:
     Name = mountain
     Features:
-        Mountain
-        Difficult
+        VeryHigh
+        Unswimmable
+        HardToWalk
 Terrain:
     Name = hill
     Features:
         High
+        Unswimmable
 Terrain:
     Name = plain
+    Features:
+        Unswimmable
 Terrain:
     Name = sea
     Features:
-        Water
-        Impassable
+        Unwalkable
         
 Map:
     Name = test
