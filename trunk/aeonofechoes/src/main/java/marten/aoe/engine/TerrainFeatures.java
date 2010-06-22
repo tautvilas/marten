@@ -4,55 +4,79 @@ package marten.aoe.engine;
  * @author Petras Ražanskas */
 public enum TerrainFeatures {
     /** Ground units should slow down */
-    DIFFICULT,
-    /** Ground units should not be able to enter this location. This flag overrides <code>DIFFICULT</code>. */
-    IMPASSABLE,
+    HARD_TO_WALK,
+    /** Ground units should not be able to enter this location.*/
+    UNWALKABLE,
+    /** Air units should slow down */
+    HARD_TO_FLY,
+    /** Air units should not be able to enter this location.*/
+    UNFLYABLE,
+    /** Marine units should slow down */
+    HARD_TO_SWIM,
+    /** Marine units should not be able to enter this location.*/
+    UNSWIMMABLE,
     /** Some types of ground units should benefit defensively */
     COVERED,
-    /** Some types of ground units should benefit significantly defensively. This flag overrides <code>COVERED</code>. */
+    /** Some types of ground units should benefit significantly defensively.*/
     FORTIFIED,
     /** Ground units on a high ground should generally have a defensive and offensive advantage over units below. */
     HIGH,
     /** Ground units on a higher ground should have significant defensive and offensive advantage over units below and some advantage over units on a high ground. This flag overrides <code>HIGH</code>. */
-    MOUNTAIN,
-    /** Marine ground units may enter this tile (overrides <code>IMPASSABLE</code> for these units).*/
-    SHALLOW_WATER,
-    /** Marine ground units may enter this tile (overrides <code>DIFFICULT</code> and <code>IMPASSABLE</code> for these units). */
-    WATER,
+    VERY_HIGH,
     /** Detrimental defense effects for units with weakness for cold.*/
     COLD,
     /** Detrimental defense effects for units with weakness for hotness.*/
     HOT,
-    /** Air units cannot enter this location */
-    CAVE,
+    /** Detrimental defense effects for night-dwellers.*/
+    LIT,
     /** Detrimental defense effects for units without night-vision.*/
-    DARK;
+    DARK,
+    /** This location is a buildable part of a base.*/
+    CITY,
+    /** This location is a central part of a base*/
+    BASE,
+    /** This location is a strategic point of a map*/
+    VILLAGE,
+    /** This location could be easier to move through for ground units*/
+    ROAD;
     // XXX: could be extended with additional features should necessity arise.
     public static TerrainFeatures fromString(String string) {
-        if (string.equals("Difficult"))
-            return DIFFICULT;
-        if (string.equals("Impassable"))
-            return IMPASSABLE;
+        if (string.equals("HardToWalk"))
+            return HARD_TO_WALK;
+        if (string.equals("Unwalkable"))
+            return UNWALKABLE;
+        if (string.equals("HardToSwim"))
+            return HARD_TO_SWIM;
+        if (string.equals("Unswimmable"))
+            return UNSWIMMABLE;
+        if (string.equals("HardToFly"))
+            return HARD_TO_FLY;
+        if (string.equals("Unflyable"))
+            return UNFLYABLE;
         if (string.equals("Covered"))
             return COVERED;
         if (string.equals("Fortified"))
             return FORTIFIED;
         if (string.equals("High"))
             return HIGH;
-        if (string.equals("Mountain"))
-            return MOUNTAIN;
-        if (string.equals("ShallowWater"))
-            return SHALLOW_WATER;
-        if (string.equals("Water"))
-            return WATER;
+        if (string.equals("VeryHigh"))
+            return VERY_HIGH;
         if (string.equals("Cold"))
             return COLD;
         if (string.equals("Hot"))
             return HOT;
-        if (string.equals("Cave"))
-            return CAVE;
         if (string.equals("Dark"))
             return DARK;
+        if (string.equals("Lit"))
+            return LIT;
+        if (string.equals("City"))
+            return CITY;
+        if (string.equals("Base"))
+            return BASE;
+        if (string.equals("Village"))
+            return VILLAGE;
+        if (string.equals("Road"))
+            return ROAD;
         return null;
     }
 }
