@@ -83,4 +83,8 @@ public final class Tile {
     public int hashCode() {
         return this.at.hashCode() + this.name.hashCode() + this.terrain.hashCode();
     }
+    public boolean occupied() {
+        // FIXME: method stub to be used when units are implemented
+        return false;
+    }
 }
