@@ -9,6 +9,7 @@ public final class Tile {
     private TileCoordinate at;
     private String name;
     private boolean access;
+    private Unit unit;
     private ArrayList<TileListener> listeners = new ArrayList<TileListener>();
     /** Creates a new tile with defined terrain and name at a given location and registers it on a map.
      * @param terrain The terrain at this tile
@@ -84,7 +85,21 @@ public final class Tile {
         return this.at.hashCode() + this.name.hashCode() + this.terrain.hashCode();
     }
     public boolean occupied() {
-        // FIXME: method stub to be used when units are implemented
-        return false;
+        return this.unit != null;
+    }
+    public void enter(Unit unit) {
+        if (this.unit != null)
+            throw new RuntimeException("Entering occupied tile!");
+        this.unit = unit;
+        for (TileListener listener : this.listeners)
+            listener.onEntry(this);
+    }
+    public void exit() {
+        if (this.unit == null)
+            throw new RuntimeException("Exiting empty tile!");
+        Unit unitCopy = this.unit;
+        this.unit = null;
+        for (TileListener listener : this.listeners)
+            listener.onExit(this, unitCopy);                
     }
 }
