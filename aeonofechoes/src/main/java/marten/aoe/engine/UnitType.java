@@ -1,6 +1,6 @@
 package marten.aoe.engine;
 
-public enum TilePathType {
+public enum UnitType {
     GROUND,
     MARINE,
     AIR;

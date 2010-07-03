@@ -14,5 +14,12 @@ public interface TileListener {
     /** Method is invoked whenever the access mode of a tile changes.
      * @param source the tile where the change took place
      * @param oldValue the previous access mode of the tile */
-    void onAccessChange(Tile tile, boolean oldValue);    
+    void onAccessChange(Tile tile, boolean oldValue);
+    /** Method is invoked whenever a unit enters a tile.
+     * @param source the tile where unit currently is*/
+    void onEntry(Tile tile);
+    /** Method is invoked whenever a unit leaves a tile.
+     * @param source the tile where unit was before this action.
+     * @param unit the unit which left the tile.*/
+    void onExit(Tile tile, Unit unit);
 }

@@ -8,9 +8,9 @@ public final class TilePath {
     private List<TileDirection> directions;
     private List<TileCoordinate> tiles;
     private TileCoordinate origin;
-    private TilePathType pathType;
+    private UnitType pathType;
     private int lengthCache = -1;
-    public TilePath(TilePathType pathType, List<TileDirection> directions, TileCoordinate origin) {
+    public TilePath(UnitType pathType, List<TileDirection> directions, TileCoordinate origin) {
         this.directions = new ArrayList<TileDirection>(directions);
         this.tiles = new ArrayList<TileCoordinate>();
         this.origin = origin;
@@ -35,14 +35,14 @@ public final class TilePath {
             if (tile == null || !tile.access() || tile.occupied())
                 return Integer.MAX_VALUE;
             Set<TerrainFeatures> features = tile.terrain().features();
-            if (pathType.equals(TilePathType.AIR))
+            if (pathType.equals(UnitType.AIR))
                 if (features.contains(TerrainFeatures.UNFLYABLE))
                     return Integer.MAX_VALUE;
                 else if (features.contains(TerrainFeatures.HARD_TO_FLY))
                     length += 2;
                 else
                     length++;
-            else if (pathType.equals(TilePathType.GROUND))
+            else if (pathType.equals(UnitType.GROUND))
                 if (features.contains(TerrainFeatures.UNWALKABLE))
                     return Integer.MAX_VALUE;
                 else if (features.contains(TerrainFeatures.HARD_TO_WALK))
@@ -69,5 +69,8 @@ public final class TilePath {
         if (this.tiles.size() == 0)
             return this.origin;
         return this.tiles.get(this.tiles.size() - 1);
+    }
+    public TileCoordinate origin() {
+        return this.origin;
     }
 }
