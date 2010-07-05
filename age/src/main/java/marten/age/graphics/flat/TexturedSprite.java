@@ -1,12 +1,12 @@
 package marten.age.graphics.flat;
 
 import marten.age.graphics.BasicSceneGraphBranch;
+import marten.age.graphics.appearance.Color;
 import marten.age.graphics.geometry.SimpleModel;
 import marten.age.graphics.geometry.primitives.Rectangle;
+import marten.age.graphics.primitives.Point;
 import marten.age.graphics.texture.Texture;
 import marten.age.graphics.transform.TranslationGroup;
-import marten.age.graphics.util.Color;
-import marten.age.graphics.util.Point;
 
 public class TexturedSprite extends BasicSceneGraphBranch {
     private SimpleModel model;

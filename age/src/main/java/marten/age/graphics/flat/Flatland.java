@@ -3,12 +3,12 @@ package marten.age.graphics.flat;
 import marten.age.graphics.SceneGraphChild;
 import marten.age.graphics.camera.Camera;
 import marten.age.graphics.camera.FrustumCamera;
+import marten.age.graphics.primitives.Point;
+import marten.age.graphics.primitives.Rotation;
+import marten.age.graphics.primitives.Vector;
 import marten.age.graphics.root.SimpleRoot;
 import marten.age.graphics.text.BitmapString;
 import marten.age.graphics.transform.TranslationGroup;
-import marten.age.graphics.util.Point;
-import marten.age.graphics.util.Rotation;
-import marten.age.graphics.util.Vector;
 
 public class Flatland {
 

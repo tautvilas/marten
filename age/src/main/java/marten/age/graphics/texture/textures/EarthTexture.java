@@ -1,8 +1,8 @@
 package marten.age.graphics.texture.textures;
 
+import marten.age.graphics.appearance.Color;
 import marten.age.graphics.texture.TextureProvider;
 import marten.age.graphics.texture.util.NoiseGenerator2d;
-import marten.age.graphics.util.Color;
 
 public class EarthTexture extends TextureProvider {
 	private static final int DEFAULT_SEED = 3;

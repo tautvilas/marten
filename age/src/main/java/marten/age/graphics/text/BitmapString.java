@@ -1,7 +1,7 @@
 package marten.age.graphics.text;
 
 import marten.age.graphics.BasicSceneGraphChild;
-import marten.age.graphics.util.Color;
+import marten.age.graphics.appearance.Color;
 
 import org.lwjgl.opengl.GL11;
 

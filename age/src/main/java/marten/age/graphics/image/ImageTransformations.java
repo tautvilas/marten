@@ -1,6 +1,6 @@
 package marten.age.graphics.image;
 
-import marten.age.graphics.util.Constants;
+import marten.age.Constants;
 
 import org.lwjgl.opengl.GL11;
 

@@ -3,7 +3,6 @@ package marten.age.core;
 import marten.age.control.Controller;
 import marten.age.event.AgeEvent;
 import marten.age.event.AgeEventListener;
-import marten.age.graphics.util.SelectionDialog;
 
 import org.apache.log4j.Logger;
 import org.lwjgl.input.Keyboard;

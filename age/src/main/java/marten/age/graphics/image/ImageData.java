@@ -7,7 +7,7 @@ import java.nio.ByteBuffer;
 
 import javax.imageio.ImageIO;
 
-import marten.age.graphics.util.Constants;
+import marten.age.Constants;
 
 import org.apache.log4j.Logger;
 import org.lwjgl.BufferUtils;

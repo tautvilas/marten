@@ -6,7 +6,7 @@ import java.awt.GraphicsEnvironment;
 import java.util.ArrayList;
 import java.util.List;
 
-import marten.age.graphics.util.SelectionDialog;
+import marten.age.core.SelectionDialog;
 
 public class ScreenResSelector {
   static interface DisplayModeFilter {

@@ -1,8 +1,8 @@
 package marten.age.graphics.texture.textures;
 
+import marten.age.graphics.appearance.Color;
 import marten.age.graphics.texture.TextureProvider;
 import marten.age.graphics.texture.util.Noise;
-import marten.age.graphics.util.Color;
 
 public class SaturnTexture extends TextureProvider {
 	private Color baseColor = new Color(0xe1 / 255.0, 0xbe / 255.0, 0x44 / 255.0);

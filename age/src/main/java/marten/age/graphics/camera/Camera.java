@@ -4,8 +4,8 @@ import java.util.ArrayList;
 
 import org.lwjgl.opengl.Display;
 
-import marten.age.graphics.util.Point;
-import marten.age.graphics.util.Rotation;
+import marten.age.graphics.primitives.Point;
+import marten.age.graphics.primitives.Rotation;
 
 abstract public class Camera {
 	private ArrayList<CameraTransformation> settings = new ArrayList<CameraTransformation>();

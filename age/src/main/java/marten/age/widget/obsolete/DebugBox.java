@@ -1,4 +1,4 @@
-package marten.age.graphics.util;
+package marten.age.widget.obsolete;
 
 import java.awt.Font;
 import java.util.HashMap;
