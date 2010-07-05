@@ -176,6 +176,6 @@ public abstract class AgeApp {
     /* User has to override this method and do AGE configuration here */
     public abstract void configure();
 
-    /* Do some final cleanup */
-    public abstract void finalize();
+    /* Do some final cleanup (overriding is optional) */
+    public void finalize() {}
 }
