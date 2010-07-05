@@ -1,4 +1,4 @@
-package marten.age.graphics.util;
+package marten.age.graphics.primitives;
 
 /**
  * A class to simulate three-dimensional points.
@@ -29,7 +29,7 @@ public final class Point {
      * point.
      * 
      * @param source
-     *                the source point, copy of which is being made.
+     *            the source point, copy of which is being made.
      */
     public Point(Point source) {
         this.x = source.x;
@@ -42,8 +42,8 @@ public final class Point {
      * <b>source</b> vector if it started from the origin.
      * 
      * @param source
-     *                the vector, which points to the point being created from
-     *                the origin.
+     *            the vector, which points to the point being created from the
+     *            origin.
      */
     public Point(Vector source) {
         this.x = source.x;
@@ -56,7 +56,7 @@ public final class Point {
      * the rotation quaternion centered at the origin.
      * 
      * @param source
-     *                the quaternion along the axis of which the point is
+     *            the quaternion along the axis of which the point is
      */
     public Point(Rotation source) {
         this.x = source.x;
@@ -69,11 +69,11 @@ public final class Point {
      * <code>double</code> coordinates.
      * 
      * @param newX
-     *                the <code>x</code> coordinate of the new point.
+     *            the <code>x</code> coordinate of the new point.
      * @param newY
-     *                the <code>y</code> coordinate of the new point.
+     *            the <code>y</code> coordinate of the new point.
      * @param newZ
-     *                the <code>z</code> coordinate of the new point.
+     *            the <code>z</code> coordinate of the new point.
      */
     public Point(double newX, double newY, double newZ) {
         this.x = newX;
@@ -85,9 +85,9 @@ public final class Point {
      * Compares the two points for equality.
      * 
      * @param other
-     *                the point to which this point is compared to.
-     * @return <code>true</code> if the points are identical,
-     *         <code>false</code> otherwise.
+     *            the point to which this point is compared to.
+     * @return <code>true</code> if the points are identical, <code>false</code>
+     *         otherwise.
      */
     public synchronized boolean equals(Point other) {
         return this.x == other.x && this.y == other.y && this.z == other.z;
@@ -97,14 +97,13 @@ public final class Point {
      * Compares the two points for approximate equality.
      * 
      * @param other
-     *                the point to which this point is compared to.
+     *            the point to which this point is compared to.
      * @param epsilon
-     *                the maximum difference between the respective coordinates
-     *                for the points to be still considered equal
-     * @return <code>true</code> if the points are within <b>epsilon</b>
-     *         length units of each other, <code>false</code> otherwise.
-     * @throws <code>RuntimeException</code> if the <b>epsilon</b> is
-     *                 negative.
+     *            the maximum difference between the respective coordinates for
+     *            the points to be still considered equal
+     * @return <code>true</code> if the points are within <b>epsilon</b> length
+     *         units of each other, <code>false</code> otherwise.
+     * @throws <code>RuntimeException</code> if the <b>epsilon</b> is negative.
      */
     public synchronized boolean approximatelyEquals(Point other, double epsilon) {
         if (epsilon < 0.0)
@@ -117,9 +116,8 @@ public final class Point {
 
     /**
      * @param scaleFactor
-     *                the <code>double</code> value, signifying how much
-     *                further than this point the new point will be from the
-     *                origin.
+     *            the <code>double</code> value, signifying how much further
+     *            than this point the new point will be from the origin.
      * @return a point that is in the same direction away from the origin, but
      *         <b>scaleFactor</b> times further.
      */
@@ -130,7 +128,7 @@ public final class Point {
 
     /**
      * @param other
-     *                the vector according to which this point is moved.
+     *            the vector according to which this point is moved.
      * @return a point that is a copy of this point, only moved away in the
      *         direction, given by the <b>other</b> vector.
      */
@@ -140,7 +138,7 @@ public final class Point {
 
     /**
      * @param other
-     *                the point to where the origin would be moved.
+     *            the point to where the origin would be moved.
      * @return a point that is a copy of this point when the origin point is
      *         moved to the <b>other</b> point.
      */
@@ -150,7 +148,7 @@ public final class Point {
 
     /**
      * @param other
-     *                the point to which the distance is measured.
+     *            the point to which the distance is measured.
      * @return the distance between this and <b>other</b> points. Use
      *         {@link #distanceSquared(Point)} if you need this value for
      *         comparison since it is calculated faster.
@@ -161,7 +159,7 @@ public final class Point {
 
     /**
      * @param other
-     *                the point to which the distance is measured.
+     *            the point to which the distance is measured.
      * @return the square of the distance between this and <b>other</b> points.
      */
     public synchronized double distanceSquared(Point other) {
@@ -170,7 +168,7 @@ public final class Point {
 
     /**
      * @param other
-     *                the rotation pattern, centered around the origin point.
+     *            the rotation pattern, centered around the origin point.
      * @return an image of this point as if the coordinate system was rotated
      *         around the origin.
      */
@@ -183,7 +181,7 @@ public final class Point {
 
     /**
      * @param other
-     *                a point to which the mid-point is being calculated.
+     *            a point to which the mid-point is being calculated.
      * @return a point that is right in the middle between this and <b>other</b>
      *         points.
      */
@@ -192,7 +190,10 @@ public final class Point {
                 (this.z + other.z) / 2.0);
     }
 
-    /**@return a <code>String</code> representation of this point to facilitate the output.*/
+    /**
+     * @return a <code>String</code> representation of this point to facilitate
+     *         the output.
+     */
     @Override
     public synchronized String toString() {
         return "(" + this.x + ", " + this.y + ", " + this.z + ")";

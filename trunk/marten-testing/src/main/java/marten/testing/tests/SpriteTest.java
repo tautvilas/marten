@@ -13,13 +13,13 @@ import marten.age.graphics.geometry.OptimizedGeometry;
 import marten.age.graphics.geometry.SimpleModel;
 import marten.age.graphics.geometry.primitives.Sphere;
 import marten.age.graphics.image.ImageData;
+import marten.age.graphics.primitives.Point;
+import marten.age.graphics.primitives.Rotation;
+import marten.age.graphics.primitives.Vector;
 import marten.age.graphics.root.SimpleRoot;
 import marten.age.graphics.texture.Texture;
 import marten.age.graphics.texture.TextureLoader;
-import marten.age.graphics.util.FpsCounter;
-import marten.age.graphics.util.Point;
-import marten.age.graphics.util.Rotation;
-import marten.age.graphics.util.Vector;
+import marten.age.widget.obsolete.FpsCounter;
 
 public class SpriteTest extends AgeApp {
 

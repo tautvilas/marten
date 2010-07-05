@@ -1,8 +1,8 @@
 package marten.age.graphics.transform;
 
 import marten.age.graphics.BasicSceneGraphBranch;
-import marten.age.graphics.util.Rotation;
-import marten.age.graphics.util.Vector;
+import marten.age.graphics.primitives.Rotation;
+import marten.age.graphics.primitives.Vector;
 
 import org.lwjgl.opengl.GL11;
 

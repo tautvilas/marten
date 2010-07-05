@@ -1,4 +1,4 @@
-package marten.age.graphics.util;
+package marten.age.core;
 
 import java.awt.BorderLayout;
 import java.awt.Component;

@@ -5,7 +5,7 @@ import marten.age.graphics.flat.Flatland;
 import marten.age.graphics.flat.Sprite;
 import marten.age.graphics.image.ImageData;
 import marten.age.graphics.image.ImageLoader;
-import marten.age.graphics.util.Point;
+import marten.age.graphics.primitives.Point;
 
 public class Map extends AgeScene {
 

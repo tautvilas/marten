@@ -3,7 +3,7 @@ package marten.age.graphics.flat;
 import marten.age.graphics.BasicSceneGraphChild;
 import marten.age.graphics.image.ImageData;
 import marten.age.graphics.image.ImageTransformations;
-import marten.age.graphics.util.Point;
+import marten.age.graphics.primitives.Point;
 
 import org.lwjgl.opengl.GL11;
 

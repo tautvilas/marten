@@ -3,7 +3,7 @@ package marten.age.widget;
 import marten.age.control.MouseListener;
 import marten.age.graphics.flat.Sprite;
 import marten.age.graphics.image.ImageData;
-import marten.age.graphics.util.Point;
+import marten.age.graphics.primitives.Point;
 
 import org.apache.log4j.Logger;
 

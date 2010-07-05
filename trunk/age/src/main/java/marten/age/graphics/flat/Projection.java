@@ -3,7 +3,7 @@ package marten.age.graphics.flat;
 import java.nio.FloatBuffer;
 import java.nio.IntBuffer;
 
-import marten.age.graphics.util.Point;
+import marten.age.graphics.primitives.Point;
 
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.util.glu.Project;

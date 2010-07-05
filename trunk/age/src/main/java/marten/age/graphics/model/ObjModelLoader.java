@@ -10,17 +10,17 @@ import java.util.Arrays;
 import java.util.HashMap;
 
 import marten.age.graphics.appearance.Appearance;
+import marten.age.graphics.appearance.Color;
 import marten.age.graphics.geometry.SimpleModel;
 import marten.age.graphics.geometry.TriangularGeometry;
 import marten.age.graphics.image.ImageData;
+import marten.age.graphics.primitives.Point;
+import marten.age.graphics.primitives.TextureCoordinate;
+import marten.age.graphics.primitives.Triangle;
+import marten.age.graphics.primitives.Vector;
+import marten.age.graphics.primitives.Vertex;
 import marten.age.graphics.texture.Texture;
 import marten.age.graphics.texture.TextureLoader;
-import marten.age.graphics.util.Color;
-import marten.age.graphics.util.Point;
-import marten.age.graphics.util.TextureCoordinate;
-import marten.age.graphics.util.Triangle;
-import marten.age.graphics.util.Vector;
-import marten.age.graphics.util.Vertex;
 
 import org.apache.log4j.Logger;
 

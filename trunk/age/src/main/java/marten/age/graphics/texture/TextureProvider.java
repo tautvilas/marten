@@ -12,7 +12,7 @@ import java.awt.image.WritableRaster;
 import java.nio.Buffer;
 import java.nio.ByteBuffer;
 
-import marten.age.graphics.util.Color;
+import marten.age.graphics.appearance.Color;
 
 public abstract class TextureProvider {
 	private static final int DEFAULT_WIDTH = 512;

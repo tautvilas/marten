@@ -3,7 +3,6 @@ package marten.age.graphics.appearance;
 import java.nio.FloatBuffer;
 
 import marten.age.graphics.texture.Texture;
-import marten.age.graphics.util.Color;
 
 import org.lwjgl.BufferUtils;
 import org.lwjgl.opengl.GL11;

@@ -1,4 +1,4 @@
-package marten.age.graphics.util;
+package marten.age.graphics.appearance;
 
 public final class Color {
 	public double r;

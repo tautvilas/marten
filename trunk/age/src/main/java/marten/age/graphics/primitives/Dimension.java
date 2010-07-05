@@ -1,6 +1,6 @@
-package marten.age.graphics.util;
+package marten.age.graphics.primitives;
 
-public class Dimension {
+public final class Dimension {
     public float width = 0;
     public float height = 0;
     public float depth = 0;

@@ -2,8 +2,8 @@ package marten.age.graphics.geometry;
 
 import java.util.ArrayList;
 
-import marten.age.graphics.util.Triangle;
-import marten.age.graphics.util.Vertex;
+import marten.age.graphics.primitives.Triangle;
+import marten.age.graphics.primitives.Vertex;
 
 import org.lwjgl.opengl.GL11;
 
