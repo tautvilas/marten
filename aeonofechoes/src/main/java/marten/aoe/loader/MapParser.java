@@ -9,7 +9,6 @@ final class MapParser {
     private MapParser() {}
     public static void parse(DataTree branch) {
         if (branch.value().equals("Map")) {
-            TileMap.removeAll();
             for (DataTree subbranch : branch.branches()) {
                 if (subbranch.value().equals("KEYVALUE")) {
                     String key = subbranch.branches().get(0).value();

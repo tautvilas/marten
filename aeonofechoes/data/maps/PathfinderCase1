@@ -1,0 +1,25 @@
+CleanData
+Terrain:
+    Name = test
+Map:
+    Name = Pathfinder_Case_1
+    Tile:
+        X = 0
+        Y = 0
+        Terrain = test
+    Tile:
+        X = 0
+        Y = 1
+        Terrain = test
+    Tile:
+        X = 0
+        Y = 2
+        Terrain = test
+    Tile:
+        X = 1
+        Y = 1
+        Terrain = test
+    Tile:
+        X = 1
+        Y = 2
+        Terrain = test

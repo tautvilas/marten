@@ -7,12 +7,12 @@ Terrain:
     Name = forest
     Features:
         Covered
-        Difficult
+        Unswimmable
         
 Terrain:
     Name = water
     Features:
-        Impassable
+        Unwalkable
         Water
         
 Terrain:
@@ -29,10 +29,10 @@ Terrain:
     Name = mountain
     Features:
         Mountain
-        Difficult
+        HardToWalk
         
 Terrain:
     Name = ford
     Features:
-        Difficult
-        ShallowWater    
+        HardToWalk
+        HardToSwim    

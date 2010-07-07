@@ -73,4 +73,18 @@ public final class TilePath {
     public TileCoordinate origin() {
         return this.origin;
     }
+    public boolean equals(Object other) {
+        if (!(other instanceof TilePath))
+            return false;
+        TilePath otherPath = (TilePath)other;
+        return this.directions.equals(otherPath.directions) && this.origin.equals(otherPath.origin) && this.pathType.equals(otherPath.pathType);
+    }
+    public int hashCode() {
+        int hashCode = 0;
+        for (TileDirection direction : this.directions)
+            hashCode ^= direction.hashCode();
+        hashCode ^= this.origin.hashCode();
+        hashCode ^= this.pathType.hashCode();
+        return hashCode;
+    }
 }
