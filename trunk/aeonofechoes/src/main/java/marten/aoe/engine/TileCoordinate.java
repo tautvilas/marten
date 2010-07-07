@@ -39,12 +39,12 @@ public final class TileCoordinate {
                 break;
             case NORTHEAST:
                 newX++;
-                if (this.x % 2 == 0)
+                if (this.x % 2 == 1)
                     newY--;
                 break;
             case SOUTHEAST:
                 newX++;
-                if (this.x % 2 == 1)
+                if (this.x % 2 == 0)
                     newY++;
                 break;
             case SOUTH:
@@ -52,12 +52,12 @@ public final class TileCoordinate {
                 break;
             case SOUTHWEST:
                 newX--;
-                if (this.x % 2 == 1)
+                if (this.x % 2 == 0)
                     newY++;
                 break;
             case NORTHWEST:
                 newX--;
-                if (this.x % 2 == 0)
+                if (this.x % 2 == 1)
                     newY--;
                 break;
         }        

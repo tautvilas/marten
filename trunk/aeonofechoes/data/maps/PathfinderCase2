@@ -1,0 +1,13 @@
+CleanData
+Import:
+    data/maps/PathfinderCase1
+Terrain:
+    Name = void
+    Features:
+        Unwalkable
+Map:
+    Name = Pathfinder_Case_2
+    Tile:
+        X = 0
+        Y = 1
+        Terrain = void
