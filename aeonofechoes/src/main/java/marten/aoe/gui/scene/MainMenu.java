@@ -3,6 +3,7 @@ package marten.aoe.gui.scene;
 import marten.age.control.KeyboardController;
 import marten.age.control.MouseController;
 import marten.age.core.AgeScene;
+import marten.age.event.AgeSceneSwitchEvent;
 import marten.age.graphics.flat.Flatland;
 import marten.age.widget.Console;
 import marten.age.widget.ConsoleListener;
@@ -22,6 +23,10 @@ public class MainMenu extends AgeScene {
         Widget console = new Console(new ConsoleListener() {
             @Override
             public String handleCommand(String command) {
+                if (command.equals("start")) {
+                    fireEvent(new AgeSceneSwitchEvent(new Game("freelands.txt")));
+                    return "WIN";
+                }
                 log.info("No such command!");
                 return "FAIL";
             }

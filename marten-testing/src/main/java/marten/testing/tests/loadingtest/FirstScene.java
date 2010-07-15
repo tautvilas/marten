@@ -4,7 +4,7 @@ import java.awt.Font;
 
 import marten.age.control.MouseController;
 import marten.age.core.AgeScene;
-import marten.age.event.AgeEvent;
+import marten.age.event.AgeSceneSwitchEvent;
 import marten.age.graphics.flat.Flatland;
 import marten.age.graphics.image.ImageData;
 import marten.age.graphics.image.ImageLoader;
@@ -60,7 +60,7 @@ public class FirstScene extends AgeScene {
             System.out.println(loader.getStatus() + loader.getPercentage());
         }
         if (loader.loadingFinished()) {
-            fireEvent(new AgeEvent("SCENE SWITCH", scene2));
+            fireEvent(new AgeSceneSwitchEvent(scene2));
         }
     }
 
