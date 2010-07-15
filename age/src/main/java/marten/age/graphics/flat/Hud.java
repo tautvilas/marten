@@ -2,11 +2,19 @@ package marten.age.graphics.flat;
 
 import marten.age.graphics.BasicSceneGraphBranch;
 import marten.age.graphics.SceneGraphNode;
+import marten.age.graphics.primitives.Point;
 
 import org.lwjgl.opengl.Display;
 import org.lwjgl.opengl.GL11;
 
 public class Hud extends BasicSceneGraphBranch {
+
+    private Point position = new Point();
+
+    public void moveDown(int numPixels) {
+        this.position.y -= numPixels;
+    }
+
     @Override
     public void render() {
         int width = Display.getDisplayMode().getWidth();
@@ -29,6 +37,8 @@ public class Hud extends BasicSceneGraphBranch {
         GL11.glMatrixMode(GL11.GL_MODELVIEW);
         GL11.glPushMatrix();
         GL11.glLoadIdentity();
+
+        GL11.glTranslated(position.x, position.y, 0);
 
         for (SceneGraphNode node : this.getBranches()) {
             node.render();
