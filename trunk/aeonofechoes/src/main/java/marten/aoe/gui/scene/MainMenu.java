@@ -24,7 +24,7 @@ public class MainMenu extends AgeScene {
             @Override
             public String handleCommand(String command) {
                 if (command.equals("start")) {
-                    fireEvent(new AgeSceneSwitchEvent(new Game("freelands.txt")));
+                    fireEvent(new AgeSceneSwitchEvent(new Game("Village")));
                     return "WIN";
                 }
                 log.info("No such command!");
