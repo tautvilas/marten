@@ -3,6 +3,7 @@ package marten.age.core;
 import marten.age.control.Controller;
 import marten.age.event.AgeEvent;
 import marten.age.event.AgeEventListener;
+import marten.age.event.AgeSceneSwitchEvent;
 
 import org.apache.log4j.Logger;
 import org.lwjgl.input.Keyboard;
@@ -159,12 +160,12 @@ public abstract class AgeApp {
 
         @Override
         public void handle(AgeEvent e) {
-            if (e.id == "SCENE SWITCH") {
-                AgeScene scene = (AgeScene)e.parameters[0];
-                switchScene(scene);
-                log.info("AGE scene switced to " + scene);
+            if (e instanceof AgeSceneSwitchEvent) {
+                AgeSceneSwitchEvent event = (AgeSceneSwitchEvent)e;
+                switchScene(event.newScene);
+                log.info("AGE scene switced to " + event.newScene);
             } else {
-                log.warn("Unrecognized Age event id: " + e.id);
+                log.warn("Unrecognized Age event " + e);
             }
         }
 
