@@ -43,7 +43,7 @@ public final class TileMap {
      * @param the coordinates of the tile to be removed.*/
     public static void remove(TileCoordinate tile) {
         if (!map.containsKey(tile))
-            return;
+            throw new IndexOutOfBoundsException("The tile does not exist at "+tile.x()+", "+tile.y());
         Tile removedTile = map.remove(tile);
         for (TileMapListener listener : listeners)
             listener.onTileRemoved(removedTile);
@@ -57,10 +57,12 @@ public final class TileMap {
         name = "";
     }
     // TODO: to make this more flexible, there should be a way to remove tiles according to some arbitrary filter.
-    /** @return the tile at the given location. It is an actual tile and not its copy.
+    /** @return the tile at the given location. It is an actual tile and not its copy. <code>null</code> is returned if there is no such tile.
      * @param at the coordinates where the tile is located.*/
-    public static Tile get(TileCoordinate at) {
-        return map.get(at);
+    public static Tile get(TileCoordinate tile) {
+        if (!map.containsKey(tile))
+            throw new IndexOutOfBoundsException("The tile does not exist at "+tile.x()+", "+tile.y());
+        return map.get(tile);
     }
     /** @return all tiles currently in database. These are actual tiles and not their copies. */
     public static Collection<Tile> selectAll() {
@@ -77,8 +79,13 @@ public final class TileMap {
                 selectedTiles.add(tile);
         return selectedTiles;
     }
+    /** @return the set of all coordinates that are used in this map*/
     public static Set<TileCoordinate> definedCoordinates() {
         return map.keySet();
+    }
+    /** @return <code>true</code> if there are no tiles defined in the map.*/
+    public static boolean isEmpty() {
+        return map.isEmpty();
     }
     /** @return the name of the currently loaded tile map.*/
     public static String name() {
@@ -90,6 +97,8 @@ public final class TileMap {
     }
     /** @return the minimum x coordinate in this map.*/
     public static int minX() {
+        if (map.isEmpty())
+            throw new IllegalStateException("Map is empty, requested value is undefined");
         int minX = Integer.MAX_VALUE;
         for (TileCoordinate coordinate : map.keySet())
             if (minX > coordinate.x())
@@ -98,6 +107,8 @@ public final class TileMap {
     }
     /** @return the maximum x coordinate in this map.*/
     public static int maxX() {
+        if (map.isEmpty())
+            throw new IllegalStateException("Map is empty, requested value is undefined");
         int maxX = Integer.MIN_VALUE;
         for (TileCoordinate coordinate : map.keySet())
             if (maxX < coordinate.x())
@@ -106,6 +117,8 @@ public final class TileMap {
     }
     /** @return the minimum y coordinate in this map.*/
     public static int minY() {
+        if (map.isEmpty())
+            throw new IllegalStateException("Map is empty, requested value is undefined");
         int minY = Integer.MAX_VALUE;
         for (TileCoordinate coordinate : map.keySet())
             if (minY > coordinate.y())
@@ -114,6 +127,8 @@ public final class TileMap {
     }
     /** @return the maximum y coordinate in this map.*/
     public static int maxY() {
+        if (map.isEmpty())
+            throw new IllegalStateException("Map is empty, requested value is undefined");
         int maxY = Integer.MIN_VALUE;
         for (TileCoordinate coordinate : map.keySet())
             if (maxY < coordinate.y())
