@@ -1,20 +1,20 @@
 package marten.aoe.engine;
 
-/*     1,0     3,0
- * 0,0  |  2,0  |  4,0
- *  |  1,1  |  3,1  |
+/*     1,2     3,2
  * 0,1  |  2,1  |  4,1
- *  |  1,2  |  3,2  |
+ *  |  1,1  |  3,1  |
+ * 0,0  |  2,0  |  4,0
+ *  |  1,0  |  3,0  |
  */
 
 /** Defines an immutable coordinate on a hexagonal grid.
- * X axis is left-to-right, Y axis is top-to-bottom. 
+ * X axis is left-to-right, Y axis is bottom-to-top 
  * @author Petras Ražanskas */
 public final class TileCoordinate {
     private int x, y;
     /** Creates a point on the map with defined coordinates
      * @param x the horizontal coordinate (from the left to the right)
-     * @param y the vertical coordinate (from the top to the bottom) */
+     * @param y the vertical coordinate (from the bottom to the top) */
     public TileCoordinate(int x, int y) {
         this.x = x;
         this.y = y;
@@ -31,36 +31,8 @@ public final class TileCoordinate {
      * @return the coordinates of a tile, adjacent to this one and located in a given direction.
      * @param direction the direction to which the next coordinate lies. */
     public TileCoordinate adjacent(TileDirection direction) {
-        int newX = this.x;
-        int newY = this.y;
-        switch (direction) {
-            case NORTH:
-                newY--;
-                break;
-            case NORTHEAST:
-                newX++;
-                if (this.x % 2 == 1)
-                    newY--;
-                break;
-            case SOUTHEAST:
-                newX++;
-                if (this.x % 2 == 0)
-                    newY++;
-                break;
-            case SOUTH:
-                newY++;
-                break;
-            case SOUTHWEST:
-                newX--;
-                if (this.x % 2 == 0)
-                    newY++;
-                break;
-            case NORTHWEST:
-                newX--;
-                if (this.x % 2 == 1)
-                    newY--;
-                break;
-        }        
+        int newX = this.x + direction.deltaX();
+        int newY = this.y + (this.y % 2 == 1 ? direction.deltaYodd() : direction.deltaYeven());
         return new TileCoordinate(newX, newY);
     }
     /** @param other The other set of coordinate this is compared to. 
