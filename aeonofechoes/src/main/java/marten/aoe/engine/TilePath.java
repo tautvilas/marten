@@ -30,9 +30,14 @@ public final class TilePath {
         if (this.lengthCache > -1)
             return this.lengthCache;
         int length = 0;
-        for (TileCoordinate coordinate : tiles) {
-            Tile tile = TileMap.get(coordinate);
-            if (tile == null || !tile.access() || tile.occupied())
+        for (TileCoordinate coordinate : tiles) {            
+            Tile tile = null;
+            try {
+                tile = TileMap.get(coordinate);
+            } catch (IndexOutOfBoundsException e) {
+                return Integer.MAX_VALUE;
+            }
+            if (!tile.access() || tile.occupied())
                 return Integer.MAX_VALUE;
             Set<TerrainFeatures> features = tile.terrain().features();
             if (pathType.equals(UnitType.AIR))

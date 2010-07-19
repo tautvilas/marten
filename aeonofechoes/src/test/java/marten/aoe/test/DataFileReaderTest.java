@@ -66,7 +66,7 @@ public final class DataFileReaderTest {
         TilePath testPath = alpha.findPath(new TileCoordinate(0, 2));
         Assert.assertTrue(testPath.directions().size() == 2);
         for (TileDirection direction : testPath.directions())
-            Assert.assertTrue(direction.equals(TileDirection.SOUTH));
+            Assert.assertTrue(direction.equals(TileDirection.NORTH));
         PathFinder beta = new PathFinder(new TileCoordinate(0, 0), UnitType.GROUND, 1);
         Assert.assertNull(beta.findPath(new TileCoordinate(0, 2)));
         // Second case tries if pathfinder loops correctly around
