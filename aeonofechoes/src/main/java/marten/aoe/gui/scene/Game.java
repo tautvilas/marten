@@ -37,11 +37,11 @@ public class Game extends AgeScene {
             @Override
             public void keyUp(int key, char character) {
             }
-            
+
             @Override
             public void keyDown(int key, char character) {
                 if (key == Keyboard.KEY_DOWN) {
-                    flatland.scrollDown(5);
+                    // flatland.scrollDown(5);
                 }
             }
         });
@@ -72,8 +72,12 @@ public class Game extends AgeScene {
             TileWidget tileWidget = new TileWidget(terrainCache.get(tile
                     .terrain().name()), tile.at());
             flatland.addChild(tileWidget);
+        }
+        for (Tile tile : TileMap.selectAll()) {
             BitmapString coords = new BitmapString(font, tile.at().x() + ""
                     + tile.at().y());
+            TileWidget tileWidget = new TileWidget(terrainCache.get(tile
+                    .terrain().name()), tile.at());
             flatland.addText(coords, new Point(tileWidget.getPosition()));
         }
     }
