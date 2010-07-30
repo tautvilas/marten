@@ -1,12 +1,12 @@
 package marten.aoe.gui.widget;
 
-import marten.age.graphics.flat.Sprite;
+import marten.age.graphics.flat.TexturedSprite;
 import marten.age.graphics.image.ImageData;
 import marten.age.graphics.primitives.Point;
 import marten.age.widget.Widget;
 import marten.aoe.engine.TileCoordinate;
 
-public class TileWidget extends Sprite implements Widget {
+public class TileWidget extends TexturedSprite implements Widget {
 
     public TileWidget(ImageData data, TileCoordinate position) {
         super(data);

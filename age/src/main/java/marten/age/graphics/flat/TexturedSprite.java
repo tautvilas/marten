@@ -4,13 +4,19 @@ import marten.age.graphics.BasicSceneGraphBranch;
 import marten.age.graphics.appearance.Color;
 import marten.age.graphics.geometry.SimpleModel;
 import marten.age.graphics.geometry.primitives.Rectangle;
+import marten.age.graphics.image.ImageData;
 import marten.age.graphics.primitives.Point;
 import marten.age.graphics.texture.Texture;
+import marten.age.graphics.texture.TextureLoader;
 import marten.age.graphics.transform.TranslationGroup;
 
 public class TexturedSprite extends BasicSceneGraphBranch {
     private SimpleModel model;
     private TranslationGroup tg = new TranslationGroup();
+
+    public TexturedSprite(ImageData image) {
+        this(TextureLoader.loadTexture(image));
+    }
 
     public TexturedSprite(Texture texture) {
         model = new SimpleModel(new Rectangle(texture.getDimension()));
