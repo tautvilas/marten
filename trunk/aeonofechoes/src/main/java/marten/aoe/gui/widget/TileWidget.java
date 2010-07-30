@@ -12,14 +12,18 @@ public class TileWidget extends Sprite implements Widget {
         super(data);
         int imageWidth = data.width;
         int imageHeight = data.height;
+        int delta = imageWidth + imageWidth / 2;
         if (position.x() % 2 == 0) {
-            this.setPosition(new Point(position.x() / 2
-                    * (imageWidth + imageWidth / 2), position.y()
+            this.setPosition(new Point((position.x() / 2) * delta, position.y()
                     * imageHeight));
         } else {
-            this.setPosition(new Point(position.x() * imageWidth / 2
-                    + imageWidth * (position.x() - 2) + imageWidth / 4,
-                    position.y() * imageHeight + imageHeight / 2));
+            int deltax = imageHeight * 3 / 4;
+            if (position.x() < 0) {
+                deltax = -deltax;
+            }
+            this.setPosition(new Point((position.x() / 2) * delta
+                    + deltax, position.y() * imageHeight
+                    + imageHeight / 2));
         }
     }
 }
