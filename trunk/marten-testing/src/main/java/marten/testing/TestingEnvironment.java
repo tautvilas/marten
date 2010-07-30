@@ -49,8 +49,6 @@ public class TestingEnvironment {
                 throw new RuntimeException("Unsupported test type");
             }
 
-            if (mainCanvas == null)
-                System.exit(0);
             frame.add(mainCanvas);
 
             DisplayManager.setupDisplay(frame, true);
