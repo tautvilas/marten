@@ -75,7 +75,7 @@ public class MapWidget extends Sprite implements Widget {
                     deltax = -deltax;
                 }
                 this.setPosition(new Point((position.x() / 2) * delta + deltax,
-                        position.y() * imageHeight + imageHeight / 2));
+                        position.y() * imageHeight - imageHeight / 2));
             }
         }
     }
