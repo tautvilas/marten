@@ -90,7 +90,8 @@ public abstract class AgeApp {
     }
 
     private void initDisplay() throws Exception {
-        DisplayMode mode = selectMode();
+        DisplayMode mode = null;
+//        DisplayMode mode = selectMode();
         boolean fullscreen = true;
         if (mode == null) {
             fullscreen = false;
@@ -120,6 +121,7 @@ public abstract class AgeApp {
         return this.height;
     }
 
+    @SuppressWarnings("unused")
     private DisplayMode selectMode() throws Exception {
         DisplayMode[] modes = Display.getAvailableDisplayModes();
         DisplayMode mode = null;

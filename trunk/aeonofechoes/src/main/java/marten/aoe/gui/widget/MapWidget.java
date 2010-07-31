@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Set;
 
+import marten.age.control.MouseListener;
 import marten.age.graphics.flat.sprite.Sprite;
 import marten.age.graphics.flat.sprite.TextureSprite;
 import marten.age.graphics.image.ImageData;
@@ -21,7 +22,7 @@ import marten.aoe.engine.TileMap;
 
 import org.apache.log4j.Logger;
 
-public class MapWidget extends Sprite implements Widget {
+public class MapWidget extends Sprite implements Widget, MouseListener {
     private static org.apache.log4j.Logger log = Logger
             .getLogger(MapWidget.class);
     private HashMap<String, ImageData> terrainCache = new HashMap<String, ImageData>();
@@ -98,5 +99,22 @@ public class MapWidget extends Sprite implements Widget {
     @Override
     public void setPosition(Point position) {
         tg.setCoordinates(position);
+    }
+
+    @Override
+    public void mouseDown(Point coords) {
+    }
+
+    @Override
+    public void mouseMove(Point coords) {
+//        System.out.println("it moved!: " + coords.x + " " + coords.y);
+    }
+
+    @Override
+    public void mouseUp(Point coords) {
+    }
+
+    @Override
+    public void mouseWheelRoll(int delta) {
     }
 }
