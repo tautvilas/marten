@@ -4,6 +4,7 @@ import java.io.IOException;
 
 import marten.age.control.KeyboardController;
 import marten.age.control.KeyboardListener;
+import marten.age.control.MouseController;
 import marten.age.core.AgeScene;
 import marten.age.graphics.flat.Flatland;
 import marten.age.graphics.primitives.Point;
@@ -28,6 +29,7 @@ public class Game extends AgeScene {
         }
         log.info("Loaded.");
         map = new MapWidget(mapName);
+        map.setPosition(new Point(200, 200));
         flatland.addChild(map);
 
         KeyboardController keyboardController = new KeyboardController();
@@ -50,6 +52,8 @@ public class Game extends AgeScene {
             }
         });
         this.addController(keyboardController);
+        this.addController(new MouseController());
+        this.registerControllable(map);
     }
 
     @Override
