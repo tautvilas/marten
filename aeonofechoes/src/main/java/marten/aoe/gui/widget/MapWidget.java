@@ -5,13 +5,14 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Set;
 
-import marten.age.graphics.BasicSceneGraphBranch;
+import marten.age.graphics.flat.sprite.Sprite;
 import marten.age.graphics.flat.sprite.TextureSprite;
 import marten.age.graphics.image.ImageData;
 import marten.age.graphics.primitives.Point;
 import marten.age.graphics.text.BitmapFont;
 import marten.age.graphics.text.BitmapString;
 import marten.age.graphics.text.FontCache;
+import marten.age.graphics.transform.TranslationGroup;
 import marten.age.widget.Widget;
 import marten.aoe.engine.TerrainDatabase;
 import marten.aoe.engine.Tile;
@@ -20,12 +21,13 @@ import marten.aoe.engine.TileMap;
 
 import org.apache.log4j.Logger;
 
-public class MapWidget extends BasicSceneGraphBranch implements Widget {
+public class MapWidget extends Sprite implements Widget {
     private static org.apache.log4j.Logger log = Logger
             .getLogger(MapWidget.class);
     private HashMap<String, ImageData> terrainCache = new HashMap<String, ImageData>();
     private BitmapFont font = FontCache.getFont(new Font("Courier New",
             Font.BOLD, 20));
+    private TranslationGroup tg = new TranslationGroup();
 
     public MapWidget(String mapName) {
         log.info("Loading map tiles for '" + mapName + "'...");
@@ -44,7 +46,7 @@ public class MapWidget extends BasicSceneGraphBranch implements Widget {
         for (Tile tile : TileMap.selectAll()) {
             TileFace tileWidget = new TileFace(terrainCache.get(tile
                     .terrain().name()), tile.at());
-            this.addChild(tileWidget);
+            tg.addChild(tileWidget);
         }
         for (Tile tile : TileMap.selectAll()) {
             TileFace tileWidget = new TileFace(terrainCache.get(tile
@@ -52,8 +54,9 @@ public class MapWidget extends BasicSceneGraphBranch implements Widget {
             BitmapString coords = new BitmapString(font, tile.at().x() + ""
                     + tile.at().y());
             coords.setPosition(tileWidget.getPosition());
-            this.addChild(coords);
+            tg.addChild(coords);
         }
+        this.addChild(tg);
     }
 
     private class TileFace extends TextureSprite {
@@ -75,5 +78,25 @@ public class MapWidget extends BasicSceneGraphBranch implements Widget {
                         position.y() * imageHeight + imageHeight / 2));
             }
         }
+    }
+
+    @Override
+    public int getHeight() {
+        throw new RuntimeException("Not implemented yet");
+    }
+
+    @Override
+    public Point getPosition() {
+        return tg.getCoordinates();
+    }
+
+    @Override
+    public int getWidth() {
+        throw new RuntimeException("Not implemented yet");
+    }
+
+    @Override
+    public void setPosition(Point position) {
+        tg.setCoordinates(position);
     }
 }

@@ -6,6 +6,7 @@ import marten.age.control.KeyboardController;
 import marten.age.control.KeyboardListener;
 import marten.age.core.AgeScene;
 import marten.age.graphics.flat.Flatland;
+import marten.age.graphics.primitives.Point;
 import marten.aoe.gui.widget.MapWidget;
 import marten.aoe.loader.Loader;
 
@@ -16,8 +17,19 @@ public class Game extends AgeScene {
     private static org.apache.log4j.Logger log = Logger.getLogger(Game.class);
 
     private Flatland flatland = new Flatland();
+    private MapWidget map;
 
     public Game(String mapName) {
+        log.info("Loading map data for '" + mapName + "'...");
+        try {
+            Loader.load("data/maps/MapTest");
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        log.info("Loaded.");
+        map = new MapWidget(mapName);
+        flatland.addChild(map);
+
         KeyboardController keyboardController = new KeyboardController();
         keyboardController.addListener(new KeyboardListener() {
             @Override
@@ -27,21 +39,17 @@ public class Game extends AgeScene {
             @Override
             public void keyDown(int key, char character) {
                 if (key == Keyboard.KEY_DOWN) {
-                    // flatland.scrollDown(5);
+                    map.setPosition(new Point(map.getPosition().x, map.getPosition().y - 10));
+                } else if (key == Keyboard.KEY_UP) {
+                    map.setPosition(new Point(map.getPosition().x, map.getPosition().y + 10));
+                } else if (key == Keyboard.KEY_LEFT) {
+                    map.setPosition(new Point(map.getPosition().x - 10, map.getPosition().y));
+                } else if (key == Keyboard.KEY_RIGHT) {
+                    map.setPosition(new Point(map.getPosition().x + 10, map.getPosition().y));
                 }
             }
         });
         this.addController(keyboardController);
-
-        log.info("Loading map data for '" + mapName + "'...");
-        try {
-            Loader.load("data/maps/MapTest");
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-        log.info("Loaded.");
-        MapWidget map = new MapWidget(mapName);
-        flatland.addChild(map);
     }
 
     @Override
