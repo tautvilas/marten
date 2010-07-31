@@ -7,8 +7,8 @@ import marten.age.core.AgeScene;
 import marten.age.graphics.camera.Camera;
 import marten.age.graphics.camera.FrustumCamera;
 import marten.age.graphics.flat.Hud;
-import marten.age.graphics.flat.Sprite;
-import marten.age.graphics.flat.TexturedSprite;
+import marten.age.graphics.flat.sprite.PixelSprite;
+import marten.age.graphics.flat.sprite.TextureSprite;
 import marten.age.graphics.geometry.OptimizedGeometry;
 import marten.age.graphics.geometry.SimpleModel;
 import marten.age.graphics.geometry.primitives.Sphere;
@@ -57,9 +57,9 @@ public class SpriteTest extends AgeApp {
                 throw new RuntimeException(e);
             }
             Texture spriteTexture = TextureLoader.loadTexture(data);
-            TexturedSprite sprite = new TexturedSprite(spriteTexture,
+            TextureSprite sprite = new TextureSprite(spriteTexture,
                     new Point(0, 0));
-            Sprite sp = new Sprite(data);
+            PixelSprite sp = new PixelSprite(data);
             sp.setPosition(new Point(10, 0));
             hud.addChild(sprite);
             hud.addChild(sp);

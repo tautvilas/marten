@@ -1,6 +1,5 @@
-package marten.age.graphics.flat;
+package marten.age.graphics.flat.sprite;
 
-import marten.age.graphics.BasicSceneGraphBranch;
 import marten.age.graphics.appearance.Color;
 import marten.age.graphics.geometry.SimpleModel;
 import marten.age.graphics.geometry.primitives.Rectangle;
@@ -10,15 +9,22 @@ import marten.age.graphics.texture.Texture;
 import marten.age.graphics.texture.TextureLoader;
 import marten.age.graphics.transform.TranslationGroup;
 
-public class TexturedSprite extends BasicSceneGraphBranch {
+public class TextureSprite extends Sprite {
     private SimpleModel model;
     private TranslationGroup tg = new TranslationGroup();
+    private Texture texture;
 
-    public TexturedSprite(ImageData image) {
+    public TextureSprite(ImageData image) {
         this(TextureLoader.loadTexture(image));
     }
 
-    public TexturedSprite(Texture texture) {
+    public TextureSprite(ImageData image, Point position) {
+        this(TextureLoader.loadTexture(image));
+        setPosition(position);
+    }
+
+    public TextureSprite(Texture texture) {
+        this.texture = texture;
         model = new SimpleModel(new Rectangle(texture.getDimension()));
         // glTexEnv(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_BLEND)
         // gl<...same shit...>, GL_REPLACE) for no background blending
@@ -28,16 +34,28 @@ public class TexturedSprite extends BasicSceneGraphBranch {
         this.addChild(tg);
     }
 
-    public TexturedSprite(Texture texture, Point position) {
+    public TextureSprite(Texture texture, Point position) {
         this(texture);
         setPosition(position);
     }
 
+    @Override
+    public int getHeight() {
+        return (int)texture.getDimension().height;
+    }
+
+    @Override
+    public int getWidth() {
+        return (int)texture.getDimension().width;
+    }
+
+    @Override
     public Point getPosition() {
         return tg.getCoordinates();
     }
 
-    public void setPosition(Point position) {
-        tg.setCoordinates(position);
+    @Override
+    public void setPosition(Point point) {
+        tg.setCoordinates(point);
     }
 }

@@ -2,7 +2,7 @@ package marten.testing.tests.loadingtest;
 
 import marten.age.core.AgeScene;
 import marten.age.graphics.flat.Flatland;
-import marten.age.graphics.flat.Sprite;
+import marten.age.graphics.flat.sprite.PixelSprite;
 import marten.age.graphics.image.ImageData;
 import marten.age.graphics.image.ImageLoader;
 import marten.age.graphics.primitives.Point;
@@ -42,7 +42,7 @@ public class SecondScene extends AgeScene implements Loadable {
         }
         ImageData buttonImage = ImageLoader
                 .loadImage("data/textures/sprite.png");
-        Sprite button = new Sprite(buttonImage, new Point(200, 200));
+        PixelSprite button = new PixelSprite(buttonImage, new Point(200, 200));
         flatland.addChild(button);
     }
 

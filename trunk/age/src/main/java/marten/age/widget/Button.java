@@ -1,13 +1,13 @@
 package marten.age.widget;
 
 import marten.age.control.MouseListener;
-import marten.age.graphics.flat.Sprite;
+import marten.age.graphics.flat.sprite.PixelSprite;
 import marten.age.graphics.image.ImageData;
 import marten.age.graphics.primitives.Point;
 
 import org.apache.log4j.Logger;
 
-public class Button extends Sprite implements Widget, MouseListener {
+public class Button extends PixelSprite implements Widget, MouseListener {
     @SuppressWarnings("unused")
     private static org.apache.log4j.Logger log = Logger.getLogger(Button.class);
 
@@ -22,8 +22,8 @@ public class Button extends Sprite implements Widget, MouseListener {
     public void mouseDown(Point coords) {
         if (testHit(coords)) {
             this.pressed = true;
-            this.setX(this.getX() + 3);
-            this.setY(this.getY() - 3);
+            this.setPosition(new Point(this.getPosition().x + 3, this
+                    .getPosition().y - 3));
         }
     }
 
@@ -35,8 +35,8 @@ public class Button extends Sprite implements Widget, MouseListener {
     public void mouseUp(Point coords) {
         if (testHit(coords) && this.pressed) {
             this.action.perform();
-            this.setX(this.getX() - 3);
-            this.setY(this.getY() + 3);
+            this.setPosition(new Point(this.getPosition().x - 3, this
+                    .getPosition().y + 3));
         }
         this.pressed = false;
     }
@@ -50,10 +50,10 @@ public class Button extends Sprite implements Widget, MouseListener {
     }
 
     private boolean testHit(Point coords) {
-        double dx = coords.x - this.getX();
-        double dy = coords.y - this.getY();
-        if ((dx >= 0 && dx <= this.getWidth()) &&
-                (dy >= 0 && dy <= this.getHeight())) {
+        double dx = coords.x - this.getPosition().x;
+        double dy = coords.y - this.getPosition().y;
+        if ((dx >= 0 && dx <= this.getWidth())
+                && (dy >= 0 && dy <= this.getHeight())) {
             return true;
         }
         return false;

@@ -2,7 +2,7 @@ package marten.testing.tests.maptest;
 
 import marten.age.core.AgeScene;
 import marten.age.graphics.flat.Flatland;
-import marten.age.graphics.flat.Sprite;
+import marten.age.graphics.flat.sprite.PixelSprite;
 import marten.age.graphics.image.ImageData;
 import marten.age.graphics.image.ImageLoader;
 import marten.age.graphics.primitives.Point;
@@ -17,10 +17,10 @@ public class Map extends AgeScene {
 
         for (int i = 0; i < 10; i++) {
             for (int j = 0; j < 10; j++) {
-                Sprite tile = new Sprite(tileImage);
+                PixelSprite tile = new PixelSprite(tileImage);
                 tile.setPosition(new Point(i * (65 + 32), j * 65));
                 flatland.addChild(tile);
-                tile = new Sprite(tileImage);
+                tile = new PixelSprite(tileImage);
                 tile.setPosition(new Point(48 + i * (65 + 32), 32 + j * 65));
                 flatland.addChild(tile);
             }
