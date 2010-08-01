@@ -2,12 +2,13 @@ package marten.aoe.loader;
 
 import java.util.EnumSet;
 
+import marten.aoe.engine.Engine;
 import marten.aoe.engine.Terrain;
 import marten.aoe.engine.TerrainFeatures;
 
 final class TerrainParser {
     private TerrainParser() {}
-    public static void parse (DataTree branch) {
+    public static void parse (Engine engine, DataTree branch) {
         if (branch.value().equals("Terrain")) {
             String name = "";
             EnumSet<TerrainFeatures> features = EnumSet.noneOf(TerrainFeatures.class);
@@ -27,7 +28,7 @@ final class TerrainParser {
                     }
                 else
                     System.err.println("Unknown option: "+subbranch.value());
-            new Terrain(features, name);
+            new Terrain(engine.terrain, features, name);
         }
     }
 }

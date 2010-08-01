@@ -11,10 +11,10 @@ public final class Terrain {
      * @param features the inherent features of this terrain
      * @param name the name of the terrain
      * @throws IllegalArgumentException if the name of the terrain being created is already taken by a different description.*/
-    public Terrain(Set<TerrainFeatures> features, String name) {
+    public Terrain(TerrainDatabase database, Set<TerrainFeatures> features, String name) {
         this.features = features;
         this.name = name;
-        TerrainDatabase.add(this);
+        database.add(this);
     }
     /** @return the set of features inherent to this terrain. */
     public Set<TerrainFeatures> features() {

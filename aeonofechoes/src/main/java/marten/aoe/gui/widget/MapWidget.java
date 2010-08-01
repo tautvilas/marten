@@ -18,7 +18,6 @@ import marten.age.graphics.text.FontCache;
 import marten.age.graphics.transform.TranslationGroup;
 import marten.age.widget.Widget;
 import marten.aoe.engine.Engine;
-import marten.aoe.engine.TerrainDatabase;
 import marten.aoe.engine.Tile;
 import marten.aoe.engine.TileCoordinate;
 
@@ -41,7 +40,7 @@ public class MapWidget extends Sprite implements Widget, MouseListener {
         this.engine = engine;
         // FIXME(carnifex) Is it really necessary to pass an argument into a method for logging purposes only? :-/
         log.info("Loading map tiles for '" + mapName + "'...");
-        Set<String> definedTerrain = TerrainDatabase.definedTerrain();
+        Set<String> definedTerrain = engine.terrain.definedTerrain();
         for (String terrainType : definedTerrain) {
             try {
                 log.info("Reading '" + terrainType + ".png'...");
