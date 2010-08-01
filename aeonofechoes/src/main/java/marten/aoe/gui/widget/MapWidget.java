@@ -2,6 +2,7 @@ package marten.aoe.gui.widget;
 
 import java.awt.Font;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Set;
 
@@ -87,13 +88,12 @@ public class MapWidget extends Sprite implements Widget, MouseListener {
         }
     }
 
-    private boolean hitTest(Tile tile, Point coords) {
-        return false;
-    }
+    private Tile tileHit(Point mouseCoords) {
+        mouseCoords.x -= this.getPosition().x;
+        mouseCoords.y -= this.getPosition().y;
+        Point coords = new Point(mouseCoords);
+        ArrayList<Tile> candidates = new ArrayList<Tile>();
 
-    private Tile tileHit(Point coords) {
-        coords.x -= this.getPosition().x;
-        coords.y -= this.getPosition().y;
         if (coords.y < 0)
             coords.y -= tileWidth;
         if (coords.x < 0)
@@ -103,37 +103,52 @@ public class MapWidget extends Sprite implements Widget, MouseListener {
             int tileY = (int) coords.y / (tileHeight);
             try {
                 Tile tile = TileMap.get(new TileCoordinate(tileX, tileY));
-                if (hitTest(tile, coords)) {
-                    // return tiles.get(tile);
-                }
-                return tile;
+                candidates.add(tile);
             } catch (IndexOutOfBoundsException e) {
-
             }
         }
-        int coordX = (int) coords.x;
-        if (coordX < 0)
-            coordX += tileWidth * 3 / 4;
+
+        if (coords.x < 0)
+            coords.x += tileWidth * 3 / 4;
         else
-            coordX -= tileWidth * 3 / 4;
-        if (Math.abs(coordX % (tileWidth + tileWidth / 2)) <= tileWidth) {
-            int tileX = (coordX / (tileWidth + tileWidth / 2)) * 2;
+            coords.x -= tileWidth * 3 / 4;
+        coords.y += tileHeight / 2;
+        if (Math.abs(coords.x % (tileWidth + tileWidth / 2)) <= tileWidth) {
+            int tileX = ((int) coords.x / (tileWidth + tileWidth / 2)) * 2;
             if (coords.x < 0)
                 tileX -= 1;
             else
                 tileX += 1;
-            int tileY = ((int) coords.y + tileHeight / 2) / (tileHeight);
+            int tileY = (int) coords.y / tileHeight;
             try {
                 Tile tile = TileMap.get(new TileCoordinate(tileX, tileY));
-                if (hitTest(tile, coords)) {
-                    // return tiles.get(tile);
-                }
-                return tile;
+                candidates.add(tile);
             } catch (IndexOutOfBoundsException e) {
-
             }
         }
-        return null;
+
+        if (candidates.isEmpty()) {
+            return null;
+        } else if (candidates.size() == 1) {
+            return candidates.get(0);
+        } else {
+            double mindistance = tileWidth * 2;
+            Tile result = null;
+            for (Tile tile : candidates) {
+                TileFace face = tiles.get(tile);
+                Point facePosition = face.getPosition();
+                Point faceCenter = new Point(facePosition.x + tileWidth / 2,
+                        facePosition.y + tileHeight / 2);
+                double dx = Math.abs(faceCenter.x - mouseCoords.x);
+                double dy = Math.abs(faceCenter.y - mouseCoords.y);
+                double distance = Math.sqrt(dx * dx + dy * dy);
+                if (distance < mindistance) {
+                    mindistance = distance;
+                    result = tile;
+                }
+            }
+            return result;
+        }
     }
 
     @Override
