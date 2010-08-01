@@ -69,8 +69,14 @@ public final class TilePath {
     public List<TileDirection> directions() {
         return new ArrayList<TileDirection>(this.directions);
     }
-    public List<TileCoordinate> tiles() {
-        return new ArrayList<TileCoordinate>(this.tiles());
+    public List<TileCoordinate> coordinates() {
+        return new ArrayList<TileCoordinate>(this.tiles);
+    }
+    public List<Tile> tiles() {
+        ArrayList<Tile> pathTiles = new ArrayList<Tile>();
+        for (TileCoordinate coordinate : this.tiles)
+            pathTiles.add(this.tileMap.get(coordinate));
+        return pathTiles;
     }
     public TileCoordinate endPoint() {
         if (this.tiles.size() == 0)
