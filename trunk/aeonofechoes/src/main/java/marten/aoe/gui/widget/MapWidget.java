@@ -6,6 +6,7 @@ import java.util.HashMap;
 import java.util.Set;
 
 import marten.age.control.MouseListener;
+import marten.age.graphics.appearance.Color;
 import marten.age.graphics.flat.sprite.Sprite;
 import marten.age.graphics.flat.sprite.TextureSprite;
 import marten.age.graphics.image.ImageData;
@@ -26,9 +27,12 @@ public class MapWidget extends Sprite implements Widget, MouseListener {
     private static org.apache.log4j.Logger log = Logger
             .getLogger(MapWidget.class);
     private HashMap<String, ImageData> terrainCache = new HashMap<String, ImageData>();
+    private HashMap<Tile, TileFace> tiles = new HashMap<Tile, TileFace>();
     private BitmapFont font = FontCache.getFont(new Font("Courier New",
             Font.BOLD, 20));
     private TranslationGroup tg = new TranslationGroup();
+    private int tileWidth;
+    private int tileHeight;
 
     public MapWidget(String mapName) {
         log.info("Loading map tiles for '" + mapName + "'...");
@@ -38,6 +42,8 @@ public class MapWidget extends Sprite implements Widget, MouseListener {
                 log.info("Reading '" + terrainType + ".png'...");
                 ImageData terrain = new ImageData("data/gui/tiles/"
                         + terrainType + ".png");
+                this.tileWidth = terrain.width;
+                this.tileHeight = terrain.height;
                 terrainCache.put(terrainType, terrain);
             } catch (IOException e) {
                 throw new RuntimeException(e);
@@ -45,16 +51,15 @@ public class MapWidget extends Sprite implements Widget, MouseListener {
         }
         log.info("Loaded.");
         for (Tile tile : TileMap.selectAll()) {
-            TileFace tileWidget = new TileFace(terrainCache.get(tile
-                    .terrain().name()), tile.at());
+            TileFace tileWidget = new TileFace(terrainCache.get(tile.terrain()
+                    .name()), tile.at());
+            tiles.put(tile, tileWidget);
             tg.addChild(tileWidget);
         }
         for (Tile tile : TileMap.selectAll()) {
-            TileFace tileWidget = new TileFace(terrainCache.get(tile
-                    .terrain().name()), tile.at());
             BitmapString coords = new BitmapString(font, tile.at().x() + ""
                     + tile.at().y());
-            coords.setPosition(tileWidget.getPosition());
+            coords.setPosition(tiles.get(tile).getPosition());
             tg.addChild(coords);
         }
         this.addChild(tg);
@@ -78,12 +83,18 @@ public class MapWidget extends Sprite implements Widget, MouseListener {
                 this.setPosition(new Point((position.x() / 2) * delta + deltax,
                         position.y() * imageHeight - imageHeight / 2));
             }
+            this.setColor(new Color(0.5, 0.5, 1));
         }
+    }
+
+    private TileFace tileHit(Point coords) {
+        return null;
     }
 
     @Override
     public int getHeight() {
-        throw new RuntimeException("Not implemented yet");
+        return (TileMap.maxY() - TileMap.minY() + 1) * (this.tileHeight)
+                + this.tileHeight / 2;
     }
 
     @Override
@@ -93,7 +104,8 @@ public class MapWidget extends Sprite implements Widget, MouseListener {
 
     @Override
     public int getWidth() {
-        throw new RuntimeException("Not implemented yet");
+        return (TileMap.maxX() - TileMap.minX() + 1) * (this.tileWidth * 3 / 4)
+                + this.tileWidth / 4;
     }
 
     @Override
@@ -107,7 +119,10 @@ public class MapWidget extends Sprite implements Widget, MouseListener {
 
     @Override
     public void mouseMove(Point coords) {
-//        System.out.println("it moved!: " + coords.x + " " + coords.y);
+        TileFace tile = tileHit(coords);
+        if (tileHit(coords) != null) {
+            System.out.println(tile);
+        }
     }
 
     @Override
