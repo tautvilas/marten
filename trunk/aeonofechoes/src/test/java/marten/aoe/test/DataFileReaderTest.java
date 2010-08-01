@@ -8,7 +8,6 @@ import org.junit.Test;
 
 import marten.aoe.engine.Engine;
 import marten.aoe.engine.PathFinder;
-import marten.aoe.engine.TerrainDatabase;
 import marten.aoe.engine.TerrainFeatures;
 import marten.aoe.engine.Tile;
 import marten.aoe.engine.TileCoordinate;
@@ -25,7 +24,7 @@ public final class DataFileReaderTest {
      * @throws IOException if the an I/O failure occured while reading the test file*/
     @Test public void terrainLoaded () throws IOException {
         Loader.load(this.engine, "data/terrain/TerrainTest");
-        Set<String> definedTerrain = TerrainDatabase.definedTerrain();
+        Set<String> definedTerrain = this.engine.terrain.definedTerrain();
         Assert.assertTrue(definedTerrain.contains("grassland"));
         Assert.assertTrue(definedTerrain.contains("forest"));
         Assert.assertTrue(definedTerrain.contains("hill"));
@@ -34,7 +33,7 @@ public final class DataFileReaderTest {
         Assert.assertTrue(definedTerrain.contains("water"));
         Assert.assertTrue(definedTerrain.contains("fort"));
         Assert.assertFalse(definedTerrain.contains("lava"));
-        Set<TerrainFeatures> sampleFeatures = TerrainDatabase.get("water").features();
+        Set<TerrainFeatures> sampleFeatures = this.engine.terrain.get("water").features();
         Assert.assertTrue(sampleFeatures.contains(TerrainFeatures.UNWALKABLE));        
         Assert.assertFalse(sampleFeatures.contains(TerrainFeatures.FORTIFIED));
     }

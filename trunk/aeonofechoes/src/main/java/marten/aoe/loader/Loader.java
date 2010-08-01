@@ -3,7 +3,6 @@ package marten.aoe.loader;
 import java.io.IOException;
 
 import marten.aoe.engine.Engine;
-import marten.aoe.engine.TerrainDatabase;
 
 /** The tool to load the contents of a Marten's Minimal Data Tree Language file into the game.*/
 public final class Loader {
@@ -14,7 +13,7 @@ public final class Loader {
         if (data.value().equals("FILE"))
             for (DataTree branch : data.branches())
                 if (branch.value().equals("Terrain"))
-                    TerrainParser.parse(branch);
+                    TerrainParser.parse(engine, branch);
                 else if (branch.value().equals("Map"))
                     MapParser.parse(engine, branch);
                 else if (branch.value().equals("ClearMap"))
@@ -23,7 +22,7 @@ public final class Loader {
                     ImportParser.parse(engine, branch);
                 else if (branch.value().equals("CleanData")) {
                     engine.tileMap.removeAll();
-                    TerrainDatabase.removeAll();
+                    engine.terrain.removeAll();
                 }
                 else
                     System.err.println("Unknown option: "+branch.value());

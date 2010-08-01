@@ -1,7 +1,6 @@
 package marten.aoe.loader;
 
 import marten.aoe.engine.Engine;
-import marten.aoe.engine.TerrainDatabase;
 import marten.aoe.engine.Tile;
 import marten.aoe.engine.TileCoordinate;
 
@@ -41,8 +40,8 @@ final class MapParser {
                             access = true;
                         else
                             System.err.println("Unknown option: "+subsubbranch.value());
-                    if (TerrainDatabase.definedTerrain().contains(terrain))
-                        new Tile(engine.tileMap, TerrainDatabase.get(terrain), new TileCoordinate(x, y), name, access);
+                    if (engine.terrain.definedTerrain().contains(terrain))
+                        new Tile(engine.tileMap, engine.terrain.get(terrain), new TileCoordinate(x, y), name, access);
                     else
                         System.err.println("Unknown terrain type: "+terrain);
                 }
