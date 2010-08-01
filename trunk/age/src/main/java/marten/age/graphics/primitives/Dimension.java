@@ -17,4 +17,17 @@ public final class Dimension {
         this(width, height);
         this.depth = depth;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (o instanceof Dimension) {
+            Dimension d2 = (Dimension) o;
+            if (this.height == d2.height && this.width == d2.width)
+                return true;
+            else
+                return false;
+        } else {
+            return super.equals(o);
+        }
+    }
 }

@@ -28,6 +28,10 @@ public class Flatland {
         sr.render();
     }
 
+    public void compile() {
+        sr.compile();
+    }
+
     public void addChild(SceneGraphChild sprite) {
         hud.addChild(sprite);
     }
