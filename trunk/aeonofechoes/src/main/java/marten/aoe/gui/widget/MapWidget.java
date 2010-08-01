@@ -68,7 +68,7 @@ public class MapWidget extends Sprite implements Widget, MouseListener {
         }
         for (Tile tile : engine.tileMap.selectAll()) {
             BitmapString coords = new BitmapString(font, tile.at().x() + ":"
-                    + tile.at().y(), new Color(0.0, 0.0, 0.0));
+                    + tile.at().y(), new Color(0.0, 1.0, 0.0));
             coords.setPosition(tiles.get(tile).getPosition());
             tg.addChild(coords);
         }

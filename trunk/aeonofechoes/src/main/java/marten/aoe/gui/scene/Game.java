@@ -28,7 +28,7 @@ public class Game extends AgeScene {
     public Game(String mapName) {
         log.info("Loading map data for '" + mapName + "'...");
         try {
-            Loader.load(this.engine, "data/maps/MapTest");
+            Loader.load(this.engine, "data/maps/2pFreelands");
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
