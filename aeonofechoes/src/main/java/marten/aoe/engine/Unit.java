@@ -1,17 +1,19 @@
 package marten.aoe.engine;
 
-public class Unit {
+public final class Unit {
     private TileMap tileMap;
     private TileCoordinate currentLocation;
+    private String profileName;
     private int maxMovement;
     private int availableMovement;
     private UnitType type;
     private PathFinder pathFinder;
-    private Unit (TileMap tileMap, TileCoordinate at, UnitType type, int movement) {
+    private Unit (TileMap tileMap, TileCoordinate at, UnitProfile profile) {
         this.tileMap = tileMap;
         this.currentLocation = at;
-        this.maxMovement = this.availableMovement = movement;
-        this.type = type;
+        this.maxMovement = this.availableMovement = profile.maxMovement();
+        this.type = profile.type();
+        this.profileName = profile.name();
         this.pathFinder = new PathFinder(this.tileMap, this.currentLocation, this.type, this.availableMovement);
     }
     public void onEndTurn() {
@@ -20,6 +22,9 @@ public class Unit {
     }
     public int availableMovement() {
         return this.availableMovement;
+    }
+    public String profileName() {
+        return this.profileName;
     }
     public void move(TileCoordinate to) {        
         TilePath path = this.pathFinder.findPath(to);
