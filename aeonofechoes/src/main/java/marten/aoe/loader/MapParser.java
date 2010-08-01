@@ -49,7 +49,10 @@ final class MapParser {
                     else
                         System.err.println("Unknown terrain type: "+terrain);
                     if (unit != null)
-                        new Unit(engine.tileMap, new TileCoordinate(x, y), engine.unitProfiles.get(unit));
+                        if (engine.unitProfiles.definedUnitProfiles().contains(unit))
+                            new Unit(engine.tileMap, new TileCoordinate(x, y), engine.unitProfiles.get(unit));
+                        else
+                            System.err.println("Unknown unit type: "+unit);
                 }
             }                    
         }
