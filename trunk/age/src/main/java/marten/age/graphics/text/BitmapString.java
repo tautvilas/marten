@@ -35,12 +35,15 @@ public class BitmapString extends Sprite {
             GL11.glPushMatrix();
             GL11.glColor3d(color.r, color.g, color.b);
             GL11.glTranslated(this.position.x, this.position.y, 0);
+            int lineTranslate = 0;
             for (int i = 0; i < msg.length(); i++) {
                 if (msg.charAt(i) == '\n') {
-                    GL11.glTranslated(0.0, -font.getSize(), 0.0);
+                    GL11.glTranslated(-lineTranslate, -font.getSize(), 0.0);
+                    lineTranslate = 0;
                 } else {
                     GL11.glCallList(font.getBase() + msg.charAt(i));
                     GL11.glTranslated(font.getCharWidth(), 0.0f, 0.0f);
+                    lineTranslate += font.getCharWidth();
                 }
             }
             GL11.glPopMatrix();
