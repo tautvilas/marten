@@ -29,7 +29,6 @@ public class Game extends AgeScene {
         }
         log.info("Loaded.");
         map = new MapWidget(mapName);
-        map.setPosition(new Point(200, 200));
         flatland.addChild(map);
 
         KeyboardController keyboardController = new KeyboardController();

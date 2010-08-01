@@ -34,6 +34,10 @@ public class TextureSprite extends Sprite {
         this.addChild(tg);
     }
 
+    public void setColor(Color color) {
+        model.getAppearance().setColor(color);
+    }
+
     public TextureSprite(Texture texture, Point position) {
         this(texture);
         setPosition(position);
