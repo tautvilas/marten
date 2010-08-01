@@ -88,45 +88,55 @@ public class MapWidget extends Sprite implements Widget, MouseListener {
         }
     }
 
+    private Tile getTile(Point coords, boolean odd) throws IndexOutOfBoundsException{
+        if (Math.abs(coords.x % (tileWidth + tileWidth / 2)) <= tileWidth) {
+            int tileX = ((int) coords.x / (tileWidth + tileWidth / 2)) * 2;
+            int tileY = (int) coords.y / (tileHeight);
+            if (odd && coords.x < 0)
+                tileX -= 1;
+            else if (odd)
+                tileX += 1;
+            Tile tile = TileMap.get(new TileCoordinate(tileX, tileY));
+            return tile;
+        }
+        throw new IndexOutOfBoundsException("Tile index is out of bounds");
+    }
+
     private Tile tileHit(Point mouseCoords) {
+        // Substract map translation form mouse coordinates
         mouseCoords.x -= this.getPosition().x;
         mouseCoords.y -= this.getPosition().y;
+        // Create a copy of mouse coordinates for modification
         Point coords = new Point(mouseCoords);
+        // Tile hit candidate array
         ArrayList<Tile> candidates = new ArrayList<Tile>();
 
+        // Hack for dealing with negative coordinates
         if (coords.y < 0)
             coords.y -= tileWidth;
         if (coords.x < 0)
             coords.x -= tileWidth;
-        if (Math.abs(coords.x % (tileWidth + tileWidth / 2)) <= tileWidth) {
-            int tileX = ((int) coords.x / (tileWidth + tileWidth / 2)) * 2;
-            int tileY = (int) coords.y / (tileHeight);
-            try {
-                Tile tile = TileMap.get(new TileCoordinate(tileX, tileY));
-                candidates.add(tile);
-            } catch (IndexOutOfBoundsException e) {
-            }
+
+        // Check hit for even tile columns
+        try {
+            Tile tile = getTile(coords, false);
+            candidates.add(tile);
+        } catch (IndexOutOfBoundsException e) {
         }
 
+        // check hit for odd tile columns
         if (coords.x < 0)
             coords.x += tileWidth * 3 / 4;
         else
             coords.x -= tileWidth * 3 / 4;
         coords.y += tileHeight / 2;
-        if (Math.abs(coords.x % (tileWidth + tileWidth / 2)) <= tileWidth) {
-            int tileX = ((int) coords.x / (tileWidth + tileWidth / 2)) * 2;
-            if (coords.x < 0)
-                tileX -= 1;
-            else
-                tileX += 1;
-            int tileY = (int) coords.y / tileHeight;
-            try {
-                Tile tile = TileMap.get(new TileCoordinate(tileX, tileY));
-                candidates.add(tile);
-            } catch (IndexOutOfBoundsException e) {
-            }
+        try {
+            Tile tile = getTile(coords, true);
+            candidates.add(tile);
+        } catch (IndexOutOfBoundsException e) {
         }
 
+        // find a candidate with the closest distance to tile center
         if (candidates.isEmpty()) {
             return null;
         } else if (candidates.size() == 1) {
