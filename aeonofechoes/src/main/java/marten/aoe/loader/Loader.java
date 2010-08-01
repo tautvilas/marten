@@ -20,9 +20,12 @@ public final class Loader {
                     ClearMapParser.parse(engine, branch);
                 else if (branch.value().equals("Import"))
                     ImportParser.parse(engine, branch);
+                else if (branch.value().equals("UnitProfile"))
+                    UnitProfileParser.parse(engine, branch);
                 else if (branch.value().equals("CleanData")) {
                     engine.tileMap.removeAll();
                     engine.terrain.removeAll();
+                    engine.unitProfiles.removeAll();
                 }
                 else
                     System.err.println("Unknown option: "+branch.value());
