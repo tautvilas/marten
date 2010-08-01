@@ -21,7 +21,6 @@ public class Rectangle implements Geometry {
                 + dimension.height);
         GL11.glBegin(GL11.GL_QUADS);
         {
-            GL11.glNormal3f(0, 0, -1);
             GL11.glTexCoord2d(0, 0);
             GL11.glVertex2d(0, 0);
             GL11.glTexCoord2d(1.0, 0);
