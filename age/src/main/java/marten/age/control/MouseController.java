@@ -25,6 +25,10 @@ public class MouseController extends Controller {
         super.addListener(l);
     }
 
+    public Point getMouseCoordinates() {
+        return new Point(Mouse.getX(), Mouse.getY());
+    }
+
     @Override
     protected void harvestEvents() {
         wheelD = Mouse.getDWheel();
