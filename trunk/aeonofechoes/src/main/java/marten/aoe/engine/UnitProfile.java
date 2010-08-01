@@ -8,6 +8,7 @@ public final class UnitProfile {
         this.name = name;
         this.type = type;
         this.maxMovement = maxMovement;
+        database.add(this);
     }
     public String name() {
         return this.name;

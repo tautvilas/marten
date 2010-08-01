@@ -9,10 +9,11 @@ public final class Unit {
     private int availableMovement;
     private UnitType type;
     private PathFinder pathFinder;
-    private Unit (TileMap tileMap, TileCoordinate at, UnitProfile profile) {
+    public Unit (TileMap tileMap, TileCoordinate at, UnitProfile profile) {
         this.tileMap = tileMap;
         this.at = at;
         this.currentLocation = tileMap.get(at);
+        this.currentLocation.enter(this);
         this.maxMovement = this.availableMovement = profile.maxMovement();
         this.type = profile.type();
         this.profileName = profile.name();

@@ -3,6 +3,7 @@ package marten.aoe.loader;
 import marten.aoe.engine.Engine;
 import marten.aoe.engine.Tile;
 import marten.aoe.engine.TileCoordinate;
+import marten.aoe.engine.Unit;
 
 final class MapParser {
     private MapParser() {}
@@ -19,6 +20,7 @@ final class MapParser {
                     int y = 0;
                     String name = "";
                     String terrain = "";
+                    String unit = null;
                     boolean access = true;
                     for (DataTree subsubbranch : subbranch.branches())
                         if (subsubbranch.value().equals("KEYVALUE")) {
@@ -32,6 +34,8 @@ final class MapParser {
                                 y = Integer.parseInt(value);
                             else if (key.equals("Terrain"))
                                 terrain = value;
+                            else if (key.equals("Unit"))
+                                unit = value;
                             else
                                 System.err.println("Unknown option: "+key+" = "+value);
                         } else if (subsubbranch.value().equals("Inaccessible"))
@@ -44,6 +48,8 @@ final class MapParser {
                         new Tile(engine.tileMap, engine.terrain.get(terrain), new TileCoordinate(x, y), name, access);
                     else
                         System.err.println("Unknown terrain type: "+terrain);
+                    if (unit != null)
+                        new Unit(engine.tileMap, new TileCoordinate(x, y), engine.unitProfiles.get(unit));
                 }
             }                    
         }
