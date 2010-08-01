@@ -83,11 +83,56 @@ public class MapWidget extends Sprite implements Widget, MouseListener {
                 this.setPosition(new Point((position.x() / 2) * delta + deltax,
                         position.y() * imageHeight - imageHeight / 2));
             }
-            this.setColor(new Color(0.5, 0.5, 1));
         }
     }
 
+    private boolean hitTest(Tile tile, Point coords) {
+        return false;
+    }
+
     private TileFace tileHit(Point coords) {
+        coords.x -= this.getPosition().x;
+        coords.y -= this.getPosition().y;
+        if (coords.y < 0)
+            coords.y -= tileWidth;
+        if (coords.x < 0)
+            coords.x -= tileWidth;
+        if (Math.abs(coords.x % (tileWidth + tileWidth / 2)) <= tileWidth) {
+            int tileX = ((int) coords.x / (tileWidth + tileWidth / 2)) * 2;
+            System.out.println(coords.x + " " + tileX);
+            int tileY = (int) coords.y / (tileHeight);
+            try {
+                Tile tile = TileMap.get(new TileCoordinate(tileX, tileY));
+                if (hitTest(tile, coords)) {
+                    // return tiles.get(tile);
+                }
+                return tiles.get(tile);
+            } catch (IndexOutOfBoundsException e) {
+
+            }
+        }
+        int coordX = (int) coords.x;
+        if (coordX < 0)
+            coordX += tileWidth * 3 / 4;
+        else
+            coordX -= tileWidth * 3 / 4;
+        if (Math.abs(coordX % (tileWidth + tileWidth / 2)) <= tileWidth) {
+            int tileX = (coordX / (tileWidth + tileWidth / 2)) * 2;
+            if (coords.x < 0)
+                tileX -= 1;
+            else
+                tileX += 1;
+            int tileY = ((int) coords.y + tileHeight / 2) / (tileHeight);
+            try {
+                Tile tile = TileMap.get(new TileCoordinate(tileX, tileY));
+                if (hitTest(tile, coords)) {
+                    // return tiles.get(tile);
+                }
+                return tiles.get(tile);
+            } catch (IndexOutOfBoundsException e) {
+
+            }
+        }
         return null;
     }
 
@@ -120,7 +165,8 @@ public class MapWidget extends Sprite implements Widget, MouseListener {
     @Override
     public void mouseMove(Point coords) {
         TileFace tile = tileHit(coords);
-        if (tileHit(coords) != null) {
+        if (tile != null) {
+            tile.setColor(new Color(0.5, 0.5, 1));
             System.out.println(tile);
         }
     }
