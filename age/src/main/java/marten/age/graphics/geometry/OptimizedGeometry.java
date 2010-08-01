@@ -21,7 +21,7 @@ public final class OptimizedGeometry extends GeneratedGeometry {
     }
 
     @Override
-    public int generate() {
+    public void generate() {
         if (this.parentGeometry == null)
             throw new RuntimeException("Parent geometry not set.");
         int answer = GL11.glGenLists(1);
@@ -30,16 +30,11 @@ public final class OptimizedGeometry extends GeneratedGeometry {
         GL11.glNewList(answer, GL11.GL_COMPILE);
         parentGeometry.draw();
         GL11.glEndList();
-        return answer;
+        this.setList(answer);
     }
 
     @Override
     public boolean equals(Object o) {
-        if (o instanceof OptimizedGeometry) {
-            return parentGeometry.equals(((OptimizedGeometry) o)
-                    .getParentGeometry());
-        } else {
-            return super.equals(o);
-        }
+        return parentGeometry.equals(o);
     }
 }

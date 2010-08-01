@@ -9,8 +9,8 @@ import marten.age.graphics.SceneGraphNode;
 import marten.age.graphics.SceneGraphParent;
 import marten.age.graphics.geometry.GeneratedGeometry;
 import marten.age.graphics.geometry.Geometry;
+import marten.age.graphics.geometry.GeometryCache;
 import marten.age.graphics.geometry.OptimizedGeometry;
-import marten.age.graphics.geometry.ReusedGeometry;
 import marten.age.graphics.geometry.SimpleModel;
 import marten.age.graphics.model.ComplexModel;
 
@@ -48,15 +48,18 @@ public abstract class Root extends BasicSceneGraphParent {
         }
     }
 
-    private ReusedGeometry optimizeGeometry(Geometry g) {
-        if (!(g instanceof ReusedGeometry)) {
-            if (!(g instanceof GeneratedGeometry)) {
-                log.debug("Optimizing geometry " + g);
-                g = new OptimizedGeometry(g);
-                ((OptimizedGeometry) g).generate();
-            }
-            g = new ReusedGeometry(g);
+    private Geometry optimizeGeometry(Geometry g) {
+        Geometry g2 = GeometryCache.get(g);
+        if (g2 != null) {
+            return g2;
         }
-        return (ReusedGeometry) g;
+        if (!(g instanceof GeneratedGeometry)) {
+            log.debug("Optimizing geometry " + g);
+            OptimizedGeometry og2 = new OptimizedGeometry(g);
+            og2.generate();
+            GeometryCache.add(og2);
+            return og2;
+        }
+        return g;
     }
 }

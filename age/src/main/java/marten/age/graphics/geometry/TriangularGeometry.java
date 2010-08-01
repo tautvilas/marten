@@ -14,7 +14,7 @@ public final class TriangularGeometry extends GeneratedGeometry {
         triangles = model;
     }
 
-    public int generate() {
+    public void generate() {
         if (this.triangles == null)
             throw new RuntimeException("Parent geometry not set.");
         int answer = GL11.glGenLists(1);
@@ -34,6 +34,6 @@ public final class TriangularGeometry extends GeneratedGeometry {
             }
         GL11.glEnd();
         GL11.glEndList();
-        return answer;
+        this.setList(answer);
     }
 }
