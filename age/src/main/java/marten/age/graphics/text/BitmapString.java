@@ -40,7 +40,7 @@ public class BitmapString extends Sprite {
                     GL11.glTranslated(0.0, -font.getSize(), 0.0);
                 } else {
                     GL11.glCallList(font.getBase() + msg.charAt(i));
-                    GL11.glTranslated(font.getSize(), 0.0f, 0.0f);
+                    GL11.glTranslated(font.getCharWidth(), 0.0f, 0.0f);
                 }
             }
             GL11.glPopMatrix();
@@ -70,7 +70,7 @@ public class BitmapString extends Sprite {
 
     @Override
     public int getWidth() {
-        return (int)font.getSize() * content.length();
+        return (int)font.getCharWidth() * content.length();
     }
 
     @Override

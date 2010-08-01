@@ -1,5 +1,6 @@
 package marten.age.graphics.flat.sprite;
 
+import marten.age.graphics.appearance.Appearance;
 import marten.age.graphics.appearance.Color;
 import marten.age.graphics.geometry.SimpleModel;
 import marten.age.graphics.geometry.primitives.Rectangle;
@@ -36,6 +37,10 @@ public class TextureSprite extends Sprite {
 
     public void setColor(Color color) {
         model.getAppearance().setColor(color);
+    }
+
+    public Appearance getAppearance() {
+        return model.getAppearance();
     }
 
     public TextureSprite(Texture texture, Point position) {
