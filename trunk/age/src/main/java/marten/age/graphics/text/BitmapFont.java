@@ -5,11 +5,13 @@ public class BitmapFont {
     // font list start
     private int base = -1;
     private double size;
+    private int charWidth;
 
-    public BitmapFont(int base, int texture, double size) {
+    public BitmapFont(int base, int texture, double size, int charWidth) {
         this.base = base;
         this.texture = texture;
         this.size = size;
+        this.charWidth = charWidth;
     }
 
     public int getBase() {
@@ -22,5 +24,9 @@ public class BitmapFont {
 
     public double getSize() {
         return this.size;
+    }
+
+    public int getCharWidth() {
+        return this.charWidth;
     }
 }

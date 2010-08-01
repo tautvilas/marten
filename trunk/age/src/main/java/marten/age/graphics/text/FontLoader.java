@@ -24,6 +24,12 @@ public class FontLoader {
         boolean sizeFound = false;
 
         int fontSize = 2;
+        fontImage = new BufferedImage(bitmapSize, bitmapSize,
+                BufferedImage.TYPE_4BYTE_ABGR);
+        Graphics2D g = (Graphics2D) fontImage.getGraphics();
+        g.setFont(font);
+        FontMetrics fm = g.getFontMetrics();
+        int charWidth = fm.stringWidth("W");
         int originalSize = font.getSize();
         int fontStyle = font.getStyle();
         String fontName = font.getFontName();
@@ -42,9 +48,9 @@ public class FontLoader {
             font = new Font(fontName, fontStyle, fontSize);
             fontImage = new BufferedImage(bitmapSize, bitmapSize,
                     BufferedImage.TYPE_4BYTE_ABGR);
-            Graphics2D g = (Graphics2D) fontImage.getGraphics();
+            g = (Graphics2D) fontImage.getGraphics();
             g.setFont(font);
-            FontMetrics fm = g.getFontMetrics();
+            fm = g.getFontMetrics();
             int width = fm.stringWidth("W");
             int height = fm.getHeight();
             int lineWidth = (width > height) ? width * 16 : height * 16;
@@ -64,13 +70,13 @@ public class FontLoader {
         font = new Font(fontName, fontStyle, fontSize);
         fontImage = new BufferedImage(bitmapSize, bitmapSize,
                 BufferedImage.TYPE_4BYTE_ABGR);
-        Graphics2D g = (Graphics2D) fontImage.getGraphics();
+        g = (Graphics2D) fontImage.getGraphics();
         g.setFont(font);
         g.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
                 RenderingHints.VALUE_ANTIALIAS_ON);
         g.setColor(OPAQUE_WHITE);
         g.setBackground(TRANSPARENT_BLACK);
-        FontMetrics fm = g.getFontMetrics();
+        fm = g.getFontMetrics();
         for (int i = 0; i < 256; i++) {
             int x = i % 16;
             int y = i / 16;
@@ -109,6 +115,6 @@ public class FontLoader {
             GL11.glEndList();
         }
 
-        return new BitmapFont(base, texture, size);
+        return new BitmapFont(base, texture, size, charWidth);
     }
 }
