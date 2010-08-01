@@ -6,8 +6,8 @@ import java.util.Map;
 
 public final class PathFinder {
     private Map<TileCoordinate, TilePath> pathMap = new HashMap<TileCoordinate, TilePath>();
-    public PathFinder(TileCoordinate origin, UnitType type, int maxDistance) {
-        TilePath trivialPath = new TilePath(type, new ArrayList<TileDirection>(), origin);
+    public PathFinder(TileMap tileMap, TileCoordinate origin, UnitType type, int maxDistance) {
+        TilePath trivialPath = new TilePath(tileMap, type, new ArrayList<TileDirection>(), origin);
         this.pathMap.put(origin, trivialPath);
         this.generatePaths(trivialPath, maxDistance);
     }

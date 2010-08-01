@@ -15,12 +15,12 @@ public final class Tile {
      * @param terrain The terrain at this tile
      * @param at The location of this tile on a hexagonal grid
      * @param name The name of the location*/
-    public Tile(Terrain terrain, TileCoordinate at, String name, boolean access) {
+    public Tile(TileMap tileMap, Terrain terrain, TileCoordinate at, String name, boolean access) {
         this.terrain = terrain;
         this.at = at;
         this.name = name;
         this.access = access;
-        TileMap.add(this);
+        tileMap.add(this);
     }
     /** Adds a listener to this tile which will track the changes in the tile
      * @param listener the listener to track the state of the tile */

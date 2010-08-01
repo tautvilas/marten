@@ -1,16 +1,16 @@
 package marten.aoe.loader;
 
+import marten.aoe.engine.Engine;
 import marten.aoe.engine.TileCoordinate;
-import marten.aoe.engine.TileMap;
 
 final class ClearMapParser {
     private ClearMapParser() {}
-    public static void parse(DataTree branch) {
+    public static void parse(Engine engine, DataTree branch) {
         if (branch.value().equals("Map")) {
-            TileMap.removeAll();
+            engine.tileMap.removeAll();
             for (DataTree subbranch : branch.branches()) {
                 if (subbranch.value().equals("All"))
-                    TileMap.removeAll();
+                    engine.tileMap.removeAll();
                 else if (subbranch.value().equals("Tile")) {
                     int x = 0;
                     int y = 0;
@@ -27,7 +27,7 @@ final class ClearMapParser {
                         }
                         else
                             System.err.println("Unknown option: "+subsubbranch.value());
-                    TileMap.remove(new TileCoordinate(x, y));
+                    engine.tileMap.remove(new TileCoordinate(x, y));
                 }
             }                    
         }
