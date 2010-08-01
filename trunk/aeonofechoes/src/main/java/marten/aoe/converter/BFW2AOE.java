@@ -39,7 +39,7 @@ public final class BFW2AOE {
             rawLine = bfwFile.readLine();
         }
         int mapWidth = -1;            
-        int row = 1;
+        int row = mapHeight;
         // Reset input file
         bfwFile.close();
         bfwFile = new BufferedReader(new FileReader(args[0]));
@@ -50,7 +50,7 @@ public final class BFW2AOE {
         String[] mapPath = args[0].split("/"); 
         aoeFile.write("    Name="+mapPath[mapPath.length-1].split("\\.")[0].replace(" ", "_")+"\n");
         // Tile matrix parsing
-        while (row <= mapHeight) {
+        while (row > 0) {
             currentLine = bfwFile.readLine().split(",\\s*\\d*");
             if (currentLine[0].equals(""))
                 continue;
@@ -203,7 +203,7 @@ public final class BFW2AOE {
                 if (row <= borderSize || column <= borderSize || row >= mapHeight + 1 - borderSize || column >= mapWidth + 1 - borderSize)
                     aoeFile.write("        Inaccessible\n");
             }
-            row++;
+            row--;
         }
         aoeFile.close();
     }
