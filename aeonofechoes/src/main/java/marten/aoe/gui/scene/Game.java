@@ -60,6 +60,7 @@ public class Game extends AgeScene {
         MouseController mouseController = new MouseController();
         this.addController(mouseController);
         this.registerControllable(map);
+        flatland.compile();
     }
 
     @Override

@@ -28,4 +28,17 @@ public class Rectangle implements Geometry {
         }
         GL11.glEnd();
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (o instanceof Rectangle) {
+            Rectangle r2 = (Rectangle) o;
+            if (r2.dimension.equals(this.dimension))
+                return true;
+            else
+                return false;
+        } else {
+            return super.equals(o);
+        }
+    }
 }

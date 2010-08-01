@@ -7,7 +7,7 @@ import org.apache.log4j.Logger;
 public class GeometryCache {
     private static org.apache.log4j.Logger log = Logger
             .getLogger(GeometryCache.class);
- // TODO(zv): use hash map
+    // TODO(zv): use hash map
     private static HashSet<Geometry> geometryCache = new HashSet<Geometry>();
 
     public static Geometry get(Geometry geometry) {
