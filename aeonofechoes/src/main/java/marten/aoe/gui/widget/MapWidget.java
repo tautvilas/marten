@@ -31,6 +31,7 @@ public class MapWidget extends Sprite implements Widget, MouseListener {
     private BitmapFont font = FontCache.getFont(new Font("Courier New",
             Font.BOLD, 20));
     private TranslationGroup tg = new TranslationGroup();
+    private Tile activeTile = null;
     private int tileWidth;
     private int tileHeight;
 
@@ -90,7 +91,7 @@ public class MapWidget extends Sprite implements Widget, MouseListener {
         return false;
     }
 
-    private TileFace tileHit(Point coords) {
+    private Tile tileHit(Point coords) {
         coords.x -= this.getPosition().x;
         coords.y -= this.getPosition().y;
         if (coords.y < 0)
@@ -99,14 +100,13 @@ public class MapWidget extends Sprite implements Widget, MouseListener {
             coords.x -= tileWidth;
         if (Math.abs(coords.x % (tileWidth + tileWidth / 2)) <= tileWidth) {
             int tileX = ((int) coords.x / (tileWidth + tileWidth / 2)) * 2;
-            System.out.println(coords.x + " " + tileX);
             int tileY = (int) coords.y / (tileHeight);
             try {
                 Tile tile = TileMap.get(new TileCoordinate(tileX, tileY));
                 if (hitTest(tile, coords)) {
                     // return tiles.get(tile);
                 }
-                return tiles.get(tile);
+                return tile;
             } catch (IndexOutOfBoundsException e) {
 
             }
@@ -128,7 +128,7 @@ public class MapWidget extends Sprite implements Widget, MouseListener {
                 if (hitTest(tile, coords)) {
                     // return tiles.get(tile);
                 }
-                return tiles.get(tile);
+                return tile;
             } catch (IndexOutOfBoundsException e) {
 
             }
@@ -164,10 +164,15 @@ public class MapWidget extends Sprite implements Widget, MouseListener {
 
     @Override
     public void mouseMove(Point coords) {
-        TileFace tile = tileHit(coords);
+        Tile tile = tileHit(coords);
         if (tile != null) {
-            tile.setColor(new Color(0.5, 0.5, 1));
-            System.out.println(tile);
+            if (this.activeTile != null
+                    && !this.activeTile.at().equals(tile.at())) {
+                tiles.get(this.activeTile).setColor(new Color(1.0, 1.0, 1.0));
+            }
+            this.activeTile = tile;
+            TileFace tileFace = tiles.get(tile);
+            tileFace.setColor(new Color(0.5, 1, 0.5));
         }
     }
 
