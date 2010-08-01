@@ -15,6 +15,8 @@ import marten.age.graphics.primitives.Point;
 import marten.age.graphics.text.BitmapFont;
 import marten.age.graphics.text.BitmapString;
 import marten.age.graphics.text.FontCache;
+import marten.age.graphics.texture.Texture;
+import marten.age.graphics.texture.TextureLoader;
 import marten.age.graphics.transform.TranslationGroup;
 import marten.age.widget.Widget;
 import marten.aoe.engine.Engine;
@@ -26,7 +28,7 @@ import org.apache.log4j.Logger;
 public class MapWidget extends Sprite implements Widget, MouseListener {
     private static org.apache.log4j.Logger log = Logger
             .getLogger(MapWidget.class);
-    private HashMap<String, ImageData> terrainCache = new HashMap<String, ImageData>();
+    private HashMap<String, Texture> terrainCache = new HashMap<String, Texture>();
     private HashMap<Tile, TileFace> tiles = new HashMap<Tile, TileFace>();
     private BitmapFont font = FontCache.getFont(new Font("Courier New",
             Font.BOLD, 20));
@@ -38,7 +40,8 @@ public class MapWidget extends Sprite implements Widget, MouseListener {
 
     public MapWidget(Engine engine, String mapName) {
         this.engine = engine;
-        // FIXME(carnifex) Is it really necessary to pass an argument into a method for logging purposes only? :-/
+        // FIXME(carnifex) Is it really necessary to pass an argument into a
+        // method for logging purposes only? :-/
         log.info("Loading map tiles for '" + mapName + "'...");
         Set<String> definedTerrain = engine.terrain.definedTerrain();
         for (String terrainType : definedTerrain) {
@@ -48,7 +51,10 @@ public class MapWidget extends Sprite implements Widget, MouseListener {
                         + terrainType + ".png");
                 this.tileWidth = terrain.width;
                 this.tileHeight = terrain.height;
-                terrainCache.put(terrainType, terrain);
+                if (!terrainCache.containsKey(terrainType)) {
+                    terrainCache.put(terrainType, TextureLoader
+                            .loadTexture(terrain));
+                }
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
@@ -70,10 +76,10 @@ public class MapWidget extends Sprite implements Widget, MouseListener {
     }
 
     private class TileFace extends TextureSprite {
-        public TileFace(ImageData data, TileCoordinate position) {
-            super(data);
-            int imageWidth = data.width;
-            int imageHeight = data.height;
+        public TileFace(Texture texture, TileCoordinate position) {
+            super(texture);
+            int imageWidth = (int) texture.getDimension().width;
+            int imageHeight = (int) texture.getDimension().height;
             int delta = imageWidth + imageWidth / 2;
             if (position.x() % 2 == 0) {
                 this.setPosition(new Point((position.x() / 2) * delta, position
@@ -90,7 +96,8 @@ public class MapWidget extends Sprite implements Widget, MouseListener {
         }
     }
 
-    private Tile getTile(Point coords, boolean odd) throws IndexOutOfBoundsException{
+    private Tile getTile(Point coords, boolean odd)
+            throws IndexOutOfBoundsException {
         if (Math.abs(coords.x % (tileWidth + tileWidth / 2)) <= tileWidth) {
             int tileX = ((int) coords.x / (tileWidth + tileWidth / 2)) * 2;
             int tileY = (int) coords.y / (tileHeight);
@@ -98,7 +105,8 @@ public class MapWidget extends Sprite implements Widget, MouseListener {
                 tileX -= 1;
             else if (odd)
                 tileX += 1;
-            Tile tile = this.engine.tileMap.get(new TileCoordinate(tileX, tileY));
+            Tile tile = this.engine.tileMap
+                    .get(new TileCoordinate(tileX, tileY));
             return tile;
         }
         throw new IndexOutOfBoundsException("Tile index is out of bounds");
@@ -165,8 +173,8 @@ public class MapWidget extends Sprite implements Widget, MouseListener {
 
     @Override
     public int getHeight() {
-        return (this.engine.tileMap.maxY() - this.engine.tileMap.minY() + 1) * (this.tileHeight)
-                + this.tileHeight / 2;
+        return (this.engine.tileMap.maxY() - this.engine.tileMap.minY() + 1)
+                * (this.tileHeight) + this.tileHeight / 2;
     }
 
     @Override
@@ -176,8 +184,8 @@ public class MapWidget extends Sprite implements Widget, MouseListener {
 
     @Override
     public int getWidth() {
-        return (this.engine.tileMap.maxX() - this.engine.tileMap.minX() + 1) * (this.tileWidth * 3 / 4)
-                + this.tileWidth / 4;
+        return (this.engine.tileMap.maxX() - this.engine.tileMap.minX() + 1)
+                * (this.tileWidth * 3 / 4) + this.tileWidth / 4;
     }
 
     @Override
