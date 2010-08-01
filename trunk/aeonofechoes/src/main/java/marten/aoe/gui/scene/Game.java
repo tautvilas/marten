@@ -8,6 +8,7 @@ import marten.age.control.MouseController;
 import marten.age.core.AgeScene;
 import marten.age.graphics.flat.Flatland;
 import marten.age.graphics.primitives.Point;
+import marten.aoe.engine.Engine;
 import marten.aoe.gui.widget.MapWidget;
 import marten.aoe.loader.Loader;
 
@@ -18,17 +19,18 @@ public class Game extends AgeScene {
     private static org.apache.log4j.Logger log = Logger.getLogger(Game.class);
 
     private Flatland flatland = new Flatland();
-    private MapWidget map;
+    private Engine engine = new Engine();
+    private MapWidget map;    
 
     public Game(String mapName) {
         log.info("Loading map data for '" + mapName + "'...");
         try {
-            Loader.load("data/maps/MapTest");
+            Loader.load(this.engine, "data/maps/MapTest");
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
         log.info("Loaded.");
-        map = new MapWidget(mapName);
+        map = new MapWidget(this.engine, mapName);
         flatland.addChild(map);
 
         KeyboardController keyboardController = new KeyboardController();

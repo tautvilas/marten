@@ -17,10 +17,10 @@ import marten.age.graphics.text.BitmapString;
 import marten.age.graphics.text.FontCache;
 import marten.age.graphics.transform.TranslationGroup;
 import marten.age.widget.Widget;
+import marten.aoe.engine.Engine;
 import marten.aoe.engine.TerrainDatabase;
 import marten.aoe.engine.Tile;
 import marten.aoe.engine.TileCoordinate;
-import marten.aoe.engine.TileMap;
 
 import org.apache.log4j.Logger;
 
@@ -35,8 +35,11 @@ public class MapWidget extends Sprite implements Widget, MouseListener {
     private Tile activeTile = null;
     private int tileWidth;
     private int tileHeight;
+    private Engine engine;
 
-    public MapWidget(String mapName) {
+    public MapWidget(Engine engine, String mapName) {
+        this.engine = engine;
+        // FIXME(carnifex) Is it really necessary to pass an argument into a method for logging purposes only? :-/
         log.info("Loading map tiles for '" + mapName + "'...");
         Set<String> definedTerrain = TerrainDatabase.definedTerrain();
         for (String terrainType : definedTerrain) {
@@ -52,13 +55,13 @@ public class MapWidget extends Sprite implements Widget, MouseListener {
             }
         }
         log.info("Loaded.");
-        for (Tile tile : TileMap.selectAll()) {
+        for (Tile tile : engine.tileMap.selectAll()) {
             TileFace tileWidget = new TileFace(terrainCache.get(tile.terrain()
                     .name()), tile.at());
             tiles.put(tile, tileWidget);
             tg.addChild(tileWidget);
         }
-        for (Tile tile : TileMap.selectAll()) {
+        for (Tile tile : engine.tileMap.selectAll()) {
             BitmapString coords = new BitmapString(font, tile.at().x() + ""
                     + tile.at().y());
             coords.setPosition(tiles.get(tile).getPosition());
@@ -96,7 +99,7 @@ public class MapWidget extends Sprite implements Widget, MouseListener {
                 tileX -= 1;
             else if (odd)
                 tileX += 1;
-            Tile tile = TileMap.get(new TileCoordinate(tileX, tileY));
+            Tile tile = this.engine.tileMap.get(new TileCoordinate(tileX, tileY));
             return tile;
         }
         throw new IndexOutOfBoundsException("Tile index is out of bounds");
@@ -163,7 +166,7 @@ public class MapWidget extends Sprite implements Widget, MouseListener {
 
     @Override
     public int getHeight() {
-        return (TileMap.maxY() - TileMap.minY() + 1) * (this.tileHeight)
+        return (this.engine.tileMap.maxY() - this.engine.tileMap.minY() + 1) * (this.tileHeight)
                 + this.tileHeight / 2;
     }
 
@@ -174,7 +177,7 @@ public class MapWidget extends Sprite implements Widget, MouseListener {
 
     @Override
     public int getWidth() {
-        return (TileMap.maxX() - TileMap.minX() + 1) * (this.tileWidth * 3 / 4)
+        return (this.engine.tileMap.maxX() - this.engine.tileMap.minX() + 1) * (this.tileWidth * 3 / 4)
                 + this.tileWidth / 4;
     }
 

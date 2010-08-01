@@ -1,20 +1,20 @@
 package marten.aoe.loader;
 
+import marten.aoe.engine.Engine;
 import marten.aoe.engine.TerrainDatabase;
 import marten.aoe.engine.Tile;
 import marten.aoe.engine.TileCoordinate;
-import marten.aoe.engine.TileMap;
 
 final class MapParser {
     private MapParser() {}
-    public static void parse(DataTree branch) {
+    public static void parse(Engine engine, DataTree branch) {
         if (branch.value().equals("Map")) {
             for (DataTree subbranch : branch.branches()) {
                 if (subbranch.value().equals("KEYVALUE")) {
                     String key = subbranch.branches().get(0).value();
                     String value = subbranch.branches().get(1).value();
                     if (key.equals("Name"))
-                        TileMap.name(value);
+                        engine.tileMap.name(value);
                 } else if (subbranch.value().equals("Tile")) {
                     int x = 0;
                     int y = 0;
@@ -42,7 +42,7 @@ final class MapParser {
                         else
                             System.err.println("Unknown option: "+subsubbranch.value());
                     if (TerrainDatabase.definedTerrain().contains(terrain))
-                        new Tile(TerrainDatabase.get(terrain), new TileCoordinate(x, y), name, access);
+                        new Tile(engine.tileMap, TerrainDatabase.get(terrain), new TileCoordinate(x, y), name, access);
                     else
                         System.err.println("Unknown terrain type: "+terrain);
                 }

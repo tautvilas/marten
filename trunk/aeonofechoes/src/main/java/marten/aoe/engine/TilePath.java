@@ -9,8 +9,10 @@ public final class TilePath {
     private List<TileCoordinate> tiles;
     private TileCoordinate origin;
     private UnitType pathType;
+    private TileMap tileMap;
     private int lengthCache = -1;
-    public TilePath(UnitType pathType, List<TileDirection> directions, TileCoordinate origin) {
+    public TilePath(TileMap tileMap, UnitType pathType, List<TileDirection> directions, TileCoordinate origin) {
+        this.tileMap = tileMap;
         this.directions = new ArrayList<TileDirection>(directions);
         this.tiles = new ArrayList<TileCoordinate>();
         this.origin = origin;
@@ -24,7 +26,7 @@ public final class TilePath {
     public TilePath extendBy(TileDirection direction) {
         List<TileDirection> newList = new ArrayList<TileDirection>(this.directions);
         newList.add(direction);
-        return new TilePath(this.pathType, newList, this.origin);
+        return new TilePath(this.tileMap, this.pathType, newList, this.origin);
     }
     public int length() {
         if (this.lengthCache > -1)
@@ -33,7 +35,7 @@ public final class TilePath {
         for (TileCoordinate coordinate : tiles) {            
             Tile tile = null;
             try {
-                tile = TileMap.get(coordinate);
+                tile = this.tileMap.get(coordinate);
             } catch (IndexOutOfBoundsException e) {
                 return Integer.MAX_VALUE;
             }
