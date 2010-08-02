@@ -11,8 +11,8 @@ import marten.age.graphics.geometry.GeneratedGeometry;
 import marten.age.graphics.geometry.Geometry;
 import marten.age.graphics.geometry.GeometryCache;
 import marten.age.graphics.geometry.OptimizedGeometry;
-import marten.age.graphics.geometry.SimpleModel;
 import marten.age.graphics.model.ComplexModel;
+import marten.age.graphics.model.SimpleModel;
 
 import org.apache.log4j.Logger;
 
