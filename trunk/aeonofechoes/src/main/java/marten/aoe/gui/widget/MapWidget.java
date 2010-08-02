@@ -7,10 +7,15 @@ import java.util.HashMap;
 import java.util.Set;
 
 import marten.age.control.MouseListener;
+import marten.age.graphics.appearance.Appearance;
 import marten.age.graphics.appearance.Color;
 import marten.age.graphics.flat.sprite.Sprite;
 import marten.age.graphics.flat.sprite.TextureSprite;
+import marten.age.graphics.geometry.primitives.Rectangle;
 import marten.age.graphics.image.ImageData;
+import marten.age.graphics.model.ComplexModel;
+import marten.age.graphics.model.SimpleModel;
+import marten.age.graphics.primitives.Dimension;
 import marten.age.graphics.primitives.Point;
 import marten.age.graphics.text.BitmapFont;
 import marten.age.graphics.text.BitmapString;
@@ -37,6 +42,7 @@ public class MapWidget extends Sprite implements Widget, MouseListener {
     private int tileWidth;
     private int tileHeight;
     private Engine engine;
+    private ComplexModel cm = new ComplexModel();
 
     public MapWidget(Engine engine, String mapName) {
         this.engine = engine;
@@ -63,15 +69,22 @@ public class MapWidget extends Sprite implements Widget, MouseListener {
         for (Tile tile : engine.tileMap.selectAll()) {
             TileFace tileWidget = new TileFace(terrainCache.get(tile.terrain()
                     .name()), tile.at());
+            SimpleModel sm = new SimpleModel(new Rectangle(new Dimension(
+                    tileWidth, tileHeight), new Point(tileWidget.getPosition())));
+            Appearance appearance = new Appearance(new Color(1.0, 1.0, 1.0));
+            cm.setAppearance(appearance);
+            sm.setAppearance(new Appearance(terrainCache.get(tile.terrain().name())));
+            cm.addPart(sm);
             tiles.put(tile, tileWidget);
-            tg.addChild(tileWidget);
+//            tg.addChild(tileWidget);
         }
         for (Tile tile : engine.tileMap.selectAll()) {
             BitmapString coords = new BitmapString(font, tile.at().x() + ":"
                     + tile.at().y(), new Color(0.0, 1.0, 0.0));
             coords.setPosition(tiles.get(tile).getPosition());
-            tg.addChild(coords);
+            // tg.addChild(coords);
         }
+        tg.addChild(cm);
         this.addChild(tg);
     }
 

@@ -19,6 +19,11 @@ public class Appearance {
     public Appearance() {
     }
 
+    public Appearance(Color color) {
+        this();
+        this.color = color;
+    }
+
     public Appearance(Texture texture) {
         this();
         this.texture = texture;
@@ -135,23 +140,29 @@ public class Appearance {
     }
 
     public void set() {
-        if (this.color != null)
+        if (this.color != null) {
             GL11.glColor3d(color.r, color.g, color.b);
-        if (this.shininess != -1f)
+        }
+        if (this.shininess != -1f) {
             GL11.glMaterialf(GL11.GL_FRONT_AND_BACK, GL11.GL_SHININESS,
                     this.shininess);
-        if (this.ambient != null)
+        }
+        if (this.ambient != null) {
             GL11.glMaterial(GL11.GL_FRONT_AND_BACK, GL11.GL_AMBIENT,
                     this.ambient);
-        if (this.diffuse != null)
+        }
+        if (this.diffuse != null) {
             GL11.glMaterial(GL11.GL_FRONT_AND_BACK, GL11.GL_DIFFUSE,
                     this.diffuse);
-        if (this.emission != null)
+        }
+        if (this.emission != null) {
             GL11.glMaterial(GL11.GL_FRONT_AND_BACK, GL11.GL_EMISSION,
                     this.emission);
-        if (this.specular != null)
+        }
+        if (this.specular != null) {
             GL11.glMaterial(GL11.GL_FRONT_AND_BACK, GL11.GL_SPECULAR,
                     this.specular);
+        }
         if (this.texture != null) {
             // if (texture.getTextureId() != -1) {
             if (!GL11.glIsEnabled(GL11.GL_TEXTURE_2D)) {

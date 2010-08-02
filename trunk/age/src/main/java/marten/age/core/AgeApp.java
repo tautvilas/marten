@@ -24,6 +24,7 @@ public abstract class AgeApp {
     private String title = "";
     // private DisplayMode displayMode;
 
+    @SuppressWarnings("unused")
     private static final int FRAMERATE = 60;
 
     public int width = DEFAULT_WIDHT;
@@ -68,7 +69,7 @@ public abstract class AgeApp {
 
             activeScene.compute();
             activeScene.render();
-            Display.sync(FRAMERATE);
+//            Display.sync(FRAMERATE);
         }
     }
 
