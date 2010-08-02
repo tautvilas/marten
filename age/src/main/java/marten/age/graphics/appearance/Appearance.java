@@ -29,6 +29,10 @@ public class Appearance {
         this.texture = texture;
     }
 
+    public Texture getTexture() {
+        return this.texture;
+    }
+
     public Appearance(float newShininess, Color newSpecular, Color newDiffuse,
             Color newAmbient, Color newEmission, Texture texture) {
         this(texture);
