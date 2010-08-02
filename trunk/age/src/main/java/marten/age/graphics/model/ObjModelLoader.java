@@ -11,7 +11,6 @@ import java.util.HashMap;
 
 import marten.age.graphics.appearance.Appearance;
 import marten.age.graphics.appearance.Color;
-import marten.age.graphics.geometry.SimpleModel;
 import marten.age.graphics.geometry.TriangularGeometry;
 import marten.age.graphics.image.ImageData;
 import marten.age.graphics.primitives.Point;

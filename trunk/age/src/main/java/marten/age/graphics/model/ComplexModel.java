@@ -3,7 +3,6 @@ package marten.age.graphics.model;
 import java.util.ArrayList;
 
 import marten.age.graphics.BasicSceneGraphChild;
-import marten.age.graphics.geometry.SimpleModel;
 
 public class ComplexModel extends BasicSceneGraphChild {
 	private ArrayList<SimpleModel> parts = new ArrayList<SimpleModel>();
