@@ -11,6 +11,7 @@ import marten.age.graphics.appearance.Appearance;
 import marten.age.graphics.appearance.Color;
 import marten.age.graphics.flat.sprite.Sprite;
 import marten.age.graphics.flat.sprite.TextureSprite;
+import marten.age.graphics.geometry.Geometry;
 import marten.age.graphics.geometry.primitives.Rectangle;
 import marten.age.graphics.image.ImageData;
 import marten.age.graphics.model.ComplexModel;
@@ -33,7 +34,7 @@ import org.apache.log4j.Logger;
 public class MapWidget extends Sprite implements Widget, MouseListener {
     private static org.apache.log4j.Logger log = Logger
             .getLogger(MapWidget.class);
-    private HashMap<String, Texture> terrainCache = new HashMap<String, Texture>();
+    private HashMap<String, SimpleModel> terrainCache = new HashMap<String, SimpleModel>();
     private HashMap<Tile, TileFace> tiles = new HashMap<Tile, TileFace>();
     private BitmapFont font = FontCache.getFont(new Font("Courier New",
             Font.BOLD, 20));
@@ -58,8 +59,9 @@ public class MapWidget extends Sprite implements Widget, MouseListener {
                 this.tileWidth = terrain.width;
                 this.tileHeight = terrain.height;
                 if (!terrainCache.containsKey(terrainType)) {
-                    terrainCache.put(terrainType, TextureLoader
-                            .loadTexture(terrain));
+                    SimpleModel simpleModel = new SimpleModel(new Appearance(
+                            TextureLoader.loadTexture(terrain)));
+                    terrainCache.put(terrainType, simpleModel);
                 }
             } catch (IOException e) {
                 throw new RuntimeException(e);
@@ -69,14 +71,12 @@ public class MapWidget extends Sprite implements Widget, MouseListener {
         for (Tile tile : engine.tileMap.selectAll()) {
             TileFace tileWidget = new TileFace(terrainCache.get(tile.terrain()
                     .name()), tile.at());
-            SimpleModel sm = new SimpleModel(new Rectangle(new Dimension(
-                    tileWidth, tileHeight), new Point(tileWidget.getPosition())));
-            Appearance appearance = new Appearance(new Color(1.0, 1.0, 1.0));
-            cm.setAppearance(appearance);
-            sm.setAppearance(new Appearance(terrainCache.get(tile.terrain().name())));
-            cm.addPart(sm);
+            Geometry geometry = new Rectangle(new Dimension(tileWidth,
+                    tileHeight), new Point(tileWidget.getPosition()));
+            SimpleModel sm = terrainCache.get(tile.terrain().name());
+            sm.addGeometry(geometry);
             tiles.put(tile, tileWidget);
-//            tg.addChild(tileWidget);
+            // tg.addChild(tileWidget);
         }
         for (Tile tile : engine.tileMap.selectAll()) {
             BitmapString coords = new BitmapString(font, tile.at().x() + ":"
@@ -84,13 +84,18 @@ public class MapWidget extends Sprite implements Widget, MouseListener {
             coords.setPosition(tiles.get(tile).getPosition());
             // tg.addChild(coords);
         }
+        cm.setAppearance(new Appearance(new Color(1.0, 1.0, 1.0)));
+        for (SimpleModel sm : terrainCache.values()) {
+            cm.addPart(sm);
+        }
         tg.addChild(cm);
         this.addChild(tg);
     }
 
     private class TileFace extends TextureSprite {
-        public TileFace(Texture texture, TileCoordinate position) {
-            super(texture);
+        public TileFace(SimpleModel simpleModel, TileCoordinate position) {
+            super(new Texture(0, new Dimension()));
+            Texture texture = simpleModel.getAppearance().getTexture();
             int imageWidth = (int) texture.getDimension().width;
             int imageHeight = (int) texture.getDimension().height;
             int delta = imageWidth + imageWidth / 2;

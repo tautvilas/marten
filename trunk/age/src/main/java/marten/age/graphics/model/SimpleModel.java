@@ -14,6 +14,10 @@ public class SimpleModel extends BasicSceneGraphChild {
         this.geometries.add(geometry);
     }
 
+    public SimpleModel(Appearance appearance) {
+        this.appearance = appearance;
+    }
+
     public void setAppearance(Appearance appearance) {
         this.appearance = appearance;
     }
