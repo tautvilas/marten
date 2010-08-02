@@ -37,15 +37,23 @@ public abstract class Root extends BasicSceneGraphParent {
     private void compileSceneNode(SceneGraphNode node) {
         if (node instanceof SimpleModel) {
             SimpleModel sm = (SimpleModel) node;
-            Geometry g = sm.getGeometry();
-            sm.setGeometry(optimizeGeometry(g));
+            optimizeGeometry(sm);
         } else if (node instanceof ComplexModel) {
             ComplexModel cm = (ComplexModel) node;
             ArrayList<SimpleModel> parts = cm.getParts();
             for (SimpleModel part : parts) {
-                part.setGeometry(optimizeGeometry(part.getGeometry()));
+                optimizeGeometry(part);
             }
         }
+    }
+
+    private void optimizeGeometry(SimpleModel sm) {
+        ArrayList<Geometry> geometries = sm.getGeometries();
+        ArrayList<Geometry> optimizedGeometries = new ArrayList<Geometry>();
+        for (Geometry g : geometries) {
+            optimizedGeometries.add(optimizeGeometry(g));
+        }
+        sm.setGeometries(optimizedGeometries);
     }
 
     private Geometry optimizeGeometry(Geometry g) {
