@@ -8,23 +8,15 @@ import org.lwjgl.BufferUtils;
 import org.lwjgl.opengl.GL11;
 
 public class Appearance {
-    private FloatBuffer specular = BufferUtils.createFloatBuffer(4);
-    private FloatBuffer diffuse = BufferUtils.createFloatBuffer(4);
-    private FloatBuffer ambient = BufferUtils.createFloatBuffer(4);
-    private FloatBuffer emission = BufferUtils.createFloatBuffer(4);
-    private Color color = new Color(0.0, 0.0, 0.0);
-    private float shininess = 0.0f;
-    private Texture texture;
+    private FloatBuffer specular = null;
+    private FloatBuffer diffuse = null;
+    private FloatBuffer ambient = null;
+    private FloatBuffer emission = null;
+    private Color color = null;
+    private float shininess = -1f;
+    private Texture texture = null;
 
     public Appearance() {
-        this.specular.put(new float[] { 0.0f, 0.0f, 0.0f, 1.0f });
-        this.specular.rewind();
-        this.diffuse.put(new float[] { 0.8f, 0.8f, 0.8f, 1.0f });
-        this.diffuse.rewind();
-        this.ambient.put(new float[] { 0.2f, 0.2f, 0.2f, 1.0f });
-        this.ambient.rewind();
-        this.emission.put(new float[] { 0.0f, 0.0f, 0.0f, 1.0f });
-        this.emission.rewind();
     }
 
     public Appearance(Texture texture) {
@@ -51,6 +43,7 @@ public class Appearance {
             else if (channel > 1.0f)
                 channel = 1.0f;
         }
+        this.specular = BufferUtils.createFloatBuffer(4);
         this.specular.put(buffer);
         this.specular.rewind();
     }
@@ -69,6 +62,7 @@ public class Appearance {
             else if (channel > 1.0f)
                 channel = 1.0f;
         }
+        this.diffuse = BufferUtils.createFloatBuffer(4);
         this.diffuse.put(buffer);
         this.diffuse.rewind();
     }
@@ -95,6 +89,7 @@ public class Appearance {
             else if (channel > 1.0f)
                 channel = 1.0f;
         }
+        this.ambient = BufferUtils.createFloatBuffer(4);
         this.ambient.put(buffer);
         this.ambient.rewind();
     }
@@ -113,6 +108,7 @@ public class Appearance {
             else if (channel > 1.0f)
                 channel = 1.0f;
         }
+        this.emission = BufferUtils.createFloatBuffer(4);
         this.emission.put(buffer);
         this.emission.rewind();
     }
@@ -139,21 +135,30 @@ public class Appearance {
     }
 
     public void set() {
-        GL11.glColor3d(color.r, color.g, color.b);
-        GL11.glMaterialf(GL11.GL_FRONT_AND_BACK, GL11.GL_SHININESS,
-                this.shininess);
-        GL11.glMaterial(GL11.GL_FRONT_AND_BACK, GL11.GL_AMBIENT, this.ambient);
-        GL11.glMaterial(GL11.GL_FRONT_AND_BACK, GL11.GL_DIFFUSE, this.diffuse);
-        GL11
-                .glMaterial(GL11.GL_FRONT_AND_BACK, GL11.GL_EMISSION,
-                        this.emission);
-        GL11
-                .glMaterial(GL11.GL_FRONT_AND_BACK, GL11.GL_SPECULAR,
-                        this.specular);
-        if (texture != null && texture.getTextureId() != -1) {
-            GL11.glEnable(GL11.GL_TEXTURE_2D);
+        if (this.color != null)
+            GL11.glColor3d(color.r, color.g, color.b);
+        if (this.shininess != -1f)
+            GL11.glMaterialf(GL11.GL_FRONT_AND_BACK, GL11.GL_SHININESS,
+                    this.shininess);
+        if (this.ambient != null)
+            GL11.glMaterial(GL11.GL_FRONT_AND_BACK, GL11.GL_AMBIENT,
+                    this.ambient);
+        if (this.diffuse != null)
+            GL11.glMaterial(GL11.GL_FRONT_AND_BACK, GL11.GL_DIFFUSE,
+                    this.diffuse);
+        if (this.emission != null)
+            GL11.glMaterial(GL11.GL_FRONT_AND_BACK, GL11.GL_EMISSION,
+                    this.emission);
+        if (this.specular != null)
+            GL11.glMaterial(GL11.GL_FRONT_AND_BACK, GL11.GL_SPECULAR,
+                    this.specular);
+        if (this.texture != null) {
+            // if (texture.getTextureId() != -1) {
+            if (!GL11.glIsEnabled(GL11.GL_TEXTURE_2D)) {
+                GL11.glEnable(GL11.GL_TEXTURE_2D);
+            }
             GL11.glBindTexture(GL11.GL_TEXTURE_2D, texture.getTextureId());
-        } else {
+        } else if (GL11.glIsEnabled(GL11.GL_TEXTURE_2D)) {
             GL11.glDisable(GL11.GL_TEXTURE_2D);
         }
     }
