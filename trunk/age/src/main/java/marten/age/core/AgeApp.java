@@ -23,8 +23,7 @@ public abstract class AgeApp {
 
     private String title = "";
 
-    @SuppressWarnings("unused")
-    private static final int FRAMERATE = 60;
+    private static final int FRAMERATE = 50;
 
     public int width = DEFAULT_WIDHT;
     public int height = DEFAULT_HEIGHT;
@@ -68,7 +67,7 @@ public abstract class AgeApp {
 
             activeScene.compute();
             activeScene.render();
-            // Display.sync(FRAMERATE);
+            Display.sync(FRAMERATE);
         }
     }
 
@@ -107,7 +106,7 @@ public abstract class AgeApp {
         if (fullscreen) {
             Display.setFullscreen(true);
         }
-        // Display.setVSyncEnabled(true);
+        Display.setVSyncEnabled(true);
         Display.create();
 
     }

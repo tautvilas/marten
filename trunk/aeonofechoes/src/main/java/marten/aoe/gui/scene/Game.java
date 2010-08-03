@@ -46,13 +46,13 @@ public class Game extends AgeScene {
             @Override
             public void keyDown(int key, char character) {
                 if (key == Keyboard.KEY_DOWN) {
-                    map.setPosition(new Point(map.getPosition().x, map.getPosition().y + 10));
+                    map.ScrollDown(20);
                 } else if (key == Keyboard.KEY_UP) {
-                    map.setPosition(new Point(map.getPosition().x, map.getPosition().y - 10));
+                    map.ScrollUp(20);
                 } else if (key == Keyboard.KEY_LEFT) {
-                    map.setPosition(new Point(map.getPosition().x + 10, map.getPosition().y));
+                    map.ScrollLeft(20);
                 } else if (key == Keyboard.KEY_RIGHT) {
-                    map.setPosition(new Point(map.getPosition().x - 10, map.getPosition().y));
+                    map.ScrollRight(20);
                 }
             }
         });
@@ -67,13 +67,13 @@ public class Game extends AgeScene {
     public void compute() {
         Point coords = mouseController.getMouseCoordinates();
         if (coords.x < 5) {
-            map.setPosition(new Point(map.getPosition().x + 10, map.getPosition().y));
+            map.ScrollLeft(10);
         } else if (coords.x > AppInfo.getDisplayWidth() - 5) {
-            map.setPosition(new Point(map.getPosition().x - 10, map.getPosition().y));
+            map.ScrollRight(10);
         } else if (coords.y < 5) {
-            map.setPosition(new Point(map.getPosition().x, map.getPosition().y + 10));
+            map.ScrollDown(10);
         } else if (coords.y > AppInfo.getDisplayHeight() - 5) {
-            map.setPosition(new Point(map.getPosition().x, map.getPosition().y - 10));
+            map.ScrollUp(10);
         }
     }
 
