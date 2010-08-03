@@ -7,6 +7,7 @@ import java.util.HashMap;
 import java.util.Set;
 
 import marten.age.control.MouseListener;
+import marten.age.core.AppInfo;
 import marten.age.graphics.appearance.Appearance;
 import marten.age.graphics.appearance.Color;
 import marten.age.graphics.flat.sprite.Sprite;
@@ -45,6 +46,11 @@ public class MapWidget extends Sprite implements Widget, MouseListener {
     private ComplexModel cm = new ComplexModel();
     private TextureSprite tileHighlight = null;
 
+    private int minX = Integer.MAX_VALUE;
+    private int maxX = Integer.MIN_VALUE;
+    private int minY = Integer.MAX_VALUE;
+    private int maxY = Integer.MIN_VALUE;
+
     public MapWidget(Engine engine, String mapName) {
         this.engine = engine;
         try {
@@ -77,6 +83,7 @@ public class MapWidget extends Sprite implements Widget, MouseListener {
         log.info("Loaded.");
         for (Tile tile : engine.tileMap.selectAll()) {
             Point tileCoordinates = getTileDisplayCoordinates(tile.at());
+            updateDimensionConstraints(tileCoordinates);
             Geometry geometry = new Rectangle(new Dimension(tileWidth,
                     tileHeight), tileCoordinates);
             SimpleModel sm = terrainCache.get(tile.terrain().name());
@@ -97,6 +104,18 @@ public class MapWidget extends Sprite implements Widget, MouseListener {
         tg.addChild(cm);
         tg.addChild(tileHighlight);
         this.addChild(tg);
+        this.setPosition(this.getPosition().move(new Point(-minX, -minY)));
+    }
+
+    private void updateDimensionConstraints(Point tileCoordinates) {
+        if (tileCoordinates.x + tileWidth > this.maxX)
+            this.maxX = (int) tileCoordinates.x + tileWidth;
+        else if (tileCoordinates.x < this.minX)
+            this.minX = (int) tileCoordinates.x;
+        if (tileCoordinates.y + tileHeight > this.maxY)
+            this.maxY = (int) tileCoordinates.y + tileHeight;
+        else if (tileCoordinates.y < this.minY)
+            this.minY = (int) tileCoordinates.y;
     }
 
     private Point getTileDisplayCoordinates(TileCoordinate position) {
@@ -188,6 +207,26 @@ public class MapWidget extends Sprite implements Widget, MouseListener {
         }
     }
 
+    public void ScrollDown(int numPixels) {
+        this.setPosition(new Point(this.getPosition().x, this.getPosition().y
+                + numPixels));
+    }
+
+    public void ScrollUp(int numPixels) {
+        this.setPosition(new Point(this.getPosition().x, this.getPosition().y
+                - numPixels));
+    }
+
+    public void ScrollLeft(int numPixels) {
+        this.setPosition(new Point(this.getPosition().x + numPixels, this
+                .getPosition().y));
+    }
+
+    public void ScrollRight(int numPixels) {
+        this.setPosition(new Point(this.getPosition().x - numPixels, this
+                .getPosition().y));
+    }
+
     @Override
     public int getHeight() {
         return (this.engine.tileMap.maxY() - this.engine.tileMap.minY() + 1)
@@ -207,6 +246,19 @@ public class MapWidget extends Sprite implements Widget, MouseListener {
 
     @Override
     public void setPosition(Point position) {
+        Point currentPosition = this.getPosition();
+        if (currentPosition.x + minX > 0 && position.x > currentPosition.x) {
+            position.x = currentPosition.x;
+        } else if (currentPosition.x + maxX < AppInfo.getDisplayWidth()
+                && position.x < currentPosition.x) {
+            position.x = currentPosition.x;
+        }
+        if (currentPosition.y + minY > 0 && position.y > currentPosition.y) {
+            position.y = currentPosition.y;
+        } else if (currentPosition.y + maxY < AppInfo.getDisplayHeight()
+                && position.y < currentPosition.y) {
+            position.y = currentPosition.y;
+        }
         tg.setCoordinates(position);
     }
 
