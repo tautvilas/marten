@@ -22,7 +22,6 @@ public abstract class AgeApp {
     private static final int DEFAULT_HEIGHT = 600;
 
     private String title = "";
-    // private DisplayMode displayMode;
 
     @SuppressWarnings("unused")
     private static final int FRAMERATE = 60;
@@ -69,7 +68,7 @@ public abstract class AgeApp {
 
             activeScene.compute();
             activeScene.render();
-//            Display.sync(FRAMERATE);
+            // Display.sync(FRAMERATE);
         }
     }
 
@@ -91,8 +90,7 @@ public abstract class AgeApp {
     }
 
     private void initDisplay() throws Exception {
-        DisplayMode mode = null;
-//        DisplayMode mode = selectMode();
+        DisplayMode mode = selectMode();
         boolean fullscreen = true;
         if (mode == null) {
             fullscreen = false;
@@ -122,7 +120,6 @@ public abstract class AgeApp {
         return this.height;
     }
 
-    @SuppressWarnings("unused")
     private DisplayMode selectMode() throws Exception {
         DisplayMode[] modes = Display.getAvailableDisplayModes();
         DisplayMode mode = null;
@@ -164,7 +161,7 @@ public abstract class AgeApp {
         @Override
         public void handle(AgeEvent e) {
             if (e instanceof AgeSceneSwitchEvent) {
-                AgeSceneSwitchEvent event = (AgeSceneSwitchEvent)e;
+                AgeSceneSwitchEvent event = (AgeSceneSwitchEvent) e;
                 switchScene(event.newScene);
                 log.info("AGE scene switced to " + event.newScene);
             } else {
@@ -180,5 +177,6 @@ public abstract class AgeApp {
     public abstract void configure();
 
     /* Do some final cleanup (overriding is optional) */
-    public void finalize() {}
+    public void finalize() {
+    }
 }
