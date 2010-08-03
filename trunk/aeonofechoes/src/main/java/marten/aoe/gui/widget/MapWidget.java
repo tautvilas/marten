@@ -10,7 +10,6 @@ import marten.age.control.MouseListener;
 import marten.age.graphics.appearance.Appearance;
 import marten.age.graphics.appearance.Color;
 import marten.age.graphics.flat.sprite.Sprite;
-import marten.age.graphics.flat.sprite.TextureSprite;
 import marten.age.graphics.geometry.Geometry;
 import marten.age.graphics.geometry.primitives.Rectangle;
 import marten.age.graphics.image.ImageData;
@@ -21,7 +20,6 @@ import marten.age.graphics.primitives.Point;
 import marten.age.graphics.text.BitmapFont;
 import marten.age.graphics.text.BitmapString;
 import marten.age.graphics.text.FontCache;
-import marten.age.graphics.texture.Texture;
 import marten.age.graphics.texture.TextureLoader;
 import marten.age.graphics.transform.TranslationGroup;
 import marten.age.widget.Widget;
@@ -35,7 +33,7 @@ public class MapWidget extends Sprite implements Widget, MouseListener {
     private static org.apache.log4j.Logger log = Logger
             .getLogger(MapWidget.class);
     private HashMap<String, SimpleModel> terrainCache = new HashMap<String, SimpleModel>();
-    private HashMap<Tile, TileFace> tiles = new HashMap<Tile, TileFace>();
+    private HashMap<Tile, Point> tiles = new HashMap<Tile, Point>();
     private BitmapFont font = FontCache.getFont(new Font("Courier New",
             Font.BOLD, 20));
     private TranslationGroup tg = new TranslationGroup();
@@ -69,19 +67,18 @@ public class MapWidget extends Sprite implements Widget, MouseListener {
         }
         log.info("Loaded.");
         for (Tile tile : engine.tileMap.selectAll()) {
-            TileFace tileWidget = new TileFace(terrainCache.get(tile.terrain()
-                    .name()), tile.at());
+            Point tileCoordinates = getTileDisplayCoordinates(tile.at());
             Geometry geometry = new Rectangle(new Dimension(tileWidth,
-                    tileHeight), new Point(tileWidget.getPosition()));
+                    tileHeight), tileCoordinates);
             SimpleModel sm = terrainCache.get(tile.terrain().name());
             sm.addGeometry(geometry);
-            tiles.put(tile, tileWidget);
+            tiles.put(tile, tileCoordinates);
             // tg.addChild(tileWidget);
         }
         for (Tile tile : engine.tileMap.selectAll()) {
             BitmapString coords = new BitmapString(font, tile.at().x() + ":"
                     + tile.at().y(), new Color(0.0, 1.0, 0.0));
-            coords.setPosition(tiles.get(tile).getPosition());
+            coords.setPosition(tiles.get(tile));
             // tg.addChild(coords);
         }
         cm.setAppearance(new Appearance(new Color(1.0, 1.0, 1.0)));
@@ -92,25 +89,19 @@ public class MapWidget extends Sprite implements Widget, MouseListener {
         this.addChild(tg);
     }
 
-    private class TileFace extends TextureSprite {
-        public TileFace(SimpleModel simpleModel, TileCoordinate position) {
-            super(new Texture(0, new Dimension()));
-            Texture texture = simpleModel.getAppearance().getTexture();
-            int imageWidth = (int) texture.getDimension().width;
-            int imageHeight = (int) texture.getDimension().height;
-            int delta = imageWidth + imageWidth / 2;
-            if (position.x() % 2 == 0) {
-                this.setPosition(new Point((position.x() / 2) * delta, position
-                        .y()
-                        * imageHeight));
-            } else {
-                int deltax = imageHeight * 3 / 4;
-                if (position.x() < 0) {
-                    deltax = -deltax;
-                }
-                this.setPosition(new Point((position.x() / 2) * delta + deltax,
-                        position.y() * imageHeight - imageHeight / 2));
+    private Point getTileDisplayCoordinates(TileCoordinate position) {
+        int delta = tileWidth + tileWidth / 2;
+        if (position.x() % 2 == 0) {
+            return new Point((position.x() / 2) * delta, position
+                    .y()
+                    * tileHeight);
+        } else {
+            int deltax = tileHeight * 3 / 4;
+            if (position.x() < 0) {
+                deltax = -deltax;
             }
+            return new Point((position.x() / 2) * delta + deltax,
+                    position.y() * tileHeight - tileHeight / 2);
         }
     }
 
@@ -173,8 +164,7 @@ public class MapWidget extends Sprite implements Widget, MouseListener {
             double mindistance = tileWidth * 2;
             Tile result = null;
             for (Tile tile : candidates) {
-                TileFace face = tiles.get(tile);
-                Point facePosition = face.getPosition();
+                Point facePosition = tiles.get(tile);
                 Point faceCenter = new Point(facePosition.x + tileWidth / 2,
                         facePosition.y + tileHeight / 2);
                 double dx = Math.abs(faceCenter.x - mouseCoords.x);
@@ -221,11 +211,11 @@ public class MapWidget extends Sprite implements Widget, MouseListener {
         if (tile != null) {
             if (this.activeTile != null
                     && !this.activeTile.at().equals(tile.at())) {
-                tiles.get(this.activeTile).setColor(new Color(1.0, 1.0, 1.0));
+//                tiles.get(this.activeTile).setColor(new Color(1.0, 1.0, 1.0));
             }
             this.activeTile = tile;
-            TileFace tileFace = tiles.get(tile);
-            tileFace.setColor(new Color(0.5, 1, 0.5));
+//            Point position = tiles.get(tile);
+//            tileFace.setColor(new Color(0.5, 1, 0.5));
         }
     }
 
