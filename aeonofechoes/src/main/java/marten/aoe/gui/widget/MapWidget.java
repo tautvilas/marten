@@ -10,6 +10,7 @@ import marten.age.control.MouseListener;
 import marten.age.graphics.appearance.Appearance;
 import marten.age.graphics.appearance.Color;
 import marten.age.graphics.flat.sprite.Sprite;
+import marten.age.graphics.flat.sprite.TextureSprite;
 import marten.age.graphics.geometry.Geometry;
 import marten.age.graphics.geometry.primitives.Rectangle;
 import marten.age.graphics.image.ImageData;
@@ -37,14 +38,22 @@ public class MapWidget extends Sprite implements Widget, MouseListener {
     private BitmapFont font = FontCache.getFont(new Font("Courier New",
             Font.BOLD, 20));
     private TranslationGroup tg = new TranslationGroup();
-    private Tile activeTile = null;
+    // private Tile activeTile = null;
     private int tileWidth;
     private int tileHeight;
     private Engine engine;
     private ComplexModel cm = new ComplexModel();
+    private TextureSprite tileHighlight = null;
 
     public MapWidget(Engine engine, String mapName) {
         this.engine = engine;
+        try {
+            tileHighlight = new TextureSprite(new ImageData(
+                    "data/gui/skin/tile-highlight.png"));
+            tileHighlight.setPosition(new Point(-10000, -10000));
+        } catch (IOException e1) {
+            throw (new RuntimeException(e1));
+        }
         // FIXME(carnifex) Is it really necessary to pass an argument into a
         // method for logging purposes only? :-/
         log.info("Loading map tiles for '" + mapName + "'...");
@@ -86,22 +95,22 @@ public class MapWidget extends Sprite implements Widget, MouseListener {
             cm.addPart(sm);
         }
         tg.addChild(cm);
+        tg.addChild(tileHighlight);
         this.addChild(tg);
     }
 
     private Point getTileDisplayCoordinates(TileCoordinate position) {
         int delta = tileWidth + tileWidth / 2;
         if (position.x() % 2 == 0) {
-            return new Point((position.x() / 2) * delta, position
-                    .y()
+            return new Point((position.x() / 2) * delta, position.y()
                     * tileHeight);
         } else {
             int deltax = tileHeight * 3 / 4;
             if (position.x() < 0) {
                 deltax = -deltax;
             }
-            return new Point((position.x() / 2) * delta + deltax,
-                    position.y() * tileHeight - tileHeight / 2);
+            return new Point((position.x() / 2) * delta + deltax, position.y()
+                    * tileHeight - tileHeight / 2);
         }
     }
 
@@ -209,13 +218,7 @@ public class MapWidget extends Sprite implements Widget, MouseListener {
     public void mouseMove(Point coords) {
         Tile tile = tileHit(coords);
         if (tile != null) {
-            if (this.activeTile != null
-                    && !this.activeTile.at().equals(tile.at())) {
-//                tiles.get(this.activeTile).setColor(new Color(1.0, 1.0, 1.0));
-            }
-            this.activeTile = tile;
-//            Point position = tiles.get(tile);
-//            tileFace.setColor(new Color(0.5, 1, 0.5));
+            tileHighlight.setPosition(tiles.get(tile));
         }
     }
 
