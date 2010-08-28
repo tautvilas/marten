@@ -4,5 +4,5 @@ import java.rmi.Remote;
 import java.rmi.RemoteException;
 
 public interface Server extends Remote {
-    public String say() throws RemoteException;
+    public Session login(String username) throws RemoteException;
 }

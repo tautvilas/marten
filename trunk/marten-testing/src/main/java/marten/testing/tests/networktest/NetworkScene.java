@@ -29,10 +29,10 @@ public class NetworkScene extends AgeScene {
                 if (command.equals("start server")) {
                     AoeServer.start();
                     return "OK";
-                } else if (command.equals("connect")) {
+                } else if (command.equals("login")) {
                     try {
                         Server server = (Server)Naming.lookup("//localhost/Server");
-                        log.info("Server says: " + server.say());
+                        server.login("John");
                     } catch (Exception e) {
                         log.error("Could not connect to AOE server");
                         throw new RuntimeException(e);
