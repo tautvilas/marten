@@ -3,13 +3,13 @@ package marten.aoe.server;
 import java.rmi.Naming;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
-import java.util.HashSet;
+import java.util.HashMap;
 
 import org.apache.log4j.Logger;
 
 public class AoeServer extends UnicastRemoteObject implements Server {
     private static final long serialVersionUID = 1L;
-    private HashSet<String> users = new HashSet<String>();
+    private HashMap<String, ClientSession> users = new HashMap<String, ClientSession>();
 
     private static org.apache.log4j.Logger log = Logger
             .getLogger(AoeServer.class);
@@ -30,13 +30,24 @@ public class AoeServer extends UnicastRemoteObject implements Server {
 
     @Override
     public Session login(String username) throws RemoteException {
-        if (users.contains(username)) {
+        if (users.keySet().contains(username)) {
             log.error("Username '" + username + "' allready exists");
             return null;
         } else {
-            users.add(username);
-            log.info("User '" + "' successfully logged in");
-            return new ClientSession();
+            ClientSession userSession = new ClientSession(username);
+            users.put(username, userSession);
+            log.info("User '" + username + "' successfully logged in");
+            return userSession;
         }
+    }
+
+    @Override
+    public void sendMessage(Session from, String to, String message)
+            throws RemoteException {
+        if(!users.keySet().contains(to)) {
+            log.error("User '" + to + "' does not exist");
+            return;
+        }
+        users.get(to).publishMessage(from.getUsername(), message);
     }
 }

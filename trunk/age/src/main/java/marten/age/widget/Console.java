@@ -5,6 +5,7 @@ import java.util.ArrayList;
 
 import marten.age.control.KeyboardListener;
 import marten.age.graphics.BasicSceneGraphChild;
+import marten.age.graphics.appearance.Color;
 import marten.age.graphics.text.BitmapFont;
 import marten.age.graphics.text.BitmapString;
 import marten.age.graphics.text.FontCache;
@@ -17,14 +18,13 @@ public class Console extends BasicSceneGraphChild implements Widget,
     private static org.apache.log4j.Logger log = Logger
             .getLogger(Console.class);
 
-    private ArrayList<String> consoleLog = new ArrayList<String>();
+    private ArrayList<LogEntry> consoleLog = new ArrayList<LogEntry>();
 
     private String command = "";
     private String prompt = "> ";
 
     private BitmapFont font = FontCache.getFont(new Font("Courier New",
-            Font.BOLD, 12));
-    private BitmapString text = new BitmapString(font, prompt);
+            Font.BOLD, 14));
 
     private ConsoleListener listener = null;
 
@@ -34,7 +34,15 @@ public class Console extends BasicSceneGraphChild implements Widget,
 
     @Override
     public void render() {
-        text.setContent(prompt + command);
+        BitmapString text = new BitmapString(font, "");
+        for (int i = 0; i < consoleLog.size(); i++) {
+            text.addColor(new Color(1.0, 1.0, 1.0));
+            text.addContent(consoleLog.get(i).command + "\n");
+            text.addColor(new Color(0, 1.0, 0));
+            text.addContent(consoleLog.get(i).response + "\n");
+        }
+        text.addColor(new Color(1.0, 1.0, 1.0));
+        text.addContent(prompt + command);
         text.render();
     }
 
@@ -47,8 +55,8 @@ public class Console extends BasicSceneGraphChild implements Widget,
                 command = command.substring(0, command.length() - 1);
             }
         } else if (key == Keyboard.KEY_RETURN) {
-            consoleLog.add(command);
-            listener.handleCommand(command);
+            String response = listener.handleCommand(command);
+            consoleLog.add(new LogEntry(command, response));
             command = "";
         } else {
             log.warn("Unrecognized key pressed: " + key + " ("
@@ -58,6 +66,15 @@ public class Console extends BasicSceneGraphChild implements Widget,
 
     @Override
     public void keyUp(int key, char character) {
+    }
+
+    private class LogEntry {
+        public String command;
+        public String response;
+        public LogEntry(String command, String response) {
+            this.command = command;
+            this.response = response;
+        }
     }
 
 }
