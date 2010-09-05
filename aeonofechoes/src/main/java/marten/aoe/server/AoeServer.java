@@ -9,7 +9,7 @@ import org.apache.log4j.Logger;
 
 public class AoeServer extends UnicastRemoteObject implements Server {
     private static final long serialVersionUID = 1L;
-    private HashMap<String, ClientSession> users = new HashMap<String, ClientSession>();
+    private HashMap<String, Session> users = new HashMap<String, Session>();
 
     private static org.apache.log4j.Logger log = Logger
             .getLogger(AoeServer.class);
@@ -29,15 +29,13 @@ public class AoeServer extends UnicastRemoteObject implements Server {
     }
 
     @Override
-    public Session login(String username) throws RemoteException {
+    public void login(Session session) throws RemoteException {
+        String username = session.getUsername();
         if (users.keySet().contains(username)) {
-            log.error("Username '" + username + "' allready exists");
-            return null;
+            log.error("Username '" + session.getUsername() + "' allready exists");
         } else {
-            ClientSession userSession = new ClientSession(username);
-            users.put(username, userSession);
+            users.put(username, session);
             log.info("User '" + username + "' successfully logged in");
-            return userSession;
         }
     }
 
