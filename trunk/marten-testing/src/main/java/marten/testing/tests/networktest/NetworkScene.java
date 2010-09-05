@@ -17,7 +17,7 @@ import marten.age.widget.Console;
 import marten.age.widget.ConsoleListener;
 import marten.age.widget.Widget;
 import marten.aoe.server.AoeServer;
-import marten.aoe.server.ChatMessage;
+import marten.aoe.server.ClientSession;
 import marten.aoe.server.Server;
 import marten.aoe.server.Session;
 
@@ -54,8 +54,25 @@ public class NetworkScene extends AgeScene {
                     try {
                         // TODO(zv): this should be run in new thread because
                         // application freezes while connecting to server
-                        server = (Server) Naming.lookup("//" + words[1] + "/Server");
-                        session = server.login(words[2]);
+                        server = (Server) Naming.lookup("//" + words[1]
+                                + "/Server");
+                        session = new ClientSession(words[2]) {
+                            private static final long serialVersionUID = 1L;
+
+                            @Override
+                            public void publishMessage(String from,
+                                    String message) throws RemoteException {
+                                messages.addColor(new Color(0.0, 0, 1.0));
+                                messages.addContent(from);
+                                messages.addColor(new Color(1.0, 1.0, 1.0));
+                                messages.addContent(" to ");
+                                messages.addColor(new Color(1.0, 0.0, 0.0));
+                                messages.addContent(username);
+                                messages.addColor(new Color(1.0, 1.0, 1.0));
+                                messages.addContent(": " + message + "\n");
+                            }
+                        };
+                        server.login(session);
                         username = words[2];
                         return "logged in";
                     } catch (Exception e) {
@@ -96,30 +113,12 @@ public class NetworkScene extends AgeScene {
         messages.setPosition(new Point(0, AppInfo.getDisplayHeight() - 100));
         this.flatland.addChild(console);
         this.flatland.addChild(messages);
-//        this.flatland.addChild(new FpsCounter());
+        // this.flatland.addChild(new FpsCounter());
         this.registerControllable(console);
     }
 
     @Override
     public void compute() {
-        try {
-            if (session != null) {
-                ChatMessage message = session.popMessage();
-                while (message != null) {
-                    messages.addColor(new Color(0.0, 0, 1.0));
-                    messages.addContent(message.sender);
-                    messages.addColor(new Color(1.0, 1.0, 1.0));
-                    messages.addContent(" to ");
-                    messages.addColor(new Color(1.0, 0.0, 0.0));
-                    messages.addContent(this.username);
-                    messages.addColor(new Color(1.0, 1.0, 1.0));
-                    messages.addContent(": " + message.message + "\n");
-                    message = session.popMessage();
-                }
-            }
-        } catch (RemoteException e) {
-            throw new RuntimeException(e);
-        }
     }
 
     @Override

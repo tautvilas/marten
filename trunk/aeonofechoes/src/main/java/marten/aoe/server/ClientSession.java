@@ -2,11 +2,8 @@ package marten.aoe.server;
 
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
-import java.util.LinkedList;
 
-public class ClientSession extends UnicastRemoteObject implements Session {
-
-    private LinkedList<ChatMessage> messages = new LinkedList<ChatMessage>();
+public abstract class ClientSession extends UnicastRemoteObject implements Session {
 
     private String username;
 
@@ -15,23 +12,14 @@ public class ClientSession extends UnicastRemoteObject implements Session {
         this.username = username;
     }
 
+    @Override
     public String getUsername() throws RemoteException {
         return this.username;
     }
 
-    protected void publishMessage(String from, String message) {
-        messages.add(new ChatMessage(from, message));
-    }
+    @Override
+    public abstract void publishMessage(String from, String message) throws RemoteException;
 
     private static final long serialVersionUID = 1L;
-
-    @Override
-    public ChatMessage popMessage() throws RemoteException {
-        if (messages.isEmpty()) {
-            return null;
-        } else {
-            return messages.remove();
-        }
-    }
 
 }
