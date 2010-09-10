@@ -2,7 +2,6 @@ package marten.age.graphics.flat;
 
 import marten.age.graphics.SceneGraphChild;
 import marten.age.graphics.camera.FrustumCamera;
-import marten.age.graphics.flat.sprite.PixelSprite;
 import marten.age.graphics.primitives.Point;
 import marten.age.graphics.root.SimpleRoot;
 import marten.age.graphics.text.BitmapString;
@@ -36,7 +35,7 @@ public class Flatland {
         hud.addChild(sprite);
     }
 
-    public void removeChild(PixelSprite sprite) {
+    public void removeChild(SceneGraphChild sprite) {
         hud.removeChild(sprite);
     }
 

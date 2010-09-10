@@ -8,7 +8,7 @@ import org.lwjgl.opengl.GL11;
 
 public class PixelSprite extends Sprite {
     private ImageData data;
-    private Point postition;
+    private Point postition = new Point();
 
     public PixelSprite(ImageData data) {
         this.data = ImageTransformations.flip(data);

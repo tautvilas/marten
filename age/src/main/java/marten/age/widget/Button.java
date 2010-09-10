@@ -1,21 +1,51 @@
 package marten.age.widget;
 
+import java.awt.Font;
+
 import marten.age.control.MouseListener;
-import marten.age.graphics.flat.sprite.PixelSprite;
+import marten.age.graphics.appearance.Color;
+import marten.age.graphics.flat.sprite.Sprite;
+import marten.age.graphics.flat.sprite.TextureSprite;
 import marten.age.graphics.image.ImageData;
 import marten.age.graphics.primitives.Point;
+import marten.age.graphics.text.BitmapString;
+import marten.age.graphics.text.FontCache;
+import marten.age.graphics.transform.TranslationGroup;
 
 import org.apache.log4j.Logger;
 
-public class Button extends PixelSprite implements Widget, MouseListener {
+public class Button extends Sprite implements Widget, MouseListener {
     @SuppressWarnings("unused")
     private static org.apache.log4j.Logger log = Logger.getLogger(Button.class);
 
     private boolean pressed = false;
+    private boolean mouseOver = false;
     private Action action;
+    private TextureSprite face;
+    private BitmapString label;
+    private TranslationGroup tg = new TranslationGroup();
 
     public Button(ImageData data) {
-        super(data);
+        this.face = new TextureSprite(data);
+        tg.addChild(face);
+        this.addChild(tg);
+    }
+
+    public void setLabel(String label) {
+        this.label = new BitmapString(FontCache.getFont(new Font("Courier New",
+                Font.BOLD, 30)));
+        this.label.setContent(label);
+        Point position = this.getPosition();
+        // center the label
+        this.label.setPosition(new Point(position.x + this.getWidth() / 2
+                - this.label.getWidth() / 2, position.y + 15));
+        this.tg.removeChild(this.label);
+        this.tg.addChild(this.label);
+    }
+
+    @Override
+    public void setPosition(Point point) {
+        tg.setCoordinates(point);
     }
 
     @Override
@@ -29,12 +59,25 @@ public class Button extends PixelSprite implements Widget, MouseListener {
 
     @Override
     public void mouseMove(Point coords) {
+        if (testHit(coords) && !this.mouseOver) {
+            this.mouseOver = true;
+            if (this.label != null) {
+                this.label.setColor(new Color(0, 1.0, 0));
+            }
+        } else if (!testHit(coords) && this.mouseOver) {
+            if (this.label != null) {
+                this.label.setColor(new Color(1, 1, 1));
+            }
+            this.mouseOver = false;
+        }
     }
 
     @Override
     public void mouseUp(Point coords) {
-        if (testHit(coords) && this.pressed) {
-            this.action.perform();
+        if (this.pressed) {
+            if (testHit(coords) && this.action != null) {
+                this.action.perform();
+            }
             this.setPosition(new Point(this.getPosition().x - 3, this
                     .getPosition().y + 3));
         }
@@ -57,5 +100,20 @@ public class Button extends PixelSprite implements Widget, MouseListener {
             return true;
         }
         return false;
+    }
+
+    @Override
+    public int getHeight() {
+        return this.face.getHeight();
+    }
+
+    @Override
+    public Point getPosition() {
+        return tg.getCoordinates();
+    }
+
+    @Override
+    public int getWidth() {
+        return this.face.getWidth();
     }
 }
