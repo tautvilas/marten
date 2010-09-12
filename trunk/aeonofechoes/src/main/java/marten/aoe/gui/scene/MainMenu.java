@@ -3,16 +3,17 @@ package marten.aoe.gui.scene;
 import java.awt.Font;
 import java.io.IOException;
 
-import marten.age.control.KeyboardController;
 import marten.age.control.MouseController;
 import marten.age.core.AgeScene;
 import marten.age.core.AppInfo;
+import marten.age.event.AgeSceneSwitchEvent;
 import marten.age.graphics.flat.Flatland;
 import marten.age.graphics.image.ImageData;
 import marten.age.graphics.primitives.Point;
 import marten.age.graphics.text.BitmapFont;
 import marten.age.graphics.text.BitmapString;
 import marten.age.graphics.text.FontCache;
+import marten.age.widget.Action;
 import marten.age.widget.Button;
 import marten.age.widget.obsolete.FpsCounter;
 import marten.aoe.Path;
@@ -28,8 +29,7 @@ public class MainMenu extends AgeScene {
             Font.PLAIN, 50));
 
     public MainMenu() {
-        this.addController(new KeyboardController());
-        this.addController(new MouseController());
+        // load graphics
         ImageData menuButtonImage;
         try {
             menuButtonImage = new ImageData(Path.SKIN_PATH + "menu-button.png");
@@ -37,12 +37,20 @@ public class MainMenu extends AgeScene {
             log.error("Could not load menu button image.");
             throw new RuntimeException(e);
         }
+
+        // create and configure title
         BitmapString title = new BitmapString(titleFont, "Aeon Of Echoes");
-//        title.setColor(new Color(0.0, 1.0, 0.0));
+        // title.setColor(new Color(0.0, 1.0, 0.0));
+
+        // create and configure buttons
         Button hostButton = new Button(menuButtonImage);
         Button joinButton = new Button(menuButtonImage);
+        Font font = new Font("Arial", Font.PLAIN, 20);
+        hostButton.setFont(font);
         hostButton.setLabel("Host Game");
+        joinButton.setFont(font);
         joinButton.setLabel("Join Game");
+
         // center the buttons and the title
         hostButton.setPosition(new Point(AppInfo.getDisplayWidth() / 2
                 - hostButton.getWidth() / 2, AppInfo.getDisplayHeight() / 2
@@ -54,13 +62,32 @@ public class MainMenu extends AgeScene {
                 - title.getWidth() / 2, AppInfo.getDisplayHeight() / 2
                 + hostButton.getHeight() * 3));
 
+        // hook up button actions
+        hostButton.setAction(new Action() {
+            @Override
+            public void perform() {
+                fireEvent(new AgeSceneSwitchEvent(new HostDialog()));
+            }
+        });
+        hostButton.setAction(new Action() {
+            @Override
+            public void perform() {
+                fireEvent(new AgeSceneSwitchEvent(new JoinDialog()));
+            }
+        });
+
+        // register buttons
+        // this.addController(new KeyboardController());
+        this.addController(new MouseController());
+        this.registerControllable(hostButton);
+        this.registerControllable(joinButton);
+
+        // add graphic elements to flatland
         this.flatland.addChild(title);
         this.flatland.addChild(hostButton);
         this.flatland.addChild(joinButton);
         this.flatland.addChild(new FpsCounter());
         this.flatland.compile();
-        this.registerControllable(hostButton);
-        this.registerControllable(joinButton);
     }
 
     @Override
