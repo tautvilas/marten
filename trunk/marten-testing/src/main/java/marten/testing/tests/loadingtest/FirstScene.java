@@ -28,7 +28,6 @@ public class FirstScene extends AgeScene {
     public FirstScene() {
         this.flatland = new Flatland();
 
-        // TODO:zv:develop a decent image loading/caching system
         ImageData buttonImage = ImageLoader
                 .loadImage("data/testloading/button.png");
         BitmapFont font = FontCache.getFont(new Font("Courier New", Font.BOLD,
