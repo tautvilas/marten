@@ -7,7 +7,6 @@ import marten.age.control.KeyboardController;
 import marten.age.control.MouseController;
 import marten.age.core.AgeScene;
 import marten.age.core.AppInfo;
-import marten.age.graphics.appearance.Color;
 import marten.age.graphics.flat.Flatland;
 import marten.age.graphics.image.ImageData;
 import marten.age.graphics.primitives.Point;
@@ -15,6 +14,7 @@ import marten.age.graphics.text.BitmapFont;
 import marten.age.graphics.text.BitmapString;
 import marten.age.graphics.text.FontCache;
 import marten.age.widget.Button;
+import marten.age.widget.obsolete.FpsCounter;
 import marten.aoe.Path;
 
 import org.apache.log4j.Logger;
@@ -24,8 +24,8 @@ public class MainMenu extends AgeScene {
             .getLogger(MainMenu.class);
 
     private Flatland flatland = new Flatland();
-    private BitmapFont titleFont = FontCache.getFont(new Font("Helvetica",
-            Font.BOLD, 30));
+    private BitmapFont titleFont = FontCache.getFont(new Font("Arial",
+            Font.PLAIN, 50));
 
     public MainMenu() {
         this.addController(new KeyboardController());
@@ -38,7 +38,7 @@ public class MainMenu extends AgeScene {
             throw new RuntimeException(e);
         }
         BitmapString title = new BitmapString(titleFont, "Aeon Of Echoes");
-        title.setColor(new Color(0.0, 1.0, 0.0));
+//        title.setColor(new Color(0.0, 1.0, 0.0));
         Button hostButton = new Button(menuButtonImage);
         Button joinButton = new Button(menuButtonImage);
         hostButton.setLabel("Host Game");
@@ -57,6 +57,7 @@ public class MainMenu extends AgeScene {
         this.flatland.addChild(title);
         this.flatland.addChild(hostButton);
         this.flatland.addChild(joinButton);
+        this.flatland.addChild(new FpsCounter());
         this.flatland.compile();
         this.registerControllable(hostButton);
         this.registerControllable(joinButton);

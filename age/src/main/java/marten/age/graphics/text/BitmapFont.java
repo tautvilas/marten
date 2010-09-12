@@ -1,25 +1,36 @@
 package marten.age.graphics.text;
 
+import java.awt.FontMetrics;
+
+import marten.age.graphics.texture.Texture;
+
 public class BitmapFont {
-    private int texture = -1;
+    private Texture texture = null;
     // font list start
     private int base = -1;
     private double size;
     private int charWidth;
+    private FontMetrics metrics;
 
-    public BitmapFont(int base, int texture, double size, int charWidth) {
+    public BitmapFont(int base, Texture texture, double size, int charWidth,
+            FontMetrics metrics) {
         this.base = base;
         this.texture = texture;
         this.size = size;
         this.charWidth = charWidth;
+        this.metrics = metrics;
     }
 
     public int getBase() {
         return this.base;
     }
 
-    public int getTexture() {
+    public Texture getTexture() {
         return this.texture;
+    }
+
+    public FontMetrics getMetrics() {
+        return this.metrics;
     }
 
     public double getSize() {

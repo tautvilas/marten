@@ -32,8 +32,8 @@ public class Button extends Sprite implements Widget, MouseListener {
     }
 
     public void setLabel(String label) {
-        this.label = new BitmapString(FontCache.getFont(new Font("Courier New",
-                Font.BOLD, 30)));
+        this.label = new BitmapString(FontCache.getFont(new Font("Arial",
+                Font.PLAIN, 30)));
         this.label.setContent(label);
         Point position = this.getPosition();
         // center the label
