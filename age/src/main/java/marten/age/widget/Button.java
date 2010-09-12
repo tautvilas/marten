@@ -7,6 +7,7 @@ import marten.age.graphics.appearance.Color;
 import marten.age.graphics.flat.sprite.Sprite;
 import marten.age.graphics.flat.sprite.TextureSprite;
 import marten.age.graphics.image.ImageData;
+import marten.age.graphics.primitives.Dimension;
 import marten.age.graphics.primitives.Point;
 import marten.age.graphics.text.BitmapFont;
 import marten.age.graphics.text.BitmapString;
@@ -42,9 +43,11 @@ public class Button extends Sprite implements Widget, MouseListener {
         this.label.setContent(label);
         Point position = this.getPosition();
         // center the label
-        this.label.setPosition(new Point(position.x + this.getWidth() / 2
-                - this.label.getWidth() / 2, position.y
-                + (this.getHeight() / 2 - this.label.getHeight() / 2)));
+        Dimension dButton = this.getDimension();
+        Dimension dLabel = this.label.getDimension();
+        this.label.setPosition(new Point(position.x + dButton.width / 2
+                - dLabel.width / 2, position.y
+                + (dButton.height / 2 - dLabel.height / 2)));
         this.tg.removeChild(this.label);
         this.tg.addChild(this.label);
     }
@@ -101,16 +104,17 @@ public class Button extends Sprite implements Widget, MouseListener {
     private boolean testHit(Point coords) {
         double dx = coords.x - this.getPosition().x;
         double dy = coords.y - this.getPosition().y;
-        if ((dx >= 0 && dx <= this.getWidth())
-                && (dy >= 0 && dy <= this.getHeight())) {
+        Dimension d = this.getDimension();
+        if ((dx >= 0 && dx <= d.width)
+                && (dy >= 0 && dy <= d.height)) {
             return true;
         }
         return false;
     }
 
     @Override
-    public int getHeight() {
-        return this.face.getHeight();
+    public Dimension getDimension() {
+        return this.face.getDimension();
     }
 
     @Override
@@ -118,8 +122,4 @@ public class Button extends Sprite implements Widget, MouseListener {
         return tg.getCoordinates();
     }
 
-    @Override
-    public int getWidth() {
-        return this.face.getWidth();
-    }
 }

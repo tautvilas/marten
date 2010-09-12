@@ -2,6 +2,7 @@ package marten.age.graphics.flat.sprite;
 
 import marten.age.graphics.image.ImageData;
 import marten.age.graphics.image.ImageTransformations;
+import marten.age.graphics.primitives.Dimension;
 import marten.age.graphics.primitives.Point;
 
 import org.lwjgl.opengl.GL11;
@@ -20,13 +21,8 @@ public class PixelSprite extends Sprite {
     }
 
     @Override
-    public int getWidth() {
-        return this.data.width;
-    }
-
-    @Override
-    public int getHeight() {
-        return this.data.height;
+    public Dimension getDimension() {
+        return new Dimension(this.data.width, this.data.height);
     }
 
     @Override

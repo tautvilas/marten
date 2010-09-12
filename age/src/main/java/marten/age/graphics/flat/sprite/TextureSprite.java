@@ -5,6 +5,7 @@ import marten.age.graphics.appearance.Color;
 import marten.age.graphics.geometry.primitives.Rectangle;
 import marten.age.graphics.image.ImageData;
 import marten.age.graphics.model.SimpleModel;
+import marten.age.graphics.primitives.Dimension;
 import marten.age.graphics.primitives.Point;
 import marten.age.graphics.texture.Texture;
 import marten.age.graphics.texture.TextureLoader;
@@ -49,13 +50,8 @@ public class TextureSprite extends Sprite {
     }
 
     @Override
-    public int getHeight() {
-        return (int)texture.getDimension().height;
-    }
-
-    @Override
-    public int getWidth() {
-        return (int)texture.getDimension().width;
+    public Dimension getDimension() {
+        return texture.getDimension();
     }
 
     @Override
