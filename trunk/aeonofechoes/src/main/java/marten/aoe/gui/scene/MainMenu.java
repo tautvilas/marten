@@ -1,13 +1,13 @@
 package marten.aoe.gui.scene;
 
 import java.awt.Font;
-import java.io.IOException;
 
 import marten.age.control.MouseController;
 import marten.age.core.AgeScene;
 import marten.age.core.AppInfo;
 import marten.age.event.AgeSceneSwitchEvent;
 import marten.age.graphics.flat.Flatland;
+import marten.age.graphics.image.ImageCache;
 import marten.age.graphics.image.ImageData;
 import marten.age.graphics.primitives.Dimension;
 import marten.age.graphics.primitives.Point;
@@ -22,6 +22,7 @@ import marten.aoe.Path;
 import org.apache.log4j.Logger;
 
 public class MainMenu extends AgeScene {
+    @SuppressWarnings("unused")
     private static org.apache.log4j.Logger log = Logger
             .getLogger(MainMenu.class);
 
@@ -31,13 +32,8 @@ public class MainMenu extends AgeScene {
 
     public MainMenu() {
         // load graphics
-        ImageData menuButtonImage;
-        try {
-            menuButtonImage = new ImageData(Path.SKIN_PATH + "menu-button.png");
-        } catch (IOException e) {
-            log.error("Could not load menu button image.");
-            throw new RuntimeException(e);
-        }
+        ImageData menuButtonImage = ImageCache.getImage(Path.SKIN_PATH
+                + "menu-button.png");
 
         // create and configure title
         BitmapString title = new BitmapString(titleFont, "Aeon Of Echoes");
@@ -55,16 +51,13 @@ public class MainMenu extends AgeScene {
         // center the buttons and the title
         Dimension dButton = hostButton.getDimension();
         Dimension dApp = AppInfo.getDisplayDimension();
-        hostButton.setPosition(new Point(dApp.width / 2
-                - dButton.width / 2, dApp.height / 2
-                + dButton.height));
-        joinButton.setPosition(new Point(dApp.width / 2
-                - dButton.width / 2, dApp.height / 2
-                - dButton.height));
+        hostButton.setPosition(new Point(dApp.width / 2 - dButton.width / 2,
+                dApp.height / 2 + dButton.height));
+        joinButton.setPosition(new Point(dApp.width / 2 - dButton.width / 2,
+                dApp.height / 2 - dButton.height));
         Dimension dTitle = title.getDimension();
-        title.setPosition(new Point(dApp.width / 2
-                - dTitle.width / 2, dApp.height/ 2
-                + dButton.height * 3));
+        title.setPosition(new Point(dApp.width / 2 - dTitle.width / 2,
+                dApp.height / 2 + dButton.height * 3));
 
         // hook up button actions
         hostButton.setAction(new Action() {
