@@ -90,6 +90,10 @@ public class BitmapString extends Sprite {
         glPrint(this.content);
     }
 
+    public String getContent() {
+        return this.content;
+    }
+
     @Override
     public Dimension getDimension() {
         return new Dimension(font.getMetrics().stringWidth(this.content),

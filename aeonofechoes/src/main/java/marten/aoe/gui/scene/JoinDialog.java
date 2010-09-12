@@ -1,10 +1,13 @@
 package marten.aoe.gui.scene;
 
+import java.awt.Font;
+
+import marten.age.control.KeyboardController;
+import marten.age.control.MouseController;
 import marten.age.core.AgeScene;
 import marten.age.graphics.flat.Flatland;
-import marten.age.graphics.flat.sprite.TextureSprite;
 import marten.age.graphics.image.ImageCache;
-import marten.age.graphics.image.ImageData;
+import marten.age.widget.AgeField;
 import marten.aoe.Path;
 
 import org.apache.log4j.Logger;
@@ -12,14 +15,18 @@ import org.apache.log4j.Logger;
 public class JoinDialog extends AgeScene {
 
     @SuppressWarnings("unused")
-    private static org.apache.log4j.Logger log = Logger.getLogger(JoinDialog.class);
+    private static org.apache.log4j.Logger log = Logger
+            .getLogger(JoinDialog.class);
     private Flatland flatland = new Flatland();
 
     public JoinDialog() {
-        // load graphics
-        ImageData menuButtonImage = ImageCache.getImage(Path.SKIN_PATH + "menu-button.png");
-        this.flatland.addChild(new TextureSprite(menuButtonImage));
+        AgeField nickField = new AgeField(ImageCache.getImage(Path.SKIN_PATH
+                + "field.png"), new Font("Arial", Font.PLAIN, 20));
+        this.flatland.addChild(nickField);
         this.flatland.compile();
+        this.addController(new KeyboardController());
+        this.addController(new MouseController());
+        this.registerControllable(nickField);
     }
 
     @Override

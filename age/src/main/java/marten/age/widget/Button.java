@@ -95,17 +95,6 @@ public class Button extends Sprite implements Widget, MouseListener {
         this.action = action;
     }
 
-    private boolean testHit(Point coords) {
-        double dx = coords.x - this.getPosition().x;
-        double dy = coords.y - this.getPosition().y;
-        Dimension d = this.getDimension();
-        if ((dx >= 0 && dx <= d.width)
-                && (dy >= 0 && dy <= d.height)) {
-            return true;
-        }
-        return false;
-    }
-
     @Override
     public Dimension getDimension() {
         return this.face.getDimension();
