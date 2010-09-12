@@ -13,7 +13,7 @@ public class AppInfo {
         return Display.getDisplayMode().getHeight();
     }
 
-    public static Dimension getDisplayDimensions() {
+    public static Dimension getDisplayDimension() {
         return new Dimension(Display.getDisplayMode().getWidth(), Display
                 .getDisplayMode().getWidth());
     }

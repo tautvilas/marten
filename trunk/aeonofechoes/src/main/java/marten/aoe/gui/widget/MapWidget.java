@@ -109,13 +109,13 @@ public class MapWidget extends Sprite implements Widget, MouseListener {
 
     private void updateDimensionConstraints(Point tileCoordinates) {
         if (tileCoordinates.x + tileWidth > this.maxX)
-            this.maxX = (int) tileCoordinates.x + tileWidth;
+            this.maxX = (int)tileCoordinates.x + tileWidth;
         else if (tileCoordinates.x < this.minX)
-            this.minX = (int) tileCoordinates.x;
+            this.minX = (int)tileCoordinates.x;
         if (tileCoordinates.y + tileHeight > this.maxY)
-            this.maxY = (int) tileCoordinates.y + tileHeight;
+            this.maxY = (int)tileCoordinates.y + tileHeight;
         else if (tileCoordinates.y < this.minY)
-            this.minY = (int) tileCoordinates.y;
+            this.minY = (int)tileCoordinates.y;
     }
 
     private Point getTileDisplayCoordinates(TileCoordinate position) {
@@ -136,8 +136,8 @@ public class MapWidget extends Sprite implements Widget, MouseListener {
     private Tile getTile(Point coords, boolean odd)
             throws IndexOutOfBoundsException {
         if (Math.abs(coords.x % (tileWidth + tileWidth / 2)) <= tileWidth) {
-            int tileX = ((int) coords.x / (tileWidth + tileWidth / 2)) * 2;
-            int tileY = (int) coords.y / (tileHeight);
+            int tileX = ((int)coords.x / (tileWidth + tileWidth / 2)) * 2;
+            int tileY = (int)coords.y / (tileHeight);
             if (odd && coords.x < 0)
                 tileX -= 1;
             else if (odd)
@@ -228,20 +228,17 @@ public class MapWidget extends Sprite implements Widget, MouseListener {
     }
 
     @Override
-    public int getHeight() {
-        return (this.engine.tileMap.maxY() - this.engine.tileMap.minY() + 1)
+    public Dimension getDimension() {
+        int width = (this.engine.tileMap.maxX() - this.engine.tileMap.minX() + 1)
+                * (this.tileWidth * 3 / 4) + this.tileWidth / 4;
+        int height = (this.engine.tileMap.maxY() - this.engine.tileMap.minY() + 1)
                 * (this.tileHeight) + this.tileHeight / 2;
+        return new Dimension(width, height);
     }
 
     @Override
     public Point getPosition() {
         return tg.getCoordinates();
-    }
-
-    @Override
-    public int getWidth() {
-        return (this.engine.tileMap.maxX() - this.engine.tileMap.minX() + 1)
-                * (this.tileWidth * 3 / 4) + this.tileWidth / 4;
     }
 
     @Override

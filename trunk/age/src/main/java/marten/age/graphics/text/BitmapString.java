@@ -4,6 +4,7 @@ import java.util.HashMap;
 
 import marten.age.graphics.appearance.Color;
 import marten.age.graphics.flat.sprite.Sprite;
+import marten.age.graphics.primitives.Dimension;
 import marten.age.graphics.primitives.Point;
 
 import org.lwjgl.opengl.GL11;
@@ -90,18 +91,14 @@ public class BitmapString extends Sprite {
     }
 
     @Override
-    public int getHeight() {
-        return (int) this.font.getSize() * this.numLines;
+    public Dimension getDimension() {
+        return new Dimension(font.getMetrics().stringWidth(this.content),
+                (float)this.font.getSize() * this.numLines);
     }
 
     @Override
     public Point getPosition() {
         return this.position;
-    }
-
-    @Override
-    public int getWidth() {
-        return font.getMetrics().stringWidth(this.content);
     }
 
     @Override
