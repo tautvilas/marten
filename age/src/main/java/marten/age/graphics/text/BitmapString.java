@@ -32,7 +32,7 @@ public class BitmapString extends Sprite {
 
     public void setContent(String content) {
         this.content = content;
-        this.numLines = 0;
+        this.numLines = 1;
         for (int i = 0; i < content.length(); i++) {
             if (content.charAt(i) == '\n') {
                 this.numLines++;
@@ -51,8 +51,8 @@ public class BitmapString extends Sprite {
             GL11.glDisable(GL11.GL_LIGHTING);
             GL11.glEnable(GL11.GL_TEXTURE_2D);
             GL11.glPushMatrix();
-            GL11.glTranslated(this.position.x, this.position.y + this.numLines
-                    * this.font.getSize(), 0);
+            GL11.glTranslated(this.position.x, this.position.y
+                    + (this.numLines - 1) * this.font.getSize(), 0);
             int lineTranslate = 0;
             for (int i = 0; i < msg.length(); i++) {
                 Integer index = new Integer(i);
@@ -91,7 +91,7 @@ public class BitmapString extends Sprite {
 
     @Override
     public int getHeight() {
-        throw new RuntimeException("Not yet implemented");
+        return (int) this.font.getSize() * this.numLines;
     }
 
     @Override

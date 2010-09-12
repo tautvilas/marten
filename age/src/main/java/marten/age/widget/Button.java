@@ -8,6 +8,7 @@ import marten.age.graphics.flat.sprite.Sprite;
 import marten.age.graphics.flat.sprite.TextureSprite;
 import marten.age.graphics.image.ImageData;
 import marten.age.graphics.primitives.Point;
+import marten.age.graphics.text.BitmapFont;
 import marten.age.graphics.text.BitmapString;
 import marten.age.graphics.text.FontCache;
 import marten.age.graphics.transform.TranslationGroup;
@@ -23,6 +24,7 @@ public class Button extends Sprite implements Widget, MouseListener {
     private Action action;
     private TextureSprite face;
     private BitmapString label;
+    private BitmapFont font;
     private TranslationGroup tg = new TranslationGroup();
 
     public Button(ImageData data) {
@@ -31,14 +33,18 @@ public class Button extends Sprite implements Widget, MouseListener {
         this.addChild(tg);
     }
 
+    public void setFont(Font font) {
+        this.font = FontCache.getFont(font);
+    }
+
     public void setLabel(String label) {
-        this.label = new BitmapString(FontCache.getFont(new Font("Arial",
-                Font.PLAIN, 30)));
+        this.label = new BitmapString(this.font);
         this.label.setContent(label);
         Point position = this.getPosition();
         // center the label
         this.label.setPosition(new Point(position.x + this.getWidth() / 2
-                - this.label.getWidth() / 2, position.y + 15));
+                - this.label.getWidth() / 2, position.y
+                + (this.getHeight() / 2 - this.label.getHeight() / 2)));
         this.tg.removeChild(this.label);
         this.tg.addChild(this.label);
     }
