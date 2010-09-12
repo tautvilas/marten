@@ -10,4 +10,21 @@ public abstract class Sprite extends BasicSceneGraphBranch {
     public abstract Point getPosition();
 
     public abstract Dimension getDimension();
+
+    public void centerIn(Sprite sprite2) {
+        Dimension d1 = this.getDimension();
+        Point p2 = sprite2.getPosition();
+        Dimension d2 = sprite2.getDimension();
+
+        this.setPosition(new Point(p2.x + d2.width / 2 - d1.width / 2, p2.y
+                + d2.height / 2 - d1.height / 2));
+    }
+
+    public void centerHorizontallyIn(Sprite sprite2, int y) {
+        Dimension d1 = this.getDimension();
+        Point p2 = sprite2.getPosition();
+        Dimension d2 = sprite2.getDimension();
+
+        this.setPosition(new Point(p2.x + d2.width / 2 - d1.width / 2, y));
+    }
 }

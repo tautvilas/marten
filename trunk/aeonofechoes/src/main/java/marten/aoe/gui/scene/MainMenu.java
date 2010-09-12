@@ -54,15 +54,16 @@ public class MainMenu extends AgeScene {
 
         // center the buttons and the title
         Dimension dButton = hostButton.getDimension();
-        hostButton.setPosition(new Point(AppInfo.getDisplayWidth() / 2
-                - dButton.width / 2, AppInfo.getDisplayHeight() / 2
+        Dimension dApp = AppInfo.getDisplayDimension();
+        hostButton.setPosition(new Point(dApp.width / 2
+                - dButton.width / 2, dApp.height / 2
                 + dButton.height));
-        joinButton.setPosition(new Point(AppInfo.getDisplayWidth() / 2
-                - dButton.width / 2, AppInfo.getDisplayHeight() / 2
+        joinButton.setPosition(new Point(dApp.width / 2
+                - dButton.width / 2, dApp.height / 2
                 - dButton.height));
         Dimension dTitle = title.getDimension();
-        title.setPosition(new Point(AppInfo.getDisplayWidth() / 2
-                - dTitle.width / 2, AppInfo.getDisplayHeight() / 2
+        title.setPosition(new Point(dApp.width / 2
+                - dTitle.width / 2, dApp.height/ 2
                 + dButton.height * 3));
 
         // hook up button actions
