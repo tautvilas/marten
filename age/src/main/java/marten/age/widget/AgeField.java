@@ -21,13 +21,19 @@ public class AgeField extends Sprite implements Widget, KeyboardListener {
     private TextureSprite face;
     private TranslationGroup tg = new TranslationGroup();
     private BitmapFont font;
+    private TextureSprite cursor;
+    private int blinkInterval = 10;
+    private int blinkCounter = 10;
 
-    public AgeField(ImageData face, Font font) {
+    public AgeField(ImageData face, ImageData cursor, Font font) {
         this.face = new TextureSprite(face);
+        this.cursor = new TextureSprite(cursor);
+        this.cursor.setPosition(new Point(5, 0));
         this.font = FontCache.getFont(font);
         this.tg.addChild(this.face);
         this.input = new BitmapString(this.font, "");
         this.tg.addChild(this.input);
+        this.tg.addChild(this.cursor);
         this.addChild(tg);
     }
 
@@ -62,5 +68,19 @@ public class AgeField extends Sprite implements Widget, KeyboardListener {
     @Override
     public void setPosition(Point position) {
         tg.setCoordinates(position);
+    }
+
+    @Override
+    public void activateChildren() {
+        super.activateChildren();
+        blinkCounter--;
+        if (blinkCounter == 0) {
+            if (tg.hasChild(cursor)) {
+                tg.removeChild(cursor);
+            } else {
+                tg.addChild(cursor);
+            }
+            blinkCounter = blinkInterval;
+        }
     }
 }

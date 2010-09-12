@@ -22,6 +22,11 @@ public abstract class BasicSceneGraphParent implements SceneGraphParent {
     }
 
     @Override
+    public boolean hasChild(SceneGraphChild child) {
+        return branches.contains(child);
+    }
+
+    @Override
     public void removeChildren() {
         branches.clear();
     }
