@@ -10,7 +10,7 @@ import marten.age.graphics.text.FontCache;
 public class FpsCounter extends BasicSceneGraphChild {
 
     BitmapFont font = FontCache
-            .getFont(new Font("Courier New", Font.BOLD, 20));
+            .getFont(new Font("Arial", Font.PLAIN, 20));
 
     private long startTime = 0;
     private long fps = 0;

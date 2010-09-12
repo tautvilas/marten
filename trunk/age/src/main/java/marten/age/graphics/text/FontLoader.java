@@ -16,6 +16,7 @@ import org.lwjgl.opengl.GL11;
 
 public class FontLoader {
 
+    @SuppressWarnings("unused")
     private static org.apache.log4j.Logger log = Logger
             .getLogger(FontLoader.class);
 
@@ -29,7 +30,6 @@ public class FontLoader {
         g.setFont(font);
         FontMetrics fm = g.getFontMetrics();
         int charWidth = fm.stringWidth("W");
-        log.info(fm.charWidth('W'));
         int charHeight = fm.getHeight();
         int bitmapWidth = 2;
         int bitmapHeight = 2;
@@ -82,8 +82,6 @@ public class FontLoader {
             GL11.glEndList();
         }
 
-        log.info("Creating font. Character height: " + charHeight
-                + ", character width: " + charWidth);
         return new BitmapFont(base, texture, charHeight, charWidth, fm);
     }
 }
