@@ -41,13 +41,7 @@ public class Button extends Sprite implements Widget, MouseListener {
     public void setLabel(String label) {
         this.label = new BitmapString(this.font);
         this.label.setContent(label);
-        Point position = this.getPosition();
-        // center the label
-        Dimension dButton = this.getDimension();
-        Dimension dLabel = this.label.getDimension();
-        this.label.setPosition(new Point(position.x + dButton.width / 2
-                - dLabel.width / 2, position.y
-                + (dButton.height / 2 - dLabel.height / 2)));
+        this.label.centerIn(this);
         this.tg.removeChild(this.label);
         this.tg.addChild(this.label);
     }
