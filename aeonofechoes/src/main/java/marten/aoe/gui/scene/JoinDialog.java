@@ -8,6 +8,7 @@ import marten.age.core.AgeScene;
 import marten.age.graphics.flat.Flatland;
 import marten.age.graphics.image.ImageCache;
 import marten.age.graphics.image.ImageData;
+import marten.age.graphics.text.FontCache;
 import marten.age.widget.AgeField;
 import marten.aoe.Path;
 
@@ -25,8 +26,8 @@ public class JoinDialog extends AgeScene {
                 .getImage(Path.SKIN_PATH + "field.png");
         ImageData cursorImage = ImageCache.getImage(Path.SKIN_PATH
                 + "cursor.png");
-        AgeField nickField = new AgeField(fieldImage, cursorImage, new Font(
-                "Arial", Font.PLAIN, 20));
+        AgeField nickField = new AgeField(fieldImage, cursorImage, FontCache
+                .getFont(new Font("Arial", Font.PLAIN, 20)));
         this.flatland.addChild(nickField);
         this.flatland.compile();
         this.addController(new KeyboardController());

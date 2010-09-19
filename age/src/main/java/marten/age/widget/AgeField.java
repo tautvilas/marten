@@ -1,7 +1,5 @@
 package marten.age.widget;
 
-import java.awt.Font;
-
 import marten.age.control.KeyboardListener;
 import marten.age.graphics.flat.sprite.Sprite;
 import marten.age.graphics.flat.sprite.TextureSprite;
@@ -10,7 +8,6 @@ import marten.age.graphics.primitives.Dimension;
 import marten.age.graphics.primitives.Point;
 import marten.age.graphics.text.BitmapFont;
 import marten.age.graphics.text.BitmapString;
-import marten.age.graphics.text.FontCache;
 import marten.age.graphics.transform.TranslationGroup;
 
 import org.lwjgl.input.Keyboard;
@@ -25,11 +22,11 @@ public class AgeField extends Sprite implements Widget, KeyboardListener {
     private int blinkInterval = 10;
     private int blinkCounter = 10;
 
-    public AgeField(ImageData face, ImageData cursor, Font font) {
+    public AgeField(ImageData face, ImageData cursor, BitmapFont font) {
         this.face = new TextureSprite(face);
         this.cursor = new TextureSprite(cursor);
         this.cursor.setPosition(new Point(5, 0));
-        this.font = FontCache.getFont(font);
+        this.font = font;
         this.tg.addChild(this.face);
         this.input = new BitmapString(this.font, "");
         this.tg.addChild(this.input);

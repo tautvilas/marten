@@ -2,6 +2,7 @@ package marten.aoe.gui.scene;
 
 import java.awt.Font;
 
+import marten.age.control.KeyboardController;
 import marten.age.control.MouseController;
 import marten.age.core.AgeScene;
 import marten.age.core.AppInfo;
@@ -15,6 +16,7 @@ import marten.age.graphics.text.BitmapFont;
 import marten.age.graphics.text.BitmapString;
 import marten.age.graphics.text.FontCache;
 import marten.age.widget.Action;
+import marten.age.widget.AgeField;
 import marten.age.widget.Button;
 import marten.age.widget.obsolete.FpsCounter;
 import marten.aoe.Path;
@@ -27,39 +29,49 @@ public class MainMenu extends AgeScene {
             .getLogger(MainMenu.class);
 
     private Flatland flatland = new Flatland();
-    private BitmapFont titleFont = FontCache.getFont(new Font("Arial",
-            Font.PLAIN, 50));
 
     public MainMenu() {
+        // create fonts
+        BitmapFont titleFont = FontCache.getFont(new Font("Arial", Font.PLAIN,
+                50));
+        BitmapFont dialogFont = FontCache.getFont(new Font("Arial", Font.PLAIN,
+                20));
+
         // load graphics
         ImageData menuButtonImage = ImageCache.getImage(Path.SKIN_PATH
                 + "menu-button.png");
+        ImageData fieldFace = ImageCache.getImage(Path.SKIN_PATH + "field.png");
+        ImageData cursor = ImageCache.getImage(Path.SKIN_PATH + "cursor.png");
 
-        // create and configure title
+        // create and configure graphic elements
+        BitmapString nickString = new BitmapString(dialogFont, "Your nickname:");
         BitmapString title = new BitmapString(titleFont, "Aeon Of Echoes");
         // title.setColor(new Color(0.0, 1.0, 0.0));
-
-        // create and configure buttons
         Button hostButton = new Button(menuButtonImage);
         Button joinButton = new Button(menuButtonImage);
-        Font font = new Font("Arial", Font.PLAIN, 20);
-        hostButton.setFont(font);
+        hostButton.setFont(dialogFont);
         hostButton.setLabel("Host Game");
-        joinButton.setFont(font);
+        joinButton.setFont(dialogFont);
         joinButton.setLabel("Join Game");
+        AgeField nickField = new AgeField(fieldFace, cursor, dialogFont);
 
-        // center the buttons and the title
+        // position graphic elements
         Dimension dButton = hostButton.getDimension();
         Dimension dApp = AppInfo.getDisplayDimension();
+        Dimension dField = nickField.getDimension();
         hostButton.setPosition(new Point(dApp.width / 2 - dButton.width / 2,
-                dApp.height / 2 + dButton.height));
+                dApp.height / 2 - dButton.height / 2));
         joinButton.setPosition(new Point(dApp.width / 2 - dButton.width / 2,
-                dApp.height / 2 - dButton.height));
+                dApp.height / 2 - dButton.height * 2));
         Dimension dTitle = title.getDimension();
         title.setPosition(new Point(dApp.width / 2 - dTitle.width / 2,
                 dApp.height / 2 + dButton.height * 3));
+        nickField.setPosition(new Point(dApp.width / 2 - dField.width / 2,
+                dApp.height / 2 + dButton.height));
+        nickString.setPosition(new Point(dApp.width / 2 - dField.width / 2,
+                dApp.height / 2 + dButton.height + dField.height));
 
-        // hook up button actions
+        // hook up actions
         hostButton.setAction(new Action() {
             @Override
             public void perform() {
@@ -73,14 +85,17 @@ public class MainMenu extends AgeScene {
             }
         });
 
-        // register buttons
-        // this.addController(new KeyboardController());
+        // register graphic elements
+        this.addController(new KeyboardController());
         this.addController(new MouseController());
         this.registerControllable(hostButton);
         this.registerControllable(joinButton);
+        this.registerControllable(nickField);
 
         // add graphic elements to flatland
         this.flatland.addChild(title);
+        this.flatland.addChild(nickString);
+        this.flatland.addChild(nickField);
         this.flatland.addChild(hostButton);
         this.flatland.addChild(joinButton);
         this.flatland.addChild(new FpsCounter());
