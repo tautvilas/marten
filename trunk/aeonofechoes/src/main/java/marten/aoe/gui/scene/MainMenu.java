@@ -1,6 +1,10 @@
 package marten.aoe.gui.scene;
 
 import java.awt.Font;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.util.ArrayList;
+import java.util.Scanner;
 
 import marten.age.control.KeyboardController;
 import marten.age.control.MouseController;
@@ -30,6 +34,37 @@ public class MainMenu extends AgeScene {
 
     private Flatland flatland = new Flatland();
 
+    private String generateNick() {
+        File file = new File("/usr/share/dict/words");
+        String nick = "";
+        ArrayList<String> lines = new ArrayList<String>();
+
+        try {
+            Scanner scanner = new Scanner(file);
+            while (scanner.hasNextLine()) {
+                String line = scanner.nextLine();
+                lines.add(line);
+            }
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+            return "nickname";
+        }
+
+        for (int i = 0; i < 2; i++) {
+            String line = lines.get((int)(Math.random() * lines.size()));
+            while (line.length() < 3) {
+                line = lines.get((int)(Math.random() * lines.size()));
+            }
+            line.toLowerCase();
+            nick += line;
+            if (i == 0) {
+                nick += "_";
+            }
+        }
+        System.out.println(nick);
+        return nick;
+    }
+
     public MainMenu() {
         // create fonts
         BitmapFont titleFont = FontCache.getFont(new Font("Arial", Font.PLAIN,
@@ -54,6 +89,7 @@ public class MainMenu extends AgeScene {
         joinButton.setFont(dialogFont);
         joinButton.setLabel("Join Game");
         AgeField nickField = new AgeField(fieldFace, cursor, dialogFont);
+        nickField.setValue(generateNick());
 
         // position graphic elements
         Dimension dButton = hostButton.getDimension();
