@@ -1,7 +1,5 @@
 package marten.age.widget;
 
-import java.awt.Font;
-
 import marten.age.control.MouseListener;
 import marten.age.graphics.appearance.Color;
 import marten.age.graphics.flat.sprite.Sprite;
@@ -11,7 +9,6 @@ import marten.age.graphics.primitives.Dimension;
 import marten.age.graphics.primitives.Point;
 import marten.age.graphics.text.BitmapFont;
 import marten.age.graphics.text.BitmapString;
-import marten.age.graphics.text.FontCache;
 import marten.age.graphics.transform.TranslationGroup;
 
 import org.apache.log4j.Logger;
@@ -34,8 +31,8 @@ public class Button extends Sprite implements Widget, MouseListener {
         this.addChild(tg);
     }
 
-    public void setFont(Font font) {
-        this.font = FontCache.getFont(font);
+    public void setFont(BitmapFont font) {
+        this.font = font;
     }
 
     public void setLabel(String label) {
