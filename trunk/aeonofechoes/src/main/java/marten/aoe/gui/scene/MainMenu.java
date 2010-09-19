@@ -61,7 +61,6 @@ public class MainMenu extends AgeScene {
                 nick += "_";
             }
         }
-        System.out.println(nick);
         return nick;
     }
 

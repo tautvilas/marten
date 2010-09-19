@@ -9,6 +9,7 @@ import marten.age.graphics.primitives.Point;
 import marten.age.graphics.text.BitmapFont;
 import marten.age.graphics.text.BitmapString;
 import marten.age.graphics.text.FontCache;
+import marten.age.widget.obsolete.FpsCounter;
 
 public class FontTest extends AgeApp {
 
@@ -88,6 +89,7 @@ public class FontTest extends AgeApp {
                     "The quick brown fox jumps over the lazy dog\nThe quick brown fox jumps over the lazy dog");
             string.setPosition(new Point(0, 100));
             flatland.addChild(string);
+            flatland.addChild(new FpsCounter());
         }
 
         @Override
