@@ -17,7 +17,6 @@ import marten.age.widget.Console;
 import marten.age.widget.ConsoleListener;
 import marten.age.widget.Widget;
 import marten.aoe.server.AoeServer;
-import marten.aoe.server.ClientSession;
 import marten.aoe.server.Server;
 import marten.aoe.server.Session;
 
@@ -55,7 +54,7 @@ public class NetworkScene extends AgeScene {
                         // application freezes while connecting to server
                         String serverUrl = "rmi://" + words[1] + "/Server";
                         server = (Server)Naming.lookup(serverUrl);
-                        session = new ClientSession(words[2]);
+//                        session = new ClientSession(words[2]);
                         // private static final long serialVersionUID = 1L;
                         //
                         // @Override
@@ -71,8 +70,7 @@ public class NetworkScene extends AgeScene {
                         // messages.addContent(": " + message + "\n");
                         // }
                         // };
-                        server.login(session);
-                        username = words[2];
+                        server.login(words[2]);
                         log.info("Logged in to server '" + words[1] + "' as '"
                                 + words[2] + "'");
                         return "logged in";
