@@ -8,4 +8,6 @@ public interface Server extends Remote {
 
     public void sendMessage(ClientSession from, String to, String message)
             throws RemoteException;
+
+    public ChatMessage getMessage(ClientSession session) throws RemoteException;
 }
