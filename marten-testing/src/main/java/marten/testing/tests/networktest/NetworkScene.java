@@ -17,14 +17,12 @@ import marten.age.widget.Console;
 import marten.age.widget.ConsoleListener;
 import marten.age.widget.Widget;
 import marten.aoe.server.AoeServer;
-import marten.aoe.server.ClientSession;
 import marten.aoe.server.Server;
 import marten.aoe.server.Session;
 
 import org.apache.log4j.Logger;
 
 public class NetworkScene extends AgeScene {
-    @SuppressWarnings("unused")
     private static org.apache.log4j.Logger log = Logger
             .getLogger(NetworkScene.class);
 
@@ -54,25 +52,27 @@ public class NetworkScene extends AgeScene {
                     try {
                         // TODO(zv): this should be run in new thread because
                         // application freezes while connecting to server
-                        server = (Server) Naming.lookup("//" + words[1]
-                                + "/Server");
-                        session = new ClientSession(words[2]) {
-                            private static final long serialVersionUID = 1L;
-
-                            @Override
-                            public void publishMessage(String from,
-                                    String message) throws RemoteException {
-                                messages.addColor(new Color(0.0, 0, 1.0));
-                                messages.addContent(from);
-                                messages.addColor(new Color(1.0, 1.0, 1.0));
-                                messages.addContent(" to ");
-                                messages.addColor(new Color(1.0, 0.0, 0.0));
-                                messages.addContent(username);
-                                messages.addColor(new Color(1.0, 1.0, 1.0));
-                                messages.addContent(": " + message + "\n");
-                            }
-                        };
-                        server.login(session);
+                        String serverUrl = "rmi://" + words[1] + "/Server";
+                        log.info(java.net.InetAddress.getLocalHost());
+                        log.info(serverUrl);
+                        server = (Server)Naming.lookup(serverUrl);
+                        // session = new ClientSession(words[2]) {
+                        // private static final long serialVersionUID = 1L;
+                        //
+                        // @Override
+                        // public void publishMessage(String from,
+                        // String message) throws RemoteException {
+                        // messages.addColor(new Color(0.0, 0, 1.0));
+                        // messages.addContent(from);
+                        // messages.addColor(new Color(1.0, 1.0, 1.0));
+                        // messages.addContent(" to ");
+                        // messages.addColor(new Color(1.0, 0.0, 0.0));
+                        // messages.addContent(username);
+                        // messages.addColor(new Color(1.0, 1.0, 1.0));
+                        // messages.addContent(": " + message + "\n");
+                        // }
+                        // };
+                        // server.login(session);
                         username = words[2];
                         return "logged in";
                     } catch (Exception e) {
