@@ -14,6 +14,7 @@ import org.apache.log4j.Logger;
 public class AoeServer extends UnicastRemoteObject implements Server {
     private static final long serialVersionUID = 1L;
     private HashMap<String, ClientSession> users = new HashMap<String, ClientSession>();
+    private HashMap<String, ClientMessageProvider> messengers = new HashMap<String, ClientMessageProvider>();
 
     private static org.apache.log4j.Logger log = Logger
             .getLogger(AoeServer.class);
@@ -56,6 +57,7 @@ public class AoeServer extends UnicastRemoteObject implements Server {
             log.error("Username '" + username + "' allready exists");
         } else {
             users.put(username, session);
+            messengers.put(username, new ClientMessageProvider());
             log.info("User '" + username + "' successfully logged in");
         }
     }
@@ -67,6 +69,12 @@ public class AoeServer extends UnicastRemoteObject implements Server {
             log.error("User '" + to + "' does not exist");
             return;
         }
-        // users.get(to).publishMessage(from.getUsername(), message);
+        messengers.get(to).addChatMessage(
+                new ChatMessage(from.username, message));
+    }
+
+    @Override
+    public ChatMessage getMessage(ClientSession session) throws RemoteException {
+        return messengers.get(session.username).getMessage();
     }
 }

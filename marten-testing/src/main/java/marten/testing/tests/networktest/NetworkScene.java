@@ -17,6 +17,7 @@ import marten.age.widget.Console;
 import marten.age.widget.ConsoleListener;
 import marten.age.widget.Widget;
 import marten.aoe.server.AoeServer;
+import marten.aoe.server.ChatMessage;
 import marten.aoe.server.ClientSession;
 import marten.aoe.server.Server;
 
@@ -54,25 +55,33 @@ public class NetworkScene extends AgeScene {
                         // application freezes while connecting to server
                         String serverUrl = "rmi://" + words[1] + "/Server";
                         server = (Server)Naming.lookup(serverUrl);
-                        // private static final long serialVersionUID = 1L;
-                        //
-                        // @Override
-                        // public void publishMessage(String from,
-                        // String message) throws RemoteException {
-                        // messages.addColor(new Color(0.0, 0, 1.0));
-                        // messages.addContent(from);
-                        // messages.addColor(new Color(1.0, 1.0, 1.0));
-                        // messages.addContent(" to ");
-                        // messages.addColor(new Color(1.0, 0.0, 0.0));
-                        // messages.addContent(username);
-                        // messages.addColor(new Color(1.0, 1.0, 1.0));
-                        // messages.addContent(": " + message + "\n");
-                        // }
-                        // };
-                        session = new ClientSession(words[2]);
+                        username = words[2];
+                        session = new ClientSession(username);
                         server.login(session);
                         log.info("Logged in to server '" + words[1] + "' as '"
                                 + words[2] + "'");
+                        Thread messageReceiver = new Thread() {
+                            @Override
+                            public void run() {
+                                while(true) {
+                                 ChatMessage message;
+                                try {
+                                    message = server.getMessage(session);
+                                } catch (RemoteException e) {
+                                    throw new RuntimeException(e);
+                                }
+                                 messages.addColor(new Color(0.0, 0, 1.0));
+                                 messages.addContent(message.from);
+                                 messages.addColor(new Color(1.0, 1.0, 1.0));
+                                 messages.addContent(" to ");
+                                 messages.addColor(new Color(1.0, 0.0, 0.0));
+                                 messages.addContent(username);
+                                 messages.addColor(new Color(1.0, 1.0, 1.0));
+                                 messages.addContent(": " + message.message + "\n");
+                                }
+                            }
+                        };
+                        messageReceiver.start();
                         return "logged in";
                     } catch (Exception e) {
                         // return "Could not connect to AOE server";
