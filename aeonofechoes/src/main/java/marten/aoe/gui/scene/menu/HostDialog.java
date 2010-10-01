@@ -1,4 +1,4 @@
-package marten.aoe.gui.scene;
+package marten.aoe.gui.scene.menu;
 
 import marten.age.core.AgeScene;
 
