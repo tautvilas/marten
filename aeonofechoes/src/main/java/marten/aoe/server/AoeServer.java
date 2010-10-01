@@ -34,7 +34,7 @@ public class AoeServer extends UnicastRemoteObject implements Server {
 
             System.setProperty("java.rmi.server.hostname", publicIp
                     .getHostAddress());
-            log.info("Binding server for IP " + publicIp.getHostAddress());
+            log.debug("Binding server for IP " + publicIp.getHostAddress());
             java.rmi.registry.LocateRegistry.createRegistry(1099);
             log.info("RMI registry started on port 1099");
             Naming.rebind("rmi://localhost/Server", new AoeServer());

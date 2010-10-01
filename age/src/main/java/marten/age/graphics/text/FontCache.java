@@ -14,9 +14,9 @@ public class FontCache {
         if (!fonts.containsKey(font)) {
             result = FontLoader.loadFont(font);
             fonts.put(font, result);
-            log.info("Font " + font + " added to font cache.");
+            log.debug("Font " + font + " added to font cache.");
         } else {
-            log.info("Font " + font + " is allready in font cache.");
+            log.debug("Font " + font + " is allready in font cache.");
         }
         return result;
     }

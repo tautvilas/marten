@@ -45,7 +45,7 @@ public abstract class AgeScene {
         for (Controller controller : this.controllers) {
             try {
                 controller.addListener(listener);
-                log.info(listener + " listener was added to controller " + controller);
+                log.debug(listener + " listener was added to controller " + controller);
             } catch (ClassCastException e) {
             }
         }

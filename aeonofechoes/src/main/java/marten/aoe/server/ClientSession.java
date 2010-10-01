@@ -3,7 +3,7 @@ package marten.aoe.server;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 
-public abstract class ClientSession extends UnicastRemoteObject implements Session {
+public class ClientSession extends UnicastRemoteObject implements Session {
 
     private String username;
 
@@ -17,9 +17,13 @@ public abstract class ClientSession extends UnicastRemoteObject implements Sessi
         return this.username;
     }
 
-    @Override
-    public abstract void publishMessage(String from, String message) throws RemoteException;
-
     private static final long serialVersionUID = 1L;
+
+    @Override
+    public void publishMessage(String from, String message)
+            throws RemoteException {
+        // TODO Auto-generated method stub
+        
+    }
 
 }
