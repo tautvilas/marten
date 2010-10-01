@@ -17,8 +17,8 @@ import marten.age.widget.Console;
 import marten.age.widget.ConsoleListener;
 import marten.age.widget.Widget;
 import marten.aoe.server.AoeServer;
+import marten.aoe.server.ClientSession;
 import marten.aoe.server.Server;
-import marten.aoe.server.Session;
 
 import org.apache.log4j.Logger;
 
@@ -27,7 +27,7 @@ public class NetworkScene extends AgeScene {
             .getLogger(NetworkScene.class);
 
     private Flatland flatland = null;
-    private Session session = null;
+    private ClientSession session = null;
     private Server server = null;
     private String username;
     private BitmapFont font = FontCache.getFont(new Font("Courier New",
@@ -54,7 +54,6 @@ public class NetworkScene extends AgeScene {
                         // application freezes while connecting to server
                         String serverUrl = "rmi://" + words[1] + "/Server";
                         server = (Server)Naming.lookup(serverUrl);
-//                        session = new ClientSession(words[2]);
                         // private static final long serialVersionUID = 1L;
                         //
                         // @Override
@@ -70,7 +69,8 @@ public class NetworkScene extends AgeScene {
                         // messages.addContent(": " + message + "\n");
                         // }
                         // };
-                        server.login(words[2]);
+                        session = new ClientSession(words[2]);
+                        server.login(session);
                         log.info("Logged in to server '" + words[1] + "' as '"
                                 + words[2] + "'");
                         return "logged in";
