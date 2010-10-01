@@ -1,15 +1,15 @@
 package marten.aoe.gui.scene.menu;
 
-import marten.age.core.AgeScene;
-
-public class HostDialog extends AgeScene {
+public class HostDialog extends MenuScene {
 
     @Override
     public void compute() {
+        // TODO Auto-generated method stub
+
     }
 
     @Override
     public void render() {
+        this.flatland.render();
     }
-
 }
