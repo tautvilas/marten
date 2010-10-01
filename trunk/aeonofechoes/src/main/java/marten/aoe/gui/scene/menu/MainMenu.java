@@ -1,4 +1,4 @@
-package marten.aoe.gui.scene;
+package marten.aoe.gui.scene.menu;
 
 import java.awt.Font;
 import java.io.File;
@@ -8,10 +8,8 @@ import java.util.Scanner;
 
 import marten.age.control.KeyboardController;
 import marten.age.control.MouseController;
-import marten.age.core.AgeScene;
 import marten.age.core.AppInfo;
 import marten.age.event.AgeSceneSwitchEvent;
-import marten.age.graphics.flat.Flatland;
 import marten.age.graphics.image.ImageCache;
 import marten.age.graphics.image.ImageData;
 import marten.age.graphics.primitives.Dimension;
@@ -27,12 +25,10 @@ import marten.aoe.Path;
 
 import org.apache.log4j.Logger;
 
-public class MainMenu extends AgeScene {
+public class MainMenu extends MenuScene {
     @SuppressWarnings("unused")
     private static org.apache.log4j.Logger log = Logger
             .getLogger(MainMenu.class);
-
-    private Flatland flatland = new Flatland();
 
     private String generateNick() {
         File file = new File("/usr/share/dict/words");
@@ -65,9 +61,8 @@ public class MainMenu extends AgeScene {
     }
 
     public MainMenu() {
+        super();
         // create fonts
-        BitmapFont titleFont = FontCache.getFont(new Font("Arial", Font.PLAIN,
-                50));
         BitmapFont dialogFont = FontCache.getFont(new Font("Arial", Font.PLAIN,
                 20));
 
@@ -79,7 +74,6 @@ public class MainMenu extends AgeScene {
 
         // create and configure graphic elements
         BitmapString nickString = new BitmapString(dialogFont, "Your nickname:");
-        BitmapString title = new BitmapString(titleFont, "Aeon Of Echoes");
         // title.setColor(new Color(0.0, 1.0, 0.0));
         Button hostButton = new Button(menuButtonImage);
         Button joinButton = new Button(menuButtonImage);
@@ -98,9 +92,6 @@ public class MainMenu extends AgeScene {
                 dApp.height / 2 - dButton.height / 2));
         joinButton.setPosition(new Point(dApp.width / 2 - dButton.width / 2,
                 dApp.height / 2 - dButton.height * 2));
-        Dimension dTitle = title.getDimension();
-        title.setPosition(new Point(dApp.width / 2 - dTitle.width / 2,
-                dApp.height / 2 + dButton.height * 3));
         nickField.setPosition(new Point(dApp.width / 2 - dField.width / 2,
                 dApp.height / 2 + dButton.height));
         nickString.setPosition(new Point(dApp.width / 2 - dField.width / 2,
@@ -128,7 +119,6 @@ public class MainMenu extends AgeScene {
         this.registerControllable(nickField);
 
         // add graphic elements to flatland
-        this.flatland.addChild(title);
         this.flatland.addChild(nickString);
         this.flatland.addChild(nickField);
         this.flatland.addChild(hostButton);

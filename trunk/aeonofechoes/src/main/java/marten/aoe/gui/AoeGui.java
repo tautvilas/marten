@@ -1,7 +1,7 @@
 package marten.aoe.gui;
 
 import marten.age.core.AgeApp;
-import marten.aoe.gui.scene.MainMenu;
+import marten.aoe.gui.scene.menu.MainMenu;
 
 public class AoeGui extends AgeApp {
 
