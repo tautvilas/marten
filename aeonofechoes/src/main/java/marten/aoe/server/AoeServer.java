@@ -62,6 +62,11 @@ public class AoeServer extends UnicastRemoteObject implements Server {
     }
 
     @Override
+    public void login(String username) throws RemoteException {
+        log.info("User '" + username + "' successfully logged in");
+    }
+
+    @Override
     public void sendMessage(Session from, String to, String message)
             throws RemoteException {
         if (!users.keySet().contains(to)) {
