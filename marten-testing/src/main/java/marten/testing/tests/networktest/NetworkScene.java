@@ -55,22 +55,22 @@ public class NetworkScene extends AgeScene {
                         // application freezes while connecting to server
                         String serverUrl = "rmi://" + words[1] + "/Server";
                         server = (Server)Naming.lookup(serverUrl);
-                        session = new ClientSession(words[2]) {
-                         private static final long serialVersionUID = 1L;
-                        
-                         @Override
-                         public void publishMessage(String from,
-                         String message) throws RemoteException {
-                         messages.addColor(new Color(0.0, 0, 1.0));
-                         messages.addContent(from);
-                         messages.addColor(new Color(1.0, 1.0, 1.0));
-                         messages.addContent(" to ");
-                         messages.addColor(new Color(1.0, 0.0, 0.0));
-                         messages.addContent(username);
-                         messages.addColor(new Color(1.0, 1.0, 1.0));
-                         messages.addContent(": " + message + "\n");
-                         }
-                         };
+                        session = new ClientSession(words[2]);
+                        // private static final long serialVersionUID = 1L;
+                        //
+                        // @Override
+                        // public void publishMessage(String from,
+                        // String message) throws RemoteException {
+                        // messages.addColor(new Color(0.0, 0, 1.0));
+                        // messages.addContent(from);
+                        // messages.addColor(new Color(1.0, 1.0, 1.0));
+                        // messages.addContent(" to ");
+                        // messages.addColor(new Color(1.0, 0.0, 0.0));
+                        // messages.addContent(username);
+                        // messages.addColor(new Color(1.0, 1.0, 1.0));
+                        // messages.addContent(": " + message + "\n");
+                        // }
+                        // };
                         server.login(session);
                         username = words[2];
                         log.info("Logged in to server '" + words[1] + "' as '"

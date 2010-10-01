@@ -68,6 +68,6 @@ public class AoeServer extends UnicastRemoteObject implements Server {
             log.error("User '" + to + "' does not exist");
             return;
         }
-        users.get(to).publishMessage(from.getUsername(), message);
+//        users.get(to).publishMessage(from.getUsername(), message);
     }
 }
