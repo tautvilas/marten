@@ -20,6 +20,15 @@ public class FontTest extends AgeApp {
         public MainScene() {
             BitmapFont font = FontCache.getFont(new Font("Courier New",
                     Font.PLAIN, 20));
+
+            for (int i = 0; i < 10; i++) {
+                BitmapString string = new BitmapString(
+                        font,
+                        "The quick brown fox jumps over the lazy dog\nThe quick brown fox jumps over the lazy dog");
+                string.setPosition(new Point(50, 600 + i * 50));
+                flatland.addChild(string);
+            }
+
             BitmapString string = new BitmapString(
                     font,
                     "The quick brown fox jumps over the lazy dog\nThe quick brown fox jumps over the lazy dog");
