@@ -45,16 +45,15 @@ public class BitmapString extends Sprite {
         this.setContent(this.content + content);
     }
 
-    // TODO(zv):check about glCallLists
     private void glPrint(String msg) {
         if (msg != null) {
             GL11.glPushAttrib(GL11.GL_ENABLE_BIT);
             GL11.glDisable(GL11.GL_LIGHTING);
             GL11.glEnable(GL11.GL_TEXTURE_2D);
             GL11.glPushMatrix();
-            GL11.glTranslated(this.position.x, this.position.y
-                    + (this.numLines - 1) * this.font.getSize(), 0);
+            GL11.glTranslated(this.position.x, this.position.y, 0);
             int lineTranslate = 0;
+            int lineNum = 0;
             for (int i = 0; i < msg.length(); i++) {
                 Integer index = new Integer(i);
                 if (colors.containsKey(index)) {
@@ -62,13 +61,14 @@ public class BitmapString extends Sprite {
                     GL11.glColor3d(color.r, color.g, color.b);
                 }
                 if (msg.charAt(i) == '\n') {
-                    GL11.glTranslated(-lineTranslate, -font.getSize(), 0.0);
                     lineTranslate = 0;
+                    lineNum += 1;
                 } else {
-                    int width = font.getMetrics().charWidth(msg.charAt(i));
-                    GL11.glCallList(font.getBase() + msg.charAt(i));
-                    GL11.glTranslated(width, 0.0f, 0.0f);
-                    lineTranslate += width;
+                    char c = msg.charAt(i);
+                    font.drawLetter(msg.charAt(i), lineTranslate, (numLines
+                            - lineNum - 1)
+                            * font.getSize());
+                    lineTranslate += font.getCharWidth(c);
                 }
             }
             GL11.glPopMatrix();
@@ -96,8 +96,9 @@ public class BitmapString extends Sprite {
 
     @Override
     public Dimension getDimension() {
-        return new Dimension(font.getMetrics().stringWidth(this.content),
-                (float)this.font.getSize() * this.numLines);
+        return new Dimension(font.stringWidth(this.content), (float)this.font
+                .getSize()
+                * this.numLines);
     }
 
     @Override
