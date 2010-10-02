@@ -7,7 +7,7 @@ import marten.age.graphics.primitives.Point;
 
 import org.lwjgl.opengl.GL11;
 
-public class PixelSprite extends Sprite {
+public class PixelSprite extends BasicSprite {
     private ImageData data;
     private Point postition = new Point();
 

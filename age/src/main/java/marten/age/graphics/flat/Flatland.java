@@ -45,7 +45,7 @@ public class Flatland {
 
     public void addText(BitmapString text, Point position) {
         TranslationGroup translation = new TranslationGroup();
-        translation.setCoordinates(position);
+        translation.setPosition(position);
         translation.addChild(text);
         hud.addChild(translation);
     }

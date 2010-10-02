@@ -47,7 +47,7 @@ public class Body {
 			throw new RuntimeException("VisualSpaceObject: model not set");
 		}
 		scaleGroup.setScaleFactor(this.radius);
-		translationGroup.setCoordinates(this.position);
+		translationGroup.setPosition(this.position);
 		rotationGroup.setRotation(this.heading);
 		scaleGroup.addChild(model);
 		rotationGroup.addChild(scaleGroup);
