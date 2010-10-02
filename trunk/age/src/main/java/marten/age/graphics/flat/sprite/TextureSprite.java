@@ -11,7 +11,7 @@ import marten.age.graphics.texture.Texture;
 import marten.age.graphics.texture.TextureLoader;
 import marten.age.graphics.transform.TranslationGroup;
 
-public class TextureSprite extends Sprite {
+public class TextureSprite extends BasicSprite {
     private SimpleModel model;
     private TranslationGroup tg = new TranslationGroup();
     private Texture texture;
@@ -56,11 +56,11 @@ public class TextureSprite extends Sprite {
 
     @Override
     public Point getPosition() {
-        return tg.getCoordinates();
+        return tg.getPosition();
     }
 
     @Override
     public void setPosition(Point point) {
-        tg.setCoordinates(point);
+        tg.setPosition(point);
     }
 }

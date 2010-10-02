@@ -3,13 +3,13 @@ package marten.age.graphics.text;
 import java.util.HashMap;
 
 import marten.age.graphics.appearance.Color;
-import marten.age.graphics.flat.sprite.Sprite;
+import marten.age.graphics.flat.sprite.BasicSprite;
 import marten.age.graphics.primitives.Dimension;
 import marten.age.graphics.primitives.Point;
 
 import org.lwjgl.opengl.GL11;
 
-public class BitmapString extends Sprite {
+public class BitmapString extends BasicSprite {
     private BitmapFont font;
     private String content = "";
     private int numLines = 0;

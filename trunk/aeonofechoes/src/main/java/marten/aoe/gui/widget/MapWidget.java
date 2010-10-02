@@ -10,7 +10,7 @@ import marten.age.control.MouseListener;
 import marten.age.core.AppInfo;
 import marten.age.graphics.appearance.Appearance;
 import marten.age.graphics.appearance.Color;
-import marten.age.graphics.flat.sprite.Sprite;
+import marten.age.graphics.flat.sprite.BasicSprite;
 import marten.age.graphics.flat.sprite.TextureSprite;
 import marten.age.graphics.geometry.Geometry;
 import marten.age.graphics.geometry.primitives.Rectangle;
@@ -31,7 +31,7 @@ import marten.aoe.engine.TileCoordinate;
 
 import org.apache.log4j.Logger;
 
-public class MapWidget extends Sprite implements Widget, MouseListener {
+public class MapWidget extends BasicSprite implements Widget, MouseListener {
     private static org.apache.log4j.Logger log = Logger
             .getLogger(MapWidget.class);
     private HashMap<String, SimpleModel> terrainCache = new HashMap<String, SimpleModel>();
@@ -238,7 +238,7 @@ public class MapWidget extends Sprite implements Widget, MouseListener {
 
     @Override
     public Point getPosition() {
-        return tg.getCoordinates();
+        return tg.getPosition();
     }
 
     @Override
@@ -256,7 +256,7 @@ public class MapWidget extends Sprite implements Widget, MouseListener {
                 && position.y < currentPosition.y) {
             position.y = currentPosition.y;
         }
-        tg.setCoordinates(position);
+        tg.setPosition(position);
     }
 
     @Override

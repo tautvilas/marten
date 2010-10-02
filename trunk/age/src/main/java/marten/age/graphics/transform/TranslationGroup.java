@@ -1,25 +1,27 @@
 package marten.age.graphics.transform;
 
 import marten.age.graphics.BasicSceneGraphBranch;
+import marten.age.graphics.flat.sprite.Placeable;
 import marten.age.graphics.primitives.Point;
 
 import org.lwjgl.opengl.GL11;
 
-public final class TranslationGroup extends BasicSceneGraphBranch {
+public class TranslationGroup extends BasicSceneGraphBranch implements
+        Placeable {
     private Point coordinates = new Point();
 
     public TranslationGroup() {
     };
 
-    public TranslationGroup(Point newCoordinates) {
-        this.setCoordinates(newCoordinates);
+    public TranslationGroup(Point position) {
+        this.setPosition(position);
     }
 
-    public void setCoordinates(Point newCoordinates) {
-        this.coordinates = new Point(newCoordinates);
+    public void setPosition(Point position) {
+        this.coordinates = new Point(position);
     }
 
-    public Point getCoordinates() {
+    public Point getPosition() {
         return new Point(this.coordinates);
     }
 

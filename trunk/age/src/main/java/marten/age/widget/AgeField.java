@@ -1,7 +1,7 @@
 package marten.age.widget;
 
 import marten.age.control.KeyboardListener;
-import marten.age.graphics.flat.sprite.Sprite;
+import marten.age.graphics.flat.sprite.BasicSprite;
 import marten.age.graphics.flat.sprite.TextureSprite;
 import marten.age.graphics.image.ImageData;
 import marten.age.graphics.primitives.Dimension;
@@ -12,7 +12,7 @@ import marten.age.graphics.transform.TranslationGroup;
 
 import org.lwjgl.input.Keyboard;
 
-public class AgeField extends Sprite implements Widget, KeyboardListener {
+public class AgeField extends BasicSprite implements Widget, KeyboardListener {
 
     private BitmapString input;
     private TextureSprite face;
@@ -65,12 +65,12 @@ public class AgeField extends Sprite implements Widget, KeyboardListener {
 
     @Override
     public Point getPosition() {
-        return tg.getCoordinates();
+        return tg.getPosition();
     }
 
     @Override
     public void setPosition(Point position) {
-        tg.setCoordinates(position);
+        tg.setPosition(position);
     }
 
     @Override
