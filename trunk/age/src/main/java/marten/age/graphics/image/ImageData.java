@@ -8,6 +8,7 @@ import java.nio.ByteBuffer;
 import javax.imageio.ImageIO;
 
 import marten.age.Constants;
+import marten.age.graphics.primitives.Dimension;
 
 import org.apache.log4j.Logger;
 import org.lwjgl.BufferUtils;
@@ -27,6 +28,10 @@ public class ImageData {
 
     public ImageData(File file) throws IOException {
         this(ImageIO.read(file));
+    }
+
+    public Dimension getDimension() {
+        return new Dimension(this.width, this.height);
     }
 
     public ImageData(BufferedImage image) {

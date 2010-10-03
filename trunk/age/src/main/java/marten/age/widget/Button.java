@@ -3,8 +3,8 @@ package marten.age.widget;
 import marten.age.control.MouseListener;
 import marten.age.graphics.appearance.Color;
 import marten.age.graphics.flat.HitTest;
+import marten.age.graphics.flat.SimpleLayout;
 import marten.age.graphics.flat.sprite.TextureSprite;
-import marten.age.graphics.flat.sprite.TranslatableSprite;
 import marten.age.graphics.image.ImageData;
 import marten.age.graphics.primitives.Dimension;
 import marten.age.graphics.primitives.Point;
@@ -13,7 +13,7 @@ import marten.age.graphics.text.BitmapString;
 
 import org.apache.log4j.Logger;
 
-public class Button extends TranslatableSprite implements Widget, MouseListener {
+public class Button extends SimpleLayout implements Widget, MouseListener {
     @SuppressWarnings("unused")
     private static org.apache.log4j.Logger log = Logger.getLogger(Button.class);
 
@@ -25,6 +25,7 @@ public class Button extends TranslatableSprite implements Widget, MouseListener 
     private BitmapFont font;
 
     public Button(ImageData data) {
+        super(data.getDimension());
         this.face = new TextureSprite(data);
         this.addChild(face);
     }
@@ -36,9 +37,8 @@ public class Button extends TranslatableSprite implements Widget, MouseListener 
     public void setLabel(String label) {
         this.label = new BitmapString(this.font);
         this.label.setContent(label);
-//        this.label.centerIn(this);
         this.removeChild(this.label);
-        this.addChild(this.label);
+        this.center(this.label);
     }
 
     @Override

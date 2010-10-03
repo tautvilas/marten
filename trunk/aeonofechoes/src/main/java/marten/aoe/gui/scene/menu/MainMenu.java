@@ -10,6 +10,7 @@ import marten.age.control.KeyboardController;
 import marten.age.control.MouseController;
 import marten.age.core.AppInfo;
 import marten.age.event.AgeSceneSwitchEvent;
+import marten.age.graphics.flat.SimpleLayout;
 import marten.age.graphics.image.ImageCache;
 import marten.age.graphics.image.ImageData;
 import marten.age.graphics.primitives.Dimension;
@@ -85,17 +86,18 @@ public class MainMenu extends MenuScene {
         nickField.setValue(generateNick());
 
         // position graphic elements
+        SimpleLayout layout = new SimpleLayout(AppInfo.getDisplayDimension());
         Dimension dButton = hostButton.getDimension();
         Dimension dApp = AppInfo.getDisplayDimension();
         Dimension dField = nickField.getDimension();
-        hostButton.setPosition(new Point(dApp.width / 2 - dButton.width / 2,
-                dApp.height / 2 - dButton.height / 2));
-        joinButton.setPosition(new Point(dApp.width / 2 - dButton.width / 2,
-                dApp.height / 2 - dButton.height * 2));
-        nickField.setPosition(new Point(dApp.width / 2 - dField.width / 2,
-                dApp.height / 2 + dButton.height));
-        nickString.setPosition(new Point(dApp.width / 2 - dField.width / 2,
-                dApp.height / 2 + dButton.height + dField.height));
+        layout.centerHorizontally(hostButton,
+                (int)(dApp.height / 2 - dButton.height / 2));
+        layout.centerHorizontally(joinButton,
+                (int)(dApp.height / 2 - dButton.height * 2));
+        layout.centerHorizontally(nickField,
+                (int)(dApp.height / 2 + dButton.height));
+        nickString.setPosition(new Point(nickField.getPosition().x, dApp.height
+                / 2 + dButton.height + dField.height));
 
         // hook up actions
         hostButton.setAction(new Action() {
@@ -119,10 +121,8 @@ public class MainMenu extends MenuScene {
         this.registerControllable(nickField);
 
         // add graphic elements to flatland
+        this.flatland.addChild(layout);
         this.flatland.addChild(nickString);
-        this.flatland.addChild(nickField);
-        this.flatland.addChild(hostButton);
-        this.flatland.addChild(joinButton);
         this.flatland.addChild(new FpsCounter());
         this.flatland.compile();
     }
