@@ -12,9 +12,9 @@ public class ImageCache {
         if (!images.containsKey(path)) {
             ImageData image = ImageLoader.loadImage(path);
             images.put(path, image);
-            log.info("Image " + path + " added to image cache.");
+            log.debug("Image " + path + " added to image cache.");
         } else {
-            log.info("Image " + path + " is allready in font cache.");
+            log.debug("Image " + path + " is allready in font cache.");
         }
     }
 
@@ -22,7 +22,7 @@ public class ImageCache {
         if (!images.containsKey(path)) {
             loadImage(path);
         } else {
-            log.info("Found image " + path + " in image cache. Returning.");
+            log.debug("Found image " + path + " in image cache. Returning.");
         }
         return images.get(path);
     }

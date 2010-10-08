@@ -5,13 +5,10 @@ import java.util.HashMap;
 
 import marten.age.graphics.camera.Camera;
 
-import org.apache.log4j.Logger;
-import org.lwjgl.opengl.GL11;
 import org.lwjgl.BufferUtils;
+import org.lwjgl.opengl.GL11;
 
 public class SimpleRoot extends Root {
-    private static org.apache.log4j.Logger log = Logger
-            .getLogger(SimpleRoot.class);
     private HashMap<String, Camera> cameras = new HashMap<String, Camera>();
 
     private Camera activeCamera = null;
@@ -36,10 +33,6 @@ public class SimpleRoot extends Root {
         // GL11.glEnable(GL11.GL_BLEND);
         // GL11.glBlendFunc(GL11.GL_SRC_ALPHA_SATURATE, GL11.GL_ONE);
         // GL11.glDepthFunc(GL11.GL_LEQUAL);
-
-        log.info("GL_VENDOR: " + GL11.glGetString(GL11.GL_VENDOR));
-        log.info("GL_RENDERER: " + GL11.glGetString(GL11.GL_RENDERER));
-        log.info("GL_VERSION: " + GL11.glGetString(GL11.GL_VERSION));
     }
 
     public void addCamera(String title, Camera newCamera) {

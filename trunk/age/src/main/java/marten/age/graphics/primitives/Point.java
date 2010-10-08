@@ -136,6 +136,10 @@ public final class Point {
         return new Point(this.x + other.x, this.y + other.y, this.z + other.z);
     }
 
+    public synchronized Point substract(Point other) {
+        return new Point(this.x - other.x, this.y - other.y, this.z - other.z);
+    }
+
     /**
      * @param other
      *            the point to where the origin would be moved.

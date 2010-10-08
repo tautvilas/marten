@@ -16,6 +16,17 @@ public class SimpleLayout extends TranslatableSprite {
         return this.dimension;
     }
 
+    public void addToLeft(Sprite sprite) {
+        sprite.setPosition(new Point(0, 0));
+        this.addChild(sprite);
+    }
+
+    public void addToRight(Sprite sprite) {
+        sprite.setPosition(new Point(this.dimension.width
+                - sprite.getDimension().width, 0));
+        this.addChild(sprite);
+    }
+
     public void center(Sprite sprite) {
         Dimension d1 = sprite.getDimension();
         Point p2 = this.getPosition();

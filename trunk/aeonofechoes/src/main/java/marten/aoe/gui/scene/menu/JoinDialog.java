@@ -5,15 +5,18 @@ import java.awt.Font;
 import marten.age.control.KeyboardController;
 import marten.age.control.MouseController;
 import marten.age.core.AppInfo;
+import marten.age.event.AgeSceneSwitchEvent;
+import marten.age.graphics.flat.SimpleLayout;
 import marten.age.graphics.image.ImageCache;
 import marten.age.graphics.image.ImageData;
 import marten.age.graphics.primitives.Dimension;
-import marten.age.graphics.primitives.Point;
 import marten.age.graphics.text.BitmapFont;
 import marten.age.graphics.text.BitmapString;
 import marten.age.graphics.text.FontCache;
+import marten.age.widget.Action;
 import marten.age.widget.AgeField;
 import marten.aoe.Path;
+import marten.aoe.gui.widget.OkCancelDialog;
 
 import org.apache.log4j.Logger;
 
@@ -25,6 +28,7 @@ public class JoinDialog extends MenuScene {
 
     public JoinDialog() {
         super();
+        // Loading graphics
         BitmapFont dialogFont = FontCache.getFont(new Font("Arial", Font.PLAIN,
                 20));
         ImageData fieldImage = ImageCache
@@ -32,24 +36,36 @@ public class JoinDialog extends MenuScene {
         ImageData cursorImage = ImageCache.getImage(Path.SKIN_PATH
                 + "cursor.png");
 
+        // Constructing GUI elements
+        SimpleLayout layout = new SimpleLayout(AppInfo.getDisplayDimension());
         BitmapString fieldLabel = new BitmapString(dialogFont,
                 "Enter server location:");
-        AgeField UrlField = new AgeField(fieldImage, cursorImage, FontCache
-                .getFont(new Font("Arial", Font.PLAIN, 20)));
+        AgeField urlField = new AgeField(fieldImage, cursorImage, dialogFont);
+        OkCancelDialog okCancel = new OkCancelDialog(new Dimension(600, 40));
 
-        Dimension dField = UrlField.getDimension();
-        Dimension dScreen = AppInfo.getDisplayDimension();
-        Point pField = new Point(dScreen.width / 2 - dField.width / 2,
-                dScreen.height / 2 - dField.height / 2);
-        UrlField.setPosition(pField);
-        fieldLabel.setPosition(new Point(pField.x, pField.y + dField.height));
+        // Layouting GUI elements
+        Dimension dField = urlField.getDimension();
+        layout.center(urlField);
+        layout.centerHorizontally(fieldLabel,
+                (int) (urlField.getPosition().y + dField.height));
+        layout.centerHorizontally(okCancel,
+                (int) (urlField.getPosition().y - 100));
 
-        this.flatland.addChild(UrlField);
-        this.flatland.addChild(fieldLabel);
+        // Setuping button actions
+        okCancel.setCancelAction(new Action() {
+            @Override
+            public void perform() {
+                fireEvent(new AgeSceneSwitchEvent(new MainMenu()));
+            }
+        });
+
+        // Registering and adding GUI elements
+        this.flatland.addChild(layout);
         this.flatland.compile();
         this.addController(new KeyboardController());
         this.addController(new MouseController());
-        this.registerControllable(UrlField);
+        this.registerControllable(urlField);
+        this.registerControllable(okCancel);
     }
 
     @Override
