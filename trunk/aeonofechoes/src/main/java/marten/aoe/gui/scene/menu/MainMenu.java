@@ -1,6 +1,5 @@
 package marten.aoe.gui.scene.menu;
 
-import java.awt.Font;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
@@ -11,18 +10,13 @@ import marten.age.control.MouseController;
 import marten.age.core.AppInfo;
 import marten.age.event.AgeSceneSwitchEvent;
 import marten.age.graphics.flat.SimpleLayout;
-import marten.age.graphics.image.ImageCache;
-import marten.age.graphics.image.ImageData;
 import marten.age.graphics.primitives.Dimension;
 import marten.age.graphics.primitives.Point;
-import marten.age.graphics.text.BitmapFont;
-import marten.age.graphics.text.BitmapString;
-import marten.age.graphics.text.FontCache;
 import marten.age.widget.Action;
-import marten.age.widget.AgeField;
-import marten.age.widget.Button;
 import marten.age.widget.obsolete.FpsCounter;
-import marten.aoe.Path;
+import marten.aoe.gui.widget.AoeButton;
+import marten.aoe.gui.widget.AoeField;
+import marten.aoe.gui.widget.AoeString;
 
 import org.apache.log4j.Logger;
 
@@ -62,26 +56,13 @@ public class MainMenu extends MenuScene {
 
     public MainMenu() {
         super();
-        // create fonts
-        BitmapFont dialogFont = FontCache.getFont(new Font("Arial", Font.PLAIN,
-                20));
-
-        // load graphics
-        ImageData menuButtonImage = ImageCache.getImage(Path.SKIN_PATH
-                + "menu-button.png");
-        ImageData fieldFace = ImageCache.getImage(Path.SKIN_PATH + "field.png");
-        ImageData cursor = ImageCache.getImage(Path.SKIN_PATH + "cursor.png");
 
         // create and configure graphic elements
-        BitmapString nickString = new BitmapString(dialogFont, "Your nickname:");
+        AoeString nickString = new AoeString("Your nickname:");
         // title.setColor(new Color(0.0, 1.0, 0.0));
-        Button hostButton = new Button(menuButtonImage);
-        Button joinButton = new Button(menuButtonImage);
-        hostButton.setFont(dialogFont);
-        hostButton.setLabel("Host Game");
-        joinButton.setFont(dialogFont);
-        joinButton.setLabel("Join Game");
-        AgeField nickField = new AgeField(fieldFace, cursor, dialogFont);
+        AoeButton hostButton = new AoeButton("Host Game");
+        AoeButton joinButton = new AoeButton("Join Game");
+        AoeField nickField = new AoeField();
         nickField.setValue(generateNick());
 
         // position graphic elements
