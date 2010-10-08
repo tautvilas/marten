@@ -1,21 +1,14 @@
 package marten.aoe.gui.scene.menu;
 
-import java.awt.Font;
-
 import marten.age.control.KeyboardController;
 import marten.age.control.MouseController;
 import marten.age.core.AppInfo;
 import marten.age.event.AgeSceneSwitchEvent;
 import marten.age.graphics.flat.SimpleLayout;
-import marten.age.graphics.image.ImageCache;
-import marten.age.graphics.image.ImageData;
 import marten.age.graphics.primitives.Dimension;
-import marten.age.graphics.text.BitmapFont;
-import marten.age.graphics.text.BitmapString;
-import marten.age.graphics.text.FontCache;
 import marten.age.widget.Action;
-import marten.age.widget.AgeField;
-import marten.aoe.Path;
+import marten.aoe.gui.widget.AoeField;
+import marten.aoe.gui.widget.AoeString;
 import marten.aoe.gui.widget.OkCancelDialog;
 
 import org.apache.log4j.Logger;
@@ -26,23 +19,12 @@ public class JoinDialog extends MenuScene {
     private static org.apache.log4j.Logger log = Logger
             .getLogger(JoinDialog.class);
 
-    private AgeField urlField;
-
     public JoinDialog() {
         super();
-        // Loading graphics
-        BitmapFont dialogFont = FontCache.getFont(new Font("Arial", Font.PLAIN,
-                20));
-        ImageData fieldImage = ImageCache
-                .getImage(Path.SKIN_PATH + "field.png");
-        ImageData cursorImage = ImageCache.getImage(Path.SKIN_PATH
-                + "cursor.png");
-
         // Constructing GUI elements
         SimpleLayout layout = new SimpleLayout(AppInfo.getDisplayDimension());
-        BitmapString fieldLabel = new BitmapString(dialogFont,
-                "Enter server location:");
-        urlField = new AgeField(fieldImage, cursorImage, dialogFont);
+        AoeString fieldLabel = new AoeString("Enter server location:");
+        final AoeField urlField = new AoeField();
         OkCancelDialog okCancel = new OkCancelDialog(new Dimension(600, 40));
 
         // Layouting GUI elements
