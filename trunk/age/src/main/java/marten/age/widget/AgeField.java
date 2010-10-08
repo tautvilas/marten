@@ -39,6 +39,10 @@ public class AgeField extends BasicSprite implements Widget, KeyboardListener {
         cursor.setPosition(new Point(3 + this.input.getDimension().width, 0));
     }
 
+    public String getValue() {
+        return this.input.getContent();
+    }
+
     @Override
     public void keyDown(int key, char character) {
         String inputString = this.input.getContent();

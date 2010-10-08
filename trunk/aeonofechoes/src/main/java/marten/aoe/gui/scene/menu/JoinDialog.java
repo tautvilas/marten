@@ -26,6 +26,8 @@ public class JoinDialog extends MenuScene {
     private static org.apache.log4j.Logger log = Logger
             .getLogger(JoinDialog.class);
 
+    private AgeField urlField;
+
     public JoinDialog() {
         super();
         // Loading graphics
@@ -40,7 +42,7 @@ public class JoinDialog extends MenuScene {
         SimpleLayout layout = new SimpleLayout(AppInfo.getDisplayDimension());
         BitmapString fieldLabel = new BitmapString(dialogFont,
                 "Enter server location:");
-        AgeField urlField = new AgeField(fieldImage, cursorImage, dialogFont);
+        urlField = new AgeField(fieldImage, cursorImage, dialogFont);
         OkCancelDialog okCancel = new OkCancelDialog(new Dimension(600, 40));
 
         // Layouting GUI elements
@@ -56,6 +58,13 @@ public class JoinDialog extends MenuScene {
             @Override
             public void perform() {
                 fireEvent(new AgeSceneSwitchEvent(new MainMenu()));
+            }
+        });
+        okCancel.setOkAction(new Action() {
+            @Override
+            public void perform() {
+                fireEvent(new AgeSceneSwitchEvent(new GameGate(urlField
+                        .getValue())));
             }
         });
 

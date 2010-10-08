@@ -102,7 +102,7 @@ public class MainMenu extends MenuScene {
         hostButton.setAction(new Action() {
             @Override
             public void perform() {
-                fireEvent(new AgeSceneSwitchEvent(new HostDialog()));
+                fireEvent(new AgeSceneSwitchEvent(new ChooseMap()));
             }
         });
         joinButton.setAction(new Action() {
