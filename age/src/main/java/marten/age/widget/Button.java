@@ -1,5 +1,7 @@
 package marten.age.widget;
 
+import java.awt.Font;
+
 import marten.age.control.MouseListener;
 import marten.age.graphics.appearance.Color;
 import marten.age.graphics.flat.HitTest;
@@ -10,6 +12,7 @@ import marten.age.graphics.primitives.Dimension;
 import marten.age.graphics.primitives.Point;
 import marten.age.graphics.text.BitmapFont;
 import marten.age.graphics.text.BitmapString;
+import marten.age.graphics.text.FontCache;
 
 import org.apache.log4j.Logger;
 
@@ -22,7 +25,8 @@ public class Button extends SimpleLayout implements Widget, MouseListener {
     private Action action;
     private TextureSprite face;
     private BitmapString label;
-    private BitmapFont font;
+    private BitmapFont font = FontCache.getFont(new Font("Arial", Font.PLAIN,
+            18));
 
     public Button(ImageData data) {
         super(data.getDimension());

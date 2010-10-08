@@ -9,6 +9,7 @@ import org.apache.log4j.Logger;
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.opengl.Display;
 import org.lwjgl.opengl.DisplayMode;
+import org.lwjgl.opengl.GL11;
 
 public abstract class AgeApp {
     private static org.apache.log4j.Logger log = Logger.getLogger(AgeApp.class);
@@ -29,7 +30,6 @@ public abstract class AgeApp {
     public int height = DEFAULT_HEIGHT;
 
     public AgeApp() {
-
     }
 
     public AgeApp(String title) {
@@ -45,6 +45,9 @@ public abstract class AgeApp {
             return;
         }
 
+        log.info("GL_VENDOR: " + GL11.glGetString(GL11.GL_VENDOR));
+        log.info("GL_RENDERER: " + GL11.glGetString(GL11.GL_RENDERER));
+        log.info("GL_VERSION: " + GL11.glGetString(GL11.GL_VERSION));
         configure();
         runScene();
         destroy();
@@ -161,8 +164,8 @@ public abstract class AgeApp {
         public void handle(AgeEvent e) {
             if (e instanceof AgeSceneSwitchEvent) {
                 AgeSceneSwitchEvent event = (AgeSceneSwitchEvent) e;
+                log.debug("Switching AGE scene to " + event.newScene);
                 switchScene(event.newScene);
-                log.info("AGE scene switced to " + event.newScene);
             } else {
                 log.warn("Unrecognized Age event " + e);
             }

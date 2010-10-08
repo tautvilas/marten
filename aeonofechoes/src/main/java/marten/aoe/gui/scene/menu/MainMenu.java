@@ -27,7 +27,6 @@ import marten.aoe.Path;
 import org.apache.log4j.Logger;
 
 public class MainMenu extends MenuScene {
-    @SuppressWarnings("unused")
     private static org.apache.log4j.Logger log = Logger
             .getLogger(MainMenu.class);
 
@@ -43,7 +42,7 @@ public class MainMenu extends MenuScene {
                 lines.add(line);
             }
         } catch (FileNotFoundException e) {
-            e.printStackTrace();
+            log.warn("This is not Linux :/ /usr/share/dict/words not found");
             return "nickname";
         }
 
