@@ -82,7 +82,7 @@ public class Button extends SimpleLayout implements Widget, MouseListener {
     }
 
     @Override
-    public void mouseWheelRoll(int delta) {
+    public void mouseWheelRoll(int delta, Point coords) {
     }
 
     public void setAction(Action action) {

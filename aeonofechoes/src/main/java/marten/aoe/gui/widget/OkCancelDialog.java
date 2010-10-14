@@ -57,7 +57,7 @@ public class OkCancelDialog extends SimpleLayout implements MouseListener {
     }
 
     @Override
-    public void mouseWheelRoll(int delta) {
+    public void mouseWheelRoll(int delta, Point coords) {
     }
 
 }

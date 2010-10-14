@@ -24,7 +24,7 @@ public class Hud extends BasicSceneGraphBranch {
         GL11.glMatrixMode(GL11.GL_PROJECTION);
         GL11.glPushMatrix();
         GL11.glLoadIdentity();
-        GL11.glOrtho(0, width, height, 0, -1, 1);
+        GL11.glOrtho(0, width, height, 0, 0, 1);
         GL11.glScalef(1, -1, 1);
         GL11.glTranslatef(0, -height, 0);
         GL11.glMatrixMode(GL11.GL_MODELVIEW);

@@ -160,7 +160,7 @@ public class AgeFeatureTest extends AgeApp {
         }
 
         /* Camera distance is being controlled by mouse wheel */
-        public void mouseWheelRoll(int delta) {
+        public void mouseWheelRoll(int delta, Point coords) {
             if (delta < 0) {
                 mainCameraDistance += 1;
             } else {
