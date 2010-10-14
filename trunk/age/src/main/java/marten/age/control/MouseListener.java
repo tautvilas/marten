@@ -9,5 +9,5 @@ public interface MouseListener extends Listener {
 
     public abstract void mouseDown(Point coords);
 
-    public abstract void mouseWheelRoll(int delta);
+    public abstract void mouseWheelRoll(int delta, Point coords);
 }

@@ -276,6 +276,6 @@ public class MapWidget extends BasicSprite implements Widget, MouseListener {
     }
 
     @Override
-    public void mouseWheelRoll(int delta) {
+    public void mouseWheelRoll(int delta, Point coords) {
     }
 }

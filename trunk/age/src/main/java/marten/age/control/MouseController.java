@@ -64,7 +64,7 @@ public class MouseController extends Controller {
     protected void publishEventsToListener(Listener l) {
         MouseListener listener = (MouseListener) l;
         if (wheelD != 0) {
-            listener.mouseWheelRoll(wheelD);
+            listener.mouseWheelRoll(wheelD, cursor);
         }
         if (mouseDX != 0 || mouseDY != 0 || mouseDW != 0) {
             listener.mouseMove(cursor);
