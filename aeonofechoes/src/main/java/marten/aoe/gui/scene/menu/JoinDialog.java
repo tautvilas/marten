@@ -1,5 +1,8 @@
 package marten.aoe.gui.scene.menu;
 
+import java.net.InetAddress;
+import java.net.UnknownHostException;
+
 import marten.age.control.KeyboardController;
 import marten.age.control.MouseController;
 import marten.age.core.AppInfo;
@@ -7,6 +10,7 @@ import marten.age.event.AgeSceneSwitchEvent;
 import marten.age.graphics.flat.SimpleLayout;
 import marten.age.graphics.primitives.Dimension;
 import marten.age.widget.Action;
+import marten.aoe.gui.scene.GameGate;
 import marten.aoe.gui.widget.AoeField;
 import marten.aoe.gui.widget.AoeString;
 import marten.aoe.gui.widget.OkCancelDialog;
@@ -15,7 +19,6 @@ import org.apache.log4j.Logger;
 
 public class JoinDialog extends MenuScene {
 
-    @SuppressWarnings("unused")
     private static org.apache.log4j.Logger log = Logger
             .getLogger(JoinDialog.class);
 
@@ -31,9 +34,9 @@ public class JoinDialog extends MenuScene {
         Dimension dField = urlField.getDimension();
         layout.center(urlField);
         layout.centerHorizontally(fieldLabel,
-                (int) (urlField.getPosition().y + dField.height));
+                (int)(urlField.getPosition().y + dField.height));
         layout.centerHorizontally(okCancel,
-                (int) (urlField.getPosition().y - 100));
+                (int)(urlField.getPosition().y - 100));
 
         // Setuping button actions
         okCancel.setCancelAction(new Action() {
@@ -45,8 +48,14 @@ public class JoinDialog extends MenuScene {
         okCancel.setOkAction(new Action() {
             @Override
             public void perform() {
-                fireEvent(new AgeSceneSwitchEvent(new GameGate(urlField
-                        .getValue())));
+                String host = urlField.getValue();
+                try {
+                    fireEvent(new AgeSceneSwitchEvent(new GameGate(InetAddress
+                            .getByName(host))));
+                } catch (UnknownHostException e) {
+                    log.error("Unknown host " + host);
+                    throw new RuntimeException(e);
+                }
             }
         });
 

@@ -14,6 +14,7 @@ import marten.age.graphics.primitives.Dimension;
 import marten.age.graphics.primitives.Point;
 import marten.age.widget.Action;
 import marten.age.widget.obsolete.FpsCounter;
+import marten.aoe.GameInfo;
 import marten.aoe.gui.widget.AoeButton;
 import marten.aoe.gui.widget.AoeField;
 import marten.aoe.gui.widget.AoeString;
@@ -54,6 +55,8 @@ public class MainMenu extends MenuScene {
         return nick;
     }
 
+    private AoeField nickField = new AoeField();
+
     public MainMenu() {
         super();
 
@@ -62,7 +65,6 @@ public class MainMenu extends MenuScene {
         // title.setColor(new Color(0.0, 1.0, 0.0));
         AoeButton hostButton = new AoeButton("Host Game");
         AoeButton joinButton = new AoeButton("Join Game");
-        AoeField nickField = new AoeField();
         nickField.setValue(generateNick());
 
         // position graphic elements
@@ -83,12 +85,14 @@ public class MainMenu extends MenuScene {
         hostButton.setAction(new Action() {
             @Override
             public void perform() {
+                GameInfo.nickname = nickField.getValue();
                 fireEvent(new AgeSceneSwitchEvent(new ChooseMap()));
             }
         });
         joinButton.setAction(new Action() {
             @Override
             public void perform() {
+                GameInfo.nickname = nickField.getValue();
                 fireEvent(new AgeSceneSwitchEvent(new JoinDialog()));
             }
         });
