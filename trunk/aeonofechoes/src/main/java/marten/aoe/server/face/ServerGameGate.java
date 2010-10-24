@@ -9,4 +9,6 @@ public interface ServerGameGate extends Remote {
     public String start(ClientSession session) throws RemoteException;
 
     public void join(ClientSession session) throws RemoteException;
+
+    public String[] getMembers(ClientSession session) throws RemoteException;
 }
