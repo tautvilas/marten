@@ -11,6 +11,7 @@ import marten.age.graphics.flat.SimpleLayout;
 import marten.age.graphics.primitives.Dimension;
 import marten.age.widget.Action;
 import marten.aoe.Path;
+import marten.aoe.gui.scene.GameGate;
 import marten.aoe.gui.widget.AoeButton;
 import marten.aoe.gui.widget.OkCancelDialog;
 
@@ -26,6 +27,7 @@ public class ChooseMap extends AgeScene {
 
         File mapFolder = new File(Path.MAP_PATH);
         String[] filenames = mapFolder.list();
+        int j = 0;
         for (int i = 0; i < filenames.length; i++) {
             final String filename = filenames[i];
             if (filename.charAt(0) == '.') continue;
@@ -37,8 +39,9 @@ public class ChooseMap extends AgeScene {
                 }
             });
             layout.centerHorizontally(mapButton, (int)(layout.getDimension().height
-                    - 100 - i * mapButton.getDimension().height));
+                    - 100 - j * mapButton.getDimension().height));
             this.registerControllable(mapButton);
+            j++;
         }
 
         okCancel.setCancelAction(new Action() {

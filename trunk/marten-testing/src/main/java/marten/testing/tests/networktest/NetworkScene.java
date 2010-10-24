@@ -19,7 +19,7 @@ import marten.age.widget.Widget;
 import marten.aoe.server.AoeServer;
 import marten.aoe.server.ChatMessage;
 import marten.aoe.server.ClientSession;
-import marten.aoe.server.Server;
+import marten.aoe.server.face.Server;
 
 import org.apache.log4j.Logger;
 
