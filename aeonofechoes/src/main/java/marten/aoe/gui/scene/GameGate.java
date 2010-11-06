@@ -105,6 +105,7 @@ public class GameGate extends AgeScene {
                 while (true) {
                     String[] members;
                     try {
+                        gate.listen();
                         members = gate.getMembers(session);
                     } catch (RemoteException e) {
                         throw new RuntimeException(e);

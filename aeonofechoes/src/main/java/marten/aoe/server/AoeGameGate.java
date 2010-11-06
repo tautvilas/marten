@@ -17,40 +17,26 @@ public class AoeGameGate extends UnicastRemoteObject implements ServerGameGate {
 
     private ClientSession creator;
     private HashMap<String, ClientSession> players = new HashMap<String, ClientSession>();
-    private volatile HashMap<String, Messenger> messengers = new HashMap<String, Messenger>();
     private String gameName;
     @SuppressWarnings("unused")
     private String mapName;
     private boolean open = true;
 
-    private class Messenger {
-        private boolean firstCall = true;
-
-        public synchronized Set<String> getMembers() {
-            log.info(firstCall);
-            try {
-                if (!firstCall) {
-                    this.wait();
-                } else {
-                    firstCall = false;
-                }
-            } catch (InterruptedException e) {
-                throw new RuntimeException(e);
-            }
-            return players.keySet();
-        }
-
-        public synchronized void resume() {
-            // Seems that notify can not be called from other class...
-            this.notify();
-        }
+    @Override
+    public synchronized String[] getMembers(ClientSession session)
+            throws RemoteException {
+        Set<String> members = this.players.keySet();
+        String[] m = new String[members.size()];
+        return members.toArray(m);
     }
 
     @Override
-    public synchronized String[] getMembers(ClientSession session) throws RemoteException {
-        Set<String> members = messengers.get(session.username).getMembers();
-        String[] m = new String[members.size()];
-        return members.toArray(m);
+    public synchronized void listen() throws RemoteException {
+        try {
+            this.wait();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
     }
 
     protected AoeGameGate(ClientSession creator, String gameName, String mapName)
@@ -60,18 +46,14 @@ public class AoeGameGate extends UnicastRemoteObject implements ServerGameGate {
         this.gameName = gameName;
         this.mapName = mapName;
         players.put(creator.username, creator);
-        messengers.put(creator.username, new Messenger());
         log.info("Game gate for game '" + this.gameName + "' created");
     }
 
     @Override
-    public void join(ClientSession session) throws RemoteException {
+    public synchronized void join(ClientSession session) throws RemoteException {
         if (open) {
+            this.notifyAll();
             players.put(session.username, session);
-            messengers.put(session.username, new Messenger());
-            for (Messenger messenger : messengers.values()) {
-                messenger.resume();
-            }
         } else {
             log.info(session.username + " tried to join but game was closed");
         }
