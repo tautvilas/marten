@@ -99,7 +99,7 @@ public class NetworkScene extends AgeScene {
                         message += words[i] + " ";
                     }
                     try {
-                        server.sendMessage(session, words[1], message);
+                        server.sendPrivateMessage(session, words[1], message);
                     } catch (RemoteException e) {
                         // log.error("Could not send message");
                         throw new RuntimeException(e);

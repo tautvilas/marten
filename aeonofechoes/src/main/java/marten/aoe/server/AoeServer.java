@@ -13,15 +13,15 @@ import java.util.LinkedList;
 import java.util.regex.Pattern;
 
 import marten.aoe.server.face.Server;
-import marten.aoe.server.face.ServerGameGate;
 
 import org.apache.log4j.Logger;
 
 public class AoeServer extends UnicastRemoteObject implements Server {
     private static final long serialVersionUID = 1L;
-    private HashMap<String, ClientSession> users = new HashMap<String, ClientSession>();
-    private HashMap<String, LinkedList<ChatMessage>> messages = new HashMap<String, LinkedList<ChatMessage>>();
-    public static String serverUrl;
+    private HashMap<String, ClientSession> sessions;;
+    private HashMap<String, LinkedList<ChatMessage>> inboxes;
+    private HashMap<String, AoeGameGate> gameGates;
+    private String serverUrl;
 
     private static org.apache.log4j.Logger log = Logger
             .getLogger(AoeServer.class);
@@ -45,48 +45,70 @@ public class AoeServer extends UnicastRemoteObject implements Server {
             log.debug("Binding server for IP " + publicIp.getHostAddress());
             java.rmi.registry.LocateRegistry.createRegistry(1099);
             log.info("RMI registry started on port 1099");
-            Naming.rebind("rmi://localhost/Server", new AoeServer());
+            String serverUrl = "rmi://" + publicIp.getHostAddress() + "/Server";
+            Naming.rebind("rmi://localhost/Server", new AoeServer(serverUrl));
             log.info("AOE server is started!");
-            serverUrl = "rmi://" + publicIp.getHostAddress() + "/Server";
         } catch (Exception e) {
             log.error("Failed to start AOE server");
             throw new RuntimeException(e);
         }
     }
 
-    public AoeServer() throws RemoteException {
+    public AoeServer(String url) throws RemoteException {
         super();
+        this.serverUrl = url;
+        this.inboxes = new HashMap<String, LinkedList<ChatMessage>>();
+        this.sessions = new HashMap<String, ClientSession>();
+        this.gameGates = new HashMap<String, AoeGameGate>();
     }
 
     @Override
     public void login(ClientSession session) throws RemoteException {
         String username = session.username;
-        if (users.keySet().contains(username)) {
+        if (sessions.keySet().contains(username)) {
             log.error("Username '" + username + "' allready exists");
         } else {
-            users.put(username, session);
-            messages.put(username, new LinkedList<ChatMessage>());
+            sessions.put(username, session);
+            inboxes.put(username, new LinkedList<ChatMessage>());
             log.info("User '" + username + "' successfully logged in");
         }
     }
 
     @Override
-    public void sendMessage(ClientSession from, String to, String message)
+    public void sendPrivateMessage(ClientSession from, String to, String message)
             throws RemoteException {
-        if (!messages.containsKey(to)) {
+        if (!inboxes.containsKey(to)) {
             log.error("Username '" + to + "' does not exists");
             return;
         }
-        LinkedList<ChatMessage> msgs = messages.get(to);
+        LinkedList<ChatMessage> msgs = inboxes.get(to);
         msgs.add(new ChatMessage(from.username, message));
-        synchronized(msgs) {
+        synchronized (msgs) {
             msgs.notifyAll();
         }
     }
 
     @Override
+    public void sendGateMessage(ClientSession from, String gate, String message) {
+        if (!gameGates.containsKey(gate)) {
+            log.error("Game gate '" + gate + "' does not exists");
+            return;
+        }
+        AoeGameGate gameGate = gameGates.get(gate);
+        for (String user : gameGate.getMembers(from)) {
+            if (user != from.username) {
+                LinkedList<ChatMessage> msgs = inboxes.get(user);
+                msgs.add(new ChatMessage(from.username, message));
+                synchronized (msgs) {
+                    msgs.notifyAll();
+                }
+            }
+        }
+    }
+
+    @Override
     public ChatMessage getMessage(ClientSession session) throws RemoteException {
-        LinkedList<ChatMessage> msgs = messages.get(session.username);
+        LinkedList<ChatMessage> msgs = inboxes.get(session.username);
         synchronized (msgs) {
             try {
                 msgs.wait();
@@ -100,7 +122,8 @@ public class AoeServer extends UnicastRemoteObject implements Server {
     @Override
     public String createGame(ClientSession session, String gameName,
             String mapName) throws RemoteException {
-        ServerGameGate gate = new AoeGameGate(session, gameName, mapName);
+        AoeGameGate gate = new AoeGameGate(session, gameName, mapName);
+        this.gameGates.put(gameName, gate);
         try {
             Naming.bind("rmi://localhost/Server/gates/" + gameName, gate);
         } catch (MalformedURLException e) {
@@ -111,9 +134,8 @@ public class AoeServer extends UnicastRemoteObject implements Server {
         return "/gates/" + gameName;
     }
 
-    @SuppressWarnings("static-access")
     @Override
-    public String getGateUrl(String gateName) {
+    public String getGateUrl(String gateName) throws RemoteException {
         return this.serverUrl + "/gates/" + gateName;
     }
 }
