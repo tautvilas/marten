@@ -24,8 +24,7 @@ public class AoeGameGate extends UnicastRemoteObject implements ServerGameGate {
     private boolean open = true;
 
     @Override
-    public synchronized String[] getMembers(ClientSession session)
-            throws RemoteException {
+    public synchronized String[] getMembers(ClientSession session) {
         Set<String> members = this.players.keySet();
         String[] m = new String[members.size()];
         return members.toArray(m);
