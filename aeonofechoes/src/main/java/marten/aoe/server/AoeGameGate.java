@@ -15,6 +15,7 @@ public class AoeGameGate extends UnicastRemoteObject implements ServerGameGate {
             .getLogger(ServerGameGate.class);
     private static final long serialVersionUID = 1L;
 
+    private Object listListenerRegister = new Object();
     private ClientSession creator;
     private HashMap<String, ClientSession> players = new HashMap<String, ClientSession>();
     private String gameName;
@@ -31,11 +32,13 @@ public class AoeGameGate extends UnicastRemoteObject implements ServerGameGate {
     }
 
     @Override
-    public synchronized void listen() throws RemoteException {
-        try {
-            this.wait();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
+    public void listen() throws RemoteException {
+        synchronized (listListenerRegister) {
+            try {
+                listListenerRegister.wait();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
         }
     }
 
@@ -50,9 +53,11 @@ public class AoeGameGate extends UnicastRemoteObject implements ServerGameGate {
     }
 
     @Override
-    public synchronized void join(ClientSession session) throws RemoteException {
+    public void join(ClientSession session) throws RemoteException {
         if (open) {
-            this.notifyAll();
+            synchronized (listListenerRegister) {
+                listListenerRegister.notifyAll();
+            }
             players.put(session.username, session);
         } else {
             log.info(session.username + " tried to join but game was closed");
