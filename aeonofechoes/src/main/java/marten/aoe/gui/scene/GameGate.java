@@ -56,7 +56,7 @@ public class GameGate extends AgeScene {
         dialog.setCancelAction(new Action() {
             @Override
             public void perform() {
-                // on this event user shall logout/destroy all games/gamegates
+                //TODO:on this event user shall logout/destroy all games/gamegates
                 fireEvent(new AgeSceneSwitchEvent(new MainMenu()));
             }
         });
@@ -67,6 +67,11 @@ public class GameGate extends AgeScene {
         this.flatland.compile();
     }
 
+    /**
+     * Host network game
+     * 
+     * @param mapName map name
+     */
     public GameGate(String mapName) {
         this();
         AoeServer.start();
@@ -83,6 +88,11 @@ public class GameGate extends AgeScene {
         this.registerMessenger();
     }
 
+    /**
+     * Join network game
+     * 
+     * @param server network server address
+     */
     public GameGate(InetAddress server) {
         this();
         Server gameServer = connect(server);
@@ -105,7 +115,6 @@ public class GameGate extends AgeScene {
                 while (true) {
                     String[] members;
                     try {
-                        gate.listen();
                         members = gate.getMembers(session);
                     } catch (RemoteException e) {
                         throw new RuntimeException(e);
@@ -121,6 +130,11 @@ public class GameGate extends AgeScene {
                         players.addChild(player);
                     }
                     flatland.addChild(players);
+                    try {
+                        gate.listen();
+                    } catch (RemoteException e) {
+                        throw new RuntimeException(e);
+                    }
                 }
             }
         };
