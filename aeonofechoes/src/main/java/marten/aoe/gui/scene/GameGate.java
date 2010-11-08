@@ -32,11 +32,12 @@ public class GameGate extends AgeScene {
     private ClientSession session;
     private Flatland flatland = new Flatland();
     private TranslationGroup players = new TranslationGroup();
+    private OkCancelDialog dialog;
 
     private GameGate() {
         Dimension dApp = AppInfo.getDisplayDimension();
         AoeField chatField = new AoeField();
-        OkCancelDialog dialog = new OkCancelDialog(new Dimension(600, 200));
+        dialog = new OkCancelDialog(new Dimension(600, 200));
         AoeString waiting = new AoeString("Waiting for players to join...");
         AoeString player = new AoeString(GameInfo.nickname);
         player.setColor(new marten.age.graphics.appearance.Color(0, 1.0, 0.0));
@@ -86,6 +87,12 @@ public class GameGate extends AgeScene {
             throw new RuntimeException(e);
         }
         this.registerMessenger();
+        dialog.setOkAction(new Action() {
+            @Override
+            public void perform() {
+                fireEvent(new AgeSceneSwitchEvent(new Game("")));
+            }
+        });
     }
 
     /**

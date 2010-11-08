@@ -98,8 +98,8 @@ public class AoeServer extends UnicastRemoteObject implements Server {
         for (String user : gameGate.getMembers(from)) {
             if (user != from.username) {
                 LinkedList<ChatMessage> msgs = inboxes.get(user);
-                msgs.add(new ChatMessage(from.username, message));
                 synchronized (msgs) {
+                    msgs.add(new ChatMessage(from.username, message));
                     msgs.notifyAll();
                 }
             }
@@ -110,13 +110,15 @@ public class AoeServer extends UnicastRemoteObject implements Server {
     public ChatMessage getMessage(ClientSession session) throws RemoteException {
         LinkedList<ChatMessage> msgs = inboxes.get(session.username);
         synchronized (msgs) {
-            try {
-                msgs.wait();
-            } catch (InterruptedException e) {
-                e.printStackTrace();
+            if (msgs.isEmpty()) {
+                try {
+                    msgs.wait();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
             }
+            return msgs.pop();
         }
-        return msgs.getLast();
     }
 
     @Override
