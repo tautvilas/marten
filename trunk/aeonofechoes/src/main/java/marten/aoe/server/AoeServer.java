@@ -18,7 +18,6 @@ import org.apache.log4j.Logger;
 
 public class AoeServer extends UnicastRemoteObject implements Server {
     private static final long serialVersionUID = 1L;
-    private HashMap<String, ClientSession> sessions;;
     private HashMap<String, LinkedList<ChatMessage>> inboxes;
     private HashMap<String, AoeGameGate> gameGates;
     private String serverUrl;
@@ -58,31 +57,31 @@ public class AoeServer extends UnicastRemoteObject implements Server {
         super();
         this.serverUrl = url;
         this.inboxes = new HashMap<String, LinkedList<ChatMessage>>();
-        this.sessions = new HashMap<String, ClientSession>();
         this.gameGates = new HashMap<String, AoeGameGate>();
     }
 
     @Override
-    public void login(ClientSession session) throws RemoteException {
-        String username = session.username;
-        if (sessions.keySet().contains(username)) {
-            log.error("Username '" + username + "' allready exists");
-        } else {
-            sessions.put(username, session);
-            inboxes.put(username, new LinkedList<ChatMessage>());
-            log.info("User '" + username + "' successfully logged in");
+    public ClientSession login(String username) throws RemoteException {
+        ClientSession session = Sessions.addUser(username);
+        if (session == null) {
+            log.error("User '" + username + "' allready exists");
+            return null;
         }
+        inboxes.put(username, new LinkedList<ChatMessage>());
+        log.info("User '" + username + "' with secret '" + session.secret + "' successfully logged in");
+        return session;
     }
 
     @Override
     public void sendPrivateMessage(ClientSession from, String to, String message)
             throws RemoteException {
+        String username = Sessions.getUsername(from);
         if (!inboxes.containsKey(to)) {
             log.error("Username '" + to + "' does not exists");
             return;
         }
         LinkedList<ChatMessage> msgs = inboxes.get(to);
-        msgs.add(new ChatMessage(from.username, message));
+        msgs.add(new ChatMessage(username, message));
         synchronized (msgs) {
             msgs.notifyAll();
         }
@@ -90,16 +89,17 @@ public class AoeServer extends UnicastRemoteObject implements Server {
 
     @Override
     public void sendGateMessage(ClientSession from, String gate, String message) {
+        String username = Sessions.getUsername(from);
         if (!gameGates.containsKey(gate)) {
             log.error("Game gate '" + gate + "' does not exists");
             return;
         }
         AoeGameGate gameGate = gameGates.get(gate);
         for (String user : gameGate.getMembers(from)) {
-            if (user != from.username) {
+            if (user != username) {
                 LinkedList<ChatMessage> msgs = inboxes.get(user);
                 synchronized (msgs) {
-                    msgs.add(new ChatMessage(from.username, message));
+                    msgs.add(new ChatMessage(username, message));
                     msgs.notifyAll();
                 }
             }
@@ -108,7 +108,8 @@ public class AoeServer extends UnicastRemoteObject implements Server {
 
     @Override
     public ChatMessage getMessage(ClientSession session) throws RemoteException {
-        LinkedList<ChatMessage> msgs = inboxes.get(session.username);
+        String username = Sessions.getUsername(session);
+        LinkedList<ChatMessage> msgs = inboxes.get(username);
         synchronized (msgs) {
             if (msgs.isEmpty()) {
                 try {

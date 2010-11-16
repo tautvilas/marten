@@ -2,8 +2,7 @@ package marten.aoe.server;
 
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
-import java.util.HashMap;
-import java.util.Set;
+import java.util.ArrayList;
 
 import marten.aoe.server.face.ServerGameGate;
 
@@ -16,8 +15,8 @@ public class AoeGameGate extends UnicastRemoteObject implements ServerGameGate {
     private static final long serialVersionUID = 1L;
 
     private Object listListenerRegister = new Object();
-    private ClientSession creator;
-    private HashMap<String, ClientSession> players = new HashMap<String, ClientSession>();
+    private String creator;
+    private ArrayList<String> players = new ArrayList<String>();
     private String gameName;
     @SuppressWarnings("unused")
     private String mapName;
@@ -25,9 +24,8 @@ public class AoeGameGate extends UnicastRemoteObject implements ServerGameGate {
 
     @Override
     public synchronized String[] getMembers(ClientSession session) {
-        Set<String> members = this.players.keySet();
-        String[] m = new String[members.size()];
-        return members.toArray(m);
+        String[] m = new String[players.size()];
+        return players.toArray(m);
     }
 
     @Override
@@ -44,28 +42,31 @@ public class AoeGameGate extends UnicastRemoteObject implements ServerGameGate {
     protected AoeGameGate(ClientSession creator, String gameName, String mapName)
             throws RemoteException {
         super();
-        this.creator = creator;
+        String username = Sessions.getUsername(creator);
+        this.creator = username;
         this.gameName = gameName;
         this.mapName = mapName;
-        players.put(creator.username, creator);
+        players.add(username);
         log.info("Game gate for game '" + this.gameName + "' created");
     }
 
     @Override
     public void join(ClientSession session) throws RemoteException {
+        String username = Sessions.getUsername(session);
         if (open) {
             synchronized (listListenerRegister) {
                 listListenerRegister.notifyAll();
             }
-            players.put(session.username, session);
+            players.add(username);
         } else {
-            log.info(session.username + " tried to join but game was closed");
+            log.info(username + " tried to join but game was closed");
         }
     }
 
     @Override
     public String start(ClientSession session) throws RemoteException {
-        if (this.creator == session) {
+        String username = Sessions.getUsername(session);
+        if (this.creator == username) {
             return "xxx";
         }
         log.warn("Not authorized");

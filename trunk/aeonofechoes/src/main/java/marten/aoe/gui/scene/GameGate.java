@@ -78,8 +78,7 @@ public class GameGate extends AgeScene {
         AoeServer.start();
         try {
             Server gameServer = connect(InetAddress.getByName("localhost"));
-            this.session = new ClientSession(GameInfo.nickname);
-            gameServer.login(session);
+            this.session = gameServer.login(GameInfo.nickname);
             gameServer.createGame(session, "default", mapName);
             this.gate = (ServerGameGate)Naming.lookup(gameServer
                     .getGateUrl("default"));
@@ -103,9 +102,8 @@ public class GameGate extends AgeScene {
     public GameGate(InetAddress server) {
         this();
         Server gameServer = connect(server);
-        this.session = new ClientSession(GameInfo.nickname);
         try {
-            gameServer.login(session);
+            this.session = gameServer.login(GameInfo.nickname);
             this.gate = (ServerGameGate)Naming.lookup(gameServer
                     .getGateUrl("default"));
             this.gate.join(this.session);
