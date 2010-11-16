@@ -10,7 +10,9 @@ import marten.age.core.AppInfo;
 import marten.age.graphics.flat.Flatland;
 import marten.age.graphics.primitives.Point;
 import marten.age.widget.obsolete.FpsCounter;
+import marten.aoe.Path;
 import marten.aoe.engine.Engine;
+import marten.aoe.gui.GameParams;
 import marten.aoe.gui.widget.MapWidget;
 import marten.aoe.loader.Loader;
 
@@ -22,18 +24,18 @@ public class Game extends AgeScene {
 
     private Flatland flatland = new Flatland();
     private Engine engine = new Engine();
-    private MapWidget map;    
+    private MapWidget map;
     private MouseController mouseController = new MouseController();
 
-    public Game(String mapName) {
-        log.info("Loading map data for '" + mapName + "'...");
+    public Game(GameParams params) {
+        log.info("Loading map data for '" + params.getMapName() + "'...");
         try {
-            Loader.load(this.engine, "data/maps/2pFreelands");
+            Loader.load(this.engine, Path.MAP_PATH + params.getMapName());
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
         log.info("Loaded.");
-        map = new MapWidget(this.engine, mapName);
+        map = new MapWidget(this.engine, params.getMapName());
         flatland.addChild(map);
         flatland.addChild(new FpsCounter());
 

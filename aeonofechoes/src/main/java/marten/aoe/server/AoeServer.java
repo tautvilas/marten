@@ -68,7 +68,8 @@ public class AoeServer extends UnicastRemoteObject implements Server {
             return null;
         }
         inboxes.put(username, new LinkedList<ChatMessage>());
-        log.info("User '" + username + "' with secret '" + session.secret + "' successfully logged in");
+        log.info("User '" + username + "' with secret '" + session.secret
+                + "' successfully logged in");
         return session;
     }
 
@@ -88,7 +89,8 @@ public class AoeServer extends UnicastRemoteObject implements Server {
     }
 
     @Override
-    public void sendGateMessage(ClientSession from, String gate, String message) {
+    public void sendGateMessage(ClientSession from, String gate, String message)
+            throws RemoteException {
         String username = Sessions.getUsername(from);
         if (!gameGates.containsKey(gate)) {
             log.error("Game gate '" + gate + "' does not exists");

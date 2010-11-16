@@ -16,12 +16,14 @@ import marten.age.graphics.primitives.Point;
 import marten.age.graphics.transform.TranslationGroup;
 import marten.age.widget.Action;
 import marten.aoe.GameInfo;
+import marten.aoe.gui.GameParams;
 import marten.aoe.gui.scene.menu.MainMenu;
 import marten.aoe.gui.widget.AoeField;
 import marten.aoe.gui.widget.AoeString;
 import marten.aoe.gui.widget.OkCancelDialog;
 import marten.aoe.server.AoeServer;
 import marten.aoe.server.ClientSession;
+import marten.aoe.server.ServerListener;
 import marten.aoe.server.face.Server;
 import marten.aoe.server.face.ServerGameGate;
 
@@ -33,6 +35,9 @@ public class GameGate extends AgeScene {
     private Flatland flatland = new Flatland();
     private TranslationGroup players = new TranslationGroup();
     private OkCancelDialog dialog;
+
+    private String map;
+    private String gameUrl;
 
     private GameGate() {
         Dimension dApp = AppInfo.getDisplayDimension();
@@ -57,7 +62,8 @@ public class GameGate extends AgeScene {
         dialog.setCancelAction(new Action() {
             @Override
             public void perform() {
-                //TODO:on this event user shall logout/destroy all games/gamegates
+                // TODO:on this event user shall logout/destroy all
+                // games/gamegates
                 fireEvent(new AgeSceneSwitchEvent(new MainMenu()));
             }
         });
@@ -71,10 +77,12 @@ public class GameGate extends AgeScene {
     /**
      * Host network game
      * 
-     * @param mapName map name
+     * @param mapName
+     *            map name
      */
     public GameGate(String mapName) {
         this();
+        this.map = mapName;
         AoeServer.start();
         try {
             Server gameServer = connect(InetAddress.getByName("localhost"));
@@ -89,7 +97,8 @@ public class GameGate extends AgeScene {
         dialog.setOkAction(new Action() {
             @Override
             public void perform() {
-                fireEvent(new AgeSceneSwitchEvent(new Game("")));
+                GameParams params = new GameParams(map, gameUrl);
+                fireEvent(new AgeSceneSwitchEvent(new Game(params)));
             }
         });
     }
@@ -97,7 +106,8 @@ public class GameGate extends AgeScene {
     /**
      * Join network game
      * 
-     * @param server network server address
+     * @param server
+     *            network server address
      */
     public GameGate(InetAddress server) {
         this();
@@ -114,36 +124,32 @@ public class GameGate extends AgeScene {
     }
 
     private void registerMessenger() {
-        Thread messageReceiver = new Thread() {
+        new ServerListener() {
             @Override
-            public void run() {
-                while (true) {
-                    String[] members;
-                    try {
-                        members = gate.getMembers(session);
-                    } catch (RemoteException e) {
-                        throw new RuntimeException(e);
-                    }
-                    flatland.removeChild(players);
-                    players = new TranslationGroup();
-                    for (int i = 0; i < members.length; i++) {
-                        AoeString player = new AoeString(members[i]);
-                        player
-                                .setColor(new marten.age.graphics.appearance.Color(
-                                        0, 1.0, 0.0));
-                        player.setPosition(new Point(200, 200 + 50 * i));
-                        players.addChild(player);
-                    }
-                    flatland.addChild(players);
-                    try {
-                        gate.listen();
-                    } catch (RemoteException e) {
-                        throw new RuntimeException(e);
-                    }
+            public void listen() {
+                String[] members;
+                try {
+                    members = gate.getMembers(session);
+                } catch (RemoteException e) {
+                    throw new RuntimeException(e);
+                }
+                flatland.removeChild(players);
+                players = new TranslationGroup();
+                for (int i = 0; i < members.length; i++) {
+                    AoeString player = new AoeString(members[i]);
+                    player.setColor(new marten.age.graphics.appearance.Color(0,
+                            1.0, 0.0));
+                    player.setPosition(new Point(200, 200 + 50 * i));
+                    players.addChild(player);
+                }
+                flatland.addChild(players);
+                try {
+                    gate.listen();
+                } catch (RemoteException e) {
+                    throw new RuntimeException(e);
                 }
             }
         };
-        messageReceiver.start();
     }
 
     private Server connect(InetAddress server) {
