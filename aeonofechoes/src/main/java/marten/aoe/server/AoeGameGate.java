@@ -20,7 +20,6 @@ public class AoeGameGate extends UnicastRemoteObject implements ServerGameGate {
     private ArrayList<String> players = new ArrayList<String>();
     private HashMap<String, LinkedList<GameNotification>> notifiers = new HashMap<String, LinkedList<GameNotification>>();
     private String gameName;
-    @SuppressWarnings("unused")
     private String mapName;
     private boolean open = true;
 
@@ -66,25 +65,34 @@ public class AoeGameGate extends UnicastRemoteObject implements ServerGameGate {
         if (open) {
             players.add(username);
             notifiers.put(username, new LinkedList<GameNotification>());
-            for (LinkedList<GameNotification> notifier : notifiers.values()) {
-                synchronized (notifier) {
-                    notifier.add(GameNotification.PLAYER_LIST_UPDATED);
-                    notifier.notifyAll();
-                }
-            }
+            publishNotification(GameNotification.PLAYER_LIST_UPDATED);
         } else {
             log.info(username + " tried to join but game was closed");
         }
     }
 
-    @Override
-    public String start(ClientSession session) throws RemoteException {
-        String username = Sessions.getUsername(session);
-        if (this.creator == username) {
-            return "xxx";
+    private void publishNotification(GameNotification notification) {
+        for (LinkedList<GameNotification> notifier : notifiers.values()) {
+            synchronized (notifier) {
+                notifier.add(notification);
+                notifier.notifyAll();
+            }
         }
-        log.warn("Not authorized");
-        return "";
+    }
+
+    @Override
+    public void start(ClientSession session) throws RemoteException {
+        String username = Sessions.getUsername(session);
+        if (this.creator.equals(username)) {
+            publishNotification(GameNotification.GAME_STARTED);
+            this.open = false;
+        }
+        log.warn("Not authorized to start a game");
+    }
+
+    @Override
+    public String getMapName(ClientSession session) {
+        return this.mapName;
     }
 
 }

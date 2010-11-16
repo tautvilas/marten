@@ -22,12 +22,13 @@ import org.lwjgl.input.Keyboard;
 public class Game extends AgeScene {
     private static org.apache.log4j.Logger log = Logger.getLogger(Game.class);
 
-    private Flatland flatland = new Flatland();
+    private Flatland flatland;
     private Engine engine = new Engine();
     private MapWidget map;
     private MouseController mouseController = new MouseController();
 
     public Game(GameParams params) {
+        flatland = new Flatland();
         log.info("Loading map data for '" + params.getMapName() + "'...");
         try {
             Loader.load(this.engine, Path.MAP_PATH + params.getMapName());
