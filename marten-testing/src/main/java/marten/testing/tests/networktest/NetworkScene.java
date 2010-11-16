@@ -56,8 +56,7 @@ public class NetworkScene extends AgeScene {
                         String serverUrl = "rmi://" + words[1] + "/Server";
                         server = (Server)Naming.lookup(serverUrl);
                         username = words[2];
-                        session = new ClientSession(username);
-                        server.login(session);
+                        session = server.login(username);
                         log.info("Logged in to server '" + words[1] + "' as '"
                                 + words[2] + "'");
                         Thread messageReceiver = new Thread() {

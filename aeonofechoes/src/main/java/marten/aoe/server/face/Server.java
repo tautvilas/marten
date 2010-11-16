@@ -7,7 +7,7 @@ import marten.aoe.server.ChatMessage;
 import marten.aoe.server.ClientSession;
 
 public interface Server extends Remote {
-    public void login(ClientSession session) throws RemoteException;
+    public ClientSession login(String username) throws RemoteException;
 
     public void sendPrivateMessage(ClientSession from, String to, String message)
             throws RemoteException;
