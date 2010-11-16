@@ -23,6 +23,7 @@ import marten.aoe.gui.widget.AoeString;
 import marten.aoe.gui.widget.OkCancelDialog;
 import marten.aoe.server.AoeServer;
 import marten.aoe.server.ClientSession;
+import marten.aoe.server.GameNotification;
 import marten.aoe.server.ServerListener;
 import marten.aoe.server.face.Server;
 import marten.aoe.server.face.ServerGameGate;
@@ -93,7 +94,7 @@ public class GameGate extends AgeScene {
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
-        this.registerMessenger();
+        this.registerListeners();
         dialog.setOkAction(new Action() {
             @Override
             public void perform() {
@@ -120,33 +121,37 @@ public class GameGate extends AgeScene {
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
-        this.registerMessenger();
+        this.registerListeners();
     }
 
-    private void registerMessenger() {
+    private void registerListeners() {
         new ServerListener() {
             @Override
             public void listen() {
-                String[] members;
+                GameNotification notification;
                 try {
-                    members = gate.getMembers(session);
+                    notification = gate.listen(session);
                 } catch (RemoteException e) {
                     throw new RuntimeException(e);
                 }
-                flatland.removeChild(players);
-                players = new TranslationGroup();
-                for (int i = 0; i < members.length; i++) {
-                    AoeString player = new AoeString(members[i]);
-                    player.setColor(new marten.age.graphics.appearance.Color(0,
-                            1.0, 0.0));
-                    player.setPosition(new Point(200, 200 + 50 * i));
-                    players.addChild(player);
-                }
-                flatland.addChild(players);
-                try {
-                    gate.listen();
-                } catch (RemoteException e) {
-                    throw new RuntimeException(e);
+                if (notification == GameNotification.PLAYER_LIST_UPDATED) {
+                    String[] members;
+                    try {
+                        members = gate.getMembers(session);
+                    } catch (RemoteException e) {
+                        throw new RuntimeException(e);
+                    }
+                    flatland.removeChild(players);
+                    players = new TranslationGroup();
+                    for (int i = 0; i < members.length; i++) {
+                        AoeString player = new AoeString(members[i]);
+                        player
+                                .setColor(new marten.age.graphics.appearance.Color(
+                                        0, 1.0, 0.0));
+                        player.setPosition(new Point(200, 200 + 50 * i));
+                        players.addChild(player);
+                    }
+                    flatland.addChild(players);
                 }
             }
         };

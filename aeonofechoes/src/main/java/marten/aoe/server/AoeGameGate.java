@@ -3,6 +3,8 @@ package marten.aoe.server;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.LinkedList;
 
 import marten.aoe.server.face.ServerGameGate;
 
@@ -14,9 +16,9 @@ public class AoeGameGate extends UnicastRemoteObject implements ServerGameGate {
             .getLogger(ServerGameGate.class);
     private static final long serialVersionUID = 1L;
 
-    private Object listListenerRegister = new Object();
     private String creator;
     private ArrayList<String> players = new ArrayList<String>();
+    private HashMap<String, LinkedList<GameNotification>> notifiers = new HashMap<String, LinkedList<GameNotification>>();
     private String gameName;
     @SuppressWarnings("unused")
     private String mapName;
@@ -30,14 +32,20 @@ public class AoeGameGate extends UnicastRemoteObject implements ServerGameGate {
     }
 
     @Override
-    public void listen() throws RemoteException {
-        synchronized (listListenerRegister) {
-            try {
-                listListenerRegister.wait();
-            } catch (InterruptedException e) {
-                e.printStackTrace();
+    public GameNotification listen(ClientSession session)
+            throws RemoteException {
+        String username = Sessions.getUsername(session);
+        LinkedList<GameNotification> notifier = notifiers.get(username);
+        synchronized (notifier) {
+            if (notifier.isEmpty()) {
+                try {
+                    notifier.wait();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
             }
         }
+        return notifier.pop();
     }
 
     protected AoeGameGate(ClientSession creator, String gameName, String mapName)
@@ -48,6 +56,7 @@ public class AoeGameGate extends UnicastRemoteObject implements ServerGameGate {
         this.gameName = gameName;
         this.mapName = mapName;
         players.add(username);
+        notifiers.put(username, new LinkedList<GameNotification>());
         log.info("Game gate for game '" + this.gameName + "' created");
     }
 
@@ -55,10 +64,14 @@ public class AoeGameGate extends UnicastRemoteObject implements ServerGameGate {
     public void join(ClientSession session) throws RemoteException {
         String username = Sessions.getUsername(session);
         if (open) {
-            synchronized (listListenerRegister) {
-                listListenerRegister.notifyAll();
-            }
             players.add(username);
+            notifiers.put(username, new LinkedList<GameNotification>());
+            for (LinkedList<GameNotification> notifier : notifiers.values()) {
+                synchronized (notifier) {
+                    notifier.add(GameNotification.PLAYER_LIST_UPDATED);
+                    notifier.notifyAll();
+                }
+            }
         } else {
             log.info(username + " tried to join but game was closed");
         }
