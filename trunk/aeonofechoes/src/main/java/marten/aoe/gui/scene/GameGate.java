@@ -98,8 +98,11 @@ public class GameGate extends AgeScene {
         dialog.setOkAction(new Action() {
             @Override
             public void perform() {
-                GameParams params = new GameParams(map, gameUrl);
-                fireEvent(new AgeSceneSwitchEvent(new Game(params)));
+                try {
+                    gate.start(session);
+                } catch (RemoteException e) {
+                    e.printStackTrace();
+                }
             }
         });
     }
@@ -118,6 +121,7 @@ public class GameGate extends AgeScene {
             this.gate = (ServerGameGate)Naming.lookup(gameServer
                     .getGateUrl("default"));
             this.gate.join(this.session);
+            this.map = this.gate.getMapName(session);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
@@ -125,6 +129,8 @@ public class GameGate extends AgeScene {
     }
 
     private void registerListeners() {
+        GameParams params = new GameParams(map, gameUrl);
+        final Game game = new Game(params);
         new ServerListener() {
             @Override
             public void listen() {
@@ -152,6 +158,8 @@ public class GameGate extends AgeScene {
                         players.addChild(player);
                     }
                     flatland.addChild(players);
+                } else if (notification == GameNotification.GAME_STARTED) {
+                    fireEvent(new AgeSceneSwitchEvent(game));
                 }
             }
         };
