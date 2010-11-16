@@ -4,6 +4,7 @@ import java.rmi.Remote;
 import java.rmi.RemoteException;
 
 import marten.aoe.server.ClientSession;
+import marten.aoe.server.GameNotification;
 
 public interface ServerGameGate extends Remote {
     public String start(ClientSession session) throws RemoteException;
@@ -12,5 +13,5 @@ public interface ServerGameGate extends Remote {
 
     public String[] getMembers(ClientSession session) throws RemoteException;
 
-    public void listen() throws RemoteException;
+    public GameNotification listen(ClientSession session) throws RemoteException;
 }
