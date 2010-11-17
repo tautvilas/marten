@@ -17,9 +17,9 @@ import marten.age.widget.Console;
 import marten.age.widget.ConsoleListener;
 import marten.age.widget.Widget;
 import marten.aoe.server.AoeServer;
-import marten.aoe.server.ChatMessage;
-import marten.aoe.server.ClientSession;
 import marten.aoe.server.face.Server;
+import marten.aoe.server.serializable.ChatMessage;
+import marten.aoe.server.serializable.ClientSession;
 
 import org.apache.log4j.Logger;
 

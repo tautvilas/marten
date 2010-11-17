@@ -1,4 +1,4 @@
-package marten.aoe.server;
+package marten.aoe.server.serializable;
 
 import java.io.Serializable;
 

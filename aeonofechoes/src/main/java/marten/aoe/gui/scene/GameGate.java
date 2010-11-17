@@ -22,15 +22,15 @@ import marten.aoe.gui.widget.AoeField;
 import marten.aoe.gui.widget.AoeString;
 import marten.aoe.gui.widget.OkCancelDialog;
 import marten.aoe.server.AoeServer;
-import marten.aoe.server.ClientSession;
-import marten.aoe.server.GameNotification;
 import marten.aoe.server.ServerListener;
 import marten.aoe.server.face.Server;
-import marten.aoe.server.face.ServerGameGate;
+import marten.aoe.server.face.ServerGame;
+import marten.aoe.server.serializable.ClientSession;
+import marten.aoe.server.serializable.GameNotification;
 
 public class GameGate extends AgeScene {
 
-    private ServerGameGate gate;
+    private ServerGame gate;
     private String serverUrl;
     private ClientSession session;
     private Flatland flatland = new Flatland();
@@ -89,7 +89,7 @@ public class GameGate extends AgeScene {
             Server gameServer = connect(InetAddress.getByName("localhost"));
             this.session = gameServer.login(GameInfo.nickname);
             gameServer.createGame(session, "default", mapName);
-            this.gate = (ServerGameGate)Naming.lookup(gameServer
+            this.gate = (ServerGame)Naming.lookup(gameServer
                     .getGateUrl("default"));
         } catch (Exception e) {
             throw new RuntimeException(e);
@@ -118,7 +118,7 @@ public class GameGate extends AgeScene {
         Server gameServer = connect(server);
         try {
             this.session = gameServer.login(GameInfo.nickname);
-            this.gate = (ServerGameGate)Naming.lookup(gameServer
+            this.gate = (ServerGame)Naming.lookup(gameServer
                     .getGateUrl("default"));
             this.gate.join(this.session);
             this.map = this.gate.getMapName(session);
