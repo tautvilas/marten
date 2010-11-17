@@ -11,6 +11,8 @@ public interface ServerGame extends Remote {
 
     public void join(ClientSession session) throws RemoteException;
 
+    public void leave(ClientSession session) throws RemoteException;
+
     public String[] getMembers(ClientSession session) throws RemoteException;
 
     public GameNotification listen(ClientSession session) throws RemoteException;

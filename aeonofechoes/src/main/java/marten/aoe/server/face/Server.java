@@ -9,6 +9,8 @@ import marten.aoe.server.serializable.ClientSession;
 public interface Server extends Remote {
     public ClientSession login(String username) throws RemoteException;
 
+    public void leave(ClientSession session) throws RemoteException;
+
     public void sendPrivateMessage(ClientSession from, String to, String message)
             throws RemoteException;
 

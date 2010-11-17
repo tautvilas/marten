@@ -31,6 +31,7 @@ import marten.aoe.server.serializable.GameNotification;
 public class GameGate extends AgeScene {
 
     private ServerGame gate;
+    private Server gameServer;
     private String serverUrl;
     private ClientSession session;
     private Flatland flatland = new Flatland();
@@ -63,8 +64,11 @@ public class GameGate extends AgeScene {
         dialog.setCancelAction(new Action() {
             @Override
             public void perform() {
-                // TODO:on this event user shall logout/destroy all
-                // games/gamegates
+                try {
+                    gameServer.leave(session);
+                } catch (RemoteException e) {
+                    throw new RuntimeException(e);
+                }
                 fireEvent(new AgeSceneSwitchEvent(new MainMenu()));
             }
         });
@@ -86,7 +90,7 @@ public class GameGate extends AgeScene {
         this.map = mapName;
         AoeServer.start();
         try {
-            Server gameServer = connect(InetAddress.getByName("localhost"));
+            this.gameServer = connect(InetAddress.getByName("localhost"));
             this.session = gameServer.login(GameInfo.nickname);
             gameServer.createGame(session, "default", mapName);
             this.gate = (ServerGame)Naming.lookup(gameServer
@@ -115,7 +119,7 @@ public class GameGate extends AgeScene {
      */
     public GameGate(InetAddress server) {
         this();
-        Server gameServer = connect(server);
+        this.gameServer = connect(server);
         try {
             this.session = gameServer.login(GameInfo.nickname);
             this.gate = (ServerGame)Naming.lookup(gameServer
