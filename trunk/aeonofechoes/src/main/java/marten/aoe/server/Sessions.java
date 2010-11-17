@@ -27,6 +27,10 @@ public class Sessions {
         }
     }
 
+    public static void removeUser(String username) {
+        container.remove(username);
+    }
+
     public static ClientSession addUser(String username) {
         if (container.containsKey(username)) {
             return null;

@@ -76,6 +76,16 @@ public class AoeServer extends UnicastRemoteObject implements Server {
     }
 
     @Override
+    public void leave(ClientSession session) throws RemoteException {
+        String username = Sessions.getUsername(session);
+        inboxes.remove(username);
+        for (AoeGame game : gameGates.values()) {
+            game.leave(session);
+        }
+        Sessions.removeUser(username);
+    }
+
+    @Override
     public void sendPrivateMessage(ClientSession from, String to, String message)
             throws RemoteException {
         String username = Sessions.getUsername(from);
