@@ -13,13 +13,15 @@ import java.util.LinkedList;
 import java.util.regex.Pattern;
 
 import marten.aoe.server.face.Server;
+import marten.aoe.server.serializable.ChatMessage;
+import marten.aoe.server.serializable.ClientSession;
 
 import org.apache.log4j.Logger;
 
 public class AoeServer extends UnicastRemoteObject implements Server {
     private static final long serialVersionUID = 1L;
     private HashMap<String, LinkedList<ChatMessage>> inboxes;
-    private HashMap<String, AoeGameGate> gameGates;
+    private HashMap<String, AoeGame> gameGates;
     private String serverUrl;
 
     private static org.apache.log4j.Logger log = Logger
@@ -57,7 +59,7 @@ public class AoeServer extends UnicastRemoteObject implements Server {
         super();
         this.serverUrl = url;
         this.inboxes = new HashMap<String, LinkedList<ChatMessage>>();
-        this.gameGates = new HashMap<String, AoeGameGate>();
+        this.gameGates = new HashMap<String, AoeGame>();
     }
 
     @Override
@@ -96,7 +98,7 @@ public class AoeServer extends UnicastRemoteObject implements Server {
             log.error("Game gate '" + gate + "' does not exists");
             return;
         }
-        AoeGameGate gameGate = gameGates.get(gate);
+        AoeGame gameGate = gameGates.get(gate);
         for (String user : gameGate.getMembers(from)) {
             if (user != username) {
                 LinkedList<ChatMessage> msgs = inboxes.get(user);
@@ -127,7 +129,7 @@ public class AoeServer extends UnicastRemoteObject implements Server {
     @Override
     public String createGame(ClientSession session, String gameName,
             String mapName) throws RemoteException {
-        AoeGameGate gate = new AoeGameGate(session, gameName, mapName);
+        AoeGame gate = new AoeGame(session, gameName, mapName);
         this.gameGates.put(gameName, gate);
         try {
             Naming.bind("rmi://localhost/Server/gates/" + gameName, gate);

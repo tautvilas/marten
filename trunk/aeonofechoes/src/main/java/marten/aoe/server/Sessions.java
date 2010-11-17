@@ -2,6 +2,8 @@ package marten.aoe.server;
 
 import java.util.HashMap;
 
+import marten.aoe.server.serializable.ClientSession;
+
 import org.apache.log4j.Logger;
 
 public class Sessions {

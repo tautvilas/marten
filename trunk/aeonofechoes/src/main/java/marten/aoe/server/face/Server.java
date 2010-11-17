@@ -3,8 +3,8 @@ package marten.aoe.server.face;
 import java.rmi.Remote;
 import java.rmi.RemoteException;
 
-import marten.aoe.server.ChatMessage;
-import marten.aoe.server.ClientSession;
+import marten.aoe.server.serializable.ChatMessage;
+import marten.aoe.server.serializable.ClientSession;
 
 public interface Server extends Remote {
     public ClientSession login(String username) throws RemoteException;
