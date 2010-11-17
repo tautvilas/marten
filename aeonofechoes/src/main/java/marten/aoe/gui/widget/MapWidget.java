@@ -14,6 +14,7 @@ import marten.age.graphics.flat.sprite.BasicSprite;
 import marten.age.graphics.flat.sprite.TextureSprite;
 import marten.age.graphics.geometry.Geometry;
 import marten.age.graphics.geometry.primitives.Rectangle;
+import marten.age.graphics.image.ImageCache;
 import marten.age.graphics.image.ImageData;
 import marten.age.graphics.model.ComplexModel;
 import marten.age.graphics.model.SimpleModel;
@@ -65,19 +66,14 @@ public class MapWidget extends BasicSprite implements Widget, MouseListener {
         log.info("Loading map tiles for '" + mapName + "'...");
         Set<String> definedTerrain = engine.terrain.definedTerrain();
         for (String terrainType : definedTerrain) {
-            try {
-                log.info("Reading '" + terrainType + ".png'...");
-                ImageData terrain = new ImageData("data/gui/tiles/"
-                        + terrainType + ".png");
-                this.tileWidth = terrain.width;
-                this.tileHeight = terrain.height;
-                if (!terrainCache.containsKey(terrainType)) {
-                    SimpleModel simpleModel = new SimpleModel(new Appearance(
-                            TextureLoader.loadTexture(terrain)));
-                    terrainCache.put(terrainType, simpleModel);
-                }
-            } catch (IOException e) {
-                throw new RuntimeException(e);
+            ImageData terrain = ImageCache.getImage("data/gui/tiles/"
+                    + terrainType + ".png");
+            this.tileWidth = terrain.width;
+            this.tileHeight = terrain.height;
+            if (!terrainCache.containsKey(terrainType)) {
+                SimpleModel simpleModel = new SimpleModel(new Appearance(
+                        TextureLoader.loadTexture(terrain)));
+                terrainCache.put(terrainType, simpleModel);
             }
         }
         log.info("Loaded.");

@@ -23,6 +23,7 @@ public abstract class AgeApp {
     private static final int DEFAULT_HEIGHT = 600;
 
     private String title = "";
+    private boolean sceneChanged = false;
 
     private static final int FRAMERATE = 50;
 
@@ -59,6 +60,7 @@ public abstract class AgeApp {
             destroy();
         }
 
+        activeScene.init();
         while (!Keyboard.isKeyDown(Keyboard.KEY_ESCAPE)
                 && !Display.isCloseRequested()) {
             Display.update();
@@ -68,6 +70,11 @@ public abstract class AgeApp {
                 c.publishEvents();
             }
 
+            if (sceneChanged) {
+                this.activeScene.init();
+                sceneChanged = false;
+            }
+
             activeScene.compute();
             activeScene.render();
             Display.sync(FRAMERATE);
@@ -75,13 +82,12 @@ public abstract class AgeApp {
     }
 
     protected void setActiveScene(AgeScene scene) {
+        if (this.activeScene != null) {
+            this.activeScene.cleanup();
+        }
         scene.registerListener(new CoreAgeEventListener());
         this.activeScene = scene;
-    }
-
-    protected void switchScene(AgeScene scene) {
-        this.activeScene.cleanup();
-        this.setActiveScene(scene);
+        this.sceneChanged = true;
     }
 
     private void destroy() {
@@ -165,7 +171,7 @@ public abstract class AgeApp {
             if (e instanceof AgeSceneSwitchEvent) {
                 AgeSceneSwitchEvent event = (AgeSceneSwitchEvent) e;
                 log.debug("Switching AGE scene to " + event.newScene);
-                switchScene(event.newScene);
+                setActiveScene(event.newScene);
             } else {
                 log.warn("Unrecognized Age event " + e);
             }
