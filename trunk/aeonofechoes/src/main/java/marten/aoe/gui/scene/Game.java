@@ -1,7 +1,5 @@
 package marten.aoe.gui.scene;
 
-import java.io.IOException;
-
 import marten.age.control.KeyboardController;
 import marten.age.control.KeyboardListener;
 import marten.age.control.MouseController;
@@ -10,33 +8,27 @@ import marten.age.core.AppInfo;
 import marten.age.graphics.flat.Flatland;
 import marten.age.graphics.primitives.Point;
 import marten.age.widget.obsolete.FpsCounter;
-import marten.aoe.Path;
-import marten.aoe.engine.Engine;
 import marten.aoe.gui.GameParams;
 import marten.aoe.gui.widget.MapWidget;
-import marten.aoe.loader.Loader;
 
 import org.apache.log4j.Logger;
 import org.lwjgl.input.Keyboard;
 
 public class Game extends AgeScene {
+    @SuppressWarnings("unused")
     private static org.apache.log4j.Logger log = Logger.getLogger(Game.class);
 
     private Flatland flatland;
-    private Engine engine = new Engine();
     private MapWidget map;
+    @SuppressWarnings("unused")
+    private GameParams params;
     private MouseController mouseController = new MouseController();
 
-    public Game(GameParams params) {
+    public Game(MapWidget mapWidget, GameParams params) {
+        this.params = params;
+        this.map = mapWidget;
         flatland = new Flatland();
-        log.info("Loading map data for '" + params.getMapName() + "'...");
-        try {
-            Loader.load(this.engine, Path.MAP_PATH + params.getMapName());
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-        log.info("Loaded.");
-        map = new MapWidget(this.engine, params.getMapName());
+
         flatland.addChild(map);
         flatland.addChild(new FpsCounter());
 

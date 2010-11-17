@@ -8,6 +8,7 @@ import org.apache.log4j.Logger;
 import org.lwjgl.opengl.GL11;
 
 public class Rectangle implements Geometry {
+    @SuppressWarnings("unused")
     private static org.apache.log4j.Logger log = Logger
             .getLogger(Rectangle.class);
     private Dimension dimension;
@@ -24,8 +25,8 @@ public class Rectangle implements Geometry {
 
     @Override
     public void draw() {
-        log.debug("Drawing rectangle " + dimension.width + "x"
-                + dimension.height);
+//        log.debug("Drawing rectangle " + dimension.width + "x"
+//                + dimension.height);
         GL11.glBegin(GL11.GL_QUADS);
         {
             GL11.glTexCoord2d(0, 0);

@@ -129,8 +129,6 @@ public class GameGate extends AgeScene {
     }
 
     private void registerListeners() {
-        GameParams params = new GameParams(map, gameUrl);
-        final Game game = new Game(params);
         new ServerListener() {
             @Override
             public void listen() {
@@ -159,7 +157,8 @@ public class GameGate extends AgeScene {
                     }
                     flatland.addChild(players);
                 } else if (notification == GameNotification.GAME_STARTED) {
-                    fireEvent(new AgeSceneSwitchEvent(game));
+                    GameParams params = new GameParams(map, gameUrl);
+                    fireEvent(new AgeSceneSwitchEvent(new GameLoader(params)));
                 }
             }
         };

@@ -21,6 +21,10 @@ public abstract class AgeScene {
     /* All the graphics related code goes here */
     public abstract void render();
 
+    /* Init method unwanted stuff */
+    public void init() {
+    }
+
     /* Method for destroying unwanted stuff */
     public void cleanup() {
     }
