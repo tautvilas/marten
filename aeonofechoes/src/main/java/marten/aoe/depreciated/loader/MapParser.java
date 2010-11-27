@@ -1,9 +1,9 @@
-package marten.aoe.loader;
+package marten.aoe.depreciated.loader;
 
-import marten.aoe.engine.Engine;
-import marten.aoe.engine.Tile;
-import marten.aoe.engine.TileCoordinate;
-import marten.aoe.engine.Unit;
+import marten.aoe.depreciated.engine.Engine;
+import marten.aoe.depreciated.engine.Tile;
+import marten.aoe.depreciated.engine.TileCoordinate;
+import marten.aoe.depreciated.engine.Unit;
 
 final class MapParser {
     private MapParser() {}

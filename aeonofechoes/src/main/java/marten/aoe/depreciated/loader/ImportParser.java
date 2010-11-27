@@ -1,8 +1,8 @@
-package marten.aoe.loader;
+package marten.aoe.depreciated.loader;
 
 import java.io.IOException;
 
-import marten.aoe.engine.Engine;
+import marten.aoe.depreciated.engine.Engine;
 
 final class ImportParser {
     public static void parse(Engine engine, DataTree branch) throws IOException {

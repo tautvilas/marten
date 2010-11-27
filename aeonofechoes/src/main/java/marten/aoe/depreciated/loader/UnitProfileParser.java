@@ -1,8 +1,8 @@
-package marten.aoe.loader;
+package marten.aoe.depreciated.loader;
 
-import marten.aoe.engine.Engine;
-import marten.aoe.engine.UnitProfile;
-import marten.aoe.engine.UnitType;
+import marten.aoe.depreciated.engine.Engine;
+import marten.aoe.depreciated.engine.UnitProfile;
+import marten.aoe.depreciated.engine.UnitType;
 
 final class UnitProfileParser {
     public static void parse(Engine engine, DataTree branch) {

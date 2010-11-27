@@ -1,4 +1,4 @@
-package marten.aoe.engine;
+package marten.aoe.depreciated.engine;
 
 public interface UnitProfileDatabaseListener {
     void onProfileAdded(UnitProfile unitProfile);

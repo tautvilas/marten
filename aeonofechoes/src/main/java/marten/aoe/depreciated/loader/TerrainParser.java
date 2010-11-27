@@ -1,10 +1,10 @@
-package marten.aoe.loader;
+package marten.aoe.depreciated.loader;
 
 import java.util.EnumSet;
 
-import marten.aoe.engine.Engine;
-import marten.aoe.engine.Terrain;
-import marten.aoe.engine.TerrainFeatures;
+import marten.aoe.depreciated.engine.Engine;
+import marten.aoe.depreciated.engine.Terrain;
+import marten.aoe.depreciated.engine.TerrainFeatures;
 
 final class TerrainParser {
     private TerrainParser() {}

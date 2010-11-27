@@ -1,4 +1,4 @@
-package marten.aoe.engine;
+package marten.aoe.depreciated.engine;
 
 /** Defines all six possible directions on a hexagonal grid 
  * @author Petras Ražanskas*/
