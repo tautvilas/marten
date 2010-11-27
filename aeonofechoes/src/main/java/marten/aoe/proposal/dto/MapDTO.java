@@ -1,6 +1,9 @@
 package marten.aoe.proposal.dto;
 
-public final class MapDTO {
+import java.io.Serializable;
+
+public final class MapDTO implements Serializable {
+    private static final long serialVersionUID = -178599366315529060L;
     private final TileDTO[][] map;
     private final int width;
     private final int height;

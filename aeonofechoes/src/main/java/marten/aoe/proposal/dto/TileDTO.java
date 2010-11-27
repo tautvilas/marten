@@ -1,6 +1,9 @@
 package marten.aoe.proposal.dto;
 
-public final class TileDTO {
+import java.io.Serializable;
+
+public final class TileDTO implements Serializable {
+    private static final long serialVersionUID = 8570422115600942749L;
     private final UnitDTO unit;
     private final Point location;
     private final String name;

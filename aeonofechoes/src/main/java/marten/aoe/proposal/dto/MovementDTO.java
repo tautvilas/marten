@@ -1,8 +1,10 @@
 package marten.aoe.proposal.dto;
 
+import java.io.Serializable;
 import java.util.EnumMap;
 
-public final class MovementDTO {
+public final class MovementDTO implements Serializable {
+    private static final long serialVersionUID = 7333580818044229109L;
     private final EnumMap<UnitType, EnumMap<UnitSize, Integer>> data = new EnumMap<UnitType, EnumMap<UnitSize, Integer>>(UnitType.class);
     public MovementDTO (int[][] values) {
         for (UnitType unitType : UnitType.values()) {
