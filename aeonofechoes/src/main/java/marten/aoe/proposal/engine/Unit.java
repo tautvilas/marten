@@ -1,5 +1,6 @@
 package marten.aoe.proposal.engine;
 
+import marten.aoe.proposal.dto.MinimalUnitDTO;
 import marten.aoe.proposal.dto.UnitDTO;
 import marten.aoe.proposal.dto.UnitSize;
 import marten.aoe.proposal.dto.UnitType;
@@ -10,12 +11,18 @@ public abstract class Unit {
     private final UnitType unitType;
     private Tile location = null;
     private final Player owner;
+    private final String name;
     
-    public Unit(Map map, Player owner, UnitSize unitSize, UnitType unitType) {
+    public Unit(String name, Map map, Player owner, UnitSize unitSize, UnitType unitType) {
+        this.name = name;
         this.map = map;
         this.unitSize = unitSize;
         this.unitType = unitType;
         this.owner = owner;
+    }
+    /** @return the name of this unit */
+    public final String getName() {
+        return this.name;
     }
     /** @return the map, where this unit is located.*/
     public final Map getMap() {
@@ -45,6 +52,10 @@ public abstract class Unit {
     public final UnitDTO getDTO() {
         // FIXME what shall we use to fill the empty spaces where we used to talk?
         return null;
+    }
+    /** Create a minimal Unit Data Transfer Object. */
+    public final MinimalUnitDTO getMinimalDTO() {
+        return new MinimalUnitDTO(this.name);
     }
     /** Apply the movement cost of entering a tile.
      * @param cost - the integer cost of entering a tile.

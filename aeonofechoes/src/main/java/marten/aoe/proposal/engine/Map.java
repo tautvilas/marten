@@ -1,6 +1,8 @@
 package marten.aoe.proposal.engine;
 
 import marten.aoe.proposal.dto.MapDTO;
+import marten.aoe.proposal.dto.MinimalMapDTO;
+import marten.aoe.proposal.dto.MinimalTileDTO;
 import marten.aoe.proposal.dto.Point;
 import marten.aoe.proposal.dto.TileDTO;
 
@@ -34,10 +36,19 @@ public final class Map {
         TileDTO[][] tiles = new TileDTO[this.width][this.height];
         for (int x = 0; x < this.width; x++) {
             for (int y = 0; y < this.height; y++) {
-                tiles[x][y] = this.map[x][y].getDTO();
+                tiles[x][y] = (this.map[x][y] != null ? this.map[x][y].getDTO() : null);
             }
         }
         return new MapDTO(tiles, this.width, this.height, this.name);
+    }
+    public final MinimalMapDTO getMinimalDTO () {
+        MinimalTileDTO[][] tiles = new MinimalTileDTO[this.width][this.height];
+        for (int x = 0; x < this.width; x++) {
+            for (int y = 0; y < this.height; y++) {
+                tiles[x][y] = (this.map[x][y] != null ? this.map[x][y].getMinimalDTO() : null);
+            }
+        }
+        return new MinimalMapDTO(tiles, this.width, this.height, this.name);
     }
     public final Tile getTile (Point point) {
         if (point.getX() >= 0 && point.getX() < this.width && point.getY() >= 0 && point.getY() < this.height) {
