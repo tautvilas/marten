@@ -1,4 +1,4 @@
-package marten.aoe.engine;
+package marten.aoe.depreciated.engine;
 
 /** The set of flags which describe the general behavior of any terrain
  * @author Petras Ražanskas */

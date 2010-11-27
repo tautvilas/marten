@@ -1,4 +1,4 @@
-package marten.aoe.engine;
+package marten.aoe.depreciated.engine;
 
 /** An interface for any class which finds it necessary to track changes of the map.
  * It is important to know that it only reflects changes in the whole structure of the map.
