@@ -1,8 +1,10 @@
 package marten.aoe.proposal.dto;
 
+import java.io.Serializable;
 import java.util.EnumMap;
 
-public final class DefenseDTO {
+public final class DefenseDTO implements Serializable {
+    private static final long serialVersionUID = -4521243019926967774L;
     private final EnumMap<UnitType, EnumMap<UnitSize, Integer>> data = new EnumMap<UnitType, EnumMap<UnitSize, Integer>>(UnitType.class);
     public DefenseDTO (int[][] values) {
         for (UnitType unitType : UnitType.values()) {
