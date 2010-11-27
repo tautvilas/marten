@@ -1,4 +1,4 @@
-package marten.aoe.depreciated.engine;
+package marten.aoe.engine;
 
 public final class Engine {
     public final TileMap tileMap = new TileMap();

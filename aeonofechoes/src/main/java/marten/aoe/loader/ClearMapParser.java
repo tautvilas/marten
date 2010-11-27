@@ -1,7 +1,7 @@
-package marten.aoe.depreciated.loader;
+package marten.aoe.loader;
 
-import marten.aoe.depreciated.engine.Engine;
-import marten.aoe.depreciated.engine.TileCoordinate;
+import marten.aoe.engine.Engine;
+import marten.aoe.engine.TileCoordinate;
 
 final class ClearMapParser {
     private ClearMapParser() {}

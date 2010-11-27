@@ -1,4 +1,4 @@
-package marten.aoe.depreciated.engine;
+package marten.aoe.engine;
 
 public interface TerrainDatabaseListener {
     void onTerrainAdded(Terrain terrain);

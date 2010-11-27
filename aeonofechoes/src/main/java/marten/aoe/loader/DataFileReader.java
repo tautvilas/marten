@@ -1,4 +1,4 @@
-package marten.aoe.depreciated.loader;
+package marten.aoe.loader;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
