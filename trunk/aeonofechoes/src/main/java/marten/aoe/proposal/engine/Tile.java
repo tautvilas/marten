@@ -1,6 +1,7 @@
 package marten.aoe.proposal.engine;
 
 import marten.aoe.proposal.dto.DefenseDTO;
+import marten.aoe.proposal.dto.MinimalTileDTO;
 import marten.aoe.proposal.dto.MovementDTO;
 import marten.aoe.proposal.dto.Point;
 import marten.aoe.proposal.dto.TileDTO;
@@ -44,9 +45,13 @@ public abstract class Tile {
             this.getHeight(),
             this.getMovementCost(),
             this.getDefenseBonus(),
-            this.unit.getDTO(),
+            (this.unit != null ? this.unit.getDTO() : null),
             this.getSpecialFeatures()
         );
+    }
+    /** Returns a minimal Tile Data Transfer Object for this tile.*/
+    public final MinimalTileDTO getMinimalDTO() {
+        return new MinimalTileDTO(this.name, (this.unit != null ? this.unit.getMinimalDTO() : null));
     }
     
     /** Removes the unit from this tile and triggers appropriate events.
