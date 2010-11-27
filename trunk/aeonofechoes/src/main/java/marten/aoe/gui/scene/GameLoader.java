@@ -13,11 +13,11 @@ import marten.age.io.Loadable;
 import marten.age.io.LoadingState;
 import marten.age.io.SimpleLoader;
 import marten.aoe.Path;
-import marten.aoe.depreciated.engine.Engine;
-import marten.aoe.depreciated.loader.Loader;
+import marten.aoe.engine.Engine;
 import marten.aoe.gui.GameParams;
 import marten.aoe.gui.widget.AoeString;
 import marten.aoe.gui.widget.MapWidget;
+import marten.aoe.loader.Loader;
 
 import org.apache.log4j.Logger;
 

@@ -1,4 +1,4 @@
-package marten.aoe.depreciated.engine;
+package marten.aoe.engine;
 
 import java.util.ArrayList;
 import java.util.Collection;

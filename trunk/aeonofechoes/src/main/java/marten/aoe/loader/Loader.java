@@ -1,8 +1,8 @@
-package marten.aoe.depreciated.loader;
+package marten.aoe.loader;
 
 import java.io.IOException;
 
-import marten.aoe.depreciated.engine.Engine;
+import marten.aoe.engine.Engine;
 
 /** The tool to load the contents of a Marten's Minimal Data Tree Language file into the game.*/
 public final class Loader {

@@ -1,4 +1,4 @@
-package marten.aoe.depreciated.loader;
+package marten.aoe.loader;
 
 import java.util.ArrayList;
 import java.util.List;

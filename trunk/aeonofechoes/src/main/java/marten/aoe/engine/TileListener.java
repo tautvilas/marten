@@ -1,4 +1,4 @@
-package marten.aoe.depreciated.engine;
+package marten.aoe.engine;
 
 /** An interface for any class which finds it necessary to track changes on individual tiles.
  * @author Petras Ražanskas */
