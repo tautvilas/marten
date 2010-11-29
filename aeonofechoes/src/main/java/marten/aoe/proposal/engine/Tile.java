@@ -92,7 +92,12 @@ public abstract class Tile {
         }
         return false;
     }
-    
+    public final void turnOver() {
+        if (this.unit != null) {
+            this.unit.turnOver();
+        }
+        this.onTurnOver();
+    }
     /** Performs an action when a unit enters this tile.*/
     public abstract void onUnitEntry();
     /** Performs an action when a unit leaves this tile.*/

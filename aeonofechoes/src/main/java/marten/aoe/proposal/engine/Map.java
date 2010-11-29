@@ -6,7 +6,7 @@ import marten.aoe.proposal.dto.MinimalTileDTO;
 import marten.aoe.proposal.dto.Point;
 import marten.aoe.proposal.dto.TileDTO;
 
-public final class Map {
+public abstract class Map {
     private final Tile[][] map;
     private final int width;
     private final int height;
@@ -32,7 +32,7 @@ public final class Map {
     public final String getName () {
         return this.name;
     }
-    public final MapDTO getDTO (Point point) {
+    public final MapDTO getDTO () {
         TileDTO[][] tiles = new TileDTO[this.width][this.height];
         for (int x = 0; x < this.width; x++) {
             for (int y = 0; y < this.height; y++) {
@@ -66,4 +66,13 @@ public final class Map {
         }
         return null;
     }
+    public final void endTurn () {
+        for (int x = 0; x < width; x++) {
+            for (int y = 0; y < height; y++) {
+                this.map[x][y].turnOver();
+            }
+        }
+        this.onTurnOver();
+    }
+    public abstract void onTurnOver ();
 }
