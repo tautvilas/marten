@@ -7,6 +7,8 @@ import java.net.Socket;
 import java.rmi.AlreadyBoundException;
 import java.rmi.Naming;
 import java.rmi.RemoteException;
+import java.rmi.registry.LocateRegistry;
+import java.rmi.registry.Registry;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.HashMap;
 import java.util.LinkedList;
@@ -27,9 +29,13 @@ public class AoeServer extends UnicastRemoteObject implements Server {
     private static org.apache.log4j.Logger log = Logger
             .getLogger(AoeServer.class);
 
+    private static boolean serverStarted = false;
+
     public static void start() {
+        if (serverStarted) return;
         try {
             InetAddress publicIp = InetAddress.getLocalHost();
+            // HACK(zv): try to determine public IP by connecting to HTTP on example.com
             if (Pattern.compile("127\\..*").matcher(publicIp.getHostAddress())
                     .matches()) {
                 log.warn("System has a misconfigured public IP."
@@ -44,10 +50,11 @@ public class AoeServer extends UnicastRemoteObject implements Server {
             System.setProperty("java.rmi.server.hostname", publicIp
                     .getHostAddress());
             log.debug("Binding server for IP " + publicIp.getHostAddress());
-            java.rmi.registry.LocateRegistry.createRegistry(1099);
+            LocateRegistry.createRegistry(Registry.REGISTRY_PORT);
             log.info("RMI registry started on port 1099");
             String serverUrl = "rmi://" + publicIp.getHostAddress() + "/Server";
             Naming.rebind("rmi://localhost/Server", new AoeServer(serverUrl));
+            serverStarted = true;
             log.info("AOE server is started!");
         } catch (Exception e) {
             log.error("Failed to start AOE server");
