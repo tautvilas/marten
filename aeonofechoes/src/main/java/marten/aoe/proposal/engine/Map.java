@@ -56,12 +56,12 @@ public abstract class Map {
         }
         return null;
     }
-    public final Tile switchTile (int x, int y, Tile tile) {
-        if (x >= 0 && x < this.width && y >= 0 && y < this.height) {
-            Tile oldTile = this.map[x][y];
+    public final Tile switchTile (Point point, Tile tile) {
+        if (point.getX() >= 0 && point.getX() < this.width && point.getY() >= 0 && point.getY() < this.height) {
+            Tile oldTile = this.map[point.getX()][point.getY()];
             Unit unit = oldTile.popUnit();
             tile.pushUnit(unit);
-            this.map[x][y] = tile;
+            this.map[point.getX()][point.getY()] = tile;
             return oldTile;
         }
         return null;
@@ -75,4 +75,6 @@ public abstract class Map {
         this.onTurnOver();
     }
     public abstract void onTurnOver ();
+    public abstract Point getStartingPosition (int playerNumber);
+    public abstract int getPlayerLimit ();
 }
