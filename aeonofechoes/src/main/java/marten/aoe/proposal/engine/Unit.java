@@ -50,8 +50,7 @@ public abstract class Unit {
     }
     /** Create a standard Unit Data Transfer Object. */
     public final UnitDTO getDTO() {
-        // FIXME what shall we use to fill the empty spaces where we used to talk?
-        return null;
+        return new UnitDTO(this.name, this.unitSize, this.unitType, this.getMovementAllowance(), this.getMaximumMovementAllowance());
     }
     /** Invoke the actions applicable to the end of a turn. */
     public void turnOver() {
@@ -61,10 +60,16 @@ public abstract class Unit {
     public final MinimalUnitDTO getMinimalDTO() {
         return new MinimalUnitDTO(this.name);
     }
+    /** Find out the remaining movement capacity of the unit*/
+    public final int getMovementAllowance () {
+        return this.applyMovementCost(0);
+    }
     /** Apply the movement cost of entering a tile.
      * @param cost - the integer cost of entering a tile.
      * @return <code>-1</code> if movement was impossible to complete for any reason, remaining movement points otherwise.*/
     public abstract int applyMovementCost(int cost);
+    /** Find out the maximum possible movement capacity of the unit*/
+    public abstract int getMaximumMovementAllowance ();
     /** Performs an action when this unit enters a tile.
      * @param tile - the tile that was entered.*/
     public abstract void onTileEntry(Tile tile);

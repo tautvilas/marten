@@ -4,6 +4,7 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
+import marten.aoe.Path;
 import marten.aoe.proposal.dto.MapDTO;
 import marten.aoe.proposal.dto.MinimalMapDTO;
 import marten.aoe.proposal.dto.MinimalTileDTO;
@@ -13,15 +14,13 @@ import marten.aoe.proposal.dto.TileDTO;
 import marten.aoe.proposal.dto.UnitDTO;
 
 public final class Engine {
-    private static final String MAPS_PATH = "src/main/java/marten/aoe/proposal/maps/";
-    private static final String MAPS_PACKAGE = "marten.aoe.proposal.maps";    
     private Map map = null;
     public static final List<String> getAvailableMaps () {
-        File mapDirectory = new File(MAPS_PATH);
+        File mapDirectory = new File(Path.MAP_PATH);
         String[] mapList = mapDirectory.list();
         List<String> mapNameList = new ArrayList<String>();
         for (String mapName : mapList) {
-            if (mapName.matches(".*\\.java")) {
+            if (mapName.matches(".*\\.class")) {
                 mapNameList.add(mapName.substring(0, mapName.length() - 5));
             }
         }
@@ -34,7 +33,7 @@ public final class Engine {
         Class<?> mapClass = null;
         Object mapInstance = null;
         try {
-            mapClass = Class.forName(MAPS_PACKAGE + mapName);
+            mapClass = Class.forName(Path.MAPS_PACKAGE + mapName);
             mapInstance = mapClass.newInstance();
         }
         catch (Exception e) {
