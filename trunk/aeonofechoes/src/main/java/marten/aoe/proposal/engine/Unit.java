@@ -53,6 +53,10 @@ public abstract class Unit {
         // FIXME what shall we use to fill the empty spaces where we used to talk?
         return null;
     }
+    /** Invoke the actions applicable to the end of a turn. */
+    public void turnOver() {
+        this.onTurnOver();
+    }
     /** Create a minimal Unit Data Transfer Object. */
     public final MinimalUnitDTO getMinimalDTO() {
         return new MinimalUnitDTO(this.name);
@@ -69,4 +73,5 @@ public abstract class Unit {
     public abstract void onTileExit(Tile tile);
     /** Performs an action at the end of every turn.*/
     public abstract void onTurnOver();
+    
 }
