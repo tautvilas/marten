@@ -1,2653 +1,1041 @@
-CleanData
-Import:
-    data/terrain/BasicTerrain
 Map:
-    Name=2p_The_Freelands
-    Tile:
-        X = 11
-        Y = 25
-        Terrain = high_mountain
-    Tile:
-        X = 13
-        Y = 25
-        Terrain = hill
-    Tile:
-        X = 15
-        Y = 25
-        Terrain = forest
-    Tile:
-        X = 17
-        Y = 25
-        Terrain = forest
-    Tile:
-        X = 19
-        Y = 25
-        Terrain = mountain
-    Tile:
-        X = 21
-        Y = 25
-        Terrain = water
-    Tile:
-        X = 23
-        Y = 25
-        Terrain = water
-    Tile:
-        X = 25
-        Y = 25
-        Terrain = grass
-    Tile:
-        X = 27
-        Y = 25
-        Terrain = hill
-    Tile:
-        X = 29
-        Y = 25
-        Terrain = mountain
-    Tile:
-        X = 9
-        Y = 24
-        Terrain = high_mountain
-    Tile:
-        X = 10
-        Y = 24
-        Terrain = mountain
-    Tile:
-        X = 11
-        Y = 24
-        Terrain = high_mountain
-    Tile:
-        X = 12
-        Y = 24
-        Terrain = hill
-    Tile:
-        X = 13
-        Y = 24
-        Terrain = village
-    Tile:
-        X = 14
-        Y = 24
-        Terrain = forest
-    Tile:
-        X = 15
-        Y = 24
-        Terrain = hill
-    Tile:
-        X = 16
-        Y = 24
-        Terrain = grass
-    Tile:
-        X = 17
-        Y = 24
-        Terrain = forest
-    Tile:
-        X = 18
-        Y = 24
-        Terrain = hill
-    Tile:
-        X = 19
-        Y = 24
-        Terrain = water
-    Tile:
-        X = 20
-        Y = 24
-        Terrain = water
-    Tile:
-        X = 21
-        Y = 24
-        Terrain = water
-    Tile:
-        X = 22
-        Y = 24
-        Terrain = water
-    Tile:
-        X = 23
-        Y = 24
-        Terrain = swamp_village
-    Tile:
-        X = 24
-        Y = 24
-        Terrain = grass
-    Tile:
-        X = 25
-        Y = 24
-        Terrain = forest
-    Tile:
-        X = 26
-        Y = 24
-        Terrain = forest
-    Tile:
-        X = 27
-        Y = 24
-        Terrain = mountain
-    Tile:
-        X = 28
-        Y = 24
-        Terrain = hill
-    Tile:
-        X = 29
-        Y = 24
-        Terrain = grass
-    Tile:
-        X = 30
-        Y = 24
-        Terrain = swamp
-    Tile:
-        X = 31
-        Y = 24
-        Terrain = forest
-    Tile:
-        X = 7
-        Y = 23
-        Terrain = water
-    Tile:
-        X = 8
-        Y = 23
-        Terrain = mountain
-    Tile:
-        X = 9
-        Y = 23
-        Terrain = hill
-    Tile:
-        X = 10
-        Y = 23
-        Terrain = high_mountain
-    Tile:
-        X = 11
-        Y = 23
-        Terrain = mountain
-    Tile:
-        X = 12
-        Y = 23
-        Terrain = grass
-    Tile:
-        X = 13
-        Y = 23
-        Terrain = grass
-    Tile:
-        X = 14
-        Y = 23
-        Terrain = grass
-    Tile:
-        X = 15
-        Y = 23
-        Terrain = grass
-    Tile:
-        X = 16
-        Y = 23
-        Terrain = grass
-    Tile:
-        X = 17
-        Y = 23
-        Terrain = road
-    Tile:
-        X = 18
-        Y = 23
-        Terrain = water
-    Tile:
-        X = 19
-        Y = 23
-        Terrain = city
-    Tile:
-        X = 20
-        Y = 23
-        Terrain = water
-    Tile:
-        X = 21
-        Y = 23
-        Terrain = city
-    Tile:
-        X = 22
-        Y = 23
-        Terrain = hill
-    Tile:
-        X = 23
-        Y = 23
-        Terrain = grass
-    Tile:
-        X = 24
-        Y = 23
-        Terrain = grass
-    Tile:
-        X = 25
-        Y = 23
-        Terrain = grass
-    Tile:
-        X = 26
-        Y = 23
-        Terrain = swamp
-    Tile:
-        X = 27
-        Y = 23
-        Terrain = forest
-    Tile:
-        X = 28
-        Y = 23
-        Terrain = hill
-    Tile:
-        X = 29
-        Y = 23
-        Terrain = grass
-    Tile:
-        X = 30
-        Y = 23
-        Terrain = grass
-    Tile:
-        X = 31
-        Y = 23
-        Terrain = forest
-    Tile:
-        X = 32
-        Y = 23
-        Terrain = water
-    Tile:
-        X = 33
-        Y = 23
-        Terrain = hill
-    Tile:
-        X = 5
-        Y = 22
-        Terrain = forest
-    Tile:
-        X = 6
-        Y = 22
-        Terrain = hill
-    Tile:
-        X = 7
-        Y = 22
-        Terrain = water
-    Tile:
-        X = 8
-        Y = 22
-        Terrain = forest
-    Tile:
-        X = 9
-        Y = 22
-        Terrain = forest
-    Tile:
-        X = 10
-        Y = 22
-        Terrain = grass
-    Tile:
-        X = 11
-        Y = 22
-        Terrain = grass
-    Tile:
-        X = 12
-        Y = 22
-        Terrain = grass
-    Tile:
-        X = 13
-        Y = 22
-        Terrain = grass
-    Tile:
-        X = 14
-        Y = 22
-        Terrain = grass
-    Tile:
-        X = 15
-        Y = 22
-        Terrain = mountain
-    Tile:
-        X = 16
-        Y = 22
-        Terrain = road
-    Tile:
-        X = 17
-        Y = 22
-        Terrain = water
-    Tile:
-        X = 18
-        Y = 22
-        Terrain = water
-    Tile:
-        X = 19
-        Y = 22
-        Terrain = base
-    Tile:
-        X = 20
-        Y = 22
-        Terrain = base
-    Tile:
-        X = 21
-        Y = 22
-        Terrain = city
-    Tile:
-        X = 22
-        Y = 22
-        Terrain = grass
-    Tile:
-        X = 23
-        Y = 22
-        Terrain = grass
-    Tile:
-        X = 24
-        Y = 22
-        Terrain = grass
-    Tile:
-        X = 25
-        Y = 22
-        Terrain = swamp
-    Tile:
-        X = 26
-        Y = 22
-        Terrain = grass
-    Tile:
-        X = 27
-        Y = 22
-        Terrain = grass
-    Tile:
-        X = 28
-        Y = 22
-        Terrain = grass
-    Tile:
-        X = 29
-        Y = 22
-        Terrain = hill
-    Tile:
-        X = 30
-        Y = 22
-        Terrain = grass
-    Tile:
-        X = 31
-        Y = 22
-        Terrain = water
-    Tile:
-        X = 32
-        Y = 22
-        Terrain = water
-    Tile:
-        X = 33
-        Y = 22
-        Terrain = forest
-    Tile:
-        X = 34
-        Y = 22
-        Terrain = hill
-    Tile:
-        X = 35
-        Y = 22
-        Terrain = mountain
-    Tile:
-        X = 5
-        Y = 21
-        Terrain = grass
-    Tile:
-        X = 6
-        Y = 21
-        Terrain = grass
-    Tile:
-        X = 7
-        Y = 21
-        Terrain = water
-    Tile:
-        X = 8
-        Y = 21
-        Terrain = water
-    Tile:
-        X = 9
-        Y = 21
-        Terrain = swamp_village
-    Tile:
-        X = 10
-        Y = 21
-        Terrain = grass
-    Tile:
-        X = 11
-        Y = 21
-        Terrain = grass
-    Tile:
-        X = 12
-        Y = 21
-        Terrain = grass
-    Tile:
-        X = 13
-        Y = 21
-        Terrain = village
-    Tile:
-        X = 14
-        Y = 21
-        Terrain = forest
-    Tile:
-        X = 15
-        Y = 21
-        Terrain = water
-    Tile:
-        X = 16
-        Y = 21
-        Terrain = water
-    Tile:
-        X = 17
-        Y = 21
-        Terrain = grass
-    Tile:
-        X = 18
-        Y = 21
-        Terrain = city
-    Tile:
-        X = 19
-        Y = 21
-        Terrain = road
-    Tile:
-        X = 20
-        Y = 21
-        Terrain = city
-    Tile:
-        X = 21
-        Y = 21
-        Terrain = road
-    Tile:
-        X = 22
-        Y = 21
-        Terrain = grass
-    Tile:
-        X = 23
-        Y = 21
-        Terrain = forest
-    Tile:
-        X = 24
-        Y = 21
-        Terrain = swamp
-    Tile:
-        X = 25
-        Y = 21
-        Terrain = mountain
-    Tile:
-        X = 26
-        Y = 21
-        Terrain = swamp
-    Tile:
-        X = 27
-        Y = 21
-        Terrain = swamp
-    Tile:
-        X = 28
-        Y = 21
-        Terrain = grass
-    Tile:
-        X = 29
-        Y = 21
-        Terrain = swamp_village
-    Tile:
-        X = 30
-        Y = 21
-        Terrain = forest
-    Tile:
-        X = 31
-        Y = 21
-        Terrain = water
-    Tile:
-        X = 32
-        Y = 21
-        Terrain = water
-    Tile:
-        X = 33
-        Y = 21
-        Terrain = water
-    Tile:
-        X = 34
-        Y = 21
-        Terrain = water
-    Tile:
-        X = 35
-        Y = 21
-        Terrain = water
-    Tile:
-        X = 5
-        Y = 20
-        Terrain = water
-    Tile:
-        X = 6
-        Y = 20
-        Terrain = water
-    Tile:
-        X = 7
-        Y = 20
-        Terrain = hill
-    Tile:
-        X = 8
-        Y = 20
-        Terrain = grass
-    Tile:
-        X = 9
-        Y = 20
-        Terrain = grass
-    Tile:
-        X = 10
-        Y = 20
-        Terrain = grass
-    Tile:
-        X = 11
-        Y = 20
-        Terrain = grass
-    Tile:
-        X = 12
-        Y = 20
-        Terrain = grass
-    Tile:
-        X = 13
-        Y = 20
-        Terrain = grass
-    Tile:
-        X = 14
-        Y = 20
-        Terrain = grass
-    Tile:
-        X = 15
-        Y = 20
-        Terrain = water
-    Tile:
-        X = 16
-        Y = 20
-        Terrain = grass
-    Tile:
-        X = 17
-        Y = 20
-        Terrain = forest
-    Tile:
-        X = 18
-        Y = 20
-        Terrain = grass
-    Tile:
-        X = 19
-        Y = 20
-        Terrain = grass
-    Tile:
-        X = 20
-        Y = 20
-        Terrain = road
-    Tile:
-        X = 21
-        Y = 20
-        Terrain = road
-    Tile:
-        X = 22
-        Y = 20
-        Terrain = grass
-    Tile:
-        X = 23
-        Y = 20
-        Terrain = swamp
-    Tile:
-        X = 24
-        Y = 20
-        Terrain = hill
-    Tile:
-        X = 25
-        Y = 20
-        Terrain = forest
-    Tile:
-        X = 26
-        Y = 20
-        Terrain = hill
-    Tile:
-        X = 27
-        Y = 20
-        Terrain = forest
-    Tile:
-        X = 28
-        Y = 20
-        Terrain = grass
-    Tile:
-        X = 29
-        Y = 20
-        Terrain = water
-    Tile:
-        X = 30
-        Y = 20
-        Terrain = water
-    Tile:
-        X = 31
-        Y = 20
-        Terrain = grass
-    Tile:
-        X = 32
-        Y = 20
-        Terrain = grass
-    Tile:
-        X = 33
-        Y = 20
-        Terrain = grass
-    Tile:
-        X = 34
-        Y = 20
-        Terrain = water
-    Tile:
-        X = 35
-        Y = 20
-        Terrain = high_mountain
-    Tile:
-        X = 5
-        Y = 19
-        Terrain = water
-    Tile:
-        X = 6
-        Y = 19
-        Terrain = forest
-    Tile:
-        X = 7
-        Y = 19
-        Terrain = high_mountain
-    Tile:
-        X = 8
-        Y = 19
-        Terrain = forest
-    Tile:
-        X = 9
-        Y = 19
-        Terrain = mountain
-    Tile:
-        X = 10
-        Y = 19
-        Terrain = grass
-    Tile:
-        X = 11
-        Y = 19
-        Terrain = water
-    Tile:
-        X = 12
-        Y = 19
-        Terrain = water
-    Tile:
-        X = 13
-        Y = 19
-        Terrain = water
-    Tile:
-        X = 14
-        Y = 19
-        Terrain = water
-    Tile:
-        X = 15
-        Y = 19
-        Terrain = forest
-    Tile:
-        X = 16
-        Y = 19
-        Terrain = high_mountain
-    Tile:
-        X = 17
-        Y = 19
-        Terrain = high_mountain
-    Tile:
-        X = 18
-        Y = 19
-        Terrain = high_mountain
-    Tile:
-        X = 19
-        Y = 19
-        Terrain = hill
-    Tile:
-        X = 20
-        Y = 19
-        Terrain = road
-    Tile:
-        X = 21
-        Y = 19
-        Terrain = grass
-    Tile:
-        X = 22
-        Y = 19
-        Terrain = grass
-    Tile:
-        X = 23
-        Y = 19
-        Terrain = grass
-    Tile:
-        X = 24
-        Y = 19
-        Terrain = grass
-    Tile:
-        X = 25
-        Y = 19
-        Terrain = village
-    Tile:
-        X = 26
-        Y = 19
-        Terrain = hill
-    Tile:
-        X = 27
-        Y = 19
-        Terrain = grass
-    Tile:
-        X = 28
-        Y = 19
-        Terrain = water
-    Tile:
-        X = 29
-        Y = 19
-        Terrain = water
-    Tile:
-        X = 30
-        Y = 19
-        Terrain = water
-    Tile:
-        X = 31
-        Y = 19
-        Terrain = grass
-    Tile:
-        X = 32
-        Y = 19
-        Terrain = grass
-    Tile:
-        X = 33
-        Y = 19
-        Terrain = hill
-    Tile:
-        X = 34
-        Y = 19
-        Terrain = forest
-    Tile:
-        X = 35
-        Y = 19
-        Terrain = high_mountain
-    Tile:
-        X = 5
-        Y = 18
-        Terrain = water
-    Tile:
-        X = 6
-        Y = 18
-        Terrain = mountain
-    Tile:
-        X = 7
-        Y = 18
-        Terrain = grass
-    Tile:
-        X = 8
-        Y = 18
-        Terrain = high_mountain
-    Tile:
-        X = 9
-        Y = 18
-        Terrain = hill
-    Tile:
-        X = 10
-        Y = 18
-        Terrain = water
-    Tile:
-        X = 11
-        Y = 18
-        Terrain = grass
-    Tile:
-        X = 12
-        Y = 18
-        Terrain = grass
-    Tile:
-        X = 13
-        Y = 18
-        Terrain = grass
-    Tile:
-        X = 14
-        Y = 18
-        Terrain = grass
-    Tile:
-        X = 15
-        Y = 18
-        Terrain = mountain
-    Tile:
-        X = 16
-        Y = 18
-        Terrain = hill
-    Tile:
-        X = 17
-        Y = 18
-        Terrain = hill
-    Tile:
-        X = 18
-        Y = 18
-        Terrain = high_mountain
-    Tile:
-        X = 19
-        Y = 18
-        Terrain = hill
-    Tile:
-        X = 20
-        Y = 18
-        Terrain = road
-    Tile:
-        X = 21
-        Y = 18
-        Terrain = grass
-    Tile:
-        X = 22
-        Y = 18
-        Terrain = grass
-    Tile:
-        X = 23
-        Y = 18
-        Terrain = grass
-    Tile:
-        X = 24
-        Y = 18
-        Terrain = grass
-    Tile:
-        X = 25
-        Y = 18
-        Terrain = grass
-    Tile:
-        X = 26
-        Y = 18
-        Terrain = grass
-    Tile:
-        X = 27
-        Y = 18
-        Terrain = water
-    Tile:
-        X = 28
-        Y = 18
-        Terrain = water
-    Tile:
-        X = 29
-        Y = 18
-        Terrain = grass
-    Tile:
-        X = 30
-        Y = 18
-        Terrain = grass
-    Tile:
-        X = 31
-        Y = 18
-        Terrain = grass
-    Tile:
-        X = 32
-        Y = 18
-        Terrain = grass
-    Tile:
-        X = 33
-        Y = 18
-        Terrain = high_mountain
-    Tile:
-        X = 34
-        Y = 18
-        Terrain = high_mountain
-    Tile:
-        X = 35
-        Y = 18
-        Terrain = mountain
-    Tile:
-        X = 5
-        Y = 17
-        Terrain = water
-    Tile:
-        X = 6
-        Y = 17
-        Terrain = forest
-    Tile:
-        X = 7
-        Y = 17
-        Terrain = grass
-    Tile:
-        X = 8
-        Y = 17
-        Terrain = grass
-    Tile:
-        X = 9
-        Y = 17
-        Terrain = water
-    Tile:
-        X = 10
-        Y = 17
-        Terrain = water
-    Tile:
-        X = 11
-        Y = 17
-        Terrain = grass
-    Tile:
-        X = 12
-        Y = 17
-        Terrain = village
-    Tile:
-        X = 13
-        Y = 17
-        Terrain = grass
-    Tile:
-        X = 14
-        Y = 17
-        Terrain = grass
-    Tile:
-        X = 15
-        Y = 17
-        Terrain = hill
-    Tile:
-        X = 16
-        Y = 17
-        Terrain = high_mountain
-    Tile:
-        X = 17
-        Y = 17
-        Terrain = forest
-    Tile:
-        X = 18
-        Y = 17
-        Terrain = forest
-    Tile:
-        X = 19
-        Y = 17
-        Terrain = hill_village
-    Tile:
-        X = 20
-        Y = 17
-        Terrain = road
-    Tile:
-        X = 21
-        Y = 17
-        Terrain = hill
-    Tile:
-        X = 22
-        Y = 17
-        Terrain = hill
-    Tile:
-        X = 23
-        Y = 17
-        Terrain = mountain
-    Tile:
-        X = 24
-        Y = 17
-        Terrain = forest
-    Tile:
-        X = 25
-        Y = 17
-        Terrain = grass
-    Tile:
-        X = 26
-        Y = 17
-        Terrain = grass
-    Tile:
-        X = 27
-        Y = 17
-        Terrain = water
-    Tile:
-        X = 28
-        Y = 17
-        Terrain = water
-    Tile:
-        X = 29
-        Y = 17
-        Terrain = grass
-    Tile:
-        X = 30
-        Y = 17
-        Terrain = grass
-    Tile:
-        X = 31
-        Y = 17
-        Terrain = grass
-    Tile:
-        X = 32
-        Y = 17
-        Terrain = hill
-    Tile:
-        X = 33
-        Y = 17
-        Terrain = mountain
-    Tile:
-        X = 34
-        Y = 17
-        Terrain = high_mountain
-    Tile:
-        X = 35
-        Y = 17
-        Terrain = mountain
-    Tile:
-        X = 5
-        Y = 16
-        Terrain = forest
-    Tile:
-        X = 6
-        Y = 16
-        Terrain = water
-    Tile:
-        X = 7
-        Y = 16
-        Terrain = water
-    Tile:
-        X = 8
-        Y = 16
-        Terrain = water
-    Tile:
-        X = 9
-        Y = 16
-        Terrain = hill
-    Tile:
-        X = 10
-        Y = 16
-        Terrain = grass
-    Tile:
-        X = 11
-        Y = 16
-        Terrain = grass
-    Tile:
-        X = 12
-        Y = 16
-        Terrain = grass
-    Tile:
-        X = 13
-        Y = 16
-        Terrain = grass
-    Tile:
-        X = 14
-        Y = 16
-        Terrain = grass
-    Tile:
-        X = 15
-        Y = 16
-        Terrain = forest
-    Tile:
-        X = 16
-        Y = 16
-        Terrain = high_mountain
-    Tile:
-        X = 17
-        Y = 16
-        Terrain = high_mountain
-    Tile:
-        X = 18
-        Y = 16
-        Terrain = hill
-    Tile:
-        X = 19
-        Y = 16
-        Terrain = grass
-    Tile:
-        X = 20
-        Y = 16
-        Terrain = road
-    Tile:
-        X = 21
-        Y = 16
-        Terrain = road
-    Tile:
-        X = 22
-        Y = 16
-        Terrain = forest
-    Tile:
-        X = 23
-        Y = 16
-        Terrain = hill
-    Tile:
-        X = 24
-        Y = 16
-        Terrain = hill
-    Tile:
-        X = 25
-        Y = 16
-        Terrain = water
-    Tile:
-        X = 26
-        Y = 16
-        Terrain = water
-    Tile:
-        X = 27
-        Y = 16
-        Terrain = water
-    Tile:
-        X = 28
-        Y = 16
-        Terrain = city
-    Tile:
-        X = 29
-        Y = 16
-        Terrain = city
-    Tile:
-        X = 30
-        Y = 16
-        Terrain = hill
-    Tile:
-        X = 31
-        Y = 16
-        Terrain = grass
-    Tile:
-        X = 32
-        Y = 16
-        Terrain = grass
-    Tile:
-        X = 33
-        Y = 16
-        Terrain = hill
-    Tile:
-        X = 34
-        Y = 16
-        Terrain = high_mountain
-    Tile:
-        X = 35
-        Y = 16
-        Terrain = high_mountain
-    Tile:
-        X = 5
-        Y = 15
-        Terrain = hill
-    Tile:
-        X = 6
-        Y = 15
-        Terrain = grass
-    Tile:
-        X = 7
-        Y = 15
-        Terrain = water
-    Tile:
-        X = 8
-        Y = 15
-        Terrain = mountain
-    Tile:
-        X = 9
-        Y = 15
-        Terrain = forest
-    Tile:
-        X = 10
-        Y = 15
-        Terrain = grass
-    Tile:
-        X = 11
-        Y = 15
-        Terrain = road
-    Tile:
-        X = 12
-        Y = 15
-        Terrain = grass
-    Tile:
-        X = 13
-        Y = 15
-        Terrain = grass
-    Tile:
-        X = 14
-        Y = 15
-        Terrain = grass
-    Tile:
-        X = 15
-        Y = 15
-        Terrain = high_mountain
-    Tile:
-        X = 16
-        Y = 15
-        Terrain = high_mountain
-    Tile:
-        X = 17
-        Y = 15
-        Terrain = mountain
-    Tile:
-        X = 18
-        Y = 15
-        Terrain = forest
-    Tile:
-        X = 19
-        Y = 15
-        Terrain = grass
-    Tile:
-        X = 20
-        Y = 15
-        Terrain = grass
-    Tile:
-        X = 21
-        Y = 15
-        Terrain = water
-    Tile:
-        X = 22
-        Y = 15
-        Terrain = water
-    Tile:
-        X = 23
-        Y = 15
-        Terrain = water
-    Tile:
-        X = 24
-        Y = 15
-        Terrain = water
-    Tile:
-        X = 25
-        Y = 15
-        Terrain = high_mountain
-    Tile:
-        X = 26
-        Y = 15
-        Terrain = hill
-    Tile:
-        X = 27
-        Y = 15
-        Terrain = grass
-    Tile:
-        X = 28
-        Y = 15
-        Terrain = city
-    Tile:
-        X = 29
-        Y = 15
-        Terrain = water
-    Tile:
-        X = 30
-        Y = 15
-        Terrain = forest
-    Tile:
-        X = 31
-        Y = 15
-        Terrain = water
-    Tile:
-        X = 32
-        Y = 15
-        Terrain = grass
-    Tile:
-        X = 33
-        Y = 15
-        Terrain = grass
-    Tile:
-        X = 34
-        Y = 15
-        Terrain = forest
-    Tile:
-        X = 35
-        Y = 15
-        Terrain = forest
-    Tile:
-        X = 5
-        Y = 14
-        Terrain = water
-    Tile:
-        X = 6
-        Y = 14
-        Terrain = water
-    Tile:
-        X = 7
-        Y = 14
-        Terrain = water
-    Tile:
-        X = 8
-        Y = 14
-        Terrain = hill
-    Tile:
-        X = 9
-        Y = 14
-        Terrain = road
-    Tile:
-        X = 10
-        Y = 14
-        Terrain = road
-    Tile:
-        X = 11
-        Y = 14
-        Terrain = road
-    Tile:
-        X = 12
-        Y = 14
-        Terrain = grass
-    Tile:
-        X = 13
-        Y = 14
-        Terrain = grass
-    Tile:
-        X = 14
-        Y = 14
-        Terrain = forest
-    Tile:
-        X = 15
-        Y = 14
-        Terrain = high_mountain
-    Tile:
-        X = 16
-        Y = 14
-        Terrain = high_mountain
-    Tile:
-        X = 17
-        Y = 14
-        Terrain = hill
-    Tile:
-        X = 18
-        Y = 14
-        Terrain = grass
-    Tile:
-        X = 19
-        Y = 14
-        Terrain = grass
-    Tile:
-        X = 20
-        Y = 14
-        Terrain = water
-    Tile:
-        X = 21
-        Y = 14
-        Terrain = grass
-    Tile:
-        X = 22
-        Y = 14
-        Terrain = grass
-    Tile:
-        X = 23
-        Y = 14
-        Terrain = hill
-    Tile:
-        X = 24
-        Y = 14
-        Terrain = road
-    Tile:
-        X = 25
-        Y = 14
-        Terrain = high_mountain
-    Tile:
-        X = 26
-        Y = 14
-        Terrain = mountain
-    Tile:
-        X = 27
-        Y = 14
-        Terrain = grass
-    Tile:
-        X = 28
-        Y = 14
-        Terrain = road
-    Tile:
-        X = 29
-        Y = 14
-        Terrain = road
-    Tile:
-        X = 30
-        Y = 14
-        Terrain = water
-    Tile:
-        X = 31
-        Y = 14
-        Terrain = road
-    Tile:
-        X = 32
-        Y = 14
-        Terrain = water
-    Tile:
-        X = 33
-        Y = 14
-        Terrain = water
-    Tile:
-        X = 34
-        Y = 14
-        Terrain = grass
-    Tile:
-        X = 35
-        Y = 14
-        Terrain = water
-    Tile:
-        X = 5
-        Y = 13
-        Terrain = forest
-    Tile:
-        X = 6
-        Y = 13
-        Terrain = grass
-    Tile:
-        X = 7
-        Y = 13
-        Terrain = grass
-    Tile:
-        X = 8
-        Y = 13
-        Terrain = water
-    Tile:
-        X = 9
-        Y = 13
-        Terrain = water
-    Tile:
-        X = 10
-        Y = 13
-        Terrain = water
-    Tile:
-        X = 11
-        Y = 13
-        Terrain = water
-    Tile:
-        X = 12
-        Y = 13
-        Terrain = road
-    Tile:
-        X = 13
-        Y = 13
-        Terrain = grass
-    Tile:
-        X = 14
-        Y = 13
-        Terrain = mountain
-    Tile:
-        X = 15
-        Y = 13
-        Terrain = high_mountain
-    Tile:
-        X = 16
-        Y = 13
-        Terrain = road
-    Tile:
-        X = 17
-        Y = 13
-        Terrain = water
-    Tile:
-        X = 18
-        Y = 13
-        Terrain = grass
-    Tile:
-        X = 19
-        Y = 13
-        Terrain = water
-    Tile:
-        X = 20
-        Y = 13
-        Terrain = water
-    Tile:
-        X = 21
-        Y = 13
-        Terrain = grass
-    Tile:
-        X = 22
-        Y = 13
-        Terrain = grass
-    Tile:
-        X = 23
-        Y = 13
-        Terrain = mountain
-    Tile:
-        X = 24
-        Y = 13
-        Terrain = high_mountain
-    Tile:
-        X = 25
-        Y = 13
-        Terrain = high_mountain
-    Tile:
-        X = 26
-        Y = 13
-        Terrain = forest
-    Tile:
-        X = 27
-        Y = 13
-        Terrain = grass
-    Tile:
-        X = 28
-        Y = 13
-        Terrain = grass
-    Tile:
-        X = 29
-        Y = 13
-        Terrain = road
-    Tile:
-        X = 30
-        Y = 13
-        Terrain = road
-    Tile:
-        X = 31
-        Y = 13
-        Terrain = forest
-    Tile:
-        X = 32
-        Y = 13
-        Terrain = hill
-    Tile:
-        X = 33
-        Y = 13
-        Terrain = water
-    Tile:
-        X = 34
-        Y = 13
-        Terrain = water
-    Tile:
-        X = 35
-        Y = 13
-        Terrain = hill
-    Tile:
-        X = 5
-        Y = 12
-        Terrain = high_mountain
-    Tile:
-        X = 6
-        Y = 12
-        Terrain = forest
-    Tile:
-        X = 7
-        Y = 12
-        Terrain = hill
-    Tile:
-        X = 8
-        Y = 12
-        Terrain = grass
-    Tile:
-        X = 9
-        Y = 12
-        Terrain = grass
-    Tile:
-        X = 10
-        Y = 12
-        Terrain = forest
-    Tile:
-        X = 11
-        Y = 12
-        Terrain = city
-    Tile:
-        X = 12
-        Y = 12
-        Terrain = city
-    Tile:
-        X = 13
-        Y = 12
-        Terrain = water
-    Tile:
-        X = 14
-        Y = 12
-        Terrain = hill
-    Tile:
-        X = 15
-        Y = 12
-        Terrain = water
-    Tile:
-        X = 16
-        Y = 12
-        Terrain = water
-    Tile:
-        X = 17
-        Y = 12
-        Terrain = hill
-    Tile:
-        X = 18
-        Y = 12
-        Terrain = water
-    Tile:
-        X = 19
-        Y = 12
-        Terrain = road
-    Tile:
-        X = 20
-        Y = 12
-        Terrain = grass
-    Tile:
-        X = 21
-        Y = 12
-        Terrain = grass
-    Tile:
-        X = 22
-        Y = 12
-        Terrain = forest
-    Tile:
-        X = 23
-        Y = 12
-        Terrain = high_mountain
-    Tile:
-        X = 24
-        Y = 12
-        Terrain = high_mountain
-    Tile:
-        X = 25
-        Y = 12
-        Terrain = forest
-    Tile:
-        X = 26
-        Y = 12
-        Terrain = grass
-    Tile:
-        X = 27
-        Y = 12
-        Terrain = grass
-    Tile:
-        X = 28
-        Y = 12
-        Terrain = grass
-    Tile:
-        X = 29
-        Y = 12
-        Terrain = grass
-    Tile:
-        X = 30
-        Y = 12
-        Terrain = grass
-    Tile:
-        X = 31
-        Y = 12
-        Terrain = hill
-    Tile:
-        X = 32
-        Y = 12
-        Terrain = mountain
-    Tile:
-        X = 33
-        Y = 12
-        Terrain = water
-    Tile:
-        X = 34
-        Y = 12
-        Terrain = grass
-    Tile:
-        X = 35
-        Y = 12
-        Terrain = forest
-    Tile:
-        X = 5
-        Y = 11
-        Terrain = mountain
-    Tile:
-        X = 6
-        Y = 11
-        Terrain = high_mountain
-    Tile:
-        X = 7
-        Y = 11
-        Terrain = mountain
-    Tile:
-        X = 8
-        Y = 11
-        Terrain = grass
-    Tile:
-        X = 9
-        Y = 11
-        Terrain = grass
-    Tile:
-        X = 10
-        Y = 11
-        Terrain = hill
-    Tile:
-        X = 11
-        Y = 11
-        Terrain = grass
-    Tile:
-        X = 12
-        Y = 11
-        Terrain = city
-    Tile:
-        X = 13
-        Y = 11
-        Terrain = water
-    Tile:
-        X = 14
-        Y = 11
-        Terrain = water
-    Tile:
-        X = 15
-        Y = 11
-        Terrain = grass
-    Tile:
-        X = 16
-        Y = 11
-        Terrain = hill
-    Tile:
-        X = 17
-        Y = 11
-        Terrain = mountain
-    Tile:
-        X = 18
-        Y = 11
-        Terrain = forest
-    Tile:
-        X = 19
-        Y = 11
-        Terrain = hill
-    Tile:
-        X = 20
-        Y = 11
-        Terrain = road
-    Tile:
-        X = 21
-        Y = 11
-        Terrain = hill_village
-    Tile:
-        X = 22
-        Y = 11
-        Terrain = hill
-    Tile:
-        X = 23
-        Y = 11
-        Terrain = forest
-    Tile:
-        X = 24
-        Y = 11
-        Terrain = high_mountain
-    Tile:
-        X = 25
-        Y = 11
-        Terrain = hill
-    Tile:
-        X = 26
-        Y = 11
-        Terrain = grass
-    Tile:
-        X = 27
-        Y = 11
-        Terrain = grass
-    Tile:
-        X = 28
-        Y = 11
-        Terrain = grass
-    Tile:
-        X = 29
-        Y = 11
-        Terrain = grass
-    Tile:
-        X = 30
-        Y = 11
-        Terrain = grass
-    Tile:
-        X = 31
-        Y = 11
-        Terrain = water
-    Tile:
-        X = 32
-        Y = 11
-        Terrain = water
-    Tile:
-        X = 33
-        Y = 11
-        Terrain = grass
-    Tile:
-        X = 34
-        Y = 11
-        Terrain = water
-    Tile:
-        X = 35
-        Y = 11
-        Terrain = water
-    Tile:
-        X = 5
-        Y = 10
-        Terrain = mountain
-    Tile:
-        X = 6
-        Y = 10
-        Terrain = high_mountain
-    Tile:
-        X = 7
-        Y = 10
-        Terrain = high_mountain
-    Tile:
-        X = 8
-        Y = 10
-        Terrain = hill
-    Tile:
-        X = 9
-        Y = 10
-        Terrain = grass
-    Tile:
-        X = 10
-        Y = 10
-        Terrain = grass
-    Tile:
-        X = 11
-        Y = 10
-        Terrain = grass
-    Tile:
-        X = 12
-        Y = 10
-        Terrain = water
-    Tile:
-        X = 13
-        Y = 10
-        Terrain = water
-    Tile:
-        X = 14
-        Y = 10
-        Terrain = grass
-    Tile:
-        X = 15
-        Y = 10
-        Terrain = grass
-    Tile:
-        X = 16
-        Y = 10
-        Terrain = forest
-    Tile:
-        X = 17
-        Y = 10
-        Terrain = grass
-    Tile:
-        X = 18
-        Y = 10
-        Terrain = hill
-    Tile:
-        X = 19
-        Y = 10
-        Terrain = grass
-    Tile:
-        X = 20
-        Y = 10
-        Terrain = road
-    Tile:
-        X = 21
-        Y = 10
-        Terrain = hill
-    Tile:
-        X = 22
-        Y = 10
-        Terrain = forest
-    Tile:
-        X = 23
-        Y = 10
-        Terrain = hill
-    Tile:
-        X = 24
-        Y = 10
-        Terrain = high_mountain
-    Tile:
-        X = 25
-        Y = 10
-        Terrain = mountain
-    Tile:
-        X = 26
-        Y = 10
-        Terrain = grass
-    Tile:
-        X = 27
-        Y = 10
-        Terrain = grass
-    Tile:
-        X = 28
-        Y = 10
-        Terrain = village
-    Tile:
-        X = 29
-        Y = 10
-        Terrain = grass
-    Tile:
-        X = 30
-        Y = 10
-        Terrain = water
-    Tile:
-        X = 31
-        Y = 10
-        Terrain = hill
-    Tile:
-        X = 32
-        Y = 10
-        Terrain = grass
-    Tile:
-        X = 33
-        Y = 10
-        Terrain = grass
-    Tile:
-        X = 34
-        Y = 10
-        Terrain = forest
-    Tile:
-        X = 35
-        Y = 10
-        Terrain = water
-    Tile:
-        X = 5
-        Y = 9
-        Terrain = high_mountain
-    Tile:
-        X = 6
-        Y = 9
-        Terrain = high_mountain
-    Tile:
-        X = 7
-        Y = 9
-        Terrain = hill
-    Tile:
-        X = 8
-        Y = 9
-        Terrain = grass
-    Tile:
-        X = 9
-        Y = 9
-        Terrain = grass
-    Tile:
-        X = 10
-        Y = 9
-        Terrain = grass
-    Tile:
-        X = 11
-        Y = 9
-        Terrain = water
-    Tile:
-        X = 12
-        Y = 9
-        Terrain = water
-    Tile:
-        X = 13
-        Y = 9
-        Terrain = grass
-    Tile:
-        X = 14
-        Y = 9
-        Terrain = grass
-    Tile:
-        X = 15
-        Y = 9
-        Terrain = village
-    Tile:
-        X = 16
-        Y = 9
-        Terrain = grass
-    Tile:
-        X = 17
-        Y = 9
-        Terrain = grass
-    Tile:
-        X = 18
-        Y = 9
-        Terrain = grass
-    Tile:
-        X = 19
-        Y = 9
-        Terrain = grass
-    Tile:
-        X = 20
-        Y = 9
-        Terrain = road
-    Tile:
-        X = 21
-        Y = 9
-        Terrain = hill
-    Tile:
-        X = 22
-        Y = 9
-        Terrain = high_mountain
-    Tile:
-        X = 23
-        Y = 9
-        Terrain = high_mountain
-    Tile:
-        X = 24
-        Y = 9
-        Terrain = hill
-    Tile:
-        X = 25
-        Y = 9
-        Terrain = forest
-    Tile:
-        X = 26
-        Y = 9
-        Terrain = grass
-    Tile:
-        X = 27
-        Y = 9
-        Terrain = water
-    Tile:
-        X = 28
-        Y = 9
-        Terrain = grass
-    Tile:
-        X = 29
-        Y = 9
-        Terrain = water
-    Tile:
-        X = 30
-        Y = 9
-        Terrain = water
-    Tile:
-        X = 31
-        Y = 9
-        Terrain = mountain
-    Tile:
-        X = 32
-        Y = 9
-        Terrain = high_mountain
-    Tile:
-        X = 33
-        Y = 9
-        Terrain = high_mountain
-    Tile:
-        X = 34
-        Y = 9
-        Terrain = mountain
-    Tile:
-        X = 35
-        Y = 9
-        Terrain = water
-    Tile:
-        X = 5
-        Y = 8
-        Terrain = high_mountain
-    Tile:
-        X = 6
-        Y = 8
-        Terrain = forest
-    Tile:
-        X = 7
-        Y = 8
-        Terrain = grass
-    Tile:
-        X = 8
-        Y = 8
-        Terrain = grass
-    Tile:
-        X = 9
-        Y = 8
-        Terrain = grass
-    Tile:
-        X = 10
-        Y = 8
-        Terrain = water
-    Tile:
-        X = 11
-        Y = 8
-        Terrain = water
-    Tile:
-        X = 12
-        Y = 8
-        Terrain = water
-    Tile:
-        X = 13
-        Y = 8
-        Terrain = forest
-    Tile:
-        X = 14
-        Y = 8
-        Terrain = hill
-    Tile:
-        X = 15
-        Y = 8
-        Terrain = forest
-    Tile:
-        X = 16
-        Y = 8
-        Terrain = grass
-    Tile:
-        X = 17
-        Y = 8
-        Terrain = swamp
-    Tile:
-        X = 18
-        Y = 8
-        Terrain = grass
-    Tile:
-        X = 19
-        Y = 8
-        Terrain = road
-    Tile:
-        X = 20
-        Y = 8
-        Terrain = road
-    Tile:
-        X = 21
-        Y = 8
-        Terrain = grass
-    Tile:
-        X = 22
-        Y = 8
-        Terrain = high_mountain
-    Tile:
-        X = 23
-        Y = 8
-        Terrain = forest
-    Tile:
-        X = 24
-        Y = 8
-        Terrain = high_mountain
-    Tile:
-        X = 25
-        Y = 8
-        Terrain = water
-    Tile:
-        X = 26
-        Y = 8
-        Terrain = water
-    Tile:
-        X = 27
-        Y = 8
-        Terrain = grass
-    Tile:
-        X = 28
-        Y = 8
-        Terrain = water
-    Tile:
-        X = 29
-        Y = 8
-        Terrain = grass
-    Tile:
-        X = 30
-        Y = 8
-        Terrain = grass
-    Tile:
-        X = 31
-        Y = 8
-        Terrain = grass
-    Tile:
-        X = 32
-        Y = 8
-        Terrain = forest
-    Tile:
-        X = 33
-        Y = 8
-        Terrain = hill
-    Tile:
-        X = 34
-        Y = 8
-        Terrain = forest
-    Tile:
-        X = 35
-        Y = 8
-        Terrain = water
-    Tile:
-        X = 5
-        Y = 7
-        Terrain = water
-    Tile:
-        X = 6
-        Y = 7
-        Terrain = water
-    Tile:
-        X = 7
-        Y = 7
-        Terrain = water
-    Tile:
-        X = 8
-        Y = 7
-        Terrain = grass
-    Tile:
-        X = 9
-        Y = 7
-        Terrain = water
-    Tile:
-        X = 10
-        Y = 7
-        Terrain = water
-    Tile:
-        X = 11
-        Y = 7
-        Terrain = swamp_village
-    Tile:
-        X = 12
-        Y = 7
-        Terrain = grass
-    Tile:
-        X = 13
-        Y = 7
-        Terrain = swamp
-    Tile:
-        X = 14
-        Y = 7
-        Terrain = hill
-    Tile:
-        X = 15
-        Y = 7
-        Terrain = mountain
-    Tile:
-        X = 16
-        Y = 7
-        Terrain = hill
-    Tile:
-        X = 17
-        Y = 7
-        Terrain = forest
-    Tile:
-        X = 18
-        Y = 7
-        Terrain = grass
-    Tile:
-        X = 19
-        Y = 7
-        Terrain = road
-    Tile:
-        X = 20
-        Y = 7
-        Terrain = road
-    Tile:
-        X = 21
-        Y = 7
-        Terrain = road
-    Tile:
-        X = 22
-        Y = 7
-        Terrain = grass
-    Tile:
-        X = 23
-        Y = 7
-        Terrain = grass
-    Tile:
-        X = 24
-        Y = 7
-        Terrain = grass
-    Tile:
-        X = 25
-        Y = 7
-        Terrain = water
-    Tile:
-        X = 26
-        Y = 7
-        Terrain = grass
-    Tile:
-        X = 27
-        Y = 7
-        Terrain = village
-    Tile:
-        X = 28
-        Y = 7
-        Terrain = grass
-    Tile:
-        X = 29
-        Y = 7
-        Terrain = grass
-    Tile:
-        X = 30
-        Y = 7
-        Terrain = grass
-    Tile:
-        X = 31
-        Y = 7
-        Terrain = swamp_village
-    Tile:
-        X = 32
-        Y = 7
-        Terrain = grass
-    Tile:
-        X = 33
-        Y = 7
-        Terrain = water
-    Tile:
-        X = 34
-        Y = 7
-        Terrain = water
-    Tile:
-        X = 35
-        Y = 7
-        Terrain = grass
-    Tile:
-        X = 5
-        Y = 6
-        Terrain = hill
-    Tile:
-        X = 6
-        Y = 6
-        Terrain = water
-    Tile:
-        X = 7
-        Y = 6
-        Terrain = forest
-    Tile:
-        X = 8
-        Y = 6
-        Terrain = water
-    Tile:
-        X = 9
-        Y = 6
-        Terrain = water
-    Tile:
-        X = 10
-        Y = 6
-        Terrain = forest
-    Tile:
-        X = 11
-        Y = 6
-        Terrain = hill
-    Tile:
-        X = 12
-        Y = 6
-        Terrain = grass
-    Tile:
-        X = 13
-        Y = 6
-        Terrain = grass
-    Tile:
-        X = 14
-        Y = 6
-        Terrain = swamp
-    Tile:
-        X = 15
-        Y = 6
-        Terrain = swamp
-    Tile:
-        X = 16
-        Y = 6
-        Terrain = swamp
-    Tile:
-        X = 17
-        Y = 6
-        Terrain = grass
-    Tile:
-        X = 18
-        Y = 6
-        Terrain = grass
-    Tile:
-        X = 19
-        Y = 6
-        Terrain = city
-    Tile:
-        X = 20
-        Y = 6
-        Terrain = city
-    Tile:
-        X = 21
-        Y = 6
-        Terrain = base
-    Tile:
-        X = 22
-        Y = 6
-        Terrain = city
-    Tile:
-        X = 23
-        Y = 6
-        Terrain = water
-    Tile:
-        X = 24
-        Y = 6
-        Terrain = water
-    Tile:
-        X = 25
-        Y = 6
-        Terrain = mountain
-    Tile:
-        X = 26
-        Y = 6
-        Terrain = forest
-    Tile:
-        X = 27
-        Y = 6
-        Terrain = grass
-    Tile:
-        X = 28
-        Y = 6
-        Terrain = grass
-    Tile:
-        X = 29
-        Y = 6
-        Terrain = grass
-    Tile:
-        X = 30
-        Y = 6
-        Terrain = grass
-    Tile:
-        X = 31
-        Y = 6
-        Terrain = forest
-    Tile:
-        X = 32
-        Y = 6
-        Terrain = water
-    Tile:
-        X = 33
-        Y = 6
-        Terrain = water
-    Tile:
-        X = 34
-        Y = 6
-        Terrain = grass
-    Tile:
-        X = 35
-        Y = 6
-        Terrain = forest
-    Tile:
-        X = 6
-        Y = 5
-        Terrain = mountain
-    Tile:
-        X = 7
-        Y = 5
-        Terrain = hill
-    Tile:
-        X = 8
-        Y = 5
-        Terrain = water
-    Tile:
-        X = 9
-        Y = 5
-        Terrain = forest
-    Tile:
-        X = 10
-        Y = 5
-        Terrain = grass
-    Tile:
-        X = 11
-        Y = 5
-        Terrain = grass
-    Tile:
-        X = 12
-        Y = 5
-        Terrain = grass
-    Tile:
-        X = 13
-        Y = 5
-        Terrain = forest
-    Tile:
-        X = 14
-        Y = 5
-        Terrain = grass
-    Tile:
-        X = 15
-        Y = 5
-        Terrain = grass
-    Tile:
-        X = 16
-        Y = 5
-        Terrain = grass
-    Tile:
-        X = 17
-        Y = 5
-        Terrain = grass
-    Tile:
-        X = 18
-        Y = 5
-        Terrain = grass
-    Tile:
-        X = 19
-        Y = 5
-        Terrain = city
-    Tile:
-        X = 20
-        Y = 5
-        Terrain = base
-    Tile:
-        X = 21
-        Y = 5
-        Terrain = city
-    Tile:
-        X = 22
-        Y = 5
-        Terrain = water
-    Tile:
-        X = 23
-        Y = 5
-        Terrain = road
-    Tile:
-        X = 24
-        Y = 5
-        Terrain = road
-    Tile:
-        X = 25
-        Y = 5
-        Terrain = grass
-    Tile:
-        X = 26
-        Y = 5
-        Terrain = grass
-    Tile:
-        X = 27
-        Y = 5
-        Terrain = grass
-    Tile:
-        X = 28
-        Y = 5
-        Terrain = grass
-    Tile:
-        X = 29
-        Y = 5
-        Terrain = forest
-    Tile:
-        X = 30
-        Y = 5
-        Terrain = grass
-    Tile:
-        X = 31
-        Y = 5
-        Terrain = hill
-    Tile:
-        X = 32
-        Y = 5
-        Terrain = forest
-    Tile:
-        X = 33
-        Y = 5
-        Terrain = water
-    Tile:
-        X = 34
-        Y = 5
-        Terrain = hill
-    Tile:
-        X = 8
-        Y = 4
-        Terrain = water
-    Tile:
-        X = 9
-        Y = 4
-        Terrain = forest
-    Tile:
-        X = 10
-        Y = 4
-        Terrain = grass
-    Tile:
-        X = 11
-        Y = 4
-        Terrain = grass
-    Tile:
-        X = 12
-        Y = 4
-        Terrain = hill
-    Tile:
-        X = 13
-        Y = 4
-        Terrain = mountain
-    Tile:
-        X = 14
-        Y = 4
-        Terrain = swamp
-    Tile:
-        X = 15
-        Y = 4
-        Terrain = forest
-    Tile:
-        X = 16
-        Y = 4
-        Terrain = grass
-    Tile:
-        X = 17
-        Y = 4
-        Terrain = swamp_village
-    Tile:
-        X = 18
-        Y = 4
-        Terrain = hill
-    Tile:
-        X = 19
-        Y = 4
-        Terrain = water
-    Tile:
-        X = 20
-        Y = 4
-        Terrain = water
-    Tile:
-        X = 21
-        Y = 4
-        Terrain = water
-    Tile:
-        X = 22
-        Y = 4
-        Terrain = water
-    Tile:
-        X = 23
-        Y = 4
-        Terrain = hill
-    Tile:
-        X = 24
-        Y = 4
-        Terrain = grass
-    Tile:
-        X = 25
-        Y = 4
-        Terrain = grass
-    Tile:
-        X = 26
-        Y = 4
-        Terrain = grass
-    Tile:
-        X = 27
-        Y = 4
-        Terrain = village
-    Tile:
-        X = 28
-        Y = 4
-        Terrain = grass
-    Tile:
-        X = 29
-        Y = 4
-        Terrain = high_mountain
-    Tile:
-        X = 30
-        Y = 4
-        Terrain = high_mountain
-    Tile:
-        X = 31
-        Y = 4
-        Terrain = high_mountain
-    Tile:
-        X = 32
-        Y = 4
-        Terrain = mountain
-    Tile:
-        X = 10
-        Y = 3
-        Terrain = swamp
-    Tile:
-        X = 11
-        Y = 3
-        Terrain = mountain
-    Tile:
-        X = 12
-        Y = 3
-        Terrain = hill
-    Tile:
-        X = 13
-        Y = 3
-        Terrain = forest
-    Tile:
-        X = 14
-        Y = 3
-        Terrain = hill
-    Tile:
-        X = 15
-        Y = 3
-        Terrain = grass
-    Tile:
-        X = 16
-        Y = 3
-        Terrain = grass
-    Tile:
-        X = 17
-        Y = 3
-        Terrain = water
-    Tile:
-        X = 18
-        Y = 3
-        Terrain = water
-    Tile:
-        X = 19
-        Y = 3
-        Terrain = water
-    Tile:
-        X = 20
-        Y = 3
-        Terrain = water
-    Tile:
-        X = 21
-        Y = 3
-        Terrain = mountain
-    Tile:
-        X = 22
-        Y = 3
-        Terrain = forest
-    Tile:
-        X = 23
-        Y = 3
-        Terrain = forest
-    Tile:
-        X = 24
-        Y = 3
-        Terrain = grass
-    Tile:
-        X = 25
-        Y = 3
-        Terrain = forest
-    Tile:
-        X = 26
-        Y = 3
-        Terrain = forest
-    Tile:
-        X = 27
-        Y = 3
-        Terrain = hill
-    Tile:
-        X = 28
-        Y = 3
-        Terrain = hill
-    Tile:
-        X = 29
-        Y = 3
-        Terrain = high_mountain
-    Tile:
-        X = 30
-        Y = 3
-        Terrain = mountain
+    Row:
+        Void
+        Void
+        Void
+        Void
+        Void
+        Void
+        Void
+        Void
+        Void
+        Void
+        Void
+        Void
+        Void
+        Void
+        Void
+        Void
+        Void
+        Void
+        Void
+        Void
+        Void
+        Void
+        Void
+        Void
+        Void
+        Void
+        Void
+        Void
+        Void
+        Void
+        Void
+        Void
+        Void
+        Void
+        Void
+        Void
+        Void
+        Void
+        Void
+    Row:
+        Void
+        Void
+        Void
+        Void
+        Void
+        Void
+        Void
+        Void
+        Void
+        Void
+        ImpassableMountain
+        Void
+        Hill
+        Void
+        Forest
+        Void
+        Forest
+        Void
+        Mountain
+        Void
+        Water
+        Void
+        Water
+        Void
+        Field
+        Void
+        Hill
+        Void
+        Mountain
+        Void
+        Void
+        Void
+        Void
+        Void
+        Void
+        Void
+        Void
+        Void
+        Void
+    Row:
+        Void
+        Void
+        Void
+        Void
+        Void
+        Void
+        Void
+        Void
+        ImpassableMountain
+        Mountain
+        ImpassableMountain
+        Hill
+        Village
+        Forest
+        Hill
+        Field
+        Forest
+        Hill
+        Water
+        Water
+        Water
+        Water
+        SwampVillage
+        Field
+        Forest
+        Forest
+        Mountain
+        Hill
+        Field
+        Swamp
+        Forest
+        Void
+        Void
+        Void
+        Void
+        Void
+        Void
+        Void
+        Void
+    Row:
+        Void
+        Void
+        Void
+        Void
+        Void
+        Void
+        Water
+        Mountain
+        Hill
+        ImpassableMountain
+        Mountain
+        Field
+        Field
+        Field
+        Field
+        Field
+        Road
+        Water
+        City
+        Water
+        City
+        Hill
+        Field
+        Field
+        Field
+        Swamp
+        Forest
+        Hill
+        Field
+        Field
+        Forest
+        Water
+        Hill
+        Void
+        Void
+        Void
+        Void
+        Void
+        Void
+    Row:
+        Void
+        Void
+        Void
+        Void
+        Forest
+        Hill
+        Water
+        Forest
+        Forest
+        Field
+        Field
+        Field
+        Field
+        Field
+        Mountain
+        Road
+        Water
+        Water
+        Headquarters
+        Headquarters
+        City
+        Field
+        Field
+        Field
+        Swamp
+        Field
+        Field
+        Field
+        Hill
+        Field
+        Water
+        Water
+        Forest
+        Hill
+        Mountain
+        Void
+        Void
+        Void
+        Void
+    Row:
+        Void
+        Void
+        Void
+        Void
+        Field
+        Field
+        Water
+        Water
+        SwampVillage
+        Field
+        Field
+        Field
+        Village
+        Forest
+        Water
+        Water
+        Field
+        City
+        Road
+        City
+        Road
+        Field
+        Forest
+        Swamp
+        Mountain
+        Swamp
+        Swamp
+        Field
+        SwampVillage
+        Forest
+        Water
+        Water
+        Water
+        Water
+        Water
+        Void
+        Void
+        Void
+        Void
+    Row:
+        Void
+        Void
+        Void
+        Void
+        Water
+        Water
+        Hill
+        Field
+        Field
+        Field
+        Field
+        Field
+        Field
+        Field
+        Water
+        Field
+        Forest
+        Field
+        Field
+        Road
+        Road
+        Field
+        Swamp
+        Hill
+        Forest
+        Hill
+        Forest
+        Field
+        Water
+        Water
+        Field
+        Field
+        Field
+        Water
+        ImpassableMountain
+        Void
+        Void
+        Void
+        Void
+    Row:
+        Void
+        Void
+        Void
+        Void
+        Water
+        Forest
+        ImpassableMountain
+        Forest
+        Mountain
+        Field
+        Water
+        Water
+        Water
+        Water
+        Forest
+        ImpassableMountain
+        ImpassableMountain
+        ImpassableMountain
+        Hill
+        Road
+        Field
+        Field
+        Field
+        Field
+        Village
+        Hill
+        Field
+        Water
+        Water
+        Water
+        Field
+        Field
+        Hill
+        Forest
+        ImpassableMountain
+        Void
+        Void
+        Void
+        Void
+    Row:
+        Void
+        Void
+        Void
+        Void
+        Water
+        Mountain
+        Field
+        ImpassableMountain
+        Hill
+        Water
+        Field
+        Field
+        Field
+        Field
+        Mountain
+        Hill
+        Hill
+        ImpassableMountain
+        Hill
+        Road
+        Field
+        Field
+        Field
+        Field
+        Field
+        Field
+        Water
+        Water
+        Field
+        Field
+        Field
+        Field
+        ImpassableMountain
+        ImpassableMountain
+        Mountain
+        Void
+        Void
+        Void
+        Void
+    Row:
+        Void
+        Void
+        Void
+        Void
+        Water
+        Forest
+        Field
+        Field
+        Water
+        Water
+        Field
+        Village
+        Field
+        Field
+        Hill
+        ImpassableMountain
+        Forest
+        Forest
+        HillVillage
+        Road
+        Hill
+        Hill
+        Mountain
+        Forest
+        Field
+        Field
+        Water
+        Water
+        Field
+        Field
+        Field
+        Hill
+        Mountain
+        ImpassableMountain
+        Mountain
+        Void
+        Void
+        Void
+        Void
+    Row:
+        Void
+        Void
+        Void
+        Void
+        Forest
+        Water
+        Water
+        Water
+        Hill
+        Field
+        Field
+        Field
+        Field
+        Field
+        Forest
+        ImpassableMountain
+        ImpassableMountain
+        Hill
+        Field
+        Road
+        Road
+        Forest
+        Hill
+        Hill
+        Water
+        Water
+        Water
+        City
+        City
+        Hill
+        Field
+        Field
+        Hill
+        ImpassableMountain
+        ImpassableMountain
+        Void
+        Void
+        Void
+        Void
+    Row:
+        Void
+        Void
+        Void
+        Void
+        Hill
+        Field
+        Water
+        Mountain
+        Forest
+        Field
+        Road
+        Field
+        Field
+        Field
+        ImpassableMountain
+        ImpassableMountain
+        Mountain
+        Forest
+        Field
+        Field
+        Water
+        Water
+        Water
+        Water
+        ImpassableMountain
+        Hill
+        Field
+        City
+        Water
+        Forest
+        Water
+        Field
+        Field
+        Forest
+        Forest
+        Void
+        Void
+        Void
+        Void
+    Row:
+        Void
+        Void
+        Void
+        Void
+        Water
+        Water
+        Water
+        Hill
+        Road
+        Road
+        Road
+        Field
+        Field
+        Forest
+        ImpassableMountain
+        ImpassableMountain
+        Hill
+        Field
+        Field
+        Water
+        Field
+        Field
+        Hill
+        Road
+        ImpassableMountain
+        Mountain
+        Field
+        Road
+        Road
+        Water
+        Road
+        Water
+        Water
+        Field
+        Water
+        Void
+        Void
+        Void
+        Void
+    Row:
+        Void
+        Void
+        Void
+        Void
+        Forest
+        Field
+        Field
+        Water
+        Water
+        Water
+        Water
+        Road
+        Field
+        Mountain
+        ImpassableMountain
+        Road
+        Water
+        Field
+        Water
+        Water
+        Field
+        Field
+        Mountain
+        ImpassableMountain
+        ImpassableMountain
+        Forest
+        Field
+        Field
+        Road
+        Road
+        Forest
+        Hill
+        Water
+        Water
+        Hill
+        Void
+        Void
+        Void
+        Void
+    Row:
+        Void
+        Void
+        Void
+        Void
+        ImpassableMountain
+        Forest
+        Hill
+        Field
+        Field
+        Forest
+        City
+        City
+        Water
+        Hill
+        Water
+        Water
+        Hill
+        Water
+        Road
+        Field
+        Field
+        Forest
+        ImpassableMountain
+        ImpassableMountain
+        Forest
+        Field
+        Field
+        Field
+        Field
+        Field
+        Hill
+        Mountain
+        Water
+        Field
+        Forest
+        Void
+        Void
+        Void
+        Void
+    Row:
+        Void
+        Void
+        Void
+        Void
+        Mountain
+        ImpassableMountain
+        Mountain
+        Field
+        Field
+        Hill
+        Field
+        City
+        Water
+        Water
+        Field
+        Hill
+        Mountain
+        Forest
+        Hill
+        Road
+        HillVillage
+        Hill
+        Forest
+        ImpassableMountain
+        Hill
+        Field
+        Field
+        Field
+        Field
+        Field
+        Water
+        Water
+        Field
+        Water
+        Water
+        Void
+        Void
+        Void
+        Void
+    Row:
+        Void
+        Void
+        Void
+        Void
+        Mountain
+        ImpassableMountain
+        ImpassableMountain
+        Hill
+        Field
+        Field
+        Field
+        Water
+        Water
+        Field
+        Field
+        Forest
+        Field
+        Hill
+        Field
+        Road
+        Hill
+        Forest
+        Hill
+        ImpassableMountain
+        Mountain
+        Field
+        Field
+        Village
+        Field
+        Water
+        Hill
+        Field
+        Field
+        Forest
+        Water
+        Void
+        Void
+        Void
+        Void
+    Row:
+        Void
+        Void
+        Void
+        Void
+        ImpassableMountain
+        ImpassableMountain
+        Hill
+        Field
+        Field
+        Field
+        Water
+        Water
+        Field
+        Field
+        Village
+        Field
+        Field
+        Field
+        Field
+        Road
+        Hill
+        ImpassableMountain
+        ImpassableMountain
+        Hill
+        Forest
+        Field
+        Water
+        Field
+        Water
+        Water
+        Mountain
+        ImpassableMountain
+        ImpassableMountain
+        Mountain
+        Water
+        Void
+        Void
+        Void
+        Void
+    Row:
+        Void
+        Void
+        Void
+        Void
+        ImpassableMountain
+        Forest
+        Field
+        Field
+        Field
+        Water
+        Water
+        Water
+        Forest
+        Hill
+        Forest
+        Field
+        Swamp
+        Field
+        Road
+        Road
+        Field
+        ImpassableMountain
+        Forest
+        ImpassableMountain
+        Water
+        Water
+        Field
+        Water
+        Field
+        Field
+        Field
+        Forest
+        Hill
+        Forest
+        Water
+        Void
+        Void
+        Void
+        Void
+    Row:
+        Void
+        Void
+        Void
+        Void
+        Water
+        Water
+        Water
+        Field
+        Water
+        Water
+        SwampVillage
+        Field
+        Swamp
+        Hill
+        Mountain
+        Hill
+        Forest
+        Field
+        Road
+        Road
+        Road
+        Field
+        Field
+        Field
+        Water
+        Field
+        Village
+        Field
+        Field
+        Field
+        SwampVillage
+        Field
+        Water
+        Water
+        Field
+        Void
+        Void
+        Void
+        Void
+    Row:
+        Void
+        Void
+        Void
+        Void
+        Hill
+        Water
+        Forest
+        Water
+        Water
+        Forest
+        Hill
+        Field
+        Field
+        Swamp
+        Swamp
+        Swamp
+        Field
+        Field
+        City
+        City
+        Headquarters
+        City
+        Water
+        Water
+        Mountain
+        Forest
+        Field
+        Field
+        Field
+        Field
+        Forest
+        Water
+        Water
+        Field
+        Forest
+        Void
+        Void
+        Void
+        Void
+    Row:
+        Void
+        Void
+        Void
+        Void
+        Void
+        Mountain
+        Hill
+        Water
+        Forest
+        Field
+        Field
+        Field
+        Forest
+        Field
+        Field
+        Field
+        Field
+        Field
+        City
+        Headquarters
+        City
+        Water
+        Road
+        Road
+        Field
+        Field
+        Field
+        Field
+        Forest
+        Field
+        Hill
+        Forest
+        Water
+        Hill
+        Void
+        Void
+        Void
+        Void
+        Void
+    Row:
+        Void
+        Void
+        Void
+        Void
+        Void
+        Void
+        Void
+        Water
+        Forest
+        Field
+        Field
+        Hill
+        Mountain
+        Swamp
+        Forest
+        Field
+        SwampVillage
+        Hill
+        Water
+        Water
+        Water
+        Water
+        Hill
+        Field
+        Field
+        Field
+        Village
+        Field
+        ImpassableMountain
+        ImpassableMountain
+        ImpassableMountain
+        Mountain
+        Void
+        Void
+        Void
+        Void
+        Void
+        Void
+        Void
+    Row:
+        Void
+        Void
+        Void
+        Void
+        Void
+        Void
+        Void
+        Void
+        Void
+        Swamp
+        Mountain
+        Hill
+        Forest
+        Hill
+        Field
+        Field
+        Water
+        Water
+        Water
+        Water
+        Mountain
+        Forest
+        Forest
+        Field
+        Forest
+        Forest
+        Hill
+        Hill
+        ImpassableMountain
+        Mountain
+        Void
+        Void
+        Void
+        Void
+        Void
+        Void
+        Void
+        Void
+        Void
+    Row:
+        Void
+        Void
+        Void
+        Void
+        Void
+        Void
+        Void
+        Void
+        Void
+        Void
+        Void
+        Void
+        Void
+        Void
+        Void
+        Void
+        Void
+        Void
+        Void
+        Void
+        Void
+        Void
+        Void
+        Void
+        Void
+        Void
+        Void
+        Void
+        Void
+        Void
+        Void
+        Void
+        Void
+        Void
+        Void
+        Void
+        Void
+        Void
+        Void
+    Row:
+        Void
+        Void
+        Void
+        Void
+        Void
+        Void
+        Void
+        Void
+        Void
+        Void
+        Void
+        Void
+        Void
+        Void
+        Void
+        Void
+        Void
+        Void
+        Void
+        Void
+        Void
+        Void
+        Void
+        Void
+        Void
+        Void
+        Void
+        Void
+        Void
+        Void
+        Void
+        Void
+        Void
+        Void
+        Void
+        Void
+        Void
+        Void
+        Void
