@@ -18,18 +18,13 @@ public final class BFW2AOE {
         }
         BufferedReader bfwFile = new BufferedReader(new FileReader(args[0]));
         BufferedWriter aoeFile = new BufferedWriter(new FileWriter(args[1]));
-        int borderSize = 0;
         // Header parsing
         String[] currentLine = bfwFile.readLine().split("=");
         if (currentLine.length != 2 || (currentLine[0].trim().equals("usage") && !currentLine[1].trim().equals("map")) || (!(currentLine[0].trim().equals("border_size")) && !(currentLine[0].trim().equals("usage"))))
             throw new IOException("Input file is not a BFW map");
-        if (currentLine[0].trim().equals("border_size"))
-            borderSize = Integer.parseInt(currentLine[1]);
         currentLine = bfwFile.readLine().split("=");
         if (currentLine.length != 2 || (currentLine[0].trim().equals("usage") && !currentLine[1].trim().equals("map")) || (!(currentLine[0].trim().equals("border_size")) && !(currentLine[0].trim().equals("usage"))))
             throw new IOException("Input file is not a BFW map");
-        if (currentLine[0].trim().equals("border_size"))
-            borderSize = Integer.parseInt(currentLine[1]);
         // Determine map size
         int mapHeight = 0;
         String rawLine = bfwFile.readLine();
@@ -46,9 +41,7 @@ public final class BFW2AOE {
         bfwFile.readLine();
         bfwFile.readLine();
         // Create AOE file header
-        aoeFile.write("CleanData\nImport:\n    data/terrain/BasicTerrain\nMap:\n");
-        String[] mapPath = args[0].split("/"); 
-        aoeFile.write("    Name="+mapPath[mapPath.length-1].split("\\.")[0].replace(" ", "_")+"\n");
+        aoeFile.write("Map:\n");
         // Tile matrix parsing
         while (row > 0) {
             currentLine = bfwFile.readLine().split(",\\s*\\d*");
@@ -58,6 +51,7 @@ public final class BFW2AOE {
                 mapWidth = currentLine.length;
             if (mapWidth != currentLine.length)
                 throw new IOException("Corrupt BFW file");
+            aoeFile.write("    Row:\n");
             for (int column = 1; column <= mapWidth; column++) {
                 // The hard part - matching BFW terrain codes with their proper names
                 String[] terrainCodes = currentLine[column - 1].trim().split("[a-zI\\^]*");
@@ -72,139 +66,134 @@ public final class BFW2AOE {
                         terrainCode[terrainCodeLength] = terrainCodeLetter;
                         terrainCodeLength++;
                     }
+                aoeFile.write("        ");
                 if (terrainCode[0].equals("_") || terrainCode[0].equals("X"))
-                    continue;
-                aoeFile.write("    Tile:\n");
-                aoeFile.write("        X = "+column+"\n");
-                aoeFile.write("        Y = "+row+"\n");
-                aoeFile.write("        Terrain = ");                
-                if (terrainCode[0].equals("A"))
+                    aoeFile.write("Void");
+                else if (terrainCode[0].equals("A"))
                     if (terrainCode.length < 2)
-                        aoeFile.write("arctic");
+                        aoeFile.write("Snow");
                     else if (terrainCode[1].equals("F"))
-                        aoeFile.write("arctic_forest");
+                        aoeFile.write("SnowForest");
                     else if (terrainCode[1].equals("V"))
-                        aoeFile.write("arctic_village");
+                        aoeFile.write("SnowVillage");
                     else {
                         System.err.println("Unkwown subtype of arctic tile: "+terrainCode[1]);
-                        aoeFile.write("arctic");
+                        aoeFile.write("Snow");
                     }
                 else if (terrainCode[0].equals("C"))
                     if (terrainCode.length < 2)
-                        aoeFile.write("city");
+                        aoeFile.write("City");
                     else {                        
                         System.err.println("Unknown subtype of city tile: "+terrainCode[1]);
-                        aoeFile.write("city");
+                        aoeFile.write("City");
                     }
                 else if (terrainCode[0].equals("D"))
                     if (terrainCode.length < 2)
-                        aoeFile.write("desert");
+                        aoeFile.write("Desert");
                     else if (terrainCode[1].equals("V"))
-                        aoeFile.write("desert_village");
+                        aoeFile.write("DesertVillage");
                     else {
                         System.err.println("Unknown subtype of desert tile: "+terrainCode[1]);
-                        aoeFile.write("desert");
+                        aoeFile.write("Desert");
                     }
                 else if (terrainCode[0].equals("G"))
                     if (terrainCode.length < 2)
-                        aoeFile.write("grass");
+                        aoeFile.write("Field");
                     else if (terrainCode[1].equals("F"))
-                        aoeFile.write("forest");
+                        aoeFile.write("Forest");
                     else if (terrainCode[1].equals("V"))
-                        aoeFile.write("village");
+                        aoeFile.write("Village");
                     else if (terrainCode[1].equals("W"))
-                        aoeFile.write("structure");
+                        aoeFile.write("Structure");
                     else {
                         System.err.println("Unknown subtype of grass tile: "+terrainCode[1]);
-                        aoeFile.write("grass");
+                        aoeFile.write("Field");
                     }
                 else if (terrainCode[0].equals("H"))
                     if (terrainCode.length < 2)
-                        aoeFile.write("hill");
+                        aoeFile.write("Hill");
                     else if (terrainCode[1].equals("F"))
-                        aoeFile.write("hilly_forest");
+                        aoeFile.write("HillForest");
                     else if (terrainCode[1].equals("V"))
-                        aoeFile.write("hill_village");
+                        aoeFile.write("HillVillage");
                     else {
                         System.err.println("Unknown subtype of hill tile: "+terrainCode[1]);
-                        aoeFile.write("hill");
+                        aoeFile.write("Hill");
                     }
                 else if (terrainCode[0].equals("K"))
                     if (terrainCode.length < 2)
-                        aoeFile.write("base");
+                        aoeFile.write("Headquarters");
                     else {
                         System.err.println("Unknown subtype of base tile: "+terrainCode[1]);
-                        aoeFile.write("base");
+                        aoeFile.write("Headquarters");
                     }
                 else if (terrainCode[0].equals("M"))
                     if (terrainCode.length < 2)
-                        aoeFile.write("mountain");
+                        aoeFile.write("Mountain");
                     else if (terrainCode[1].equals("V"))
-                        aoeFile.write("mountain_village");
+                        aoeFile.write("MountainVillage");
                     else if (terrainCode[1].equals("X"))
-                        aoeFile.write("high_mountain");
+                        aoeFile.write("ImpassableMountain");
                     else {
                         System.err.println("Unknown subtype of mountain tile: "+terrainCode[1]);
-                        aoeFile.write("mountain");
+                        aoeFile.write("Mountain");
                     }
                 else if (terrainCode[0].equals("Q"))
                     if (terrainCode.length < 2)
-                        aoeFile.write("lava");
+                        aoeFile.write("Lava");
                     else {
                         System.err.println("Unknown subtype of lava tile: "+terrainCode[1]);
-                        aoeFile.write("lava");
+                        aoeFile.write("Lava");
                     }
                 else if (terrainCode[0].equals("R"))
                     if (terrainCode.length < 2)
-                        aoeFile.write("road");
+                        aoeFile.write("Road");
                     else if (terrainCode[1].equals("G"))
-                        aoeFile.write("farmland");
+                        aoeFile.write("Farm");
                     else if (terrainCode[1].equals("U"))
-                        aoeFile.write("rubble");
+                        aoeFile.write("Ruins");
                     else {
                         System.err.println("Unknown subtype of road tile: "+terrainCode[1]);
-                        aoeFile.write("road");
+                        aoeFile.write("Road");
                     }
                 else if (terrainCode[0].equals("S"))
                     if (terrainCode.length < 2)
-                        aoeFile.write("swamp");
+                        aoeFile.write("Swamp");
                     else if (terrainCode[1].equals("B"))
-                        aoeFile.write("swamp_bridge");
+                        aoeFile.write("SwampBridge");
                     else if (terrainCode[1].equals("V"))
-                        aoeFile.write("swamp_village");
+                        aoeFile.write("SwampVillage");
                     else {
                         System.err.println("Unknown subtype of swamp tile: "+terrainCode[1]);
-                        aoeFile.write("swamp");
+                        aoeFile.write("Swamp");
                     }
                 else if (terrainCode[0].equals("U"))
                     if (terrainCode.length < 2)
-                        aoeFile.write("cave");
+                        aoeFile.write("Cave");
                     else if (terrainCode[1].equals("V"))
-                        aoeFile.write("cave_village");
+                        aoeFile.write("CaveVillage");
                     else {
                         System.err.println("Unknown subtype of cave tile: "+terrainCode[1]);
-                        aoeFile.write("cave");
+                        aoeFile.write("Cave");
                     }
                 else if (terrainCode[0].equals("W"))
                     if (terrainCode.length < 2)
-                        aoeFile.write("water");
+                        aoeFile.write("Water");
                     else if (terrainCode[1].equals("B"))
-                        aoeFile.write("bridge");
+                        aoeFile.write("Bridge");
                     else if (terrainCode[1].equals("V"))
-                        aoeFile.write("water_village");
+                        aoeFile.write("WaterVillage");
                     else {
                         System.err.println("Unknown subtype of water tile: "+terrainCode[1]);
-                        aoeFile.write("water");
+                        aoeFile.write("Water");
                     }
                 else
                     throw new IOException("Unknown type of tile: "+terrainCode[0]);
                 aoeFile.write("\n");
-                // Provide map border
-                if (row <= borderSize || column <= borderSize || row >= mapHeight + 1 - borderSize || column >= mapWidth + 1 - borderSize)
-                    aoeFile.write("        Inaccessible\n");
             }
             row--;
         }
         aoeFile.close();
+        bfwFile.close();
     }
 }
