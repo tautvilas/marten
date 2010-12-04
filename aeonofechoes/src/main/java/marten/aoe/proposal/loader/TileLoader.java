@@ -29,7 +29,7 @@ public final class TileLoader {
         Object tileInstance = null;
         try {
             tileClass = Class.forName(Path.TILE_PACKAGE + tileName);
-            tileInstance = tileClass.getConstructor(Map.class, Point.class);
+            tileInstance = tileClass.getConstructor(Map.class, Point.class).newInstance(owner, location);
         }
         catch (Exception e) {
             e.printStackTrace();
