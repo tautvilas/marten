@@ -77,7 +77,7 @@ public final class BFW2AOE {
                     else if (terrainCode[1].equals("V"))
                         aoeFile.write("SnowVillage");
                     else {
-                        System.err.println("Unkwown subtype of arctic tile: "+terrainCode[1]);
+                        System.err.println("Unknown subtype of arctic tile: "+terrainCode[1]);
                         aoeFile.write("Snow");
                     }
                 else if (terrainCode[0].equals("C"))
