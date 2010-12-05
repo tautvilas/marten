@@ -24,13 +24,11 @@ import marten.aoe.gui.widget.OkCancelDialog;
 import marten.aoe.server.AoeServer;
 import marten.aoe.server.ServerListener;
 import marten.aoe.server.face.Server;
-import marten.aoe.server.face.ServerGame;
 import marten.aoe.server.serializable.ClientSession;
-import marten.aoe.server.serializable.GameNotification;
+import marten.aoe.server.serializable.ServerNotification;
 
 public class GameGate extends AgeScene {
 
-    private ServerGame gate;
     private Server gameServer;
     private String serverUrl;
     private ClientSession session;
@@ -93,8 +91,6 @@ public class GameGate extends AgeScene {
             this.gameServer = connect(InetAddress.getByName("localhost"));
             this.session = gameServer.login(GameInfo.nickname);
             gameServer.createGame(session, "default", mapName);
-            this.gate = (ServerGame)Naming.lookup(gameServer
-                    .getGateUrl("default"));
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
@@ -103,7 +99,7 @@ public class GameGate extends AgeScene {
             @Override
             public void perform() {
                 try {
-                    gate.start(session);
+                    gameServer.startGame(session, "default");
                 } catch (RemoteException e) {
                     e.printStackTrace();
                 }
@@ -122,10 +118,9 @@ public class GameGate extends AgeScene {
         this.gameServer = connect(server);
         try {
             this.session = gameServer.login(GameInfo.nickname);
-            this.gate = (ServerGame)Naming.lookup(gameServer
-                    .getGateUrl("default"));
-            this.gate.join(this.session);
-            this.map = this.gate.getMapName(session);
+            this.gameServer.joinGame(this.session, "default");
+            this.map = this.gameServer.getGameDetails(session, "default")
+                    .getMapName();
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
@@ -136,16 +131,17 @@ public class GameGate extends AgeScene {
         new ServerListener() {
             @Override
             public void listen() {
-                GameNotification notification;
+                ServerNotification notification;
                 try {
-                    notification = gate.listen(session);
+                    notification = gameServer.listen(session);
                 } catch (RemoteException e) {
                     throw new RuntimeException(e);
                 }
-                if (notification == GameNotification.PLAYER_LIST_UPDATED) {
+                if (notification == ServerNotification.PLAYER_LIST_UPDATED) {
                     String[] members;
                     try {
-                        members = gate.getMembers(session);
+                        members = gameServer.getGameDetails(session, "default")
+                                .getPlayers();
                     } catch (RemoteException e) {
                         throw new RuntimeException(e);
                     }
@@ -160,7 +156,7 @@ public class GameGate extends AgeScene {
                         players.addChild(player);
                     }
                     flatland.addChild(players);
-                } else if (notification == GameNotification.GAME_STARTED) {
+                } else if (notification == ServerNotification.GAME_STARTED) {
                     GameParams params = new GameParams(map, gameUrl);
                     fireEvent(new AgeSceneSwitchEvent(new GameLoader(params)));
                 }

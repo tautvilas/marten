@@ -2,9 +2,7 @@ package marten.aoe.server;
 
 import java.net.InetAddress;
 import java.net.InetSocketAddress;
-import java.net.MalformedURLException;
 import java.net.Socket;
-import java.rmi.AlreadyBoundException;
 import java.rmi.Naming;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
@@ -17,13 +15,16 @@ import java.util.regex.Pattern;
 import marten.aoe.server.face.Server;
 import marten.aoe.server.serializable.ChatMessage;
 import marten.aoe.server.serializable.ClientSession;
+import marten.aoe.server.serializable.GameDetails;
+import marten.aoe.server.serializable.ServerNotification;
 
 import org.apache.log4j.Logger;
 
 public class AoeServer extends UnicastRemoteObject implements Server {
     private static final long serialVersionUID = 1L;
-    private HashMap<String, LinkedList<ChatMessage>> inboxes;
-    private HashMap<String, AoeGame> gameGates;
+    private HashMap<String, ServerClient> clients = new HashMap<String, ServerClient>();
+    private HashMap<String, GameDetails> games = new HashMap<String, GameDetails>();
+    @SuppressWarnings("unused")
     private String serverUrl;
 
     private static org.apache.log4j.Logger log = Logger
@@ -32,10 +33,12 @@ public class AoeServer extends UnicastRemoteObject implements Server {
     private static boolean serverStarted = false;
 
     public static void start() {
-        if (serverStarted) return;
+        if (serverStarted)
+            return;
         try {
             InetAddress publicIp = InetAddress.getLocalHost();
-            // HACK(zv): try to determine public IP by connecting to HTTP on example.com
+            // HACK(zv): try to determine public IP by connecting to HTTP on
+            // example.com
             if (Pattern.compile("127\\..*").matcher(publicIp.getHostAddress())
                     .matches()) {
                 log.warn("System has a misconfigured public IP."
@@ -65,64 +68,69 @@ public class AoeServer extends UnicastRemoteObject implements Server {
     public AoeServer(String url) throws RemoteException {
         super();
         this.serverUrl = url;
-        this.inboxes = new HashMap<String, LinkedList<ChatMessage>>();
-        this.gameGates = new HashMap<String, AoeGame>();
     }
 
     @Override
     public ClientSession login(String username) throws RemoteException {
         ClientSession session = Sessions.addUser(username);
-        if (session == null) {
-            log.error("User '" + username + "' allready exists");
-            return null;
-        }
-        inboxes.put(username, new LinkedList<ChatMessage>());
+        clients.put(username, new ServerClient(username));
         log.info("User '" + username + "' with secret '" + session.secret
                 + "' successfully logged in");
         return session;
     }
 
     @Override
+    public ServerNotification listen(ClientSession session)
+            throws RemoteException {
+        String username = Sessions.getUsername(session);
+        LinkedList<ServerNotification> notifier = clients.get(username)
+                .getNotifier();
+        synchronized (notifier) {
+            if (notifier.isEmpty()) {
+                try {
+                    notifier.wait();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+        return notifier.pop();
+    }
+
+    @Override
     public void leave(ClientSession session) throws RemoteException {
         String username = Sessions.getUsername(session);
-        inboxes.remove(username);
-        for (AoeGame game : gameGates.values()) {
-            game.leave(session);
+        clients.remove(username);
+        for (String game : games.keySet()) {
+            GameDetails details = games.get(game);
+            if (details.hasPlayer(username)) {
+                this.leaveGame(session, game);
+            }
         }
         Sessions.removeUser(username);
+        log.info("User '" + username + "' logged out ");
     }
 
     @Override
     public void sendPrivateMessage(ClientSession from, String to, String message)
             throws RemoteException {
         String username = Sessions.getUsername(from);
-        if (!inboxes.containsKey(to)) {
-            log.error("Username '" + to + "' does not exists");
-            return;
-        }
-        LinkedList<ChatMessage> msgs = inboxes.get(to);
-        msgs.add(new ChatMessage(username, message));
-        synchronized (msgs) {
-            msgs.notifyAll();
-        }
+        ServerClient client = clients.get(to);
+        client.addMessage(new ChatMessage(username, message));
     }
 
     @Override
-    public void sendGateMessage(ClientSession from, String gate, String message)
+    public void sendGameMessage(ClientSession from, String gate, String message)
             throws RemoteException {
         String username = Sessions.getUsername(from);
-        if (!gameGates.containsKey(gate)) {
-            log.error("Game gate '" + gate + "' does not exists");
-            return;
+        if (!games.containsKey(gate)) {
+            throw new RemoteException("Game '" + gate
+                    + "' does not exists");
         }
-        AoeGame gameGate = gameGates.get(gate);
-        for (String user : gameGate.getMembers(from)) {
+        GameDetails game = games.get(gate);
+        for (String user : game.getPlayers()) {
             if (user != username) {
-                LinkedList<ChatMessage> msgs = inboxes.get(user);
-                synchronized (msgs) {
-                    msgs.add(new ChatMessage(username, message));
-                    msgs.notifyAll();
-                }
+                clients.get(username).addMessage(new ChatMessage(username, message));
             }
         }
     }
@@ -130,36 +138,72 @@ public class AoeServer extends UnicastRemoteObject implements Server {
     @Override
     public ChatMessage getMessage(ClientSession session) throws RemoteException {
         String username = Sessions.getUsername(session);
-        LinkedList<ChatMessage> msgs = inboxes.get(username);
-        synchronized (msgs) {
-            if (msgs.isEmpty()) {
-                try {
-                    msgs.wait();
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-            }
-            return msgs.pop();
-        }
+        return clients.get(username).getLastMessage();
     }
 
     @Override
-    public String createGame(ClientSession session, String gameName,
+    public synchronized void createGame(ClientSession session, String gameName,
             String mapName) throws RemoteException {
-        AoeGame gate = new AoeGame(session, gameName, mapName);
-        this.gameGates.put(gameName, gate);
-        try {
-            Naming.bind("rmi://localhost/Server/gates/" + gameName, gate);
-        } catch (MalformedURLException e) {
-            log.warn("Can not bind game gate: address is malformed");
-        } catch (AlreadyBoundException e) {
-            log.warn("Can not bind game: address allready in use");
+        String username = Sessions.getUsername(session);
+        if (games.containsKey(gameName)) {
+            log.error("Game '" + gameName + "' allready exists");
+            throw new RemoteException("Game name allready exists");
         }
-        return "/gates/" + gameName;
+        GameDetails game = new GameDetails(username, mapName, gameName);
+        this.games.put(gameName, game);
     }
 
     @Override
-    public String getGateUrl(String gateName) throws RemoteException {
-        return this.serverUrl + "/gates/" + gateName;
+    public GameDetails getGameDetails(
+            ClientSession session, String game) throws RemoteException {
+//        String username = Sessions.getUsername(session);
+        return games.get(game);
+    }
+
+    @Override
+    public String[] getMembers(ClientSession session, String game)
+            throws RemoteException {
+//        String username = Sessions.getUsername(session);
+        return games.get(game).getPlayers();
+    }
+
+    @Override
+    public void joinGame(ClientSession session, String game)
+            throws RemoteException {
+        String username = Sessions.getUsername(session);
+        GameDetails details = games.get(game);
+        details.addPlayer(username);
+        for (String member : details.getPlayers()) {
+            clients.get(member).notify(ServerNotification.PLAYER_LIST_UPDATED);
+        }
+    }
+
+    @Override
+    public void leaveGame(ClientSession session, String game)
+            throws RemoteException {
+        String username = Sessions.getUsername(session);
+        GameDetails details =  games.get(game);
+        details.removePlayer(username);
+        if (details.getNumPlayers() == 0) {
+            games.remove(game);
+        } else {
+            for (String member : details.getPlayers()) {
+                clients.get(member).notify(ServerNotification.PLAYER_LIST_UPDATED);
+            }
+        }
+    }
+
+    @Override
+    public void startGame(ClientSession session, String game)
+            throws RemoteException {
+        String username = Sessions.getUsername(session);
+        GameDetails details = games.get(game);
+        if (details.getCreator().equals(username)) {
+            for (String member : details.getPlayers()) {
+                clients.get(member).notify(ServerNotification.GAME_STARTED);
+            }
+        } else {
+            throw new RuntimeException("Unauthorized");
+        }
     }
 }
