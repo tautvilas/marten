@@ -1,5 +1,6 @@
 package marten.aoe.server;
 
+import java.rmi.RemoteException;
 import java.util.HashMap;
 
 import marten.aoe.server.serializable.ClientSession;
@@ -12,28 +13,34 @@ public class Sessions {
 
     private static HashMap<String, ClientSession> container = new HashMap<String, ClientSession>();
 
-    public static String getUsername(ClientSession session) {
+    public static String getUsername(ClientSession session) throws RemoteException {
         if (container.containsKey(session.id)) {
             ClientSession serverSession = container.get(session.id);
             if (serverSession.secret.equals(session.secret)) {
                 return session.id;
             } else {
-                log.error("Incorrect secret for user '" + session.id + "'");
-                return null;
+                String exception = "Incorrect secret for user '" + session.id + "'";
+                log.error(exception);
+                throw new RemoteException(exception);
             }
         } else {
-            log.error("User '" + session.id + "' has no session");
-            return null;
+            String exception = "User '" + session.id + "' has no session";
+            log.error(exception);
+            throw new RemoteException(exception);
         }
     }
 
     public static void removeUser(String username) {
-        container.remove(username);
+        if (container.containsKey(username)) {
+            container.remove(username);
+        }
     }
 
-    public static ClientSession addUser(String username) {
+    public static ClientSession addUser(String username) throws RemoteException {
         if (container.containsKey(username)) {
-            return null;
+            String exception = "User '" + username + "' allready exists";
+            log.error(exception);
+            throw new RemoteException(exception);
         } else {
             ClientSession session = new ClientSession(username);
             container.put(username, session);

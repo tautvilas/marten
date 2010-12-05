@@ -20,6 +20,7 @@ import marten.aoe.server.AoeServer;
 import marten.aoe.server.face.Server;
 import marten.aoe.server.serializable.ChatMessage;
 import marten.aoe.server.serializable.ClientSession;
+import marten.aoe.server.serializable.ServerNotification;
 
 import org.apache.log4j.Logger;
 
@@ -65,6 +66,8 @@ public class NetworkScene extends AgeScene {
                                 while(true) {
                                  ChatMessage message;
                                 try {
+                                    ServerNotification notification = server.listen(session);
+                                    if (notification != ServerNotification.NEW_MESSAGE) continue;
                                     message = server.getMessage(session);
                                 } catch (RemoteException e) {
                                     throw new RuntimeException(e);
