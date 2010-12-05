@@ -11,13 +11,17 @@ public class Sessions {
     private static org.apache.log4j.Logger log = Logger
             .getLogger(Sessions.class);
 
-    private static HashMap<String, ClientSession> container = new HashMap<String, ClientSession>();
+    private static HashMap<String, ServerClient> container = new HashMap<String, ServerClient>();
 
-    public static String getUsername(ClientSession session) throws RemoteException {
+    public static ServerClient getClient(String username) {
+        return container.get(username);
+    }
+
+    public static ServerClient authenticate(ClientSession session) throws RemoteException {
         if (container.containsKey(session.id)) {
-            ClientSession serverSession = container.get(session.id);
-            if (serverSession.secret.equals(session.secret)) {
-                return session.id;
+            ServerClient client = container.get(session.id);
+            if (client.getSecret().equals(session.secret)) {
+                return client;
             } else {
                 String exception = "Incorrect secret for user '" + session.id + "'";
                 log.error(exception);
@@ -30,21 +34,21 @@ public class Sessions {
         }
     }
 
-    public static void removeUser(String username) {
+    public static void removeClient(String username) {
         if (container.containsKey(username)) {
             container.remove(username);
         }
     }
 
-    public static ClientSession addUser(String username) throws RemoteException {
+    public static ClientSession addClient(String username) throws RemoteException {
         if (container.containsKey(username)) {
             String exception = "User '" + username + "' allready exists";
             log.error(exception);
             throw new RemoteException(exception);
         } else {
-            ClientSession session = new ClientSession(username);
-            container.put(username, session);
-            return session;
+            ServerClient client = new ServerClient(username);
+            container.put(username, client);
+            return new ClientSession(username, client.getSecret());
         }
     }
 }

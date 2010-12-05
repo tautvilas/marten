@@ -22,8 +22,7 @@ import org.apache.log4j.Logger;
 
 public class AoeServer extends UnicastRemoteObject implements Server {
     private static final long serialVersionUID = 1L;
-    private HashMap<String, ServerClient> clients = new HashMap<String, ServerClient>();
-    private HashMap<String, GameDetails> games = new HashMap<String, GameDetails>();
+    private HashMap<String, ServerGame> games = new HashMap<String, ServerGame>();
     @SuppressWarnings("unused")
     private String serverUrl;
 
@@ -72,8 +71,7 @@ public class AoeServer extends UnicastRemoteObject implements Server {
 
     @Override
     public ClientSession login(String username) throws RemoteException {
-        ClientSession session = Sessions.addUser(username);
-        clients.put(username, new ServerClient(username));
+        ClientSession session = Sessions.addClient(username);
         log.info("User '" + username + "' with secret '" + session.secret
                 + "' successfully logged in");
         return session;
@@ -82,9 +80,8 @@ public class AoeServer extends UnicastRemoteObject implements Server {
     @Override
     public ServerNotification listen(ClientSession session)
             throws RemoteException {
-        String username = Sessions.getUsername(session);
-        LinkedList<ServerNotification> notifier = clients.get(username)
-                .getNotifier();
+        ServerClient client = Sessions.authenticate(session);
+        LinkedList<ServerNotification> notifier = client.getNotifier();
         synchronized (notifier) {
             if (notifier.isEmpty()) {
                 try {
@@ -99,111 +96,89 @@ public class AoeServer extends UnicastRemoteObject implements Server {
 
     @Override
     public void leave(ClientSession session) throws RemoteException {
-        String username = Sessions.getUsername(session);
-        clients.remove(username);
-        for (String game : games.keySet()) {
-            GameDetails details = games.get(game);
-            if (details.hasPlayer(username)) {
-                this.leaveGame(session, game);
+        ServerClient client = Sessions.authenticate(session);
+        for (String gameName : games.keySet()) {
+            ServerGame game = games.get(gameName);
+            if (game.hasPlayer(client)) {
+                this.leaveGame(session, gameName);
             }
         }
-        Sessions.removeUser(username);
-        log.info("User '" + username + "' logged out ");
+        Sessions.removeClient(client.getUsername());
+        log.info("User '" + client.getUsername() + "' logged out ");
     }
 
     @Override
     public void sendPrivateMessage(ClientSession from, String to, String message)
             throws RemoteException {
-        String username = Sessions.getUsername(from);
-        ServerClient client = clients.get(to);
-        client.addMessage(new ChatMessage(username, message));
+        ServerClient fromClient = Sessions.authenticate(from);
+        ServerClient toClient = Sessions.getClient(to);
+        toClient.addMessage(new ChatMessage(fromClient.getUsername(), message));
     }
 
     @Override
     public void sendGameMessage(ClientSession from, String gate, String message)
             throws RemoteException {
-        String username = Sessions.getUsername(from);
+        ServerClient client = Sessions.authenticate(from);
         if (!games.containsKey(gate)) {
             throw new RemoteException("Game '" + gate
                     + "' does not exists");
         }
-        GameDetails game = games.get(gate);
-        for (String user : game.getPlayers()) {
-            if (user != username) {
-                clients.get(username).addMessage(new ChatMessage(username, message));
+        ServerGame game = games.get(gate);
+        for (ServerClient gameClient : game.getPlayers()) {
+            if (!gameClient.getUsername().equals(client.getUsername())) {
+                gameClient.addMessage(new ChatMessage(client.getUsername(), message));
             }
         }
     }
 
     @Override
     public ChatMessage getMessage(ClientSession session) throws RemoteException {
-        String username = Sessions.getUsername(session);
-        return clients.get(username).getLastMessage();
+        return Sessions.authenticate(session).getLastMessage();
     }
 
     @Override
     public synchronized void createGame(ClientSession session, String gameName,
             String mapName) throws RemoteException {
-        String username = Sessions.getUsername(session);
+        ServerClient user = Sessions.authenticate(session);
         if (games.containsKey(gameName)) {
             log.error("Game '" + gameName + "' allready exists");
             throw new RemoteException("Game name allready exists");
         }
-        GameDetails game = new GameDetails(username, mapName, gameName);
+        ServerGame game = new ServerGame(user, mapName, gameName);
         this.games.put(gameName, game);
     }
 
     @Override
     public GameDetails getGameDetails(
             ClientSession session, String game) throws RemoteException {
-//        String username = Sessions.getUsername(session);
-        return games.get(game);
+        Sessions.authenticate(session);
+        return games.get(game).getDetails();
     }
 
     @Override
-    public String[] getMembers(ClientSession session, String game)
+    public void joinGame(ClientSession session, String gameName)
             throws RemoteException {
-//        String username = Sessions.getUsername(session);
-        return games.get(game).getPlayers();
+        ServerClient client = Sessions.authenticate(session);
+        ServerGame game = games.get(gameName);
+        game.addPlayer(client);
     }
 
     @Override
-    public void joinGame(ClientSession session, String game)
+    public void leaveGame(ClientSession session, String gameName)
             throws RemoteException {
-        String username = Sessions.getUsername(session);
-        GameDetails details = games.get(game);
-        details.addPlayer(username);
-        for (String member : details.getPlayers()) {
-            clients.get(member).notify(ServerNotification.PLAYER_LIST_UPDATED);
-        }
-    }
-
-    @Override
-    public void leaveGame(ClientSession session, String game)
-            throws RemoteException {
-        String username = Sessions.getUsername(session);
-        GameDetails details =  games.get(game);
-        details.removePlayer(username);
-        if (details.getNumPlayers() == 0) {
+        ServerClient client = Sessions.authenticate(session);
+        ServerGame game = games.get(gameName);
+        game.removePlayer(client);
+        if (game.getNumPlayers() == 0) {
             games.remove(game);
-        } else {
-            for (String member : details.getPlayers()) {
-                clients.get(member).notify(ServerNotification.PLAYER_LIST_UPDATED);
-            }
         }
     }
 
     @Override
-    public void startGame(ClientSession session, String game)
+    public void startGame(ClientSession session, String gameName)
             throws RemoteException {
-        String username = Sessions.getUsername(session);
-        GameDetails details = games.get(game);
-        if (details.getCreator().equals(username)) {
-            for (String member : details.getPlayers()) {
-                clients.get(member).notify(ServerNotification.GAME_STARTED);
-            }
-        } else {
-            throw new RuntimeException("Unauthorized");
-        }
+        Sessions.authenticate(session);
+        ServerGame game = games.get(gameName);
+        game.start();
     }
 }

@@ -1,5 +1,7 @@
 package marten.aoe.server;
 
+import java.math.BigInteger;
+import java.security.SecureRandom;
 import java.util.LinkedList;
 
 import marten.aoe.server.serializable.ChatMessage;
@@ -9,9 +11,15 @@ public class ServerClient {
     private LinkedList<ChatMessage> inbox = new LinkedList<ChatMessage>();
     private LinkedList<ServerNotification> notifier = new LinkedList<ServerNotification>();
     private String username;
+    private String secret;
 
     public ServerClient(String username) {
         this.username = username;
+        this.secret = new BigInteger(130, new SecureRandom()).toString(32);
+    }
+
+    public String getSecret() {
+        return this.secret;
     }
 
     public LinkedList<ServerNotification> getNotifier() {
