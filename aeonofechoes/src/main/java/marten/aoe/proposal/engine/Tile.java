@@ -20,7 +20,9 @@ public abstract class Tile {
         this.owner = owner;
         this.coordinates = coordinates;
     }
-    
+    public String getName() {
+        return this.name;
+    }
     /** @return the owner of this tile. */
     public final Map getOwner() {
         return this.owner;        
@@ -119,5 +121,5 @@ public abstract class Tile {
     /** Calculates the height at which this tile currently is. */
     public abstract int getHeight();
     /** Returns a description of the special features of this tile.*/
-    public abstract String[] getSpecialFeatures();
+    public abstract String[] getSpecialFeatures();    
 }

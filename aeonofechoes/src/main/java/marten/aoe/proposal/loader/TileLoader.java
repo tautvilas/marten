@@ -41,4 +41,24 @@ public final class TileLoader {
         }
         return null;
     }
+    public static Tile loadLayer (String layerName, Tile tile) {
+        List<String> availableTiles = getAvailableTiles();
+        if (!availableTiles.contains(layerName))
+            return tile;
+        Class<?> tileClass = null;
+        Object tileInstance = null;
+        try {
+            tileClass = Class.forName(Path.TILE_PACKAGE + layerName);
+            tileInstance = tileClass.getConstructor(Tile.class).newInstance(tile);
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+            return tile;
+        }
+        /* THE ROOT OF ALL THE EVIL, BE CAUTIOUS! */
+        if (tileInstance instanceof Tile) {
+            return (Tile)tileInstance;
+        }
+        return tile;
+    }
 }

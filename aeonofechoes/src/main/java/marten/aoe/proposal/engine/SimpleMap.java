@@ -25,8 +25,19 @@ public abstract class SimpleMap extends Map {
                 if (subbranch.value().equals("Row")) {
                     int x = 0;
                     for (DataTree subsubbranch : subbranch.branches()) {
-                        this.switchTile(new Point(x, y), TileLoader.loadTile(subsubbranch.value(), this, new Point(x, y)));
-                        x++;
+                        if (subsubbranch.value().equals("Tile")) {
+                            Tile tile = null;
+                            for (DataTree subsubsubbranch : subsubbranch.branches()) {
+                                if (tile == null) {
+                                    tile = TileLoader.loadTile(subsubsubbranch.value(), this, new Point(x, y));
+                                }
+                                else {
+                                    tile = TileLoader.loadLayer(subsubsubbranch.value(), tile);
+                                }
+                            }
+                            this.switchTile(new Point(x, y), tile);
+                            x++;                            
+                        }                        
                     }
                     if (x != width) {
                         throw new IOException("Row dimension mismatch.");
