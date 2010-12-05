@@ -40,9 +40,6 @@ public interface Server extends Remote {
     public void leaveGame(ClientSession session, String game)
             throws RemoteException;
 
-    public String[] getMembers(ClientSession session, String game)
-            throws RemoteException;
-
     public GameDetails getGameDetails(ClientSession session, String game)
             throws RemoteException;
 }

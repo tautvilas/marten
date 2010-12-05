@@ -1,44 +1,30 @@
 package marten.aoe.server.serializable;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 
 public class GameDetails implements Serializable {
     private static final long serialVersionUID = 3089867646546555166L;
 
     private String creator;
-    private ArrayList<String> players = new ArrayList<String>();
+    private String[] players;
     private String gameName;
     private String mapName;
     private boolean open = true;
 
-    public GameDetails(String creator, String map, String gameName) {
+    public GameDetails(String creator, String map, String gameName, String[] players, boolean open) {
         this.creator = creator;
         this.mapName = map;
         this.gameName = gameName;
-        players.add(creator);
-    }
-
-    public void addPlayer(String username) {
-        this.players.add(username);
+        this.players = players;
+        this.open = open;
     }
 
     public int getNumPlayers() {
-        return this.players.size();
-    }
-
-    public void removePlayer(String username) {
-        if (players.contains(username)) {
-            players.remove(username);
-        }
+        return this.players.length;
     }
 
     public String[] getPlayers() {
-        return this.players.toArray(new String[players.size()]);
-    }
-
-    public boolean hasPlayer(String username) {
-        return players.contains(username);
+        return players;
     }
 
     public String getGameName() {
