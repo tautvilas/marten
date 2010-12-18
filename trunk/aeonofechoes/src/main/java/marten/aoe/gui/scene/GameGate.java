@@ -35,6 +35,7 @@ public class GameGate extends AgeScene {
     private Flatland flatland = new Flatland();
     private TranslationGroup players = new TranslationGroup();
     private OkCancelDialog dialog;
+    private ServerListener listener;
 
     private GameGate() {
         Dimension dApp = AppInfo.getDisplayDimension();
@@ -60,6 +61,7 @@ public class GameGate extends AgeScene {
             @Override
             public void perform() {
                 try {
+                    listener.quit();
                     gameServer.leave(session);
                 } catch (RemoteException e) {
                     throw new RuntimeException(e);
@@ -122,12 +124,13 @@ public class GameGate extends AgeScene {
     }
 
     private void registerListeners() {
-        new ServerListener(this.gameServer, this.session) {
+        this.listener = new ServerListener(this.gameServer, this.session) {
             @Override
             public void listen() {
                 ServerNotification notification;
                 try {
                     notification = gameServer.listen(session);
+                    System.out.println(notification);
                 } catch (RemoteException e) {
                     throw new RuntimeException(e);
                 }
