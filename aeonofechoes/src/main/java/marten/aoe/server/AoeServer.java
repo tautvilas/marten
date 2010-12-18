@@ -55,7 +55,7 @@ public class AoeServer extends UnicastRemoteObject implements Server {
             LocateRegistry.createRegistry(Registry.REGISTRY_PORT);
             log.info("RMI registry started on port 1099");
             String serverUrl = "rmi://" + publicIp.getHostAddress() + "/Server";
-            Naming.rebind("rmi://localhost/Server", new AoeServer(serverUrl));
+            Naming.rebind(serverUrl, new AoeServer(serverUrl));
             serverStarted = true;
             log.info("AOE server is started!");
         } catch (Exception e) {
@@ -151,8 +151,8 @@ public class AoeServer extends UnicastRemoteObject implements Server {
     @Override
     public GameDetails getGameDetails(
             ClientSession session, String game) throws RemoteException {
-        Sessions.authenticate(session);
-        return games.get(game).getDetails();
+        ServerClient client = Sessions.authenticate(session);
+        return games.get(game).getDetails(client);
     }
 
     @Override

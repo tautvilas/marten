@@ -16,7 +16,6 @@ import marten.age.graphics.primitives.Point;
 import marten.age.graphics.transform.TranslationGroup;
 import marten.age.widget.Action;
 import marten.aoe.GameInfo;
-import marten.aoe.gui.GameParams;
 import marten.aoe.gui.scene.menu.MainMenu;
 import marten.aoe.gui.widget.AoeField;
 import marten.aoe.gui.widget.AoeString;
@@ -25,6 +24,7 @@ import marten.aoe.server.AoeServer;
 import marten.aoe.server.ServerListener;
 import marten.aoe.server.face.Server;
 import marten.aoe.server.serializable.ClientSession;
+import marten.aoe.server.serializable.GameDetails;
 import marten.aoe.server.serializable.ServerNotification;
 
 public class GameGate extends AgeScene {
@@ -35,9 +35,6 @@ public class GameGate extends AgeScene {
     private Flatland flatland = new Flatland();
     private TranslationGroup players = new TranslationGroup();
     private OkCancelDialog dialog;
-
-    private String map;
-    private String gameUrl;
 
     private GameGate() {
         Dimension dApp = AppInfo.getDisplayDimension();
@@ -85,7 +82,6 @@ public class GameGate extends AgeScene {
      */
     public GameGate(String mapName) {
         this();
-        this.map = mapName;
         AoeServer.start();
         try {
             this.gameServer = connect(InetAddress.getByName("localhost"));
@@ -119,8 +115,6 @@ public class GameGate extends AgeScene {
         try {
             this.session = gameServer.login(GameInfo.nickname);
             this.gameServer.joinGame(this.session, "default");
-            this.map = this.gameServer.getGameDetails(session, "default")
-                    .getMapName();
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
@@ -140,8 +134,7 @@ public class GameGate extends AgeScene {
                 if (notification == ServerNotification.PLAYER_LIST_UPDATED) {
                     String[] members;
                     try {
-                        members = gameServer.getGameDetails(session, "default")
-                                .getPlayers();
+                        members = gameServer.getGameDetails(session, "default").players;
                     } catch (RemoteException e) {
                         throw new RuntimeException(e);
                     }
@@ -157,8 +150,13 @@ public class GameGate extends AgeScene {
                     }
                     flatland.addChild(players);
                 } else if (notification == ServerNotification.GAME_STARTED) {
-                    GameParams params = new GameParams(map, gameUrl);
-                    fireEvent(new AgeSceneSwitchEvent(new GameLoader(params)));
+                    GameDetails details;
+                    try {
+                        details = gameServer.getGameDetails(session, "default");
+                    } catch (RemoteException e) {
+                        throw new RuntimeException(e);
+                    }
+                    fireEvent(new AgeSceneSwitchEvent(new GameLoader(details)));
                 }
             }
         };

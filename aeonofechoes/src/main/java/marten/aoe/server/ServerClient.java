@@ -12,10 +12,19 @@ public class ServerClient {
     private LinkedList<ServerNotification> notifier = new LinkedList<ServerNotification>();
     private String username;
     private String secret;
+    private String engineUrl;
 
     public ServerClient(String username) {
         this.username = username;
         this.secret = new BigInteger(130, new SecureRandom()).toString(32);
+    }
+
+    public String getEngineUrl() {
+        return this.engineUrl;
+    }
+
+    public void setEngineUrl(String url) {
+        this.engineUrl = url;
     }
 
     public String getSecret() {
