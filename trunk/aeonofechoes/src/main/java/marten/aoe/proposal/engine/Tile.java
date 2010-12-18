@@ -1,5 +1,6 @@
 package marten.aoe.proposal.engine;
 
+import marten.aoe.proposal.dto.DamageDTO;
 import marten.aoe.proposal.dto.DefenseDTO;
 import marten.aoe.proposal.dto.MinimalTileDTO;
 import marten.aoe.proposal.dto.MovementDTO;
@@ -115,11 +116,16 @@ public abstract class Tile {
     /** Calculates all defense bonuses and returns it as a DTO.*/
     public abstract DefenseDTO getDefenseBonus();
     /** Calculates the defense value of being in this tile. */
-    public final int getDefenseBonus(UnitSize size, UnitType type) {
+    public final double getDefenseBonus(UnitSize size, UnitType type) {
         return this.getDefenseBonus().getValue(size, type);
     }
     /** Calculates the height at which this tile currently is. */
     public abstract int getHeight();
     /** Returns a description of the special features of this tile.*/
-    public abstract String[] getSpecialFeatures();    
+    public abstract String[] getSpecialFeatures(); 
+    public final void applyDamage(DamageDTO damage) {
+        if (this.unit != null) {
+            this.unit.applyDamage(damage);
+        }
+    }
 }
