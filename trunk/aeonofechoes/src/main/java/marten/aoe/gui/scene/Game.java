@@ -8,8 +8,8 @@ import marten.age.core.AppInfo;
 import marten.age.graphics.flat.Flatland;
 import marten.age.graphics.primitives.Point;
 import marten.age.widget.obsolete.FpsCounter;
-import marten.aoe.gui.GameParams;
 import marten.aoe.gui.widget.MapWidget;
+import marten.aoe.server.serializable.GameDetails;
 
 import org.apache.log4j.Logger;
 import org.lwjgl.input.Keyboard;
@@ -21,11 +21,11 @@ public class Game extends AgeScene {
     private Flatland flatland;
     private MapWidget map;
     @SuppressWarnings("unused")
-    private GameParams params;
+    private GameDetails params;
     private MouseController mouseController = new MouseController();
 
-    public Game(MapWidget mapWidget, GameParams params) {
-        this.params = params;
+    public Game(MapWidget mapWidget, GameDetails details) {
+        this.params = details;
         this.map = mapWidget;
         flatland = new Flatland();
 

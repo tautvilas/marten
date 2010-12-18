@@ -1,7 +1,14 @@
 package marten.aoe.server;
 
+import java.math.BigInteger;
+import java.net.MalformedURLException;
+import java.rmi.Naming;
+import java.rmi.NotBoundException;
+import java.rmi.RemoteException;
+import java.security.SecureRandom;
 import java.util.ArrayList;
 
+import marten.aoe.proposal.engine.Engine;
 import marten.aoe.server.serializable.GameDetails;
 import marten.aoe.server.serializable.ServerNotification;
 
@@ -10,6 +17,7 @@ public class ServerGame {
     private ArrayList<ServerClient> players = new ArrayList<ServerClient>();
     private String gameName;
     private String mapName;
+    private Engine engine;
     private boolean open = true;
 
     public ServerGame(ServerClient creator, String map, String gameName) {
@@ -28,8 +36,18 @@ public class ServerGame {
         return this.players.size();
     }
 
-    public void removePlayer(ServerClient client) {
+    public void removePlayer(ServerClient client) throws RemoteException {
         if (players.contains(client)) {
+            if (client.getEngineUrl() != null) {
+                try {
+                    Naming.unbind("rmi://localhost/Server/"
+                            + client.getEngineUrl());
+                } catch (MalformedURLException e) {
+                    e.printStackTrace();
+                } catch (NotBoundException e) {
+                    e.printStackTrace();
+                }
+            }
             players.remove(client);
             this.notify(ServerNotification.PLAYER_LIST_UPDATED);
         }
@@ -55,13 +73,33 @@ public class ServerGame {
         return this.creator;
     }
 
-    public GameDetails getDetails() {
+    public GameDetails getDetails(ServerClient client) throws RemoteException {
         String[] members = new String[players.size()];
         for (int i = 0; i < members.length; i++) {
             members[i] = players.get(i).getUsername();
         }
-        return new GameDetails(this.creator.getUsername(), this.mapName,
-                this.gameName, members, this.open);
+        GameDetails details = new GameDetails();
+        details.creator = this.creator.getUsername();
+        details.mapName = this.mapName;
+        details.gameName = this.gameName;
+        details.players = members;
+        details.open = this.open;
+        if (this.engine != null) {
+            if (client.getEngineUrl() == null) {
+                String url = client.getUsername()
+                        + new BigInteger(130, new SecureRandom()).toString(32);
+                client.setEngineUrl(url);
+                try {
+                    Naming.rebind("rmi://localhost/Server/"
+                            + client.getEngineUrl(), new EngineInterface(
+                            this.engine, client.getUsername()));
+                } catch (MalformedURLException e) {
+                    e.printStackTrace();
+                }
+            }
+            details.engineUrl = client.getEngineUrl();
+        }
+        return details;
     }
 
     public ArrayList<ServerClient> getPlayers() {
@@ -70,6 +108,7 @@ public class ServerGame {
 
     public void start() {
         this.open = false;
+        this.engine = new Engine(this.mapName);
         this.notify(ServerNotification.GAME_STARTED);
     }
 

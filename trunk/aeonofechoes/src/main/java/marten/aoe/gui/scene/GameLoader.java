@@ -14,10 +14,10 @@ import marten.age.io.LoadingState;
 import marten.age.io.SimpleLoader;
 import marten.aoe.Path;
 import marten.aoe.engine.Engine;
-import marten.aoe.gui.GameParams;
 import marten.aoe.gui.widget.AoeString;
 import marten.aoe.gui.widget.MapWidget;
 import marten.aoe.loader.Loader;
+import marten.aoe.server.serializable.GameDetails;
 
 import org.apache.log4j.Logger;
 
@@ -29,12 +29,12 @@ public class GameLoader extends AgeScene implements Loadable {
     private SimpleLayout layout;
     private SimpleLoader loader = new SimpleLoader(this);
     private AoeString statusString;
-    private GameParams params;
+    private GameDetails details;
     private Engine engine;
     String status = "Loading map data";
 
-    public GameLoader(GameParams params) {
-        this.params = params;
+    public GameLoader(GameDetails details) {
+        this.details = details;
     }
 
     @Override
@@ -50,8 +50,8 @@ public class GameLoader extends AgeScene implements Loadable {
     @Override
     public void compute() {
         if (this.loader.loadingFinished()) {
-            MapWidget map = new MapWidget(engine, params.getMapName());
-            this.fireEvent(new AgeSceneSwitchEvent(new Game(map, params)));
+            MapWidget map = new MapWidget(engine, details.mapName);
+            this.fireEvent(new AgeSceneSwitchEvent(new Game(map, this.details)));
         }
         String status = loader.getStatus();
         if (!this.status.equals(status)) {
@@ -69,9 +69,9 @@ public class GameLoader extends AgeScene implements Loadable {
     public synchronized void load(LoadingState state) {
         state.status = "Loading map data";
         this.engine = new Engine();
-        log.info("Loading map data for '" + this.params.getMapName() + "'...");
+        log.info("Loading map data for '" + this.details.mapName + "'...");
         try {
-            Loader.load(engine, Path.MAP_PATH + params.getMapName());
+            Loader.load(engine, Path.MAP_PATH + this.details.mapName);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
