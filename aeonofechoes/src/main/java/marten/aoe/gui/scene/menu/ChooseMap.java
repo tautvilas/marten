@@ -25,11 +25,11 @@ public class ChooseMap extends AgeScene {
         SimpleLayout layout = new SimpleLayout(AppInfo.getDisplayDimension());
         OkCancelDialog okCancel = new OkCancelDialog(new Dimension(600, 50));
 
-        File mapFolder = new File(Path.MAP_DATA_PATH);
+        File mapFolder = new File(Path.MAP_PATH);
         String[] filenames = mapFolder.list();
         int j = 0;
         for (int i = 0; i < filenames.length; i++) {
-            final String filename = filenames[i];
+            final String filename = filenames[i].split("\\.")[0];
             if (filename.charAt(0) == '.') continue;
             AoeButton mapButton = new AoeButton(filename);
             mapButton.setAction(new Action() {
