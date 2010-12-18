@@ -129,6 +129,7 @@ public class AoeServer extends UnicastRemoteObject implements Server {
     @Override
     public void leave(ClientSession session) throws RemoteException {
         ServerClient client = Sessions.authenticate(session);
+        client.notify(ServerNotification.YOU_QUIT);
         for (String gameName : games.keySet()) {
             ServerGame game = games.get(gameName);
             if (game.hasPlayer(client)) {

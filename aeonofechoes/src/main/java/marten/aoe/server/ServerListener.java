@@ -10,11 +10,16 @@ public abstract class ServerListener extends Thread {
     private Server server;
     private ClientSession session;
     private ServerPinger pinger;
+    private boolean finished = false;
+
+    public void quit() {
+        this.finished = true;
+    }
 
     private class ServerPinger extends Thread {
         @Override
         public void run() {
-            while (true) {
+            while (!finished) {
                 try {
                     server.ping(session);
                 } catch (RemoteException e) {
@@ -35,7 +40,7 @@ public abstract class ServerListener extends Thread {
 
     @Override
     public void run() {
-        while (true) {
+        while (!finished) {
             this.listen();
         }
     }

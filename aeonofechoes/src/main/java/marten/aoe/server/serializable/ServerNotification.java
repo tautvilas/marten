@@ -6,5 +6,6 @@ public enum ServerNotification implements Serializable {
     GAME_STARTED,
     PLAYER_LIST_UPDATED,
     CREATOR_QUIT,
-    NEW_MESSAGE
+    NEW_MESSAGE,
+    YOU_QUIT
 }
