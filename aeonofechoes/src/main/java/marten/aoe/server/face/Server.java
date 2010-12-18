@@ -16,6 +16,8 @@ public interface Server extends Remote {
     public ServerNotification listen(ClientSession session)
             throws RemoteException;
 
+    public void ping(ClientSession session) throws RemoteException;
+
     /** Messaging **/
 
     public void sendPrivateMessage(ClientSession from, String to, String message)

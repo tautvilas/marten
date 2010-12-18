@@ -13,6 +13,7 @@ public class ServerClient {
     private String username;
     private String secret;
     private String engineUrl;
+    private long pingTime;
 
     public ServerClient(String username) {
         this.username = username;
@@ -21,6 +22,14 @@ public class ServerClient {
 
     public String getEngineUrl() {
         return this.engineUrl;
+    }
+
+    public void setPingTime(long time) {
+        this.pingTime = time;
+    }
+
+    public long getPingTime() {
+        return this.pingTime;
     }
 
     public void setEngineUrl(String url) {

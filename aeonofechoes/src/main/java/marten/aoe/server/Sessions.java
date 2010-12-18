@@ -1,6 +1,7 @@
 package marten.aoe.server;
 
 import java.rmi.RemoteException;
+import java.util.Collection;
 import java.util.HashMap;
 
 import marten.aoe.server.serializable.ClientSession;
@@ -15,6 +16,10 @@ public class Sessions {
 
     public static ServerClient getClient(String username) {
         return container.get(username);
+    }
+
+    public static Collection<ServerClient> getClients() {
+        return container.values();
     }
 
     public static ServerClient authenticate(ClientSession session) throws RemoteException {

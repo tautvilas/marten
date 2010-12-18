@@ -8,6 +8,7 @@ import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 import java.rmi.server.UnicastRemoteObject;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.regex.Pattern;
@@ -29,6 +30,36 @@ public class AoeServer extends UnicastRemoteObject implements Server {
             .getLogger(AoeServer.class);
 
     private static boolean serverStarted = false;
+
+    private class ZombieKiller extends Thread {
+        @Override
+        public void run() {
+            while (true) {
+                Collection<ServerClient> clients = Sessions.getClients();
+                synchronized (clients) {
+                    for (ServerClient client : clients) {
+                        if (System.currentTimeMillis() - client.getPingTime() > 15000) {
+                            try {
+                                log.info("Client '" + client.getUsername()
+                                        + "' is a zombie so he was kicked out.");
+                                leave(new ClientSession(client.getUsername(),
+                                        client.getSecret()));
+                            } catch (RemoteException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    }
+                }
+                synchronized (this) {
+                    try {
+                        this.wait(10000);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        }
+    }
 
     public static void start() {
         if (serverStarted)
@@ -66,6 +97,8 @@ public class AoeServer extends UnicastRemoteObject implements Server {
     public AoeServer(String url) throws RemoteException {
         super();
         this.serverUrl = url;
+        ZombieKiller killer = new ZombieKiller();
+        killer.start();
     }
 
     @Override
@@ -119,13 +152,13 @@ public class AoeServer extends UnicastRemoteObject implements Server {
             throws RemoteException {
         ServerClient client = Sessions.authenticate(from);
         if (!games.containsKey(gate)) {
-            throw new RemoteException("Game '" + gate
-                    + "' does not exists");
+            throw new RemoteException("Game '" + gate + "' does not exists");
         }
         ServerGame game = games.get(gate);
         for (ServerClient gameClient : game.getPlayers()) {
             if (!gameClient.getUsername().equals(client.getUsername())) {
-                gameClient.addMessage(new ChatMessage(client.getUsername(), message));
+                gameClient.addMessage(new ChatMessage(client.getUsername(),
+                        message));
             }
         }
     }
@@ -143,13 +176,14 @@ public class AoeServer extends UnicastRemoteObject implements Server {
             log.error("Game '" + gameName + "' allready exists");
             throw new RemoteException("Game name allready exists");
         }
-        ServerGame game = new ServerGame(user, mapName, gameName, this.serverUrl);
+        ServerGame game = new ServerGame(user, mapName, gameName,
+                this.serverUrl);
         this.games.put(gameName, game);
     }
 
     @Override
-    public GameDetails getGameDetails(
-            ClientSession session, String game) throws RemoteException {
+    public GameDetails getGameDetails(ClientSession session, String game)
+            throws RemoteException {
         ServerClient client = Sessions.authenticate(session);
         return games.get(game).getDetails(client);
     }
@@ -169,7 +203,7 @@ public class AoeServer extends UnicastRemoteObject implements Server {
         ServerGame game = games.get(gameName);
         game.removePlayer(client);
         if (game.getNumPlayers() == 0) {
-            games.remove(game);
+            games.remove(gameName);
         }
     }
 
@@ -179,5 +213,19 @@ public class AoeServer extends UnicastRemoteObject implements Server {
         Sessions.authenticate(session);
         ServerGame game = games.get(gameName);
         game.start();
+    }
+
+    @Override
+    public void ping(ClientSession session) throws RemoteException {
+        ServerClient client = Sessions.authenticate(session);
+        Sessions.getClient(client.getUsername()).setPingTime(
+                System.currentTimeMillis());
+        synchronized (session) {
+            try {
+                session.wait(10000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
     }
 }

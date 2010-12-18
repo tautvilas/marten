@@ -22,7 +22,7 @@ public class ImageCache {
         if (!images.containsKey(path)) {
             loadImage(path);
         } else {
-            log.debug("Found image " + path + " in image cache. Returning.");
+//            log.debug("Found image " + path + " in image cache. Returning.");
         }
         return images.get(path);
     }

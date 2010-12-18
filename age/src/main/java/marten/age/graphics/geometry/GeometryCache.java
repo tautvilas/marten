@@ -13,8 +13,8 @@ public class GeometryCache {
     public static Geometry get(Geometry geometry) {
         for (Geometry g : geometryCache) {
             if (g.equals(geometry)) {
-                log.debug("Found geometry in the cache returning " + g
-                        + " for " + geometry);
+//                log.debug("Found geometry in the cache returning " + g
+//                        + " for " + geometry);
                 return g;
             }
         }
