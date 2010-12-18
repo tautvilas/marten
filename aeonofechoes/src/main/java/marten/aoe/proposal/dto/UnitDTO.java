@@ -9,12 +9,20 @@ public class UnitDTO implements Serializable {
     private final UnitType type;
     private final int movementAllowance;
     private final int maximumMovementAllowance;
-    public UnitDTO (String name, UnitSize size, UnitType type, int movementAllowance, int maximumMovementAllowance) {
+    private final DamageResistanceDTO damageResistance;
+    private final int hitPoints;
+    private final int maxHitPoints;
+    private final String[] specialFeatures;
+    public UnitDTO (String name, UnitSize size, UnitType type, int movementAllowance, int maximumMovementAllowance, DamageResistanceDTO damageResistance, int hitPoints, int maxHitPoints, String[] specialFeatures) {
         this.name = name;
         this.size = size;
         this.type = type;
         this.movementAllowance = movementAllowance;
         this.maximumMovementAllowance = maximumMovementAllowance;
+        this.damageResistance = damageResistance;
+        this.hitPoints = hitPoints;
+        this.maxHitPoints = maxHitPoints;
+        this.specialFeatures = specialFeatures;
     }
     public String getName () {
         return this.name;
@@ -30,5 +38,17 @@ public class UnitDTO implements Serializable {
     }
     public int getMaximumMovementAllowance () {
         return this.maximumMovementAllowance;
+    }
+    public DamageResistanceDTO getDamageResistance () {
+        return this.damageResistance;
+    }
+    public int getHitPoints () {
+        return this.hitPoints;
+    }
+    public int getMaximumHitPoints () {
+        return this.maxHitPoints;
+    }
+    public String[] getSpecialFeatures () {
+        return this.specialFeatures;
     }
 }
