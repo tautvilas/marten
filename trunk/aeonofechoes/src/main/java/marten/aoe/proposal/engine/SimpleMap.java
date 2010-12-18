@@ -2,6 +2,7 @@ package marten.aoe.proposal.engine;
 
 import java.io.IOException;
 
+import marten.aoe.Path;
 import marten.aoe.proposal.dto.Point;
 import marten.aoe.proposal.loader.DataFileReader;
 import marten.aoe.proposal.loader.DataTree;
@@ -18,7 +19,7 @@ public abstract class SimpleMap extends Map {
      * @throws IOException whenever there are issues with files or map dimensions do not match the given ones.*/
     public SimpleMap (String fileName, int width, int height) throws IOException {
         super (fileName, width, height);
-        DataTree mapData = DataFileReader.read(fileName);
+        DataTree mapData = DataFileReader.read(Path.MAP_DATA_PATH + fileName);
         if (mapData.value().equals("Map")) {
             int y = height - 1;            
             for (DataTree subbranch : mapData.branches()) {

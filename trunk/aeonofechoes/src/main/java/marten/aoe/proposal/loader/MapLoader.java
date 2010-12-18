@@ -17,7 +17,7 @@ public final class MapLoader {
         List<String> mapNameList = new ArrayList<String>();
         for (String mapName : mapList) {
             if (mapName.matches(".*\\.class")) {
-                mapNameList.add(mapName.substring(0, mapName.length() - 5));
+                mapNameList.add(mapName.split("\\.")[0]);
             }
         }
         return mapNameList;
