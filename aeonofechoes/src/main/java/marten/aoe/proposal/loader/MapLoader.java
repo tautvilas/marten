@@ -7,7 +7,10 @@ import java.util.List;
 import marten.aoe.Path;
 import marten.aoe.proposal.engine.Map;
 
+import org.apache.log4j.Logger;
+
 public final class MapLoader {
+    private static org.apache.log4j.Logger log = Logger.getLogger(MapLoader.class);
     public static final List<String> getAvailableMaps () {
         File mapDirectory = new File(Path.MAP_PATH);
         String[] mapList = mapDirectory.list();
@@ -21,8 +24,10 @@ public final class MapLoader {
     }
     public static Map loadMap (String mapName) {
         List<String> availableMaps = getAvailableMaps();
-        if (!availableMaps.contains(mapName))
+        if (!availableMaps.contains(mapName)) {
+            log.error("Map '" + mapName + "' was not found");
             return null;
+        }
         Class<?> mapClass = null;
         Object mapInstance = null;
         try {

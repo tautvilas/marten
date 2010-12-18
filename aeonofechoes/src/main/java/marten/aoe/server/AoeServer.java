@@ -23,7 +23,6 @@ import org.apache.log4j.Logger;
 public class AoeServer extends UnicastRemoteObject implements Server {
     private static final long serialVersionUID = 1L;
     private HashMap<String, ServerGame> games = new HashMap<String, ServerGame>();
-    @SuppressWarnings("unused")
     private String serverUrl;
 
     private static org.apache.log4j.Logger log = Logger
@@ -144,7 +143,7 @@ public class AoeServer extends UnicastRemoteObject implements Server {
             log.error("Game '" + gameName + "' allready exists");
             throw new RemoteException("Game name allready exists");
         }
-        ServerGame game = new ServerGame(user, mapName, gameName);
+        ServerGame game = new ServerGame(user, mapName, gameName, this.serverUrl);
         this.games.put(gameName, game);
     }
 

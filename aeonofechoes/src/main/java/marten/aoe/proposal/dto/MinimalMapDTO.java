@@ -26,4 +26,7 @@ public final class MinimalMapDTO implements Serializable {
     public int getHeight() {
         return this.height;
     }
+    public MinimalTileDTO[][] getTileMap() {
+        return this.tileMap;
+    }
 }

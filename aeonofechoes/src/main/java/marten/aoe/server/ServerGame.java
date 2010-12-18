@@ -18,11 +18,14 @@ public class ServerGame {
     private String gameName;
     private String mapName;
     private Engine engine;
+    private String serverUrl;
     private boolean open = true;
 
-    public ServerGame(ServerClient creator, String map, String gameName) {
+    public ServerGame(ServerClient creator, String map, String gameName,
+            String serverUrl) {
         this.creator = creator;
         this.mapName = map;
+        this.serverUrl = serverUrl;
         this.gameName = gameName;
         players.add(creator);
     }
@@ -40,8 +43,7 @@ public class ServerGame {
         if (players.contains(client)) {
             if (client.getEngineUrl() != null) {
                 try {
-                    Naming.unbind("rmi://localhost/Server/"
-                            + client.getEngineUrl());
+                    Naming.unbind(client.getEngineUrl());
                 } catch (MalformedURLException e) {
                     e.printStackTrace();
                 } catch (NotBoundException e) {
@@ -86,12 +88,11 @@ public class ServerGame {
         details.open = this.open;
         if (this.engine != null) {
             if (client.getEngineUrl() == null) {
-                String url = client.getUsername()
+                String url = this.serverUrl + "/" + client.getUsername()
                         + new BigInteger(130, new SecureRandom()).toString(32);
                 client.setEngineUrl(url);
                 try {
-                    Naming.rebind("rmi://localhost/Server/"
-                            + client.getEngineUrl(), new EngineInterface(
+                    Naming.rebind(client.getEngineUrl(), new EngineInterface(
                             this.engine, client.getUsername()));
                 } catch (MalformedURLException e) {
                     e.printStackTrace();
