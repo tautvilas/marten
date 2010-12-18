@@ -8,7 +8,6 @@ import marten.age.core.AppInfo;
 import marten.age.event.AgeSceneSwitchEvent;
 import marten.age.graphics.flat.Flatland;
 import marten.age.graphics.flat.SimpleLayout;
-import marten.age.graphics.image.ImageCache;
 import marten.age.io.Loadable;
 import marten.age.io.LoadingState;
 import marten.age.io.SimpleLoader;
@@ -85,7 +84,8 @@ public class GameLoader extends AgeScene implements Loadable {
         for (MinimalTileDTO[] tileLine : mapData.getTileMap()) {
             for (MinimalTileDTO tile : tileLine) {
                 state.status = "Loading map images ";
-                ImageCache.loadImage("data/gui/tiles/" + tile.getName() + ".png");
+                System.out.println(tile);
+//                ImageCache.loadImage("data/gui/tiles/" + tile.getName() + ".png");
             }
         }
         state.status = "100%";
