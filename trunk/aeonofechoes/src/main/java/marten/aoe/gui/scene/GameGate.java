@@ -122,7 +122,7 @@ public class GameGate extends AgeScene {
     }
 
     private void registerListeners() {
-        new ServerListener() {
+        new ServerListener(this.gameServer, this.session) {
             @Override
             public void listen() {
                 ServerNotification notification;
