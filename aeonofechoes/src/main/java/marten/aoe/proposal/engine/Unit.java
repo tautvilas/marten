@@ -108,15 +108,17 @@ public abstract class Unit {
     /** @return all multipliers for post-armor damage.*/
     public abstract DamageResistanceDTO getDamageResistance();
     /** @return a multiplier for post-armor damage of a certain type.*/
-    public final double getDamageResistance(DamageType damageType) {
+    public final int getDamageResistance(DamageType damageType) {
         return this.getDamageResistance().getDamageResistance(damageType);
     }
     /** Applies damage to the unit.*/
     public final void applyDamage(DamageDTO damage) {
         Random random = new Random();
         int rolledDamage = random.nextInt(damage.getMaxDamage()) + 1;
-        rolledDamage = (int)(rolledDamage * this.getDamageResistance(damage.getDamageType()) * this.getLocation().getDefenseBonus(unitSize, unitType));
-        this.currentHitPoints -= rolledDamage;
+        rolledDamage = rolledDamage + this.getDamageResistance(damage.getDamageType()) + this.getLocation().getDefenseBonus(unitSize, unitType);
+        if (rolledDamage > 0) {
+            this.currentHitPoints -= rolledDamage;
+        }
         if (this.currentHitPoints <= 0) {
             this.getLocation().removeUnit();
             this.onDeath();
