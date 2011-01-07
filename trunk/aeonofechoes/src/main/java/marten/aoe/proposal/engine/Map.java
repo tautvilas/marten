@@ -32,20 +32,20 @@ public abstract class Map {
     public final String getName () {
         return this.name;
     }
-    public final MapDTO getDTO () {
+    public final MapDTO getDTO (Player player) {
         TileDTO[][] tiles = new TileDTO[this.width][this.height];
         for (int x = 0; x < this.width; x++) {
             for (int y = 0; y < this.height; y++) {
-                tiles[x][y] = (this.map[x][y] != null ? this.map[x][y].getDTO() : null);
+                tiles[x][y] = (this.map[x][y] != null ? this.map[x][y].getDTO(player) : null);
             }
         }
         return new MapDTO(tiles, this.width, this.height, this.name);
     }
-    public final MinimalMapDTO getMinimalDTO () {
+    public final MinimalMapDTO getMinimalDTO (Player player) {
         MinimalTileDTO[][] tiles = new MinimalTileDTO[this.width][this.height];
         for (int x = 0; x < this.width; x++) {
             for (int y = 0; y < this.height; y++) {
-                tiles[x][y] = (this.map[x][y] != null ? this.map[x][y].getMinimalDTO() : null);
+                tiles[x][y] = (this.map[x][y] != null ? this.map[x][y].getMinimalDTO(player) : null);
             }
         }
         return new MinimalMapDTO(tiles, this.width, this.height, this.name);
@@ -59,8 +59,8 @@ public abstract class Map {
     public final Tile switchTile (Point point, Tile tile) {
         if (point.getX() >= 0 && point.getX() < this.width && point.getY() >= 0 && point.getY() < this.height) {
             Tile oldTile = this.map[point.getX()][point.getY()];
-            Unit unit = oldTile.popUnit();
-            tile.pushUnit(unit);
+            Unit unit = oldTile.popUnit(Player.SYSTEM);
+            tile.pushUnit(Player.SYSTEM, unit);
             this.map[point.getX()][point.getY()] = tile;
             return oldTile;
         }
@@ -75,6 +75,6 @@ public abstract class Map {
         this.onTurnOver();
     }
     public abstract void onTurnOver ();
-    public abstract Point getStartingPosition (int playerNumber);
+    public abstract Point getStartingPosition (Player player);
     public abstract int getPlayerLimit ();
 }

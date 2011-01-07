@@ -17,23 +17,23 @@ public final class Engine {
     public Engine (Map map) {
         this.map = map;
     }
-    public MinimalMapDTO getMinimalMapDTO () {        
-        return (this.map != null) ? this.map.getMinimalDTO() : null;
+    public MinimalMapDTO getMinimalMapDTO (Player player) {        
+        return (this.map != null) ? this.map.getMinimalDTO(player) : null;
     }
-    public MapDTO getMapDTO () {
-        return (this.map != null) ? this.map.getDTO() : null;
+    public MapDTO getMapDTO (Player player) {
+        return (this.map != null) ? this.map.getDTO(player) : null;
     }
-    public MinimalTileDTO getMinimalTileDTO (Point location) {
-        return (this.map != null) ? this.map.getTile(location).getMinimalDTO() : null;
+    public MinimalTileDTO getMinimalTileDTO (Player player, Point location) {
+        return (this.map != null) ? this.map.getTile(location).getMinimalDTO(player) : null;
     }
-    public TileDTO getTileDTO (Point location) {
-        return (this.map != null) ? this.map.getTile(location).getDTO() : null;
+    public TileDTO getTileDTO (Player player, Point location) {
+        return (this.map != null) ? this.map.getTile(location).getDTO(player) : null;
     }
-    public MinimalUnitDTO getMinimalUnitDTO (Point location) {
-        return (this.map != null) ? this.map.getTile(location).getUnit().getMinimalDTO() : null;
+    public MinimalUnitDTO getMinimalUnitDTO (Player player, Point location) {
+        return (this.map != null) ? this.map.getTile(location).getUnit().getMinimalDTO(player) : null;
     }
-    public UnitDTO getUnitDTO (Point location) {
-        return (this.map != null) ? this.map.getTile(location).getUnit().getDTO() : null;
+    public UnitDTO getUnitDTO (Player player, Point location) {
+        return (this.map != null) ? this.map.getTile(location).getUnit().getDTO(player) : null;
     }
     public void endTurn () {
         if (this.map != null) {
