@@ -116,7 +116,7 @@ public abstract class Tile {
     /** Calculates all defense bonuses and returns it as a DTO.*/
     public abstract DefenseDTO getDefenseBonus();
     /** Calculates the defense value of being in this tile. */
-    public final double getDefenseBonus(UnitSize size, UnitType type) {
+    public final int getDefenseBonus(UnitSize size, UnitType type) {
         return this.getDefenseBonus().getValue(size, type);
     }
     /** Calculates the height at which this tile currently is. */
