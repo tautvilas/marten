@@ -60,18 +60,16 @@ public abstract class Unit {
         return this.location;
     }
     /** Create a standard Unit Data Transfer Object. */
-    public final UnitDTO getDTO() {
-        return new UnitDTO(this.name, this.unitSize, this.unitType, this.currentMovementAllowance, this.maxMovementAllowance, this.getDamageResistance(), this.currentHitPoints, this.maxHitPoints, this.getSpecialFeatures());
-    }
+    // FIXME: essentially should be only different for stealth units (which should be invisible)
+    public abstract UnitDTO getDTO(Player player);
     /** Invoke the actions applicable to the end of a turn. */
     public void turnOver() {
         this.currentMovementAllowance = this.maxMovementAllowance;
         this.onTurnOver();
     }
     /** Create a minimal Unit Data Transfer Object. */
-    public final MinimalUnitDTO getMinimalDTO() {
-        return new MinimalUnitDTO(this.name);
-    }
+    // FIXME: essentially should be only different for stealth units (which should be invisible)
+    public abstract MinimalUnitDTO getMinimalDTO(Player player);
     /** Find out the remaining movement capacity of the unit*/
     public final int getMovementAllowance () {
         return this.currentMovementAllowance;
@@ -115,12 +113,12 @@ public abstract class Unit {
     public final void applyDamage(DamageDTO damage) {
         Random random = new Random();
         int rolledDamage = random.nextInt(damage.getMaxDamage()) + 1;
-        rolledDamage = rolledDamage + this.getDamageResistance(damage.getDamageType()) + this.getLocation().getDefenseBonus(unitSize, unitType);
+        rolledDamage = rolledDamage + this.getDamageResistance(damage.getDamageType()) + this.getLocation().getDefenseBonus(owner, unitSize, unitType);
         if (rolledDamage > 0) {
             this.currentHitPoints -= rolledDamage;
         }
         if (this.currentHitPoints <= 0) {
-            this.getLocation().removeUnit();
+            this.getLocation().removeUnit(Player.SYSTEM);
             this.onDeath();
         }
     }

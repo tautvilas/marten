@@ -3,6 +3,7 @@ package marten.aoe.proposal.maps;
 import java.io.IOException;
 
 import marten.aoe.proposal.dto.Point;
+import marten.aoe.proposal.engine.Player;
 import marten.aoe.proposal.engine.SimpleMap;
 
 public final class Freelands extends SimpleMap {
@@ -15,11 +16,11 @@ public final class Freelands extends SimpleMap {
         return 2;
     }
 
-    @Override public Point getStartingPosition(int playerNumber) {
-        if (playerNumber == 0) {
+    @Override public Point getStartingPosition(Player player) {
+        if (player.getTeam() == 1) {
             return new Point(18,3);
         }
-        if (playerNumber == 1) {
+        if (player.getTeam() == 2) {
             return new Point(18,20);
         }
         return null;
