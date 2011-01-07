@@ -1,11 +1,14 @@
 package marten.aoe.proposal.engine;
 
 public abstract class TileLayer extends Tile {
-    private final Tile base;
+    private Tile base;
     private final String[] specialFeatures;
     public TileLayer(String name, Tile base, String[] specialFeatures) {
         super(base.getName() + " " + name, base.getOwner(), base.getCoordinates());
         this.specialFeatures = specialFeatures;
+        this.base = base;
+    }
+    public void setBase(Tile base) {
         this.base = base;
     }
     public Tile getBase() {
@@ -17,5 +20,12 @@ public abstract class TileLayer extends Tile {
         System.arraycopy(this.specialFeatures, 0, completeSpecialFeatures, 0, this.specialFeatures.length);
         System.arraycopy(baseSpecialFeatures, 0, completeSpecialFeatures, this.specialFeatures.length, baseSpecialFeatures.length);
         return completeSpecialFeatures;
+    }
+    public void selfDestruct() {
+        TileLayer overlay = this.getOverlay();
+        if (overlay != null) {
+            overlay.setBase(this.base);
+        }
+        this.base.setOverlay(overlay);
     }
 }

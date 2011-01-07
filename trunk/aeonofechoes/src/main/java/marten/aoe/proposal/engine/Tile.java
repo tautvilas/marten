@@ -15,6 +15,7 @@ public abstract class Tile {
     private final Map owner;
     private final Point coordinates;
     private final String name;
+    private TileLayer overlay;
     
     public Tile(String name, Map owner, Point coordinates) {
         this.name = name;
@@ -127,5 +128,11 @@ public abstract class Tile {
         if (this.unit != null) {
             this.unit.applyDamage(damage);
         }
+    }
+    public final TileLayer getOverlay() {
+        return this.overlay;
+    }
+    public final void setOverlay(TileLayer overlay) {
+        this.overlay = overlay;
     }
 }
