@@ -21,8 +21,10 @@ public abstract class Unit {
     private int currentMovementAllowance;
     private final int maxHitPoints;
     private int currentHitPoints;
-    
-    public Unit(String name, Map map, Player owner, UnitSize unitSize, UnitType unitType, int movementAllowance, int hitPoints) {
+    private final int detectionRange;
+    private final int detectionModifier;
+
+    public Unit(String name, Map map, Player owner, UnitSize unitSize, UnitType unitType, int movementAllowance, int hitPoints, int detectionRange, int detectionModifier) {
         this.name = name;
         this.map = map;
         this.unitSize = unitSize;
@@ -30,6 +32,8 @@ public abstract class Unit {
         this.owner = owner;
         this.maxMovementAllowance = this.currentMovementAllowance = movementAllowance;
         this.maxHitPoints = this.currentHitPoints = hitPoints;
+        this.detectionRange = detectionRange;
+        this.detectionModifier = detectionModifier;
     }
     /** @return the name of this unit */
     public final String getName() {
@@ -59,17 +63,42 @@ public abstract class Unit {
     public final Tile getLocation() {
         return this.location;
     }
+    /** @return the unmodified range, where the unit is capable of seeing enemy units.*/
+    public final int getDetectionRange() {
+        return this.detectionRange;
+    }
+    /** @return the range modifier for enemies attempting detection. More negative is better.*/
+    public final int getDetectionModifier() {
+        return this.detectionModifier;
+    }
     /** Create a standard Unit Data Transfer Object. */
-    // FIXME: essentially should be only different for stealth units (which should be invisible)
-    public abstract UnitDTO getDTO(Player player);
+    public final UnitDTO getDTO(Player player) {
+        for (Unit unit : player.getAllUnits()) {
+            if (this.getLocation().getCoordinates().distanceTo(unit.getLocation().getCoordinates()) + this.detectionModifier <= 0)
+                return new UnitDTO(
+                        this.name,
+                        this.unitSize,
+                        this.unitType,
+                        this.currentMovementAllowance,
+                        this.maxMovementAllowance,
+                        this.getDamageResistance(),
+                        this.currentHitPoints,
+                        this.maxHitPoints,
+                        this.detectionRange,
+                        this.getSpecialFeatures()
+                );
+        }
+        return null;
+    }
     /** Invoke the actions applicable to the end of a turn. */
     public void turnOver() {
         this.currentMovementAllowance = this.maxMovementAllowance;
         this.onTurnOver();
     }
     /** Create a minimal Unit Data Transfer Object. */
-    // FIXME: essentially should be only different for stealth units (which should be invisible)
-    public abstract MinimalUnitDTO getMinimalDTO(Player player);
+    public final MinimalUnitDTO getMinimalDTO(Player player) {
+        return new MinimalUnitDTO(this.name);
+    }
     /** Find out the remaining movement capacity of the unit*/
     public final int getMovementAllowance () {
         return this.currentMovementAllowance;
@@ -113,7 +142,7 @@ public abstract class Unit {
     public final void applyDamage(DamageDTO damage) {
         Random random = new Random();
         int rolledDamage = random.nextInt(damage.getMaxDamage()) + 1;
-        rolledDamage = rolledDamage + this.getDamageResistance(damage.getDamageType()) + this.getLocation().getDefenseBonus(owner, unitSize, unitType);
+        rolledDamage = rolledDamage + this.getDamageResistance(damage.getDamageType()) + this.getLocation().getDefenseBonus(this.unitSize, this.unitType);
         if (rolledDamage > 0) {
             this.currentHitPoints -= rolledDamage;
         }
