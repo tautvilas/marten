@@ -304,10 +304,12 @@ Map:
         Tile:
             Water
         Tile:
+            Concrete
             City
         Tile:
             Water
         Tile:
+            Concrete
             City
         Tile:
             Grassland
@@ -393,12 +395,13 @@ Map:
         Tile:
             Water
         Tile:
-            City
+            Concrete
             HQ
         Tile:
-            City
+            Concrete
             HQ
         Tile:
+            Concrete
             City
         Tile:
             Grassland
@@ -479,10 +482,12 @@ Map:
         Tile:
             Grassland
         Tile:
+            Concrete
             City
         Tile:
             Dirt
         Tile:
+            Concrete
             City
         Tile:
             Dirt
@@ -969,8 +974,10 @@ Map:
         Tile:
             Water
         Tile:
+            Concrete
             City
         Tile:
+            Concrete
             City
         Tile:
             Grassland
@@ -1066,6 +1073,7 @@ Map:
         Tile:
             Grassland
         Tile:
+            Concrete
             City
         Tile:
             Water
@@ -1301,8 +1309,10 @@ Map:
             Grassland
             Forest
         Tile:
+            Concrete
             City
         Tile:
+            Concrete
             City
         Tile:
             Water
@@ -1398,6 +1408,7 @@ Map:
         Tile:
             Grassland
         Tile:
+            Concrete
             City
         Tile:
             Water
@@ -1879,13 +1890,16 @@ Map:
         Tile:
             Grassland
         Tile:
+            Concrete
             City
         Tile:
+            Concrete
             City
         Tile:
-            City
+            Concrete
             HQ
         Tile:
+            Concrete
             City
         Tile:
             Water
@@ -1967,11 +1981,13 @@ Map:
         Tile:
             Grassland
         Tile:
+            Concrete
             City
         Tile:
-            City
+            Concrete
             HQ
         Tile:
+            Concrete
             City
         Tile:
             Water

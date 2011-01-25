@@ -81,6 +81,7 @@ public final class BFW2AOE {
                             System.err.println("Unknown subtype of arctic tile: "+terrainCode[1]);                    
                 }
                 else if (terrainCode[0].equals("C")) {
+                    aoeFile.write("            Concrete\n");
                     aoeFile.write("            City\n");
                     if (terrainCode.length > 1)
                         System.err.println("Unknown subtype of city tile: "+terrainCode[1]);
@@ -117,7 +118,7 @@ public final class BFW2AOE {
                             System.err.println("Unknown subtype of hill tile: "+terrainCode[1]);
                 }
                 else if (terrainCode[0].equals("K")) {
-                    aoeFile.write("            City\n");
+                    aoeFile.write("            Concrete\n");
                     aoeFile.write("            HQ\n");
                     if (terrainCode.length > 1)
                         System.err.println("Unknown subtype of base tile: "+terrainCode[1]);

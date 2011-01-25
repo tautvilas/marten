@@ -5,13 +5,14 @@ import java.rmi.server.UnicastRemoteObject;
 
 import marten.aoe.proposal.dto.MinimalMapDTO;
 import marten.aoe.proposal.engine.Engine;
+import marten.aoe.proposal.engine.Player;
 import marten.aoe.server.face.EngineFace;
 
 public class EngineInterface extends UnicastRemoteObject implements EngineFace {
 
-    private Engine engine;
+    private final Engine engine;
     @SuppressWarnings("unused")
-    private String username;
+    private final String username;
 
     protected EngineInterface(Engine engine, String username)
             throws RemoteException {
@@ -24,7 +25,8 @@ public class EngineInterface extends UnicastRemoteObject implements EngineFace {
 
     @Override
     public MinimalMapDTO getMap() throws RemoteException {
-        return engine.getMinimalMapDTO();
+        // FIXME: patched to prevent compilation errors, MUST be changed appropriately.
+        return engine.getMinimalMapDTO(Player.SYSTEM);
     }
 
 }
