@@ -9,7 +9,6 @@ import java.security.SecureRandom;
 import java.util.ArrayList;
 
 import marten.aoe.proposal.engine.Engine;
-import marten.aoe.proposal.loader.MapLoader;
 import marten.aoe.server.serializable.GameDetails;
 import marten.aoe.server.serializable.ServerNotification;
 
@@ -110,7 +109,7 @@ public class ServerGame {
 
     public void start() {
         this.open = false;
-        this.engine = new Engine(MapLoader.loadMap(this.mapName));
+        this.engine = new Engine(this.mapName);
         this.notify(ServerNotification.GAME_STARTED);
     }
 
