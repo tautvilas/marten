@@ -58,7 +58,7 @@ public final class TileLoader {
         /* THE ROOT OF ALL THE EVIL, BE CAUTIOUS! */
         if (tileInstance instanceof Tile) {
             return (Tile)tileInstance;
-        }
+        }        
         return tile;
     }
 }
