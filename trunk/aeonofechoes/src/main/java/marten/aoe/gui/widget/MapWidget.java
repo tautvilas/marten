@@ -14,6 +14,7 @@ import marten.age.graphics.flat.sprite.BasicSprite;
 import marten.age.graphics.flat.sprite.TextureSprite;
 import marten.age.graphics.geometry.Geometry;
 import marten.age.graphics.geometry.primitives.Rectangle;
+import marten.age.graphics.image.ImageCache;
 import marten.age.graphics.image.ImageData;
 import marten.age.graphics.model.ComplexModel;
 import marten.age.graphics.model.SimpleModel;
@@ -22,9 +23,10 @@ import marten.age.graphics.primitives.Point;
 import marten.age.graphics.text.BitmapFont;
 import marten.age.graphics.text.BitmapString;
 import marten.age.graphics.text.FontCache;
+import marten.age.graphics.texture.Texture;
+import marten.age.graphics.texture.TextureLoader;
 import marten.age.graphics.transform.TranslationGroup;
 import marten.age.widget.Widget;
-import marten.aoe.engine.TileCoordinate;
 import marten.aoe.proposal.dto.MinimalMapDTO;
 import marten.aoe.proposal.dto.MinimalTileDTO;
 import marten.aoe.server.face.EngineFace;
@@ -69,11 +71,16 @@ public class MapWidget extends BasicSprite implements Widget, MouseListener {
         }
         for (MinimalTileDTO[] tileLine : map) {
             for (MinimalTileDTO tile : tileLine) {
-                Point tileCoordinates = new Point(tile.getCoordinates().getX(),
-                        tile.getCoordinates().getY());
+                Point tileCoordinates = this.getTileDisplayCoordinates(new Point(tile.getCoordinates().getX(),
+                        tile.getCoordinates().getY()));
                 updateDimensionConstraints(tileCoordinates);
                 Geometry geometry = new Rectangle(new Dimension(tileWidth,
                         tileHeight), tileCoordinates);
+                if (!this.terrainCache.containsKey(tile.getName())) {
+                    Texture terrain = TextureLoader.loadTexture(ImageCache.getImage(
+                            "data/gui/tiles/" + tile.getName().toLowerCase() + ".png"));
+                    terrainCache.put(tile.getName(), new SimpleModel(new Appearance(terrain)));
+                }
                 SimpleModel sm = terrainCache.get(tile.getName());
                 sm.addGeometry(geometry);
                 tiles.put(tile, tileCoordinates);
@@ -108,18 +115,17 @@ public class MapWidget extends BasicSprite implements Widget, MouseListener {
             this.minY = (int)tileCoordinates.y;
     }
 
-    @SuppressWarnings("unused")
-    private Point getTileDisplayCoordinates(TileCoordinate position) {
+    private Point getTileDisplayCoordinates(Point position) {
         int delta = tileWidth + tileWidth / 2;
-        if (position.x() % 2 == 0) {
-            return new Point((position.x() / 2) * delta, position.y()
+        if (position.x % 2 == 0) {
+            return new Point((position.x / 2) * delta, position.y
                     * tileHeight);
         } else {
             int deltax = tileHeight * 3 / 4;
-            if (position.x() < 0) {
+            if (position.x < 0) {
                 deltax = -deltax;
             }
-            return new Point((position.x() / 2) * delta + deltax, position.y()
+            return new Point((position.x / 2) * delta + deltax, position.y
                     * tileHeight - tileHeight / 2);
         }
     }
@@ -135,7 +141,8 @@ public class MapWidget extends BasicSprite implements Widget, MouseListener {
                 tileX += 1;
             this.tiles.get(new Point(tileX, tileY));
             try {
-                return this.engine.getMap().getTileDTO(new marten.aoe.proposal.dto.Point(tileX, tileY));
+                return this.engine.getMap().getTileDTO(
+                        new marten.aoe.proposal.dto.Point(tileX, tileY));
             } catch (RemoteException e) {
                 throw new RuntimeException(e);
             }
@@ -143,6 +150,7 @@ public class MapWidget extends BasicSprite implements Widget, MouseListener {
         throw new IndexOutOfBoundsException("Tile index is out of bounds");
     }
 
+    @SuppressWarnings("unused")
     private MinimalTileDTO tileHit(Point mouseCoords) {
         // Substract map translation form mouse coordinates
         mouseCoords.x -= this.getPosition().x;
@@ -223,10 +231,12 @@ public class MapWidget extends BasicSprite implements Widget, MouseListener {
 
     @Override
     public Dimension getDimension() {
-//        int width = (this.engine.tileMap.maxX() - this.engine.tileMap.minX() + 1)
-//                * (this.tileWidth * 3 / 4) + this.tileWidth / 4;
-//        int height = (this.engine.tileMap.maxY() - this.engine.tileMap.minY() + 1)
-//                * (this.tileHeight) + this.tileHeight / 2;
+        // int width = (this.engine.tileMap.maxX() - this.engine.tileMap.minX()
+        // + 1)
+        // * (this.tileWidth * 3 / 4) + this.tileWidth / 4;
+        // int height = (this.engine.tileMap.maxY() - this.engine.tileMap.minY()
+        // + 1)
+        // * (this.tileHeight) + this.tileHeight / 2;
         MinimalMapDTO map;
         try {
             map = this.engine.getMap();
@@ -265,10 +275,10 @@ public class MapWidget extends BasicSprite implements Widget, MouseListener {
 
     @Override
     public void mouseMove(Point coords) {
-        MinimalTileDTO tile = tileHit(coords);
-        if (tile != null) {
-            tileHighlight.setPosition(tiles.get(tile));
-        }
+//        MinimalTileDTO tile = tileHit(coords);
+//        if (tile != null) {
+//            tileHighlight.setPosition(tiles.get(tile));
+//        }
     }
 
     @Override
