@@ -27,11 +27,13 @@ public final class TileLoader {
     public static Tile loadTile (String tileName, Map owner, Point location) {
         List<String> availableTiles = getAvailableTiles();
         if (!availableTiles.contains(tileName)) {
-            log.debug(tileName + " not found.");
+            log.warn(tileName + " not found.");
+            /*
             log.debug("Detected tile types are:");
             for (String availableTile : availableTiles) {
                 log.debug("\t"+availableTile);
             }
+            */
             return null;
         }
         Class<?> tileClass = null;
@@ -53,11 +55,13 @@ public final class TileLoader {
     public static Tile loadLayer (String layerName, Tile tile) {
         List<String> availableTiles = getAvailableTiles();
         if (!availableTiles.contains(layerName)) {
-            log.debug(layerName + " not found.");
+            log.warn(layerName + " not found.");
+            /*
             log.debug("Detected tile types are:");
             for (String availableTile : availableTiles) {
                 log.debug("\t"+availableTile);
             }
+            */
             return tile;
         }
         Class<?> tileClass = null;
