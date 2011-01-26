@@ -5,14 +5,14 @@ import java.io.Serializable;
 public final class TileDTO implements Serializable {
     private static final long serialVersionUID = 8570422115600942749L;
     private final UnitDTO unit;
-    private final Point location;
+    private final PointDTO location;
     private final String name;
     private final MovementDTO movement;
     private final DefenseDTO defense;
     private final int height;
     private final String[] description;
     
-    public TileDTO (String name, Point location, int height, MovementDTO movement, DefenseDTO defense, UnitDTO unit, String[] description) {
+    public TileDTO (String name, PointDTO location, int height, MovementDTO movement, DefenseDTO defense, UnitDTO unit, String[] description) {
         this.name = name;
         this.location = location;
         this.movement = movement;
@@ -24,7 +24,7 @@ public final class TileDTO implements Serializable {
     public String getName () {
         return this.name;
     }
-    public Point getLocation () {
+    public PointDTO getLocation () {
         return this.location;
     }
     public int getHeight () {

@@ -1,11 +1,11 @@
 package marten.aoe.proposal.engine;
 
 import marten.aoe.proposal.dto.MinimalTileDTO;
-import marten.aoe.proposal.dto.Point;
+import marten.aoe.proposal.dto.PointDTO;
 import marten.aoe.proposal.dto.TileDTO;
 
 public abstract class TileBase extends Tile {
-    public TileBase(String name, Map owner, Point coordinates) {
+    public TileBase(String name, Map owner, PointDTO coordinates) {
         super(name, owner, coordinates);
     }
     @Override public final TileDTO getDTO(Player player) {

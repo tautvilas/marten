@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import marten.aoe.Path;
-import marten.aoe.proposal.dto.Point;
+import marten.aoe.proposal.dto.PointDTO;
 import marten.aoe.proposal.engine.Map;
 import marten.aoe.proposal.engine.Tile;
 
@@ -24,7 +24,7 @@ public final class TileLoader {
         }
         return tileNameList;
     }
-    public static Tile loadTile (String tileName, Map owner, Point location) {
+    public static Tile loadTile (String tileName, Map owner, PointDTO location) {
         List<String> availableTiles = getAvailableTiles();
         if (!availableTiles.contains(tileName)) {
             log.warn(tileName + " not found.");
@@ -40,7 +40,7 @@ public final class TileLoader {
         Object tileInstance = null;
         try {
             tileClass = Class.forName(Path.TILE_PACKAGE + tileName);
-            tileInstance = tileClass.getConstructor(Map.class, Point.class).newInstance(owner, location);
+            tileInstance = tileClass.getConstructor(Map.class, PointDTO.class).newInstance(owner, location);
         }
         catch (Exception e) {
             e.printStackTrace();

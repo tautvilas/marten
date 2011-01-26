@@ -8,7 +8,7 @@ import marten.aoe.proposal.dto.DefenseDTO;
 import marten.aoe.proposal.dto.Direction;
 import marten.aoe.proposal.dto.MinimalTileDTO;
 import marten.aoe.proposal.dto.MovementDTO;
-import marten.aoe.proposal.dto.Point;
+import marten.aoe.proposal.dto.PointDTO;
 import marten.aoe.proposal.dto.TileDTO;
 import marten.aoe.proposal.dto.UnitSize;
 import marten.aoe.proposal.dto.UnitType;
@@ -17,11 +17,11 @@ public abstract class Tile {
     
     private Unit unit = null;
     private final Map owner;
-    private final Point coordinates;
+    private final PointDTO coordinates;
     private final String name;
     private TileLayer overlay;
     
-    public Tile(String name, Map owner, Point coordinates) {
+    public Tile(String name, Map owner, PointDTO coordinates) {
         this.name = name;
         this.owner = owner;
         this.coordinates = coordinates;
@@ -34,7 +34,7 @@ public abstract class Tile {
         return this.owner;        
     }
     /** @return the coordinates of this tile. */
-    public final Point getCoordinates() {
+    public final PointDTO getCoordinates() {
         return this.coordinates;
     }
     /** @return the unit in this tile or <code>null</code> if there is no unit. */
@@ -161,7 +161,7 @@ public abstract class Tile {
         List<Tile> answer = new ArrayList<Tile>();
         for (int x = this.coordinates.getX() - distance; x <= this.coordinates.getX() + distance; ++x) {
             for (int y = this.coordinates.getY() - distance; y <= this.coordinates.getY() + distance; ++y) {
-                Tile candidate = this.owner.getTile(new Point(x, y));
+                Tile candidate = this.owner.getTile(new PointDTO(x, y));
                 if (this.distanceTo(candidate) <= distance) {
                     answer.add(candidate);
                 }

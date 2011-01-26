@@ -15,12 +15,12 @@ public enum Direction {
         this.dy0 = dy0;
         this.dy1 = dy1;
     }
-    public Point adjust (Point point) {
+    public PointDTO adjust (PointDTO point) {
         if (point.getX() % 2 == 0) {
-            return new Point(point.getX() + dx, point.getY() + dy0);
+            return new PointDTO(point.getX() + dx, point.getY() + dy0);
         }
         else {
-            return new Point(point.getX() + dx, point.getY() + dy1);
+            return new PointDTO(point.getX() + dx, point.getY() + dy1);
         }
     }
 }
