@@ -20,35 +20,43 @@ public abstract class SimpleMap extends Map {
     public SimpleMap (String fileName, int width, int height) throws IOException {
         super (fileName, width, height);
         DataTree mapData = DataFileReader.read(Path.MAP_DATA_PATH + fileName);
-        if (mapData.value().equals("Map")) {
-            int y = height - 1;            
-            for (DataTree subbranch : mapData.branches()) {
-                if (subbranch.value().equals("Row")) {
-                    int x = 0;
-                    for (DataTree subsubbranch : subbranch.branches()) {
-                        if (subsubbranch.value().equals("Tile")) {
-                            Tile tile = null;
-                            for (DataTree subsubsubbranch : subsubbranch.branches()) {
-                                if (tile == null) {
-                                    tile = TileLoader.loadTile(subsubsubbranch.value(), this, new Point(x, y));
+        if (mapData.value().equals("FILE")) {
+            if (mapData.value().equals("Map")) {
+                int y = height - 1;            
+                for (DataTree subbranch : mapData.branches()) {
+                    if (subbranch.value().equals("Row")) {
+                        int x = 0;
+                        for (DataTree subsubbranch : subbranch.branches()) {
+                            if (subsubbranch.value().equals("Tile")) {
+                                Tile tile = null;
+                                for (DataTree subsubsubbranch : subsubbranch.branches()) {
+                                    if (tile == null) {
+                                        tile = TileLoader.loadTile(subsubsubbranch.value(), this, new Point(x, y));
+                                    }
+                                    else {
+                                        tile = TileLoader.loadLayer(subsubsubbranch.value(), tile);
+                                    }
                                 }
-                                else {
-                                    tile = TileLoader.loadLayer(subsubsubbranch.value(), tile);
-                                }
-                            }
-                            this.switchTile(new Point(x, y), tile);
-                            x++;                            
-                        }                        
+                                this.switchTile(new Point(x, y), tile);
+                                x++;                            
+                            }                        
+                        }
+                        if (x != width) {
+                            throw new IOException("Row dimension mismatch.");
+                        }
+                        y--;
                     }
-                    if (x != width) {
-                        throw new IOException("Row dimension mismatch.");
-                    }
-                    y--;
+                }
+                if (y != -1) {
+                    throw new IOException("Column dimension mismatch.");
                 }
             }
-            if (y != -1) {
-                throw new IOException("Column dimension mismatch.");
+            else {
+                throw new IOException("Not a map file");
             }
+        }
+        else {
+            throw new IOException("Unknown major error");
         }
     }
 }
