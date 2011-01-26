@@ -6,15 +6,15 @@ import java.util.Set;
 import org.junit.Assert;
 import org.junit.Test;
 
-import marten.aoe.engine.Engine;
-import marten.aoe.engine.PathFinder;
-import marten.aoe.engine.TerrainFeatures;
-import marten.aoe.engine.Tile;
-import marten.aoe.engine.TileCoordinate;
-import marten.aoe.engine.TileDirection;
-import marten.aoe.engine.TilePath;
-import marten.aoe.engine.UnitType;
-import marten.aoe.loader.Loader;
+import marten.aoe.obsolete.engine.Engine;
+import marten.aoe.obsolete.engine.PathFinder;
+import marten.aoe.obsolete.engine.TerrainFeatures;
+import marten.aoe.obsolete.engine.Tile;
+import marten.aoe.obsolete.engine.TileCoordinate;
+import marten.aoe.obsolete.engine.TileDirection;
+import marten.aoe.obsolete.engine.TilePath;
+import marten.aoe.obsolete.engine.UnitType;
+import marten.aoe.obsolete.loader.Loader;
 
 /** Tests the proper implementation of Marten's Minimal Data Tree Language and its full set of features by reading some sample definition files
  * @author Petras Ražanskas */
