@@ -3,7 +3,7 @@ package marten.aoe.proposal.engine;
 import java.io.IOException;
 
 import marten.aoe.Path;
-import marten.aoe.proposal.dto.Point;
+import marten.aoe.proposal.dto.PointDTO;
 import marten.aoe.proposal.loader.DataFileReader;
 import marten.aoe.proposal.loader.DataTree;
 import marten.aoe.proposal.loader.TileLoader;
@@ -32,13 +32,13 @@ public abstract class SimpleMap extends Map {
                                 Tile tile = null;
                                 for (DataTree subsubsubbranch : subsubbranch.branches()) {
                                     if (tile == null) {
-                                        tile = TileLoader.loadTile(subsubsubbranch.value(), this, new Point(x, y));
+                                        tile = TileLoader.loadTile(subsubsubbranch.value(), this, new PointDTO(x, y));
                                     }
                                     else {
                                         tile = TileLoader.loadLayer(subsubsubbranch.value(), tile);
                                     }
                                 }
-                                this.switchTile(new Point(x, y), tile);
+                                this.switchTile(new PointDTO(x, y), tile);
                                 x++;                            
                             }                        
                         }

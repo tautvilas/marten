@@ -4,7 +4,7 @@ import java.util.EnumMap;
 
 import marten.aoe.proposal.dto.DefenseDTO;
 import marten.aoe.proposal.dto.MovementDTO;
-import marten.aoe.proposal.dto.Point;
+import marten.aoe.proposal.dto.PointDTO;
 import marten.aoe.proposal.dto.UnitSize;
 import marten.aoe.proposal.dto.UnitType;
 import marten.aoe.proposal.engine.Map;
@@ -13,7 +13,7 @@ import marten.aoe.proposal.engine.TileBase;
 public final class Void extends TileBase {
     private final DefenseDTO defense;
     private final MovementDTO movement;
-    public Void(Map owner, Point coordinates) {
+    public Void(Map owner, PointDTO coordinates) {
         super("Void", owner, coordinates);
         // Forming defense
         EnumMap<UnitType, EnumMap<UnitSize, Integer>> data = new EnumMap<UnitType, EnumMap<UnitSize, Integer>>(UnitType.class);

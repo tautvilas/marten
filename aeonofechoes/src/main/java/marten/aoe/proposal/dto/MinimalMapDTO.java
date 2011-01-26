@@ -14,7 +14,7 @@ public final class MinimalMapDTO implements Serializable {
         this.width = width;
         this.height = height;
     }
-    public MinimalTileDTO getTileDTO (Point location) {
+    public MinimalTileDTO getTileDTO (PointDTO location) {
         return this.tileMap[location.getX()][location.getY()];
     }
     public String getName () {

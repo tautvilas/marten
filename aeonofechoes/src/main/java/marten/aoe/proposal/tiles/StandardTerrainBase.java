@@ -5,7 +5,7 @@ import java.util.EnumMap;
 import marten.aoe.proposal.dto.DamageDTO;
 import marten.aoe.proposal.dto.DefenseDTO;
 import marten.aoe.proposal.dto.MovementDTO;
-import marten.aoe.proposal.dto.Point;
+import marten.aoe.proposal.dto.PointDTO;
 import marten.aoe.proposal.dto.UnitSize;
 import marten.aoe.proposal.dto.UnitType;
 import marten.aoe.proposal.engine.Map;
@@ -17,7 +17,7 @@ public abstract class StandardTerrainBase extends TileBase {
     private final DamageDTO entryDamage;
     private final DefenseDTO defense;
     private final MovementDTO movement;
-    public StandardTerrainBase(String name, Map owner, Point coordinates, int groundMovementCost, DamageDTO entryDamage) {
+    public StandardTerrainBase(String name, Map owner, PointDTO coordinates, int groundMovementCost, DamageDTO entryDamage) {
         super(name, owner, coordinates);
         this.groundMovementCost = groundMovementCost;
         this.entryDamage = entryDamage;

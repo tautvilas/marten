@@ -37,16 +37,16 @@ public class MapWidget extends BasicSprite implements Widget, MouseListener {
     @SuppressWarnings("unused")
     private static org.apache.log4j.Logger log = Logger
             .getLogger(MapWidget.class);
-    private HashMap<String, SimpleModel> terrainCache = new HashMap<String, SimpleModel>();
-    private HashMap<MinimalTileDTO, Point> tiles = new HashMap<MinimalTileDTO, Point>();
-    private BitmapFont font = FontCache.getFont(new Font("Courier New",
+    private final HashMap<String, SimpleModel> terrainCache = new HashMap<String, SimpleModel>();
+    private final HashMap<MinimalTileDTO, Point> tiles = new HashMap<MinimalTileDTO, Point>();
+    private final BitmapFont font = FontCache.getFont(new Font("Courier New",
             Font.BOLD, 20));
-    private TranslationGroup tg = new TranslationGroup();
+    private final TranslationGroup tg = new TranslationGroup();
     // private Tile activeTile = null;
-    private int tileWidth = 64;
-    private int tileHeight = 64;
-    private EngineFace engine;
-    private ComplexModel cm = new ComplexModel();
+    private final int tileWidth = 64;
+    private final int tileHeight = 64;
+    private final EngineFace engine;
+    private final ComplexModel cm = new ComplexModel();
     private TextureSprite tileHighlight = null;
 
     private int minX = Integer.MAX_VALUE;
@@ -142,7 +142,7 @@ public class MapWidget extends BasicSprite implements Widget, MouseListener {
             this.tiles.get(new Point(tileX, tileY));
             try {
                 return this.engine.getMap().getTileDTO(
-                        new marten.aoe.proposal.dto.Point(tileX, tileY));
+                        new marten.aoe.proposal.dto.PointDTO(tileX, tileY));
             } catch (RemoteException e) {
                 throw new RuntimeException(e);
             }

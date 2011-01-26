@@ -3,7 +3,7 @@ package marten.aoe.proposal.engine;
 import marten.aoe.proposal.dto.MapDTO;
 import marten.aoe.proposal.dto.MinimalMapDTO;
 import marten.aoe.proposal.dto.MinimalTileDTO;
-import marten.aoe.proposal.dto.Point;
+import marten.aoe.proposal.dto.PointDTO;
 import marten.aoe.proposal.dto.TileDTO;
 
 public abstract class Map {
@@ -50,13 +50,13 @@ public abstract class Map {
         }
         return new MinimalMapDTO(tiles, this.width, this.height, this.name);
     }
-    public final Tile getTile (Point point) {
+    public final Tile getTile (PointDTO point) {
         if (point.getX() >= 0 && point.getX() < this.width && point.getY() >= 0 && point.getY() < this.height) {
             return map[point.getX()][point.getY()];
         }
         return null;
     }
-    public final Tile switchTile (Point point, Tile tile) {
+    public final Tile switchTile (PointDTO point, Tile tile) {
         if (point.getX() >= 0 && point.getX() < this.width && point.getY() >= 0 && point.getY() < this.height) {
             Tile oldTile = this.map[point.getX()][point.getY()];
             if (oldTile != null) {
@@ -79,6 +79,6 @@ public abstract class Map {
         this.onTurnOver();
     }
     public abstract void onTurnOver ();
-    public abstract Point getStartingPosition (Player player);
+    public abstract PointDTO getStartingPosition (Player player);
     public abstract int getPlayerLimit ();
 }

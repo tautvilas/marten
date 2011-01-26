@@ -14,7 +14,7 @@ public final class MapDTO implements Serializable {
         this.height = height;
         this.width = width;
     }
-    public TileDTO getTileDTO (Point location) {
+    public TileDTO getTileDTO (PointDTO location) {
         return this.map[location.getX()][location.getY()];
     }
     public int getWidth () {
