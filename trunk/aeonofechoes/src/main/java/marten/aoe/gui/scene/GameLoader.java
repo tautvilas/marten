@@ -12,7 +12,6 @@ import marten.age.graphics.image.ImageCache;
 import marten.age.io.Loadable;
 import marten.age.io.LoadingState;
 import marten.age.io.SimpleLoader;
-import marten.aoe.engine.Engine;
 import marten.aoe.gui.widget.AoeString;
 import marten.aoe.gui.widget.MapWidget;
 import marten.aoe.proposal.dto.MinimalMapDTO;
@@ -31,7 +30,7 @@ public class GameLoader extends AgeScene implements Loadable {
     private SimpleLoader loader = new SimpleLoader(this);
     private AoeString statusString;
     private GameDetails details;
-    private Engine engine;
+    private EngineFace engine;
     String status = "Loading map data";
 
     public GameLoader(GameDetails details) {
@@ -51,7 +50,7 @@ public class GameLoader extends AgeScene implements Loadable {
     @Override
     public void compute() {
         if (this.loader.loadingFinished()) {
-            MapWidget map = new MapWidget(engine, details.mapName);
+            MapWidget map = new MapWidget(engine);
             this.fireEvent(new AgeSceneSwitchEvent(new Game(map, this.details)));
         }
         String status = loader.getStatus();
@@ -69,9 +68,8 @@ public class GameLoader extends AgeScene implements Loadable {
     @Override
     public synchronized void load(LoadingState state) {
         state.status = "Loading map data";
-        EngineFace engine;
         try {
-            engine = (EngineFace)Naming.lookup(this.details.engineUrl);
+            this.engine = (EngineFace)Naming.lookup(this.details.engineUrl);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
