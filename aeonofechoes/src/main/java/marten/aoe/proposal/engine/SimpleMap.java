@@ -43,13 +43,13 @@ public abstract class SimpleMap extends Map {
                             }                        
                         }
                         if (x != width) {
-                            throw new IOException("Row dimension mismatch.");
+                            throw new IOException("Row dimension mismatch. Expected: "+width+", actual: "+x);
                         }
                         y--;
                     }
                 }
                 if (y != -1) {
-                    throw new IOException("Column dimension mismatch.");
+                    throw new IOException("Column dimension mismatch. Expected: "+height+", actual: "+(height + 1 + y));
                 }
             }
             else {
