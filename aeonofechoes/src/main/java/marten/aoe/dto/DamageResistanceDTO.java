@@ -1,4 +1,4 @@
-package marten.aoe.proposal.dto;
+package marten.aoe.dto;
 
 import java.util.EnumMap;
 

@@ -1,7 +1,7 @@
 package marten.aoe.data.tiles;
 
-import marten.aoe.proposal.dto.PointDTO;
-import marten.aoe.proposal.engine.Map;
+import marten.aoe.dto.PointDTO;
+import marten.aoe.engine.Map;
 
 public final class Desert extends StandardTerrainBase {
     public Desert(Map owner, PointDTO coordinates) {

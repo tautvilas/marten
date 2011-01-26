@@ -3,9 +3,9 @@ package marten.aoe.server;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 
-import marten.aoe.proposal.dto.MinimalMapDTO;
-import marten.aoe.proposal.engine.Engine;
-import marten.aoe.proposal.engine.Player;
+import marten.aoe.dto.MinimalMapDTO;
+import marten.aoe.engine.Engine;
+import marten.aoe.engine.Player;
 import marten.aoe.server.face.EngineFace;
 
 public class EngineInterface extends UnicastRemoteObject implements EngineFace {

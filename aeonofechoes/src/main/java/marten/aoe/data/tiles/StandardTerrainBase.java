@@ -2,14 +2,14 @@ package marten.aoe.data.tiles;
 
 import java.util.EnumMap;
 
-import marten.aoe.proposal.dto.DamageDTO;
-import marten.aoe.proposal.dto.DefenseDTO;
-import marten.aoe.proposal.dto.MovementDTO;
-import marten.aoe.proposal.dto.PointDTO;
-import marten.aoe.proposal.dto.UnitSize;
-import marten.aoe.proposal.dto.UnitType;
-import marten.aoe.proposal.engine.Map;
-import marten.aoe.proposal.engine.TileBase;
+import marten.aoe.dto.DamageDTO;
+import marten.aoe.dto.DefenseDTO;
+import marten.aoe.dto.MovementDTO;
+import marten.aoe.dto.PointDTO;
+import marten.aoe.dto.UnitSize;
+import marten.aoe.dto.UnitType;
+import marten.aoe.engine.Map;
+import marten.aoe.engine.TileBase;
 
 /** Convenience class to help define most of the terrain types succinctly. */
 public abstract class StandardTerrainBase extends TileBase {

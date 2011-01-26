@@ -2,9 +2,9 @@ package marten.aoe.data.maps;
 
 import java.io.IOException;
 
-import marten.aoe.proposal.dto.PointDTO;
-import marten.aoe.proposal.engine.Player;
-import marten.aoe.proposal.engine.SimpleMap;
+import marten.aoe.dto.PointDTO;
+import marten.aoe.engine.Player;
+import marten.aoe.engine.SimpleMap;
 
 public final class Freelands extends SimpleMap {
 

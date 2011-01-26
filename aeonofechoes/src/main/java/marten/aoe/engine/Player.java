@@ -1,4 +1,4 @@
-package marten.aoe.proposal.engine;
+package marten.aoe.engine;
 
 import java.util.List;
 

@@ -1,14 +1,14 @@
-package marten.aoe.proposal.engine;
+package marten.aoe.engine;
 
 import java.util.Random;
 
-import marten.aoe.proposal.dto.DamageDTO;
-import marten.aoe.proposal.dto.DamageResistanceDTO;
-import marten.aoe.proposal.dto.DamageType;
-import marten.aoe.proposal.dto.MinimalUnitDTO;
-import marten.aoe.proposal.dto.UnitDTO;
-import marten.aoe.proposal.dto.UnitSize;
-import marten.aoe.proposal.dto.UnitType;
+import marten.aoe.dto.DamageDTO;
+import marten.aoe.dto.DamageResistanceDTO;
+import marten.aoe.dto.DamageType;
+import marten.aoe.dto.MinimalUnitDTO;
+import marten.aoe.dto.UnitDTO;
+import marten.aoe.dto.UnitSize;
+import marten.aoe.dto.UnitType;
 
 public abstract class Unit {
     private final Map map;

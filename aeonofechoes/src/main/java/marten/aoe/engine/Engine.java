@@ -1,13 +1,13 @@
-package marten.aoe.proposal.engine;
+package marten.aoe.engine;
 
-import marten.aoe.proposal.dto.MapDTO;
-import marten.aoe.proposal.dto.MinimalMapDTO;
-import marten.aoe.proposal.dto.MinimalTileDTO;
-import marten.aoe.proposal.dto.MinimalUnitDTO;
-import marten.aoe.proposal.dto.PointDTO;
-import marten.aoe.proposal.dto.TileDTO;
-import marten.aoe.proposal.dto.UnitDTO;
-import marten.aoe.proposal.loader.MapLoader;
+import marten.aoe.dto.MapDTO;
+import marten.aoe.dto.MinimalMapDTO;
+import marten.aoe.dto.MinimalTileDTO;
+import marten.aoe.dto.MinimalUnitDTO;
+import marten.aoe.dto.PointDTO;
+import marten.aoe.dto.TileDTO;
+import marten.aoe.dto.UnitDTO;
+import marten.aoe.engine.loader.MapLoader;
 
 public final class Engine {
     private final Map map;

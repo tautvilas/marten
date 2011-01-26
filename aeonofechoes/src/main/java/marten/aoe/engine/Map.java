@@ -1,10 +1,10 @@
-package marten.aoe.proposal.engine;
+package marten.aoe.engine;
 
-import marten.aoe.proposal.dto.MapDTO;
-import marten.aoe.proposal.dto.MinimalMapDTO;
-import marten.aoe.proposal.dto.MinimalTileDTO;
-import marten.aoe.proposal.dto.PointDTO;
-import marten.aoe.proposal.dto.TileDTO;
+import marten.aoe.dto.MapDTO;
+import marten.aoe.dto.MinimalMapDTO;
+import marten.aoe.dto.MinimalTileDTO;
+import marten.aoe.dto.PointDTO;
+import marten.aoe.dto.TileDTO;
 
 public abstract class Map {
     private final Tile[][] map;

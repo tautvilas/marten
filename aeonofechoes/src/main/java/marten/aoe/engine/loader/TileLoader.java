@@ -1,13 +1,13 @@
-package marten.aoe.proposal.loader;
+package marten.aoe.engine.loader;
 
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
 import marten.aoe.Path;
-import marten.aoe.proposal.dto.PointDTO;
-import marten.aoe.proposal.engine.Map;
-import marten.aoe.proposal.engine.Tile;
+import marten.aoe.dto.PointDTO;
+import marten.aoe.engine.Map;
+import marten.aoe.engine.Tile;
 
 import org.apache.log4j.Logger;
 
