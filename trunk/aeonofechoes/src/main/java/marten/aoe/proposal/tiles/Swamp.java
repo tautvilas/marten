@@ -2,7 +2,6 @@ package marten.aoe.proposal.tiles;
 
 import java.util.EnumMap;
 
-import marten.aoe.proposal.dto.DamageDTO;
 import marten.aoe.proposal.dto.DefenseDTO;
 import marten.aoe.proposal.dto.MovementDTO;
 import marten.aoe.proposal.dto.Point;
@@ -14,8 +13,8 @@ import marten.aoe.proposal.engine.TileBase;
 public final class Swamp extends TileBase {
     private final DefenseDTO defense;
     private final MovementDTO movement;
-    public Swamp(String name, Map owner, Point coordinates, int groundMovementCost, DamageDTO entryDamage) {
-        super(name, owner, coordinates);
+    public Swamp(Map owner, Point coordinates) {
+        super("Swamp", owner, coordinates);
         // Forming defense
         EnumMap<UnitType, EnumMap<UnitSize, Integer>> data = new EnumMap<UnitType, EnumMap<UnitSize, Integer>>(UnitType.class);
         for (UnitType type : UnitType.values()) {
