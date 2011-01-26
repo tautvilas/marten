@@ -9,7 +9,10 @@ import marten.aoe.proposal.dto.Point;
 import marten.aoe.proposal.engine.Map;
 import marten.aoe.proposal.engine.Tile;
 
+import org.apache.log4j.Logger;
+
 public final class TileLoader {
+    private static org.apache.log4j.Logger log = Logger.getLogger(TileLoader.class);    
     public static final List<String> getAvailableTiles () {
         File tileDirectory = new File(Path.TILE_PATH);
         String[] tileList = tileDirectory.list();
@@ -23,8 +26,14 @@ public final class TileLoader {
     }
     public static Tile loadTile (String tileName, Map owner, Point location) {
         List<String> availableTiles = getAvailableTiles();
-        if (!availableTiles.contains(tileName))
+        if (!availableTiles.contains(tileName)) {
+            log.debug(tileName + " not found.");
+            log.debug("Detected tile types are:");
+            for (String availableTile : availableTiles) {
+                log.debug("\t"+availableTile);
+            }
             return null;
+        }
         Class<?> tileClass = null;
         Object tileInstance = null;
         try {
@@ -43,8 +52,14 @@ public final class TileLoader {
     }
     public static Tile loadLayer (String layerName, Tile tile) {
         List<String> availableTiles = getAvailableTiles();
-        if (!availableTiles.contains(layerName))
+        if (!availableTiles.contains(layerName)) {
+            log.debug(layerName + " not found.");
+            log.debug("Detected tile types are:");
+            for (String availableTile : availableTiles) {
+                log.debug("\t"+availableTile);
+            }
             return tile;
+        }
         Class<?> tileClass = null;
         Object tileInstance = null;
         try {
