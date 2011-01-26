@@ -49,7 +49,7 @@ public abstract class SimpleMap extends Map {
                     }
                 }
                 if (y != -1) {
-                    throw new IOException("Column dimension mismatch. Expected: "+height+", actual: "+(height + 1 + y));
+                    throw new IOException("Column dimension mismatch. Expected: "+height+", actual: "+(height - 1 - y));
                 }
             }
             else {

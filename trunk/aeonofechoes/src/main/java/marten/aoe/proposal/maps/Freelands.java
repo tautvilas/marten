@@ -9,7 +9,7 @@ import marten.aoe.proposal.engine.SimpleMap;
 public final class Freelands extends SimpleMap {
 
     public Freelands() throws IOException {
-        super ("2pFreelands", 37, 24);
+        super ("2pFreelands", 39, 26);
     }
     
     @Override public int getPlayerLimit() {
