@@ -14,7 +14,7 @@ public class ImageCache {
             images.put(path, image);
             log.debug("Image " + path + " added to image cache.");
         } else {
-            log.debug("Image " + path + " is allready in font cache.");
+//            log.debug("Image " + path + " is allready in font cache.");
         }
     }
 
