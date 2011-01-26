@@ -59,8 +59,10 @@ public abstract class Map {
     public final Tile switchTile (Point point, Tile tile) {
         if (point.getX() >= 0 && point.getX() < this.width && point.getY() >= 0 && point.getY() < this.height) {
             Tile oldTile = this.map[point.getX()][point.getY()];
-            Unit unit = oldTile.popUnit(Player.SYSTEM);
-            tile.pushUnit(Player.SYSTEM, unit);
+            if (oldTile != null) {
+                Unit unit = oldTile.popUnit(Player.SYSTEM);
+                tile.pushUnit(Player.SYSTEM, unit);
+            }
             this.map[point.getX()][point.getY()] = tile;
             return oldTile;
         }
@@ -69,7 +71,9 @@ public abstract class Map {
     public final void endTurn () {
         for (int x = 0; x < width; x++) {
             for (int y = 0; y < height; y++) {
-                this.map[x][y].turnOver();
+                if (this.map[x][y] != null) {
+                    this.map[x][y].turnOver();
+                }
             }
         }
         this.onTurnOver();
