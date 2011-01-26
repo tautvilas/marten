@@ -19,8 +19,9 @@ public abstract class SimpleMap extends Map {
      * @throws IOException whenever there are issues with files or map dimensions do not match the given ones.*/
     public SimpleMap (String fileName, int width, int height) throws IOException {
         super (fileName, width, height);
-        DataTree mapData = DataFileReader.read(Path.MAP_DATA_PATH + fileName);
-        if (mapData.value().equals("FILE")) {
+        DataTree mapFile = DataFileReader.read(Path.MAP_DATA_PATH + fileName);
+        if (mapFile.value().equals("FILE")) {
+            DataTree mapData = mapFile.branches().get(0);
             if (mapData.value().equals("Map")) {
                 int y = height - 1;            
                 for (DataTree subbranch : mapData.branches()) {
