@@ -57,6 +57,7 @@ public abstract class TileLayer extends Tile {
             if (this.getCoordinates().distanceTo(unit.getLocation().getCoordinates()) + this.detectionModifier <= 0)
                 return new MinimalTileDTO(
                         this.getName(),
+                        this.getCoordinates(),
                         (this.getUnit() != null ? this.getUnit().getMinimalDTO(player) : null)
                 );
         }

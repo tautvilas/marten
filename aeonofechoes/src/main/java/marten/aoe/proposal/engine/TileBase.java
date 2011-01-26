@@ -20,6 +20,6 @@ public abstract class TileBase extends Tile {
         );
     }
     @Override public final MinimalTileDTO getMinimalDTO(Player player) {
-        return new MinimalTileDTO(this.getName(), (this.getUnit() != null ? this.getUnit().getMinimalDTO(player) : null));        
+        return new MinimalTileDTO(this.getName(), this.getCoordinates(), (this.getUnit() != null ? this.getUnit().getMinimalDTO(player) : null));        
     }
 }
