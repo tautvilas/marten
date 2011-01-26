@@ -19,7 +19,7 @@ public final class TileLoader {
         List<String> tileNameList = new ArrayList<String>();
         for (String tileName : tileList) {
             if (tileName.matches(".*\\.class")) {
-                tileNameList.add(tileName.substring(0, tileName.length() - 5));
+                tileNameList.add(tileName.split("\\.")[0]);
             }
         }
         return tileNameList;
