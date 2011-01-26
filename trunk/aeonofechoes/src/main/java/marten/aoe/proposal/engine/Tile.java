@@ -1,7 +1,11 @@
 package marten.aoe.proposal.engine;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import marten.aoe.proposal.dto.DamageDTO;
 import marten.aoe.proposal.dto.DefenseDTO;
+import marten.aoe.proposal.dto.Direction;
 import marten.aoe.proposal.dto.MinimalTileDTO;
 import marten.aoe.proposal.dto.MovementDTO;
 import marten.aoe.proposal.dto.Point;
@@ -128,5 +132,41 @@ public abstract class Tile {
     }
     public final void setOverlay(TileLayer overlay) {
         this.overlay = overlay;
+    }
+    public final Tile adjacent (Direction direction) {
+        return owner.getTile(direction.adjust(this.coordinates));
+    }
+    public final int distanceTo (Tile other) {
+        int minimumEstimate = other.coordinates.getX() - this.coordinates.getX();
+        minimumEstimate *= (minimumEstimate < 0 ? -1 : 1);
+        int minY = this.coordinates.getY() - minimumEstimate / 2;
+        int maxY = this.coordinates.getY() + minimumEstimate / 2;
+        if (minimumEstimate % 2 != 0) {
+            if (this.coordinates.getX() % 2 == 0) {
+                --minY;
+            }
+            else {
+                ++maxY;
+            }
+        }
+        if (other.coordinates.getY() > maxY) {
+            return minimumEstimate + other.coordinates.getY() - maxY;
+        }
+        if (other.coordinates.getY() < minY) {
+            return minimumEstimate + minY - other.coordinates.getY();
+        }
+        return minimumEstimate;
+    }
+    public final List<Tile> neighbors (int distance) {
+        List<Tile> answer = new ArrayList<Tile>();
+        for (int x = this.coordinates.getX() - distance; x <= this.coordinates.getX() + distance; ++x) {
+            for (int y = this.coordinates.getY() - distance; y <= this.coordinates.getY() + distance; ++y) {
+                Tile candidate = this.owner.getTile(new Point(x, y));
+                if (this.distanceTo(candidate) <= distance) {
+                    answer.add(candidate);
+                }
+            }
+        }
+        return answer;
     }
 }
