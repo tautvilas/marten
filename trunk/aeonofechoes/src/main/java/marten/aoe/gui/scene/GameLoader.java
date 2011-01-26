@@ -12,10 +12,10 @@ import marten.age.graphics.image.ImageCache;
 import marten.age.io.Loadable;
 import marten.age.io.LoadingState;
 import marten.age.io.SimpleLoader;
+import marten.aoe.dto.MinimalMapDTO;
+import marten.aoe.dto.MinimalTileDTO;
 import marten.aoe.gui.widget.AoeString;
 import marten.aoe.gui.widget.MapWidget;
-import marten.aoe.proposal.dto.MinimalMapDTO;
-import marten.aoe.proposal.dto.MinimalTileDTO;
 import marten.aoe.server.face.EngineFace;
 import marten.aoe.server.serializable.GameDetails;
 

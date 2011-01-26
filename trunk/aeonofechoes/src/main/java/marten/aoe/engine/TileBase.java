@@ -1,8 +1,8 @@
-package marten.aoe.proposal.engine;
+package marten.aoe.engine;
 
-import marten.aoe.proposal.dto.MinimalTileDTO;
-import marten.aoe.proposal.dto.PointDTO;
-import marten.aoe.proposal.dto.TileDTO;
+import marten.aoe.dto.MinimalTileDTO;
+import marten.aoe.dto.PointDTO;
+import marten.aoe.dto.TileDTO;
 
 public abstract class TileBase extends Tile {
     public TileBase(String name, Map owner, PointDTO coordinates) {

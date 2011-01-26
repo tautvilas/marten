@@ -27,8 +27,8 @@ import marten.age.graphics.texture.Texture;
 import marten.age.graphics.texture.TextureLoader;
 import marten.age.graphics.transform.TranslationGroup;
 import marten.age.widget.Widget;
-import marten.aoe.proposal.dto.MinimalMapDTO;
-import marten.aoe.proposal.dto.MinimalTileDTO;
+import marten.aoe.dto.MinimalMapDTO;
+import marten.aoe.dto.MinimalTileDTO;
 import marten.aoe.server.face.EngineFace;
 
 import org.apache.log4j.Logger;
@@ -142,7 +142,7 @@ public class MapWidget extends BasicSprite implements Widget, MouseListener {
             this.tiles.get(new Point(tileX, tileY));
             try {
                 return this.engine.getMap().getTileDTO(
-                        new marten.aoe.proposal.dto.PointDTO(tileX, tileY));
+                        new marten.aoe.dto.PointDTO(tileX, tileY));
             } catch (RemoteException e) {
                 throw new RuntimeException(e);
             }

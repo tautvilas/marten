@@ -1,4 +1,4 @@
-package marten.aoe.proposal.dto;
+package marten.aoe.dto;
 
 public enum Direction {
     N(0, 1, 1),

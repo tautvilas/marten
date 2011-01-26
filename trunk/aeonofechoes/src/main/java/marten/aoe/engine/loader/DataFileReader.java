@@ -1,4 +1,4 @@
-package marten.aoe.proposal.loader;
+package marten.aoe.engine.loader;
 
 import java.io.BufferedReader;
 import java.io.FileReader;

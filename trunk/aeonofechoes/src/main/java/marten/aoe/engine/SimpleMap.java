@@ -1,12 +1,12 @@
-package marten.aoe.proposal.engine;
+package marten.aoe.engine;
 
 import java.io.IOException;
 
 import marten.aoe.Path;
-import marten.aoe.proposal.dto.PointDTO;
-import marten.aoe.proposal.loader.DataFileReader;
-import marten.aoe.proposal.loader.DataTree;
-import marten.aoe.proposal.loader.TileLoader;
+import marten.aoe.dto.PointDTO;
+import marten.aoe.engine.loader.DataFileReader;
+import marten.aoe.engine.loader.DataTree;
+import marten.aoe.engine.loader.TileLoader;
 
 /** A branching point for all the maps that have a static layout, which is defined in a DataTree structure in data folder of the game.
  * This, however, does not imply any simplicity in a way the map operates, just that the map is not generated dynamically.*/

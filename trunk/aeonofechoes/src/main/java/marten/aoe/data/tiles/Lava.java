@@ -1,9 +1,9 @@
 package marten.aoe.data.tiles;
 
-import marten.aoe.proposal.dto.DamageDTO;
-import marten.aoe.proposal.dto.DamageType;
-import marten.aoe.proposal.dto.PointDTO;
-import marten.aoe.proposal.engine.Map;
+import marten.aoe.dto.DamageDTO;
+import marten.aoe.dto.DamageType;
+import marten.aoe.dto.PointDTO;
+import marten.aoe.engine.Map;
 
 public final class Lava extends StandardTerrainBase {
     public Lava(Map owner, PointDTO coordinates) {

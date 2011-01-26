@@ -1,4 +1,4 @@
-package marten.aoe.proposal.dto;
+package marten.aoe.dto;
 
 public final class DamageDTO {
     private final int maxDamage;

@@ -1,4 +1,4 @@
-package marten.aoe.proposal.loader;
+package marten.aoe.engine.loader;
 
 import java.util.ArrayList;
 import java.util.List;

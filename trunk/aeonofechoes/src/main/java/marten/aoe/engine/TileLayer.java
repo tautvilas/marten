@@ -1,7 +1,7 @@
-package marten.aoe.proposal.engine;
+package marten.aoe.engine;
 
-import marten.aoe.proposal.dto.MinimalTileDTO;
-import marten.aoe.proposal.dto.TileDTO;
+import marten.aoe.dto.MinimalTileDTO;
+import marten.aoe.dto.TileDTO;
 
 public abstract class TileLayer extends Tile {
     private Tile base;
