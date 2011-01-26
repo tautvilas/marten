@@ -74,7 +74,7 @@ public abstract class Unit {
     /** Create a standard Unit Data Transfer Object. */
     public final UnitDTO getDTO(Player player) {
         for (Unit unit : player.getAllUnits()) {
-            if (this.getLocation().getCoordinates().distanceTo(unit.getLocation().getCoordinates()) + this.detectionModifier <= 0)
+            if (this.getLocation().distanceTo(unit.getLocation()) + this.detectionModifier <= 0)
                 return new UnitDTO(
                         this.name,
                         this.unitSize,

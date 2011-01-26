@@ -38,7 +38,7 @@ public abstract class TileLayer extends Tile {
     }
     @Override public final TileDTO getDTO(Player player) {
         for (Unit unit : player.getAllUnits()) {
-            if (this.getCoordinates().distanceTo(unit.getLocation().getCoordinates()) + this.detectionModifier <= 0)
+            if (this.distanceTo(unit.getLocation()) + this.detectionModifier <= 0)
                 return new TileDTO(
                         this.getName(),
                         this.getCoordinates(),
@@ -54,7 +54,7 @@ public abstract class TileLayer extends Tile {
     @Override
     public final MinimalTileDTO getMinimalDTO(Player player) {
         for (Unit unit : player.getAllUnits()) {
-            if (this.getCoordinates().distanceTo(unit.getLocation().getCoordinates()) + this.detectionModifier <= 0)
+            if (this.distanceTo(unit.getLocation()) + this.detectionModifier <= 0)
                 return new MinimalTileDTO(
                         this.getName(),
                         this.getCoordinates(),
