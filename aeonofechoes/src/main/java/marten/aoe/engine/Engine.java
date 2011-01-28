@@ -1,12 +1,12 @@
 package marten.aoe.engine;
 
 import marten.aoe.dto.FullMapDTO;
-import marten.aoe.dto.MapDTO;
-import marten.aoe.dto.TileDTO;
-import marten.aoe.dto.UnitDTO;
-import marten.aoe.dto.PointDTO;
 import marten.aoe.dto.FullTileDTO;
 import marten.aoe.dto.FullUnitDTO;
+import marten.aoe.dto.MapDTO;
+import marten.aoe.dto.PointDTO;
+import marten.aoe.dto.TileDTO;
+import marten.aoe.dto.UnitDTO;
 import marten.aoe.engine.loader.MapLoader;
 
 public final class Engine {
@@ -17,7 +17,7 @@ public final class Engine {
     public Engine (Map map) {
         this.map = map;
     }
-    public MapDTO getMinimalMapDTO (Player player) {        
+    public MapDTO getMinimalMapDTO (Player player) {
         return (this.map != null) ? this.map.getMinimalDTO(player) : null;
     }
     public FullMapDTO getMapDTO (Player player) {
@@ -34,6 +34,9 @@ public final class Engine {
     }
     public FullUnitDTO getUnitDTO (Player player, PointDTO location) {
         return (this.map != null) ? this.map.getTile(location).getUnit().getDTO(player) : null;
+    }
+    public boolean moveUnit (Player player, PointDTO from, PointDTO to) {
+        return this.map.moveUnit(player, from, to);
     }
     public void endTurn () {
         if (this.map != null) {
