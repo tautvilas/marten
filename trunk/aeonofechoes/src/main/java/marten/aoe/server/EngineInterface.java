@@ -3,7 +3,7 @@ package marten.aoe.server;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 
-import marten.aoe.dto.MinimalMapDTO;
+import marten.aoe.dto.MapDTO;
 import marten.aoe.engine.Engine;
 import marten.aoe.engine.Player;
 import marten.aoe.server.face.EngineFace;
@@ -24,7 +24,7 @@ public class EngineInterface extends UnicastRemoteObject implements EngineFace {
     private static final long serialVersionUID = 1L;
 
     @Override
-    public MinimalMapDTO getMap() throws RemoteException {
+    public MapDTO getMap() throws RemoteException {
         // FIXME: patched to prevent compilation errors, MUST be changed appropriately.
         return engine.getMinimalMapDTO(Player.SYSTEM);
     }

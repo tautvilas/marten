@@ -1,7 +1,7 @@
 package marten.aoe.engine;
 
-import marten.aoe.dto.MinimalTileDTO;
 import marten.aoe.dto.TileDTO;
+import marten.aoe.dto.FullTileDTO;
 
 public abstract class TileLayer extends Tile {
     private Tile base;
@@ -36,10 +36,10 @@ public abstract class TileLayer extends Tile {
         }
         this.base.setOverlay(overlay);
     }
-    @Override public final TileDTO getDTO(Player player) {
+    @Override public final FullTileDTO getDTO(Player player) {
         for (Unit unit : player.getAllUnits()) {
             if (this.distanceTo(unit.getLocation()) + this.detectionModifier <= 0)
-                return new TileDTO(
+                return new FullTileDTO(
                         this.getName(),
                         this.getCoordinates(),
                         this.getHeight(),
@@ -52,10 +52,10 @@ public abstract class TileLayer extends Tile {
         return this.base.getDTO(player);
     }
     @Override
-    public final MinimalTileDTO getMinimalDTO(Player player) {
+    public final TileDTO getMinimalDTO(Player player) {
         for (Unit unit : player.getAllUnits()) {
             if (this.distanceTo(unit.getLocation()) + this.detectionModifier <= 0)
-                return new MinimalTileDTO(
+                return new TileDTO(
                         this.getName(),
                         this.getCoordinates(),
                         (this.getUnit() != null ? this.getUnit().getMinimalDTO(player) : null)

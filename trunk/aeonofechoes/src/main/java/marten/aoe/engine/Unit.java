@@ -5,8 +5,8 @@ import java.util.Random;
 import marten.aoe.dto.DamageDTO;
 import marten.aoe.dto.DamageResistanceDTO;
 import marten.aoe.dto.DamageType;
-import marten.aoe.dto.MinimalUnitDTO;
 import marten.aoe.dto.UnitDTO;
+import marten.aoe.dto.FullUnitDTO;
 import marten.aoe.dto.UnitSize;
 import marten.aoe.dto.UnitType;
 
@@ -72,10 +72,10 @@ public abstract class Unit {
         return this.detectionModifier;
     }
     /** Create a standard Unit Data Transfer Object. */
-    public final UnitDTO getDTO(Player player) {
+    public final FullUnitDTO getDTO(Player player) {
         for (Unit unit : player.getAllUnits()) {
             if (this.getLocation().distanceTo(unit.getLocation()) + this.detectionModifier <= 0)
-                return new UnitDTO(
+                return new FullUnitDTO(
                         this.name,
                         this.unitSize,
                         this.unitType,
@@ -96,8 +96,8 @@ public abstract class Unit {
         this.onTurnOver();
     }
     /** Create a minimal Unit Data Transfer Object. */
-    public final MinimalUnitDTO getMinimalDTO(Player player) {
-        return new MinimalUnitDTO(this.name);
+    public final UnitDTO getMinimalDTO(Player player) {
+        return new UnitDTO(this.name);
     }
     /** Find out the remaining movement capacity of the unit*/
     public final int getMovementAllowance () {

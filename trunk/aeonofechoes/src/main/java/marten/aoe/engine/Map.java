@@ -1,10 +1,10 @@
 package marten.aoe.engine;
 
+import marten.aoe.dto.FullMapDTO;
 import marten.aoe.dto.MapDTO;
-import marten.aoe.dto.MinimalMapDTO;
-import marten.aoe.dto.MinimalTileDTO;
-import marten.aoe.dto.PointDTO;
 import marten.aoe.dto.TileDTO;
+import marten.aoe.dto.PointDTO;
+import marten.aoe.dto.FullTileDTO;
 
 public abstract class Map {
     private final Tile[][] map;
@@ -32,23 +32,23 @@ public abstract class Map {
     public final String getName () {
         return this.name;
     }
-    public final MapDTO getDTO (Player player) {
-        TileDTO[][] tiles = new TileDTO[this.width][this.height];
+    public final FullMapDTO getDTO (Player player) {
+        FullTileDTO[][] tiles = new FullTileDTO[this.width][this.height];
         for (int x = 0; x < this.width; x++) {
             for (int y = 0; y < this.height; y++) {
                 tiles[x][y] = (this.map[x][y] != null ? this.map[x][y].getDTO(player) : null);
             }
         }
-        return new MapDTO(tiles, this.width, this.height, this.name);
+        return new FullMapDTO(tiles, this.width, this.height, this.name);
     }
-    public final MinimalMapDTO getMinimalDTO (Player player) {
-        MinimalTileDTO[][] tiles = new MinimalTileDTO[this.width][this.height];
+    public final MapDTO getMinimalDTO (Player player) {
+        TileDTO[][] tiles = new TileDTO[this.width][this.height];
         for (int x = 0; x < this.width; x++) {
             for (int y = 0; y < this.height; y++) {
                 tiles[x][y] = (this.map[x][y] != null ? this.map[x][y].getMinimalDTO(player) : null);
             }
         }
-        return new MinimalMapDTO(tiles, this.width, this.height, this.name);
+        return new MapDTO(tiles, this.width, this.height, this.name);
     }
     public final Tile getTile (PointDTO point) {
         if (point.getX() >= 0 && point.getX() < this.width && point.getY() >= 0 && point.getY() < this.height) {
