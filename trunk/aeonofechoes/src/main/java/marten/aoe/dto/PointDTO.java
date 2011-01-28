@@ -15,5 +15,17 @@ public final class PointDTO implements Serializable {
     }
     public final int getY () {
         return this.y;
-    }    
+    }
+    @Override public final int hashCode () {
+        // Somewhat evil code follows
+        return this.x ^ ~this.y;
+    }
+    @Override public final boolean equals (Object other) {
+        // Evil code follows
+        if (other != null && other instanceof PointDTO) {
+            PointDTO otherPoint = (PointDTO)other;
+            return this.x == otherPoint.x && this.y == otherPoint.y;
+        }
+        return false;
+    }
 }
