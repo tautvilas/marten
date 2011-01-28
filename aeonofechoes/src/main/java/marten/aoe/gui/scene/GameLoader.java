@@ -12,8 +12,8 @@ import marten.age.graphics.image.ImageCache;
 import marten.age.io.Loadable;
 import marten.age.io.LoadingState;
 import marten.age.io.SimpleLoader;
-import marten.aoe.dto.MinimalMapDTO;
-import marten.aoe.dto.MinimalTileDTO;
+import marten.aoe.dto.MapDTO;
+import marten.aoe.dto.TileDTO;
 import marten.aoe.gui.widget.AoeString;
 import marten.aoe.gui.widget.MapWidget;
 import marten.aoe.server.face.EngineFace;
@@ -74,14 +74,14 @@ public class GameLoader extends AgeScene implements Loadable {
             throw new RuntimeException(e);
         }
         log.info("Loading map data for '" + this.details.mapName + "'...");
-        MinimalMapDTO mapData;
+        MapDTO mapData;
         try {
             mapData = engine.getMap();
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-        for (MinimalTileDTO[] tileLine : mapData.getTileMap()) {
-            for (MinimalTileDTO tile : tileLine) {
+        for (TileDTO[] tileLine : mapData.getTileMap()) {
+            for (TileDTO tile : tileLine) {
                 state.status = "Loading map images ";
 //                System.out.println(tile.getName());
                 ImageCache.loadImage("data/gui/tiles/" + tile.getName().toLowerCase() + ".png");

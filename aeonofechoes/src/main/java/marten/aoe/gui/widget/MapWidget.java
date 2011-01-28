@@ -27,8 +27,8 @@ import marten.age.graphics.texture.Texture;
 import marten.age.graphics.texture.TextureLoader;
 import marten.age.graphics.transform.TranslationGroup;
 import marten.age.widget.Widget;
-import marten.aoe.dto.MinimalMapDTO;
-import marten.aoe.dto.MinimalTileDTO;
+import marten.aoe.dto.MapDTO;
+import marten.aoe.dto.TileDTO;
 import marten.aoe.dto.PointDTO;
 import marten.aoe.server.face.EngineFace;
 
@@ -39,8 +39,8 @@ public class MapWidget extends BasicSprite implements Widget, MouseListener {
     private static org.apache.log4j.Logger log = Logger
             .getLogger(MapWidget.class);
     private final HashMap<String, SimpleModel> terrainCache = new HashMap<String, SimpleModel>();
-    private final HashMap<MinimalTileDTO, Point> tiles = new HashMap<MinimalTileDTO, Point>();
-    private MinimalTileDTO[][] map = null;
+    private final HashMap<TileDTO, Point> tiles = new HashMap<TileDTO, Point>();
+    private TileDTO[][] map = null;
     private final BitmapFont font = FontCache.getFont(new Font("Courier New",
             Font.BOLD, 20));
     private final TranslationGroup tg = new TranslationGroup();
@@ -70,8 +70,8 @@ public class MapWidget extends BasicSprite implements Widget, MouseListener {
         } catch (RemoteException e) {
             e.printStackTrace();
         }
-        for (MinimalTileDTO[] tileLine : map) {
-            for (MinimalTileDTO tile : tileLine) {
+        for (TileDTO[] tileLine : map) {
+            for (TileDTO tile : tileLine) {
                 Point tileCoordinates = this.getTileDisplayCoordinates(tile
                         .getCoordinates());
                 updateDimensionConstraints(tileCoordinates);
@@ -95,8 +95,8 @@ public class MapWidget extends BasicSprite implements Widget, MouseListener {
         }
         tg.addChild(cm);
         tg.addChild(tileHighlight);
-        for (MinimalTileDTO[] tileLine : map) {
-            for (MinimalTileDTO tile : tileLine) {
+        for (TileDTO[] tileLine : map) {
+            for (TileDTO tile : tileLine) {
                 BitmapString coords = new BitmapString(font, tile
                         .getCoordinates().getX()
                         + ":" + tile.getCoordinates().getY(), new Color(0.0,
@@ -136,7 +136,7 @@ public class MapWidget extends BasicSprite implements Widget, MouseListener {
         }
     }
 
-    private MinimalTileDTO getTile(Point coords, boolean odd)
+    private TileDTO getTile(Point coords, boolean odd)
             throws IndexOutOfBoundsException {
         if (Math.abs(coords.x % (tileWidth + tileWidth / 2)) <= tileWidth) {
             int tileX = ((int)coords.x / (tileWidth + tileWidth / 2)) * 2;
@@ -151,14 +151,14 @@ public class MapWidget extends BasicSprite implements Widget, MouseListener {
         throw new IndexOutOfBoundsException("Tile index is out of bounds");
     }
 
-    private MinimalTileDTO tileHit(Point mouseCoords) {
+    private TileDTO tileHit(Point mouseCoords) {
         // Substract map translation form mouse coordinates
         mouseCoords.x -= this.getPosition().x;
         mouseCoords.y -= this.getPosition().y;
         // Create a copy of mouse coordinates for modification
         Point coords = new Point(mouseCoords);
         // Tile hit candidate array
-        ArrayList<MinimalTileDTO> candidates = new ArrayList<MinimalTileDTO>();
+        ArrayList<TileDTO> candidates = new ArrayList<TileDTO>();
 
         // Hack for dealing with negative coordinates
         if (coords.y < 0)
@@ -168,7 +168,7 @@ public class MapWidget extends BasicSprite implements Widget, MouseListener {
 
         // Check hit for even tile columns
         try {
-            MinimalTileDTO tile = getTile(coords, false);
+            TileDTO tile = getTile(coords, false);
             candidates.add(tile);
         } catch (IndexOutOfBoundsException e) {
         }
@@ -180,7 +180,7 @@ public class MapWidget extends BasicSprite implements Widget, MouseListener {
             coords.x -= tileWidth * 3 / 4;
         coords.y -= tileHeight / 2;
         try {
-            MinimalTileDTO tile = getTile(coords, true);
+            TileDTO tile = getTile(coords, true);
             candidates.add(tile);
         } catch (IndexOutOfBoundsException e) {
         }
@@ -192,8 +192,8 @@ public class MapWidget extends BasicSprite implements Widget, MouseListener {
             return candidates.get(0);
         } else {
             double mindistance = tileWidth * 2;
-            MinimalTileDTO result = null;
-            for (MinimalTileDTO tile : candidates) {
+            TileDTO result = null;
+            for (TileDTO tile : candidates) {
                 Point facePosition = tiles.get(tile);
                 Point faceCenter = new Point(facePosition.x + tileWidth / 2,
                         facePosition.y + tileHeight / 2);
@@ -237,7 +237,7 @@ public class MapWidget extends BasicSprite implements Widget, MouseListener {
         // int height = (this.engine.tileMap.maxY() - this.engine.tileMap.minY()
         // + 1)
         // * (this.tileHeight) + this.tileHeight / 2;
-        MinimalMapDTO map;
+        MapDTO map;
         try {
             map = this.engine.getMap();
         } catch (RemoteException e) {
@@ -275,7 +275,7 @@ public class MapWidget extends BasicSprite implements Widget, MouseListener {
 
     @Override
     public void mouseMove(Point coords) {
-        MinimalTileDTO tile = tileHit(coords);
+        TileDTO tile = tileHit(coords);
         if (tile != null) {
             tileHighlight.setPosition(tiles.get(tile));
         }

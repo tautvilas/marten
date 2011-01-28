@@ -3,27 +3,30 @@ package marten.aoe.dto;
 import java.io.Serializable;
 
 public final class MapDTO implements Serializable {
-    private static final long serialVersionUID = -178599366315529060L;
-    private final TileDTO[][] map;
+    private static final long serialVersionUID = 2061015657078949829L;
+    private final TileDTO[][] tileMap;
+    private final String name;
     private final int width;
     private final int height;
-    private final String name;
-    public MapDTO (TileDTO[][] map, int width, int height, String name) {
-        this.map = map;
+    public MapDTO (TileDTO[][] tileMap, int width, int height, String name) {
+        this.tileMap = tileMap;
         this.name = name;
-        this.height = height;
         this.width = width;
+        this.height = height;
     }
     public TileDTO getTileDTO (PointDTO location) {
-        return this.map[location.getX()][location.getY()];
-    }
-    public int getWidth () {
-        return this.width;
-    }
-    public int getHeight () {
-        return this.height;
+        return this.tileMap[location.getX()][location.getY()];
     }
     public String getName () {
         return this.name;
+    }
+    public int getWidth() {
+        return this.width;
+    }
+    public int getHeight() {
+        return this.height;
+    }
+    public TileDTO[][] getTileMap() {
+        return this.tileMap;
     }
 }

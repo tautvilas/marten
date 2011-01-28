@@ -6,10 +6,10 @@ import java.util.List;
 import marten.aoe.dto.DamageDTO;
 import marten.aoe.dto.DefenseDTO;
 import marten.aoe.dto.Direction;
-import marten.aoe.dto.MinimalTileDTO;
+import marten.aoe.dto.TileDTO;
 import marten.aoe.dto.MovementDTO;
 import marten.aoe.dto.PointDTO;
-import marten.aoe.dto.TileDTO;
+import marten.aoe.dto.FullTileDTO;
 import marten.aoe.dto.UnitSize;
 import marten.aoe.dto.UnitType;
 
@@ -46,9 +46,9 @@ public abstract class Tile {
         return this.unit != null;
     }
     /** Returns a standard Tile Data Transfer Object for this tile.*/
-    public abstract TileDTO getDTO(Player player);
+    public abstract FullTileDTO getDTO(Player player);
     /** Returns a minimal Tile Data Transfer Object for this tile.*/
-    public abstract MinimalTileDTO getMinimalDTO(Player player);
+    public abstract TileDTO getMinimalDTO(Player player);
     
     /** Removes the unit from this tile and triggers appropriate events.
      * @return the unit formerly in this tile or <code>null</code> if there was no unit. 

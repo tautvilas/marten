@@ -1,12 +1,12 @@
 package marten.aoe.engine;
 
+import marten.aoe.dto.FullMapDTO;
 import marten.aoe.dto.MapDTO;
-import marten.aoe.dto.MinimalMapDTO;
-import marten.aoe.dto.MinimalTileDTO;
-import marten.aoe.dto.MinimalUnitDTO;
-import marten.aoe.dto.PointDTO;
 import marten.aoe.dto.TileDTO;
 import marten.aoe.dto.UnitDTO;
+import marten.aoe.dto.PointDTO;
+import marten.aoe.dto.FullTileDTO;
+import marten.aoe.dto.FullUnitDTO;
 import marten.aoe.engine.loader.MapLoader;
 
 public final class Engine {
@@ -17,22 +17,22 @@ public final class Engine {
     public Engine (Map map) {
         this.map = map;
     }
-    public MinimalMapDTO getMinimalMapDTO (Player player) {        
+    public MapDTO getMinimalMapDTO (Player player) {        
         return (this.map != null) ? this.map.getMinimalDTO(player) : null;
     }
-    public MapDTO getMapDTO (Player player) {
+    public FullMapDTO getMapDTO (Player player) {
         return (this.map != null) ? this.map.getDTO(player) : null;
     }
-    public MinimalTileDTO getMinimalTileDTO (Player player, PointDTO location) {
+    public TileDTO getMinimalTileDTO (Player player, PointDTO location) {
         return (this.map != null) ? this.map.getTile(location).getMinimalDTO(player) : null;
     }
-    public TileDTO getTileDTO (Player player, PointDTO location) {
+    public FullTileDTO getTileDTO (Player player, PointDTO location) {
         return (this.map != null) ? this.map.getTile(location).getDTO(player) : null;
     }
-    public MinimalUnitDTO getMinimalUnitDTO (Player player, PointDTO location) {
+    public UnitDTO getMinimalUnitDTO (Player player, PointDTO location) {
         return (this.map != null) ? this.map.getTile(location).getUnit().getMinimalDTO(player) : null;
     }
-    public UnitDTO getUnitDTO (Player player, PointDTO location) {
+    public FullUnitDTO getUnitDTO (Player player, PointDTO location) {
         return (this.map != null) ? this.map.getTile(location).getUnit().getDTO(player) : null;
     }
     public void endTurn () {
