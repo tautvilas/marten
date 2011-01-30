@@ -17,7 +17,7 @@ public class OkCancelDialog extends SimpleLayout implements MouseListener {
 
     public OkCancelDialog(Dimension dimension) {
         super(dimension);
-        ImageData buttonImage = ImageCache.getImage(Path.SKIN_PATH
+        ImageData buttonImage = ImageCache.getImage(Path.SKIN_DATA_PATH
                 + "menu-button.png");
         ok = new Button(buttonImage);
         ok.setLabel("OK");

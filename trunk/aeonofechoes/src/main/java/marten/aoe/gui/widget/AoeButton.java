@@ -11,7 +11,7 @@ import marten.aoe.Path;
 public class AoeButton extends Button {
 
     public AoeButton(String label) {
-        super(ImageCache.getImage(Path.SKIN_PATH + "menu-button.png"));
+        super(ImageCache.getImage(Path.SKIN_DATA_PATH + "menu-button.png"));
         BitmapFont buttonFont = FontCache.getFont(new Font("Arial", Font.PLAIN,
                 20));
         this.setFont(buttonFont);

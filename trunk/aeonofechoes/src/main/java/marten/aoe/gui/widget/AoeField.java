@@ -9,8 +9,8 @@ import marten.aoe.Path;
 
 public class AoeField extends AgeField {
     public AoeField() {
-        super(ImageCache.getImage(Path.SKIN_PATH + "field.png"), ImageCache
-                .getImage(Path.SKIN_PATH + "cursor.png"), FontCache
+        super(ImageCache.getImage(Path.SKIN_DATA_PATH + "field.png"), ImageCache
+                .getImage(Path.SKIN_DATA_PATH + "cursor.png"), FontCache
                 .getFont(new Font("Arial", Font.PLAIN, 20)));
     }
 }
