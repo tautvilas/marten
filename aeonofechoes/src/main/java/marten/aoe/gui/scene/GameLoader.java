@@ -12,6 +12,7 @@ import marten.age.graphics.image.ImageCache;
 import marten.age.io.Loadable;
 import marten.age.io.LoadingState;
 import marten.age.io.SimpleLoader;
+import marten.aoe.Path;
 import marten.aoe.dto.MapDTO;
 import marten.aoe.dto.TileDTO;
 import marten.aoe.gui.widget.AoeString;
@@ -51,7 +52,9 @@ public class GameLoader extends AgeScene implements Loadable {
     public void compute() {
         if (this.loader.loadingFinished()) {
             MapWidget map = new MapWidget(engine);
-            this.fireEvent(new AgeSceneSwitchEvent(new Game(map, this.details)));
+            this
+                    .fireEvent(new AgeSceneSwitchEvent(new Game(map,
+                            this.details)));
         }
         String status = loader.getStatus();
         if (!this.status.equals(status)) {
@@ -69,7 +72,7 @@ public class GameLoader extends AgeScene implements Loadable {
     public synchronized void load(LoadingState state) {
         state.status = "Loading map data";
         try {
-            this.engine = (EngineFace)Naming.lookup(this.details.engineUrl);
+            this.engine = (EngineFace) Naming.lookup(this.details.engineUrl);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
@@ -83,8 +86,10 @@ public class GameLoader extends AgeScene implements Loadable {
         for (TileDTO[] tileLine : mapData.getTileMap()) {
             for (TileDTO tile : tileLine) {
                 state.status = "Loading map images ";
-//                System.out.println(tile.getName());
-                ImageCache.loadImage("data/gui/tiles/" + tile.getName().toLowerCase() + ".png");
+                // System.out.println(tile.getName());
+                ImageCache.loadImage("data/gui/tiles/"
+                        + tile.getName().toLowerCase() + ".png", Path.TILE_DATA_PATH
+                        + tile.getName());
             }
         }
         state.status = "100%";

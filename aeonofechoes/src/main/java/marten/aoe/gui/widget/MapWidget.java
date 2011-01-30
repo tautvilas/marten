@@ -27,6 +27,7 @@ import marten.age.graphics.texture.Texture;
 import marten.age.graphics.texture.TextureLoader;
 import marten.age.graphics.transform.TranslationGroup;
 import marten.age.widget.Widget;
+import marten.aoe.Path;
 import marten.aoe.dto.MapDTO;
 import marten.aoe.dto.PointDTO;
 import marten.aoe.dto.TileDTO;
@@ -74,8 +75,7 @@ public class MapWidget extends BasicSprite implements Widget, MouseListener {
                         TILE_HEIGHT), tileCoordinates);
                 if (!this.terrainCache.containsKey(tile.getName())) {
                     Texture terrain = TextureLoader.loadTexture(ImageCache
-                            .getImage("data/gui/tiles/"
-                                    + tile.getName().toLowerCase() + ".png"));
+                            .getImage(Path.TILE_DATA_PATH + tile.getName()));
                     terrainCache.put(tile.getName(), new SimpleModel(
                             new Appearance(terrain)));
                 }
@@ -246,16 +246,16 @@ public class MapWidget extends BasicSprite implements Widget, MouseListener {
     }
 
     @Override
-    public void mouseDown(Point coords) {
-    }
-
-    @Override
     public void mouseMove(Point coords) {
         TileDTO tile = tileHit(coords);
         if (tile != null) {
             tileHighlight.setPosition(this.getTileDisplayCoordinates(tile
                     .getCoordinates()));
         }
+    }
+
+    @Override
+    public void mouseDown(Point coords) {
     }
 
     @Override
