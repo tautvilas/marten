@@ -39,7 +39,6 @@ public class MapWidget extends BasicSprite implements Widget, MouseListener {
     private static org.apache.log4j.Logger log = Logger
             .getLogger(MapWidget.class);
     private final HashMap<String, SimpleModel> terrainCache = new HashMap<String, SimpleModel>();
-    private final HashMap<TileDTO, Point> tiles = new HashMap<TileDTO, Point>();
     private TileDTO[][] map = null;
     private final BitmapFont font = FontCache.getFont(new Font("Courier New",
             Font.BOLD, 20));
@@ -86,7 +85,6 @@ public class MapWidget extends BasicSprite implements Widget, MouseListener {
                 }
                 SimpleModel sm = terrainCache.get(tile.getName());
                 sm.addGeometry(geometry);
-                tiles.put(tile, tileCoordinates);
             }
         }
         cm.setAppearance(new Appearance(new Color(1.0, 1.0, 1.0)));
@@ -101,7 +99,8 @@ public class MapWidget extends BasicSprite implements Widget, MouseListener {
                         .getCoordinates().getX()
                         + ":" + tile.getCoordinates().getY(), new Color(0.0,
                         1.0, 0.0));
-                coords.setPosition(tiles.get(tile));
+                coords.setPosition(this.getTileDisplayCoordinates(tile
+                        .getCoordinates()));
                 // tg.addChild(coords);
             }
         }
@@ -111,13 +110,13 @@ public class MapWidget extends BasicSprite implements Widget, MouseListener {
 
     private void updateDimensionConstraints(Point tileCoordinates) {
         if (tileCoordinates.x + tileWidth > this.maxX)
-            this.maxX = (int)tileCoordinates.x + tileWidth;
+            this.maxX = (int) tileCoordinates.x + tileWidth;
         else if (tileCoordinates.x < this.minX)
-            this.minX = (int)tileCoordinates.x;
+            this.minX = (int) tileCoordinates.x;
         if (tileCoordinates.y + tileHeight > this.maxY)
-            this.maxY = (int)tileCoordinates.y + tileHeight;
+            this.maxY = (int) tileCoordinates.y + tileHeight;
         else if (tileCoordinates.y < this.minY)
-            this.minY = (int)tileCoordinates.y;
+            this.minY = (int) tileCoordinates.y;
     }
 
     private Point getTileDisplayCoordinates(PointDTO position) {
@@ -139,13 +138,12 @@ public class MapWidget extends BasicSprite implements Widget, MouseListener {
     private TileDTO getTile(Point coords, boolean odd)
             throws IndexOutOfBoundsException {
         if (Math.abs(coords.x % (tileWidth + tileWidth / 2)) <= tileWidth) {
-            int tileX = ((int)coords.x / (tileWidth + tileWidth / 2)) * 2;
-            int tileY = (int)coords.y / (tileHeight);
+            int tileX = ((int) coords.x / (tileWidth + tileWidth / 2)) * 2;
+            int tileY = (int) coords.y / (tileHeight);
             if (odd && coords.x < 0)
                 tileX -= 1;
             else if (odd)
                 tileX += 1;
-            this.tiles.get(new Point(tileX, tileY));
             return map[tileX][tileY];
         }
         throw new IndexOutOfBoundsException("Tile index is out of bounds");
@@ -194,7 +192,8 @@ public class MapWidget extends BasicSprite implements Widget, MouseListener {
             double mindistance = tileWidth * 2;
             TileDTO result = null;
             for (TileDTO tile : candidates) {
-                Point facePosition = tiles.get(tile);
+                Point facePosition = this.getTileDisplayCoordinates(tile
+                        .getCoordinates());
                 Point faceCenter = new Point(facePosition.x + tileWidth / 2,
                         facePosition.y + tileHeight / 2);
                 double dx = Math.abs(faceCenter.x - mouseCoords.x);
@@ -277,7 +276,8 @@ public class MapWidget extends BasicSprite implements Widget, MouseListener {
     public void mouseMove(Point coords) {
         TileDTO tile = tileHit(coords);
         if (tile != null) {
-            tileHighlight.setPosition(tiles.get(tile));
+            tileHighlight.setPosition(this.getTileDisplayCoordinates(tile
+                    .getCoordinates()));
         }
     }
 
