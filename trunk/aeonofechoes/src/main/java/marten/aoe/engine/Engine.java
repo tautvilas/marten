@@ -17,28 +17,28 @@ public final class Engine {
     public Engine (Map map) {
         this.map = map;
     }
-    public MapDTO getMinimalMapDTO (Player player) {
+    public synchronized MapDTO getMinimalMapDTO (Player player) {
         return (this.map != null) ? this.map.getMinimalDTO(player) : null;
     }
-    public FullMapDTO getMapDTO (Player player) {
+    public synchronized FullMapDTO getMapDTO (Player player) {
         return (this.map != null) ? this.map.getDTO(player) : null;
     }
-    public TileDTO getMinimalTileDTO (Player player, PointDTO location) {
+    public synchronized TileDTO getMinimalTileDTO (Player player, PointDTO location) {
         return (this.map != null) ? this.map.getTile(location).getMinimalDTO(player) : null;
     }
-    public FullTileDTO getTileDTO (Player player, PointDTO location) {
+    public synchronized FullTileDTO getTileDTO (Player player, PointDTO location) {
         return (this.map != null) ? this.map.getTile(location).getDTO(player) : null;
     }
-    public UnitDTO getMinimalUnitDTO (Player player, PointDTO location) {
+    public synchronized UnitDTO getMinimalUnitDTO (Player player, PointDTO location) {
         return (this.map != null) ? this.map.getTile(location).getUnit().getMinimalDTO(player) : null;
     }
-    public FullUnitDTO getUnitDTO (Player player, PointDTO location) {
+    public synchronized FullUnitDTO getUnitDTO (Player player, PointDTO location) {
         return (this.map != null) ? this.map.getTile(location).getUnit().getDTO(player) : null;
     }
-    public boolean moveUnit (Player player, PointDTO from, PointDTO to) {
+    public synchronized boolean moveUnit (Player player, PointDTO from, PointDTO to) {
         return this.map.moveUnit(player, from, to);
     }
-    public void endTurn () {
+    public synchronized void endTurn () {
         if (this.map != null) {
             this.map.endTurn();
         }
