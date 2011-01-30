@@ -1,5 +1,7 @@
 package marten.aoe.gui.scene;
 
+import java.rmi.RemoteException;
+
 import marten.age.control.KeyboardController;
 import marten.age.control.KeyboardListener;
 import marten.age.control.MouseController;
@@ -9,6 +11,7 @@ import marten.age.graphics.flat.Flatland;
 import marten.age.graphics.primitives.Point;
 import marten.age.widget.obsolete.FpsCounter;
 import marten.aoe.gui.widget.MapWidget;
+import marten.aoe.server.face.EngineFace;
 import marten.aoe.server.serializable.GameDetails;
 
 import org.apache.log4j.Logger;
@@ -22,11 +25,17 @@ public class Game extends AgeScene {
     private MapWidget map;
     @SuppressWarnings("unused")
     private GameDetails params;
+    private EngineFace engine;
     private MouseController mouseController = new MouseController();
 
-    public Game(MapWidget mapWidget, GameDetails details) {
+    public Game(EngineFace engine, GameDetails details) {
         this.params = details;
-        this.map = mapWidget;
+        this.engine = engine;
+        try {
+            this.map = new MapWidget(this.engine.getMap());
+        } catch (RemoteException e) {
+            throw new RuntimeException(e);
+        }
         flatland = new Flatland();
 
         flatland.addChild(map);
