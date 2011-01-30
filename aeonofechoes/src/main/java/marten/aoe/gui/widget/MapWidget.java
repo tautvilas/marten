@@ -2,7 +2,6 @@ package marten.aoe.gui.widget;
 
 import java.awt.Font;
 import java.io.IOException;
-import java.rmi.RemoteException;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -31,7 +30,6 @@ import marten.aoe.Path;
 import marten.aoe.dto.MapDTO;
 import marten.aoe.dto.PointDTO;
 import marten.aoe.dto.TileDTO;
-import marten.aoe.server.face.EngineFace;
 
 import org.apache.log4j.Logger;
 
@@ -45,7 +43,6 @@ public class MapWidget extends BasicSprite implements Widget, MouseListener {
 
     private final HashMap<String, SimpleModel> terrainCache = new HashMap<String, SimpleModel>();
     private MapDTO map = null;
-    private final EngineFace engine;
 
     private final BitmapFont font = FontCache.getFont(new Font("Courier New",
             Font.BOLD, 20));
@@ -53,19 +50,14 @@ public class MapWidget extends BasicSprite implements Widget, MouseListener {
     private final ComplexModel cm = new ComplexModel();
     private TextureSprite tileHighlight = null;
 
-    public MapWidget(EngineFace engine) {
-        this.engine = engine;
+    public MapWidget(MapDTO map) {
+        this.map = map;
         try {
             tileHighlight = new TextureSprite(new ImageData(
                     "data/gui/skin/tile-highlight.png"));
             tileHighlight.setPosition(new Point(-10000, -10000));
         } catch (IOException e1) {
             throw (new RuntimeException(e1));
-        }
-        try {
-            this.map = this.engine.getMap();
-        } catch (RemoteException e) {
-            e.printStackTrace();
         }
         for (TileDTO[] tileLine : this.map.getTileMap()) {
             for (TileDTO tile : tileLine) {
