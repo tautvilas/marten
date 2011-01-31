@@ -10,9 +10,10 @@ import marten.age.graphics.flat.Flatland;
 import marten.age.graphics.flat.SimpleLayout;
 import marten.age.graphics.primitives.Dimension;
 import marten.age.widget.Action;
+import marten.age.widget.Button;
 import marten.aoe.Path;
 import marten.aoe.gui.scene.GameGate;
-import marten.aoe.gui.widget.AoeButton;
+import marten.aoe.gui.widget.AoeButtonFactory;
 import marten.aoe.gui.widget.OkCancelDialog;
 
 public class ChooseMap extends AgeScene {
@@ -31,7 +32,7 @@ public class ChooseMap extends AgeScene {
         for (int i = 0; i < filenames.length; i++) {
             final String filename = filenames[i].split("\\.")[0];
             if (filename.charAt(0) == '.') continue;
-            AoeButton mapButton = new AoeButton(filename);
+            Button mapButton = AoeButtonFactory.getMenuButton(filename);
             mapButton.setAction(new Action() {
                 @Override
                 public void perform() {
