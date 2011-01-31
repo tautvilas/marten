@@ -13,9 +13,10 @@ import marten.age.graphics.flat.SimpleLayout;
 import marten.age.graphics.primitives.Dimension;
 import marten.age.graphics.primitives.Point;
 import marten.age.widget.Action;
+import marten.age.widget.Button;
 import marten.age.widget.obsolete.FpsCounter;
 import marten.aoe.GameInfo;
-import marten.aoe.gui.widget.AoeButton;
+import marten.aoe.gui.widget.AoeButtonFactory;
 import marten.aoe.gui.widget.AoeField;
 import marten.aoe.gui.widget.AoeString;
 
@@ -63,8 +64,8 @@ public class MainMenu extends MenuScene {
         // create and configure graphic elements
         AoeString nickString = new AoeString("Your nickname:");
         // title.setColor(new Color(0.0, 1.0, 0.0));
-        AoeButton hostButton = new AoeButton("Host Game");
-        AoeButton joinButton = new AoeButton("Join Game");
+        Button hostButton = AoeButtonFactory.getMenuButton("Host Game");
+        Button joinButton = AoeButtonFactory.getMenuButton("Join Game");
         nickField.setValue(generateNick());
 
         // position graphic elements
