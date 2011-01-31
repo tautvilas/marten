@@ -8,11 +8,13 @@ import marten.age.control.MouseController;
 import marten.age.core.AgeScene;
 import marten.age.core.AppInfo;
 import marten.age.graphics.flat.Flatland;
+import marten.age.graphics.primitives.Dimension;
 import marten.age.graphics.primitives.Point;
 import marten.age.widget.Button;
 import marten.age.widget.obsolete.FpsCounter;
 import marten.aoe.gui.widget.AoeButtonFactory;
 import marten.aoe.gui.widget.MapWidget;
+import marten.aoe.gui.widget.Sidebar;
 import marten.aoe.server.face.EngineFace;
 import marten.aoe.server.serializable.GameDetails;
 
@@ -41,8 +43,13 @@ public class Game extends AgeScene {
         flatland = new Flatland();
 
         flatland.addChild(map);
+        Sidebar sidebar = new Sidebar(new Dimension(256, AppInfo
+                .getDisplayHeight()));
+        sidebar.setPosition(new Point(AppInfo.getDisplayWidth() - 256, 0));
         Button endTurnButton = AoeButtonFactory.getEndTurnButton();
-        endTurnButton.setPosition(new Point(AppInfo.getDisplayWidth() - 150, 25));
+        endTurnButton
+                .setPosition(new Point(AppInfo.getDisplayWidth() - 150, 25));
+        flatland.addChild(sidebar);
         flatland.addChild(endTurnButton);
         flatland.addChild(new FpsCounter());
 
@@ -78,7 +85,8 @@ public class Game extends AgeScene {
         Point coords = mouseController.getMouseCoordinates();
         if (coords.x < 5) {
             map.ScrollLeft(10);
-        } else if (coords.x > AppInfo.getDisplayWidth() - 5) {
+        } else if (coords.x > AppInfo.getDisplayWidth() - 5 - 256
+                && coords.x < AppInfo.getDisplayWidth() - 256) {
             map.ScrollRight(10);
         } else if (coords.y < 5) {
             map.ScrollDown(10);
