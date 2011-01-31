@@ -62,18 +62,19 @@ public class MouseController extends Controller {
 
     @Override
     protected void publishEventsToListener(Listener l) {
+        Point coordinates = new Point(this.cursor);
         MouseListener listener = (MouseListener) l;
         if (wheelD != 0) {
-            listener.mouseWheelRoll(wheelD, cursor);
+            listener.mouseWheelRoll(wheelD, coordinates);
         }
         if (mouseDX != 0 || mouseDY != 0 || mouseDW != 0) {
-            listener.mouseMove(cursor);
+            listener.mouseMove(coordinates);
         }
         if (mouseDown) {
-            listener.mouseDown(cursor);
+            listener.mouseDown(coordinates);
         }
         if (mouseUp) {
-            listener.mouseUp(cursor);
+            listener.mouseUp(coordinates);
         }
     }
 
