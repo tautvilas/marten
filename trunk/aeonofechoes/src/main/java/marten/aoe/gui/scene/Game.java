@@ -9,7 +9,9 @@ import marten.age.core.AgeScene;
 import marten.age.core.AppInfo;
 import marten.age.graphics.flat.Flatland;
 import marten.age.graphics.primitives.Point;
+import marten.age.widget.Button;
 import marten.age.widget.obsolete.FpsCounter;
+import marten.aoe.gui.widget.AoeButtonFactory;
 import marten.aoe.gui.widget.MapWidget;
 import marten.aoe.server.face.EngineFace;
 import marten.aoe.server.serializable.GameDetails;
@@ -39,6 +41,9 @@ public class Game extends AgeScene {
         flatland = new Flatland();
 
         flatland.addChild(map);
+        Button endTurnButton = AoeButtonFactory.getEndTurnButton();
+        endTurnButton.setPosition(new Point(AppInfo.getDisplayWidth() - 150, 25));
+        flatland.addChild(endTurnButton);
         flatland.addChild(new FpsCounter());
 
         KeyboardController keyboardController = new KeyboardController();
@@ -64,6 +69,7 @@ public class Game extends AgeScene {
         MouseController mouseController = new MouseController();
         this.addController(mouseController);
         this.registerControllable(map);
+        this.registerControllable(endTurnButton);
         flatland.compile();
     }
 
