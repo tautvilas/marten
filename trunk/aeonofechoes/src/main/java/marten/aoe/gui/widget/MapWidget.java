@@ -126,12 +126,15 @@ public class MapWidget extends BasicSprite implements Widget, MouseListener {
         throw new IndexOutOfBoundsException("Tile index is out of bounds");
     }
 
-    private TileDTO tileHit(Point mouseCoords) {
+    private TileDTO tileHit(Point position) {
         // Substract map translation form mouse coordinates
+        Point mouseCoords = new Point(position);
         mouseCoords.x -= this.getPosition().x;
         mouseCoords.y -= this.getPosition().y;
         // Create a copy of mouse coordinates for modification
         Point coords = new Point(mouseCoords);
+        mouseCoords.x -= this.getPosition().x;
+        mouseCoords.y -= this.getPosition().y;
         // Tile hit candidate array
         ArrayList<TileDTO> candidates = new ArrayList<TileDTO>();
 
