@@ -22,6 +22,8 @@ import org.apache.log4j.Logger;
 import org.lwjgl.input.Keyboard;
 
 public class Game extends AgeScene {
+    private final int MAP_SCROLL_SPEED = 30;
+
     @SuppressWarnings("unused")
     private static org.apache.log4j.Logger log = Logger.getLogger(Game.class);
 
@@ -65,13 +67,13 @@ public class Game extends AgeScene {
             @Override
             public void keyDown(int key, char character) {
                 if (key == Keyboard.KEY_DOWN) {
-                    map.ScrollDown(20);
+                    map.ScrollDown(MAP_SCROLL_SPEED);
                 } else if (key == Keyboard.KEY_UP) {
-                    map.ScrollUp(20);
+                    map.ScrollUp(MAP_SCROLL_SPEED);
                 } else if (key == Keyboard.KEY_LEFT) {
-                    map.ScrollLeft(20);
+                    map.ScrollLeft(MAP_SCROLL_SPEED);
                 } else if (key == Keyboard.KEY_RIGHT) {
-                    map.ScrollRight(20);
+                    map.ScrollRight(MAP_SCROLL_SPEED);
                 }
             }
         });
@@ -87,14 +89,14 @@ public class Game extends AgeScene {
     public void compute() {
         Point coords = mouseController.getMouseCoordinates();
         if (coords.x < 5) {
-            map.ScrollLeft(10);
+            map.ScrollLeft(this.MAP_SCROLL_SPEED);
         } else if (coords.x > AppInfo.getDisplayWidth() - 5
                 && coords.x < AppInfo.getDisplayWidth()) {
-            map.ScrollRight(10);
+            map.ScrollRight(this.MAP_SCROLL_SPEED);
         } else if (coords.y < 5) {
-            map.ScrollDown(10);
+            map.ScrollDown(this.MAP_SCROLL_SPEED);
         } else if (coords.y > AppInfo.getDisplayHeight() - 5) {
-            map.ScrollUp(10);
+            map.ScrollUp(this.MAP_SCROLL_SPEED);
         }
     }
 
