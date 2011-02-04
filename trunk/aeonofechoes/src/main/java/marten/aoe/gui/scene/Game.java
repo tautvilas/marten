@@ -30,22 +30,25 @@ public class Game extends AgeScene {
     @SuppressWarnings("unused")
     private GameDetails params;
     private EngineFace engine;
+    private Sidebar sidebar;
     private MouseController mouseController = new MouseController();
 
     public Game(EngineFace engine, GameDetails details) {
         this.params = details;
         this.engine = engine;
         try {
-            this.map = new MapWidget(this.engine.getMap());
+            this.map = new MapWidget(this.engine.getMap(),
+                    new Dimension(AppInfo.getDisplayWidth() - 180, AppInfo
+                            .getDisplayHeight()));
         } catch (RemoteException e) {
             throw new RuntimeException(e);
         }
         flatland = new Flatland();
 
         flatland.addChild(map);
-        Sidebar sidebar = new Sidebar(new Dimension(256, AppInfo
+        this.sidebar = new Sidebar(new Dimension(256, AppInfo
                 .getDisplayHeight()));
-        sidebar.setPosition(new Point(AppInfo.getDisplayWidth() - 256, 0));
+        sidebar.setPosition(new Point(AppInfo.getDisplayWidth() - 180, 0));
         Button endTurnButton = AoeButtonFactory.getEndTurnButton();
         endTurnButton
                 .setPosition(new Point(AppInfo.getDisplayWidth() - 150, 25));
@@ -85,8 +88,8 @@ public class Game extends AgeScene {
         Point coords = mouseController.getMouseCoordinates();
         if (coords.x < 5) {
             map.ScrollLeft(10);
-        } else if (coords.x > AppInfo.getDisplayWidth() - 5 - 256
-                && coords.x < AppInfo.getDisplayWidth() - 256) {
+        } else if (coords.x > sidebar.getPosition().x - 5
+                && coords.x < sidebar.getPosition().x) {
             map.ScrollRight(10);
         } else if (coords.y < 5) {
             map.ScrollDown(10);

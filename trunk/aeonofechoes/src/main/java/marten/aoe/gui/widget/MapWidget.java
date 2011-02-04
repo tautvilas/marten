@@ -6,7 +6,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import marten.age.control.MouseListener;
-import marten.age.core.AppInfo;
 import marten.age.graphics.appearance.Appearance;
 import marten.age.graphics.appearance.Color;
 import marten.age.graphics.flat.sprite.BasicSprite;
@@ -49,8 +48,10 @@ public class MapWidget extends BasicSprite implements Widget, MouseListener {
     private final TranslationGroup tg = new TranslationGroup();
     private final ComplexModel cm = new ComplexModel();
     private TextureSprite tileHighlight = null;
+    private Dimension dimension;
 
-    public MapWidget(MapDTO map) {
+    public MapWidget(MapDTO map, Dimension dimension) {
+        this.dimension = dimension;
         this.map = map;
         try {
             tileHighlight = new TextureSprite(new ImageData(
@@ -227,13 +228,13 @@ public class MapWidget extends BasicSprite implements Widget, MouseListener {
         Point currentPosition = this.getPosition();
         if (currentPosition.x > 0 && position.x > currentPosition.x) {
             position.x = currentPosition.x;
-        } else if (currentPosition.x + maxX < AppInfo.getDisplayWidth()
+        } else if (currentPosition.x + maxX < this.dimension.width
                 && position.x < currentPosition.x) {
             position.x = currentPosition.x;
         }
         if (currentPosition.y > 0 && position.y > currentPosition.y) {
             position.y = currentPosition.y;
-        } else if (currentPosition.y + maxY < AppInfo.getDisplayHeight()
+        } else if (currentPosition.y + maxY < this.dimension.height
                 && position.y < currentPosition.y) {
             position.y = currentPosition.y;
         }
