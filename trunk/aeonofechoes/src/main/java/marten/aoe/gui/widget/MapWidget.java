@@ -6,14 +6,15 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import marten.age.control.MouseListener;
+import marten.age.graphics.BasicSceneGraphBranch;
 import marten.age.graphics.appearance.Appearance;
 import marten.age.graphics.appearance.Color;
-import marten.age.graphics.flat.sprite.BasicSprite;
 import marten.age.graphics.flat.sprite.TextureSprite;
 import marten.age.graphics.geometry.Geometry;
 import marten.age.graphics.geometry.primitives.Rectangle;
 import marten.age.graphics.image.ImageCache;
 import marten.age.graphics.image.ImageData;
+import marten.age.graphics.layout.BoxedObject;
 import marten.age.graphics.model.ComplexModel;
 import marten.age.graphics.model.SimpleModel;
 import marten.age.graphics.primitives.Dimension;
@@ -32,7 +33,8 @@ import marten.aoe.dto.TileDTO;
 
 import org.apache.log4j.Logger;
 
-public class MapWidget extends BasicSprite implements Widget, MouseListener {
+public class MapWidget extends BasicSceneGraphBranch implements Widget,
+        MouseListener, BoxedObject {
     @SuppressWarnings("unused")
     private static org.apache.log4j.Logger log = Logger
             .getLogger(MapWidget.class);
@@ -116,8 +118,8 @@ public class MapWidget extends BasicSprite implements Widget, MouseListener {
     private TileDTO getTile(Point coords, boolean odd)
             throws IndexOutOfBoundsException {
         if (Math.abs(coords.x % (TILE_WIDTH + TILE_WIDTH / 2)) <= TILE_WIDTH) {
-            int tileX = ((int) coords.x / (TILE_WIDTH + TILE_WIDTH / 2)) * 2;
-            int tileY = (int) coords.y / (TILE_HEIGHT);
+            int tileX = ((int)coords.x / (TILE_WIDTH + TILE_WIDTH / 2)) * 2;
+            int tileY = (int)coords.y / (TILE_HEIGHT);
             if (odd && coords.x < 0)
                 tileX -= 1;
             else if (odd)

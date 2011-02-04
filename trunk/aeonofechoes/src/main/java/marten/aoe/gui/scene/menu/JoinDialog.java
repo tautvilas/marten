@@ -7,7 +7,7 @@ import marten.age.control.KeyboardController;
 import marten.age.control.MouseController;
 import marten.age.core.AppInfo;
 import marten.age.event.AgeSceneSwitchEvent;
-import marten.age.graphics.flat.SimpleLayout;
+import marten.age.graphics.layout.SimpleLayout;
 import marten.age.graphics.primitives.Dimension;
 import marten.age.widget.Action;
 import marten.aoe.gui.scene.GameGate;

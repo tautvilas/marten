@@ -1,13 +1,15 @@
 package marten.age.graphics.flat.sprite;
 
+import marten.age.graphics.BasicSceneGraphChild;
 import marten.age.graphics.image.ImageData;
 import marten.age.graphics.image.ImageTransformations;
+import marten.age.graphics.layout.BoxedObject;
 import marten.age.graphics.primitives.Dimension;
 import marten.age.graphics.primitives.Point;
 
 import org.lwjgl.opengl.GL11;
 
-public class PixelSprite extends BasicSprite {
+public class PixelSprite extends BasicSceneGraphChild implements BoxedObject {
     private ImageData data;
     private Point postition = new Point();
 

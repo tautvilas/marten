@@ -1,11 +1,11 @@
 package marten.aoe.gui.widget;
 
 import marten.age.graphics.appearance.Appearance;
-import marten.age.graphics.flat.SimpleLayout;
 import marten.age.graphics.geometry.Geometry;
 import marten.age.graphics.geometry.primitives.Rectangle;
 import marten.age.graphics.image.ImageCache;
 import marten.age.graphics.image.ImageData;
+import marten.age.graphics.layout.SimpleLayout;
 import marten.age.graphics.model.SimpleModel;
 import marten.age.graphics.primitives.Dimension;
 import marten.age.graphics.primitives.Point;

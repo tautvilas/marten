@@ -1,11 +1,10 @@
-package marten.age.graphics.flat;
+package marten.age.graphics.layout;
 
-import marten.age.graphics.flat.sprite.Sprite;
-import marten.age.graphics.flat.sprite.TranslatableSprite;
 import marten.age.graphics.primitives.Dimension;
 import marten.age.graphics.primitives.Point;
+import marten.age.graphics.transform.TranslationGroup;
 
-public class SimpleLayout extends TranslatableSprite {
+public class SimpleLayout extends TranslationGroup implements BoxedObject {
     private Dimension dimension;
 
     public SimpleLayout(Dimension dimension) {
@@ -16,18 +15,18 @@ public class SimpleLayout extends TranslatableSprite {
         return this.dimension;
     }
 
-    public void addToLeft(Sprite sprite) {
+    public void addToLeft(BoxedObject sprite) {
         sprite.setPosition(new Point(0, 0));
         this.addChild(sprite);
     }
 
-    public void addToRight(Sprite sprite) {
+    public void addToRight(BoxedObject sprite) {
         sprite.setPosition(new Point(this.dimension.width
                 - sprite.getDimension().width, 0));
         this.addChild(sprite);
     }
 
-    public void center(Sprite sprite) {
+    public void center(BoxedObject sprite) {
         Dimension d1 = sprite.getDimension();
         Point p2 = this.getPosition();
         Dimension d2 = this.getDimension();
@@ -37,7 +36,7 @@ public class SimpleLayout extends TranslatableSprite {
         this.addChild(sprite);
     }
 
-    public void centerHorizontally(Sprite sprite, int y) {
+    public void centerHorizontally(BoxedObject sprite, int y) {
         Dimension d1 = sprite.getDimension();
         Point p2 = this.getPosition();
         Dimension d2 = this.getDimension();

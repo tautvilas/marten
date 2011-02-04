@@ -1,9 +1,9 @@
 package marten.aoe.gui.widget;
 
 import marten.age.control.MouseListener;
-import marten.age.graphics.flat.SimpleLayout;
 import marten.age.graphics.image.ImageCache;
 import marten.age.graphics.image.ImageData;
+import marten.age.graphics.layout.SimpleLayout;
 import marten.age.graphics.primitives.Dimension;
 import marten.age.graphics.primitives.Point;
 import marten.age.widget.Action;
