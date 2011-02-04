@@ -10,7 +10,7 @@ import marten.age.core.AgeScene;
 import marten.age.core.AppInfo;
 import marten.age.event.AgeSceneSwitchEvent;
 import marten.age.graphics.flat.Flatland;
-import marten.age.graphics.flat.SimpleLayout;
+import marten.age.graphics.layout.SimpleLayout;
 import marten.age.graphics.primitives.Dimension;
 import marten.age.graphics.primitives.Point;
 import marten.age.graphics.transform.TranslationGroup;

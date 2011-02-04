@@ -1,9 +1,11 @@
 package marten.age.graphics.flat.sprite;
 
+import marten.age.graphics.BasicSceneGraphBranch;
 import marten.age.graphics.appearance.Appearance;
 import marten.age.graphics.appearance.Color;
 import marten.age.graphics.geometry.primitives.Rectangle;
 import marten.age.graphics.image.ImageData;
+import marten.age.graphics.layout.BoxedObject;
 import marten.age.graphics.model.SimpleModel;
 import marten.age.graphics.primitives.Dimension;
 import marten.age.graphics.primitives.Point;
@@ -11,7 +13,7 @@ import marten.age.graphics.texture.Texture;
 import marten.age.graphics.texture.TextureLoader;
 import marten.age.graphics.transform.TranslationGroup;
 
-public class TextureSprite extends BasicSprite {
+public class TextureSprite extends BasicSceneGraphBranch implements BoxedObject {
     private SimpleModel model;
     private TranslationGroup tg = new TranslationGroup();
     private Texture texture;

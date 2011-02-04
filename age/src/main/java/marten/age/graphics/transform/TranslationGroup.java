@@ -1,7 +1,7 @@
 package marten.age.graphics.transform;
 
 import marten.age.graphics.BasicSceneGraphBranch;
-import marten.age.graphics.flat.sprite.Placeable;
+import marten.age.graphics.layout.Placeable;
 import marten.age.graphics.primitives.Point;
 
 import org.lwjgl.opengl.GL11;
