@@ -38,6 +38,14 @@ public final class Engine {
     public synchronized boolean moveUnit (Player player, PointDTO from, PointDTO to) {
         return this.map.moveUnit(player, from, to);
     }
+    @Deprecated public synchronized boolean createUnit (Player player, String name, PointDTO at) {
+        // For testing purposes only. In normal circumstances the players should
+        // rely on buildings and/or map events to get new units.
+        if (!this.map.getTile(at).isOccupied()) {
+            this.map.getTile(at).insertUnit(player, player.getAllUnitTypes().get(name));
+        }
+        return false;
+    }
     public synchronized void endTurn () {
         if (this.map != null) {
             this.map.endTurn();

@@ -5,13 +5,12 @@ import java.util.Random;
 import marten.aoe.dto.DamageDTO;
 import marten.aoe.dto.DamageResistanceDTO;
 import marten.aoe.dto.DamageType;
-import marten.aoe.dto.UnitDTO;
 import marten.aoe.dto.FullUnitDTO;
+import marten.aoe.dto.UnitDTO;
 import marten.aoe.dto.UnitSize;
 import marten.aoe.dto.UnitType;
 
 public abstract class Unit {
-    private final Map map;
     private final UnitSize unitSize;
     private final UnitType unitType;
     private Tile location = null;
@@ -24,9 +23,20 @@ public abstract class Unit {
     private final int detectionRange;
     private final int detectionModifier;
 
-    public Unit(String name, Map map, Player owner, UnitSize unitSize, UnitType unitType, int movementAllowance, int hitPoints, int detectionRange, int detectionModifier) {
+    public Unit (Unit other, Tile location) {
+        this.name = other.name;
+        this.location = location;
+        this.unitSize = other.unitSize;
+        this.unitType = other.unitType;
+        this.owner = other.owner;
+        this.maxMovementAllowance = this.currentMovementAllowance = other.maxMovementAllowance;
+        this.maxHitPoints = this.currentHitPoints = other.maxHitPoints;
+        this.detectionRange = other.detectionRange;
+        this.detectionModifier = other.detectionModifier;
+    }
+    public Unit(String name, Tile location, Player owner, UnitSize unitSize, UnitType unitType, int movementAllowance, int hitPoints, int detectionRange, int detectionModifier) {
         this.name = name;
-        this.map = map;
+        this.location = location;
         this.unitSize = unitSize;
         this.unitType = unitType;
         this.owner = owner;
@@ -41,7 +51,7 @@ public abstract class Unit {
     }
     /** @return the map, where this unit is located.*/
     public final Map getMap() {
-        return this.map;
+        return this.location.getOwner();
     }
     /** @return the owner of this unit.*/
     public final Player getOwner() {
@@ -74,7 +84,7 @@ public abstract class Unit {
     /** Create a standard Unit Data Transfer Object. */
     public final FullUnitDTO getDTO(Player player) {
         for (Unit unit : player.getAllUnits()) {
-            if (this.getLocation().distanceTo(unit.getLocation()) + this.detectionModifier <= 0)
+            if (this.getLocation().distanceTo(unit.getLocation()) + this.detectionModifier <= 0) {
                 return new FullUnitDTO(
                         this.name,
                         this.unitSize,
@@ -87,6 +97,7 @@ public abstract class Unit {
                         this.detectionRange,
                         this.getSpecialFeatures()
                 );
+            }
         }
         return null;
     }
@@ -119,8 +130,9 @@ public abstract class Unit {
      * @param cost - the integer cost of entering a tile.
      * @return <code>-1</code> if movement was impossible to complete for any reason, remaining movement points otherwise.*/
     public final int applyMovementCost(int cost) {
-        if (cost > this.currentMovementAllowance)
+        if (cost > this.currentMovementAllowance) {
             return -1;
+        }
         this.currentMovementAllowance -= cost;
         return this.currentMovementAllowance;
     }
@@ -155,4 +167,7 @@ public abstract class Unit {
     public abstract void onDeath();
     /** @return brief descriptions of special features of the unit*/
     public abstract String[] getSpecialFeatures();
+    /** @return a perfect copy of the unit*/
+    @Override
+    public abstract Unit clone();
 }
