@@ -88,8 +88,8 @@ public class Game extends AgeScene {
         Point coords = mouseController.getMouseCoordinates();
         if (coords.x < 5) {
             map.ScrollLeft(10);
-        } else if (coords.x > sidebar.getPosition().x - 5
-                && coords.x < sidebar.getPosition().x) {
+        } else if (coords.x > AppInfo.getDisplayWidth() - 5
+                && coords.x < AppInfo.getDisplayWidth()) {
             map.ScrollRight(10);
         } else if (coords.y < 5) {
             map.ScrollDown(10);
