@@ -42,7 +42,7 @@ public final class Engine {
         // For testing purposes only. In normal circumstances the players should
         // rely on buildings and/or map events to get new units.
         if (!this.map.getTile(at).isOccupied()) {
-            this.map.getTile(at).insertUnit(player, player.getAllUnitTypes().get(name));
+            this.map.getTile(at).insertUnit(player, player.getAllUnitTypes().get(name).clone());
         }
         return false;
     }
