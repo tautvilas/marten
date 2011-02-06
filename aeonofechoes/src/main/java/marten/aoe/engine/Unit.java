@@ -35,6 +35,9 @@ public abstract class Unit {
         this.maxHitPoints = this.currentHitPoints = other.maxHitPoints;
         this.detectionRange = other.detectionRange;
         this.detectionModifier = other.detectionModifier;
+        if (location != null) {
+            location.insertUnit(PlayerDTO.SYSTEM, this);
+        }
     }
     public Unit(String name, Tile location, PlayerDTO owner, UnitSize unitSize, UnitType unitType, int movementAllowance, int hitPoints, int detectionRange, int detectionModifier) {
         this.name = name;
@@ -46,6 +49,9 @@ public abstract class Unit {
         this.maxHitPoints = this.currentHitPoints = hitPoints;
         this.detectionRange = detectionRange;
         this.detectionModifier = detectionModifier;
+        if (location != null) {
+            location.insertUnit(PlayerDTO.SYSTEM, this);
+        }
     }
     /** @return the name of this unit */
     public final String getName() {
@@ -159,10 +165,12 @@ public abstract class Unit {
         rolledDamage = rolledDamage + this.getDamageResistance(damage.getDamageType()) + this.getLocation().getDefenseBonus(this.unitSize, this.unitType);
         if (rolledDamage > 0) {
             this.currentHitPoints -= rolledDamage;
+            this.getMap().invokeLocalEvent(LocalEvent.UNIT_HURT, this.getLocation().getCoordinates());
         }
         if (this.currentHitPoints <= 0) {
             this.getLocation().removeUnit(PlayerDTO.SYSTEM);
             this.onDeath();
+            this.getMap().invokeLocalEvent(LocalEvent.UNIT_DEAD, this.getLocation().getCoordinates());
         }
     }
     /** It is invoked whenever the health of the unit reaches 0 or below*/

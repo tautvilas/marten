@@ -4,14 +4,15 @@ import java.io.IOException;
 
 import marten.aoe.dto.PlayerDTO;
 import marten.aoe.dto.PointDTO;
+import marten.aoe.engine.Engine;
 import marten.aoe.engine.SimpleMap;
 
 public final class Freelands extends SimpleMap {
 
-    public Freelands() throws IOException {
-        super ("2pFreelands", 39, 26);
+    public Freelands(Engine engine) throws IOException {
+        super (engine, "2pFreelands", 39, 26);
     }
-    
+
     @Override public int getPlayerLimit() {
         return 2;
     }
@@ -26,7 +27,7 @@ public final class Freelands extends SimpleMap {
         return null;
     }
 
-    @Override public void onTurnOver() {       
+    @Override public void onTurnOver() {
     }
 
 }
