@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import marten.aoe.Path;
+import marten.aoe.engine.Engine;
 import marten.aoe.engine.Map;
 
 import org.apache.log4j.Logger;
@@ -22,17 +23,17 @@ public final class MapLoader {
         }
         return mapNameList;
     }
-    public static Map loadMap (String mapName) {
-        List<String> availableMaps = getAvailableMaps();
+    public static Map loadMap (Engine engine, String mapName) {
+        List<String> availableMaps = MapLoader.getAvailableMaps();
         if (!availableMaps.contains(mapName)) {
-            log.error("Map '" + mapName + "' was not found");
+            MapLoader.log.error("Map '" + mapName + "' was not found");
             return null;
         }
         Class<?> mapClass = null;
         Object mapInstance = null;
         try {
             mapClass = Class.forName(Path.MAPS_PACKAGE + mapName);
-            mapInstance = mapClass.newInstance();
+            mapInstance = mapClass.getConstructor(Engine.class).newInstance(engine);
         }
         catch (Exception e) {
             e.printStackTrace();

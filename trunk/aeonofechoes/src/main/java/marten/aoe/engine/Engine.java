@@ -1,5 +1,8 @@
 package marten.aoe.engine;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import marten.aoe.dto.FullMapDTO;
 import marten.aoe.dto.FullTileDTO;
 import marten.aoe.dto.FullUnitDTO;
@@ -12,16 +15,26 @@ import marten.aoe.engine.loader.MapLoader;
 import marten.aoe.engine.loader.UnitLoader;
 
 public final class Engine {
-    private final Map map;
+    private Map map;
     private final PlayerDTO[] playerList;
     private int currentPlayer = 0;
+    private final List<EngineListener> listeners = new ArrayList<EngineListener>();
     public Engine (String mapName, PlayerDTO[] playerList) {
-        this.map = MapLoader.loadMap(mapName);
+        this.map = MapLoader.loadMap(this, mapName);
         this.playerList = playerList;
     }
-    public Engine (Map map, PlayerDTO[] playerList) {
-        this.map = map;
-        this.playerList = playerList;
+    public synchronized void switchMap (String mapName) {
+        this.map = MapLoader.loadMap(this, mapName);
+        this.invokeGlobalEvent(GlobalEvent.MAP_CHANGE);
+    }
+    public synchronized PlayerDTO getActivePlayer() {
+        return this.playerList[this.currentPlayer];
+    }
+    public synchronized void addListener (EngineListener listener) {
+        this.listeners.add(listener);
+    }
+    public synchronized void removeListener (EngineListener listener) {
+        this.listeners.remove(listener);
     }
     public synchronized MapDTO getMinimalMapDTO (PlayerDTO player) {
         return (this.map != null) ? this.map.getMinimalDTO(player) : null;
@@ -64,7 +77,7 @@ public final class Engine {
             this.currentPlayer = 0;
         }
         this.map.endTurn();
-
+        this.invokeGlobalEvent(GlobalEvent.TURN_END);
     }
     public synchronized void performAction (PlayerDTO player, PointDTO actor, int action, PointDTO target) {
         if (player != this.playerList[this.currentPlayer] || this.map == null) {
@@ -100,6 +113,16 @@ public final class Engine {
                 activeUnit.specialAction9(target); break;
             default:
                 throw new IllegalStateException("Illegal action index.");
+        }
+    }
+    public void invokeLocalEvent(LocalEvent event, PointDTO location) {
+        for (EngineListener listener : this.listeners) {
+            listener.onLocalEvent(event, location);
+        }
+    }
+    public void invokeGlobalEvent(GlobalEvent event) {
+        for (EngineListener listener : this.listeners) {
+            listener.onGlobalEvent(event);
         }
     }
 }

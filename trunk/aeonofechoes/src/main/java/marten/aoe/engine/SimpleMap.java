@@ -17,13 +17,13 @@ public abstract class SimpleMap extends Map {
      * @param width the width of each of a row in the map.
      * @param height the total number of the rows in the map.
      * @throws IOException whenever there are issues with files or map dimensions do not match the given ones.*/
-    public SimpleMap (String fileName, int width, int height) throws IOException {
-        super (fileName, width, height);
+    public SimpleMap (Engine engine, String fileName, int width, int height) throws IOException {
+        super (engine, fileName, width, height);
         DataTree mapFile = DataFileReader.read(Path.MAP_DATA_PATH + fileName);
         if (mapFile.value().equals("FILE")) {
             DataTree mapData = mapFile.branches().get(0);
             if (mapData.value().equals("Map")) {
-                int y = height - 1;            
+                int y = height - 1;
                 for (DataTree subbranch : mapData.branches()) {
                     if (subbranch.value().equals("Row")) {
                         int x = 0;
@@ -39,8 +39,8 @@ public abstract class SimpleMap extends Map {
                                     }
                                 }
                                 this.switchTile(new PointDTO(x, y), tile);
-                                x++;                            
-                            }                        
+                                x++;
+                            }
                         }
                         if (x != width) {
                             throw new IOException("Row dimension mismatch. Expected: "+width+", actual: "+x);

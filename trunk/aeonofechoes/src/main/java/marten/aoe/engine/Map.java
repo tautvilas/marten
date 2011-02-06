@@ -15,11 +15,13 @@ public abstract class Map {
     private final int width;
     private final int height;
     private final String name;
+    private final Engine engine;
 
     // Since pathfinding for a unit is a costly procedure, we will do some caching
     private PathFinder pathCache = null;
 
-    public Map (String name, int width, int height) {
+    public Map (Engine engine, String name, int width, int height) {
+        this.engine = engine;
         this.map = new Tile[width][height];
         for (int x = 0; x < width; x++) {
             for (int y = 0; y < height; y++) {
@@ -38,6 +40,9 @@ public abstract class Map {
     }
     public final String getName () {
         return this.name;
+    }
+    public final void invokeLocalEvent (LocalEvent event, PointDTO location) {
+        this.engine.invokeLocalEvent(event, location);
     }
     public final FullMapDTO getDTO (PlayerDTO player) {
         FullTileDTO[][] tiles = new FullTileDTO[this.width][this.height];
@@ -71,6 +76,7 @@ public abstract class Map {
                 tile.pushUnit(PlayerDTO.SYSTEM, unit);
             }
             this.map[point.getX()][point.getY()] = tile;
+            this.invokeLocalEvent(LocalEvent.TILE_CHANGE, point);
             return oldTile;
         }
         return null;
@@ -113,7 +119,7 @@ public abstract class Map {
     public abstract void onTurnOver ();
     public abstract PointDTO getStartingPosition (PlayerDTO player);
     public abstract int getPlayerLimit ();
-    /** @return all units that belong to the given player.*/
+    /** @return all <code>Unit</code>s that belong to the given player.*/
     public final List<Unit> getAllUnits(PlayerDTO player) {
         List<Unit> answer = new ArrayList<Unit>();
         for (int x = 0; x < this.width; x++) {
