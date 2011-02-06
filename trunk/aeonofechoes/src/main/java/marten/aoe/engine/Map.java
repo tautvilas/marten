@@ -1,10 +1,12 @@
 package marten.aoe.engine;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import marten.aoe.dto.FullMapDTO;
 import marten.aoe.dto.FullTileDTO;
 import marten.aoe.dto.MapDTO;
+import marten.aoe.dto.PlayerDTO;
 import marten.aoe.dto.PointDTO;
 import marten.aoe.dto.TileDTO;
 
@@ -37,7 +39,7 @@ public abstract class Map {
     public final String getName () {
         return this.name;
     }
-    public final FullMapDTO getDTO (Player player) {
+    public final FullMapDTO getDTO (PlayerDTO player) {
         FullTileDTO[][] tiles = new FullTileDTO[this.width][this.height];
         for (int x = 0; x < this.width; x++) {
             for (int y = 0; y < this.height; y++) {
@@ -46,7 +48,7 @@ public abstract class Map {
         }
         return new FullMapDTO(tiles, this.width, this.height, this.name);
     }
-    public final MapDTO getMinimalDTO (Player player) {
+    public final MapDTO getMinimalDTO (PlayerDTO player) {
         TileDTO[][] tiles = new TileDTO[this.width][this.height];
         for (int x = 0; x < this.width; x++) {
             for (int y = 0; y < this.height; y++) {
@@ -65,8 +67,8 @@ public abstract class Map {
         if (point.getX() >= 0 && point.getX() < this.width && point.getY() >= 0 && point.getY() < this.height) {
             Tile oldTile = this.map[point.getX()][point.getY()];
             if (oldTile != null) {
-                Unit unit = oldTile.popUnit(Player.SYSTEM);
-                tile.pushUnit(Player.SYSTEM, unit);
+                Unit unit = oldTile.popUnit(PlayerDTO.SYSTEM);
+                tile.pushUnit(PlayerDTO.SYSTEM, unit);
             }
             this.map[point.getX()][point.getY()] = tile;
             return oldTile;
@@ -83,7 +85,7 @@ public abstract class Map {
         }
         this.onTurnOver();
     }
-    public final boolean moveUnit (Player player, PointDTO from, PointDTO to) {
+    public final boolean moveUnit (PlayerDTO player, PointDTO from, PointDTO to) {
         if (from.getX() < 0 || from.getX() >= this.width || from.getY() < 0 || from.getY() >= this.height || to.getX() < 0 || to.getX() >= this.width || to.getY() < 0 || to.getY() >= this.height) {
             return false;
         }
@@ -109,6 +111,19 @@ public abstract class Map {
         return true;
     }
     public abstract void onTurnOver ();
-    public abstract PointDTO getStartingPosition (Player player);
+    public abstract PointDTO getStartingPosition (PlayerDTO player);
     public abstract int getPlayerLimit ();
+    /** @return all units that belong to the given player.*/
+    public final List<Unit> getAllUnits(PlayerDTO player) {
+        List<Unit> answer = new ArrayList<Unit>();
+        for (int x = 0; x < this.width; x++) {
+            for (int y = 0; y < this.height; y++) {
+                Unit unit = this.map[x][y].getUnit();
+                if (unit != null && unit.getOwner() == player) {
+                    answer.add(unit);
+                }
+            }
+        }
+        return answer;
+    }
 }

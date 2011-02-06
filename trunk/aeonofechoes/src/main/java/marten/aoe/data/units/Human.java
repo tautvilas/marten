@@ -3,10 +3,10 @@ package marten.aoe.data.units;
 import marten.aoe.dto.DamageDTO;
 import marten.aoe.dto.DamageResistanceDTO;
 import marten.aoe.dto.DamageType;
+import marten.aoe.dto.PlayerDTO;
 import marten.aoe.dto.PointDTO;
 import marten.aoe.dto.UnitSize;
 import marten.aoe.dto.UnitType;
-import marten.aoe.engine.Player;
 import marten.aoe.engine.Regiment;
 import marten.aoe.engine.Tile;
 import marten.aoe.engine.Unit;
@@ -15,7 +15,7 @@ public final class Human extends Regiment {
     public Human(Human other, Tile location) {
         super (other, location);
     }
-    public Human(Player owner, Tile location) {
+    public Human(PlayerDTO owner, Tile location) {
         super("Human", location, owner, UnitSize.SMALL, UnitType.GROUND, 6, 8, 6, 0, new DamageDTO(6, DamageType.MECHANICAL), null, 0);
     }
     @Override public Unit clone(Tile location) {

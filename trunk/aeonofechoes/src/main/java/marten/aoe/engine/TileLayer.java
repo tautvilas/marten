@@ -1,7 +1,8 @@
 package marten.aoe.engine;
 
-import marten.aoe.dto.TileDTO;
 import marten.aoe.dto.FullTileDTO;
+import marten.aoe.dto.PlayerDTO;
+import marten.aoe.dto.TileDTO;
 
 public abstract class TileLayer extends Tile {
     private Tile base;
@@ -36,9 +37,9 @@ public abstract class TileLayer extends Tile {
         }
         this.base.setOverlay(overlay);
     }
-    @Override public final FullTileDTO getDTO(Player player) {
-        for (Unit unit : player.getAllUnits()) {
-            if (this.distanceTo(unit.getLocation()) + this.detectionModifier <= 0)
+    @Override public final FullTileDTO getDTO(PlayerDTO player) {
+        for (Unit unit : this.getOwner().getAllUnits(player)) {
+            if (this.distanceTo(unit.getLocation()) + this.detectionModifier <= 0) {
                 return new FullTileDTO(
                         this.getName(),
                         this.getCoordinates(),
@@ -48,18 +49,20 @@ public abstract class TileLayer extends Tile {
                         (this.getUnit() != null ? this.getUnit().getDTO(player) : null),
                         this.getSpecialFeatures()
                 );
+            }
         }
         return this.base.getDTO(player);
     }
     @Override
-    public final TileDTO getMinimalDTO(Player player) {
-        for (Unit unit : player.getAllUnits()) {
-            if (this.distanceTo(unit.getLocation()) + this.detectionModifier <= 0)
+    public final TileDTO getMinimalDTO(PlayerDTO player) {
+        for (Unit unit : this.getOwner().getAllUnits(player)) {
+            if (this.distanceTo(unit.getLocation()) + this.detectionModifier <= 0) {
                 return new TileDTO(
                         this.getName(),
                         this.getCoordinates(),
                         (this.getUnit() != null ? this.getUnit().getMinimalDTO(player) : null)
                 );
+            }
         }
         return this.base.getMinimalDTO(player);
     }

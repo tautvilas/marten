@@ -2,8 +2,8 @@ package marten.aoe.data.maps;
 
 import java.io.IOException;
 
+import marten.aoe.dto.PlayerDTO;
 import marten.aoe.dto.PointDTO;
-import marten.aoe.engine.Player;
 import marten.aoe.engine.SimpleMap;
 
 public final class Freelands extends SimpleMap {
@@ -16,7 +16,7 @@ public final class Freelands extends SimpleMap {
         return 2;
     }
 
-    @Override public PointDTO getStartingPosition(Player player) {
+    @Override public PointDTO getStartingPosition(PlayerDTO player) {
         if (player.getTeam() == 1) {
             return new PointDTO(18,3);
         }
