@@ -8,6 +8,7 @@ import marten.aoe.dto.PointDTO;
 import marten.aoe.dto.TileDTO;
 import marten.aoe.dto.UnitDTO;
 import marten.aoe.engine.loader.MapLoader;
+import marten.aoe.engine.loader.UnitLoader;
 
 public final class Engine {
     private final Map map;
@@ -43,7 +44,7 @@ public final class Engine {
         // rely on buildings and/or map events to get new units.
         Tile activeTile = this.map.getTile(at);
         if (!activeTile.isOccupied()) {
-            activeTile.insertUnit(player, player.getAllUnitTypes().get(name).clone(activeTile));
+            UnitLoader.loadUnit(name, player, at);
         }
         return false;
     }
