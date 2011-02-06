@@ -41,8 +41,9 @@ public final class Engine {
     @Deprecated public synchronized boolean createUnit (Player player, String name, PointDTO at) {
         // For testing purposes only. In normal circumstances the players should
         // rely on buildings and/or map events to get new units.
-        if (!this.map.getTile(at).isOccupied()) {
-            this.map.getTile(at).insertUnit(player, player.getAllUnitTypes().get(name).clone());
+        Tile activeTile = this.map.getTile(at);
+        if (!activeTile.isOccupied()) {
+            activeTile.insertUnit(player, player.getAllUnitTypes().get(name).clone(activeTile));
         }
         return false;
     }

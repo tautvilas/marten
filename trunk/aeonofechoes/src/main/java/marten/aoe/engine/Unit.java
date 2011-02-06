@@ -6,6 +6,7 @@ import marten.aoe.dto.DamageDTO;
 import marten.aoe.dto.DamageResistanceDTO;
 import marten.aoe.dto.DamageType;
 import marten.aoe.dto.FullUnitDTO;
+import marten.aoe.dto.PointDTO;
 import marten.aoe.dto.UnitDTO;
 import marten.aoe.dto.UnitSize;
 import marten.aoe.dto.UnitType;
@@ -167,7 +168,16 @@ public abstract class Unit {
     public abstract void onDeath();
     /** @return brief descriptions of special features of the unit*/
     public abstract String[] getSpecialFeatures();
-    /** @return a perfect copy of the unit*/
-    @Override
-    public abstract Unit clone();
+    /** @return a perfect copy of the unit in given location*/
+    public abstract Unit clone(Tile location);
+    /***/
+    public abstract void specialAction1(PointDTO target);
+    public abstract void specialAction2(PointDTO target);
+    public abstract void specialAction3(PointDTO target);
+    public abstract void specialAction4(PointDTO target);
+    public abstract void specialAction5(PointDTO target);
+    public abstract void specialAction6(PointDTO target);
+    public abstract void specialAction7(PointDTO target);
+    public abstract void specialAction8(PointDTO target);
+    public abstract void specialAction9(PointDTO target);
 }
