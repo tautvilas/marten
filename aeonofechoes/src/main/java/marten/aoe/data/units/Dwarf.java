@@ -3,10 +3,10 @@ package marten.aoe.data.units;
 import marten.aoe.dto.DamageDTO;
 import marten.aoe.dto.DamageResistanceDTO;
 import marten.aoe.dto.DamageType;
+import marten.aoe.dto.PlayerDTO;
 import marten.aoe.dto.PointDTO;
 import marten.aoe.dto.UnitSize;
 import marten.aoe.dto.UnitType;
-import marten.aoe.engine.Player;
 import marten.aoe.engine.Regiment;
 import marten.aoe.engine.Tile;
 import marten.aoe.engine.Unit;
@@ -15,7 +15,7 @@ public final class Dwarf extends Regiment {
     public Dwarf(Dwarf other, Tile location) {
         super (other, location);
     }
-    public Dwarf(Player owner, Tile location) {
+    public Dwarf(PlayerDTO owner, Tile location) {
         super("Dwarf", location, owner, UnitSize.SMALL, UnitType.GROUND, 5, 8, 5, 0, new DamageDTO(6, DamageType.MECHANICAL), null, 0);
     }
     @Override public Unit clone(Tile location) {

@@ -6,6 +6,7 @@ import marten.aoe.dto.DamageDTO;
 import marten.aoe.dto.DamageResistanceDTO;
 import marten.aoe.dto.DamageType;
 import marten.aoe.dto.FullUnitDTO;
+import marten.aoe.dto.PlayerDTO;
 import marten.aoe.dto.PointDTO;
 import marten.aoe.dto.UnitDTO;
 import marten.aoe.dto.UnitSize;
@@ -15,7 +16,7 @@ public abstract class Unit {
     private final UnitSize unitSize;
     private final UnitType unitType;
     private Tile location = null;
-    private final Player owner;
+    private final PlayerDTO owner;
     private final String name;
     private final int maxMovementAllowance;
     private int currentMovementAllowance;
@@ -35,7 +36,7 @@ public abstract class Unit {
         this.detectionRange = other.detectionRange;
         this.detectionModifier = other.detectionModifier;
     }
-    public Unit(String name, Tile location, Player owner, UnitSize unitSize, UnitType unitType, int movementAllowance, int hitPoints, int detectionRange, int detectionModifier) {
+    public Unit(String name, Tile location, PlayerDTO owner, UnitSize unitSize, UnitType unitType, int movementAllowance, int hitPoints, int detectionRange, int detectionModifier) {
         this.name = name;
         this.location = location;
         this.unitSize = unitSize;
@@ -55,7 +56,7 @@ public abstract class Unit {
         return this.location.getOwner();
     }
     /** @return the owner of this unit.*/
-    public final Player getOwner() {
+    public final PlayerDTO getOwner() {
         return this.owner;
     }
     /** @return the size of this unit.*/
@@ -83,8 +84,8 @@ public abstract class Unit {
         return this.detectionModifier;
     }
     /** Create a standard Unit Data Transfer Object. */
-    public final FullUnitDTO getDTO(Player player) {
-        for (Unit unit : player.getAllUnits()) {
+    public final FullUnitDTO getDTO(PlayerDTO player) {
+        for (Unit unit : this.getMap().getAllUnits(player)) {
             if (this.getLocation().distanceTo(unit.getLocation()) + this.detectionModifier <= 0) {
                 return new FullUnitDTO(
                         this.name,
@@ -108,7 +109,7 @@ public abstract class Unit {
         this.onTurnOver();
     }
     /** Create a minimal Unit Data Transfer Object. */
-    public final UnitDTO getMinimalDTO(Player player) {
+    public final UnitDTO getMinimalDTO(PlayerDTO player) {
         return new UnitDTO(this.name);
     }
     /** Find out the remaining movement capacity of the unit*/
@@ -160,7 +161,7 @@ public abstract class Unit {
             this.currentHitPoints -= rolledDamage;
         }
         if (this.currentHitPoints <= 0) {
-            this.getLocation().removeUnit(Player.SYSTEM);
+            this.getLocation().removeUnit(PlayerDTO.SYSTEM);
             this.onDeath();
         }
     }

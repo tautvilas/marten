@@ -13,12 +13,12 @@ import marten.aoe.server.serializable.GameDetails;
 import marten.aoe.server.serializable.ServerNotification;
 
 public class ServerGame {
-    private ServerClient creator;
-    private ArrayList<ServerClient> players = new ArrayList<ServerClient>();
-    private String gameName;
-    private String mapName;
+    private final ServerClient creator;
+    private final ArrayList<ServerClient> players = new ArrayList<ServerClient>();
+    private final String gameName;
+    private final String mapName;
     private Engine engine;
-    private String serverUrl;
+    private final String serverUrl;
     private boolean open = true;
 
     public ServerGame(ServerClient creator, String map, String gameName,
@@ -27,7 +27,7 @@ public class ServerGame {
         this.mapName = map;
         this.serverUrl = serverUrl;
         this.gameName = gameName;
-        players.add(creator);
+        this.players.add(creator);
     }
 
     public void addPlayer(ServerClient user) {
@@ -40,7 +40,7 @@ public class ServerGame {
     }
 
     public void removePlayer(ServerClient client) throws RemoteException {
-        if (players.contains(client)) {
+        if (this.players.contains(client)) {
             if (client.getEngineUrl() != null) {
                 try {
                     Naming.unbind(client.getEngineUrl());
@@ -50,13 +50,13 @@ public class ServerGame {
                     e.printStackTrace();
                 }
             }
-            players.remove(client);
+            this.players.remove(client);
             this.notify(ServerNotification.PLAYER_LIST_UPDATED);
         }
     }
 
     public boolean hasPlayer(ServerClient user) {
-        return players.contains(user);
+        return this.players.contains(user);
     }
 
     public String getGameName() {
@@ -76,9 +76,9 @@ public class ServerGame {
     }
 
     public GameDetails getDetails(ServerClient client) throws RemoteException {
-        String[] members = new String[players.size()];
+        String[] members = new String[this.players.size()];
         for (int i = 0; i < members.length; i++) {
-            members[i] = players.get(i).getUsername();
+            members[i] = this.players.get(i).getUsername();
         }
         GameDetails details = new GameDetails();
         details.creator = this.creator.getUsername();
@@ -89,7 +89,7 @@ public class ServerGame {
         if (this.engine != null) {
             if (client.getEngineUrl() == null) {
                 String url = this.serverUrl + "/" + client.getUsername()
-                        + new BigInteger(130, new SecureRandom()).toString(32);
+                + new BigInteger(130, new SecureRandom()).toString(32);
                 client.setEngineUrl(url);
                 try {
                     Naming.rebind(client.getEngineUrl(), new EngineInterface(
@@ -109,12 +109,13 @@ public class ServerGame {
 
     public void start() {
         this.open = false;
-        this.engine = new Engine(this.mapName);
+        // FIXME: Engine constructor must be provided with a player list
+        this.engine = new Engine(this.mapName, null);
         this.notify(ServerNotification.GAME_STARTED);
     }
 
     public void notify(ServerNotification notification) {
-        for (ServerClient client : players) {
+        for (ServerClient client : this.players) {
             client.notify(notification);
         }
     }

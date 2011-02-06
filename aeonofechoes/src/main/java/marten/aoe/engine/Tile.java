@@ -6,6 +6,7 @@ import java.util.List;
 import marten.aoe.dto.DamageDTO;
 import marten.aoe.dto.DefenseDTO;
 import marten.aoe.dto.Direction;
+import marten.aoe.dto.PlayerDTO;
 import marten.aoe.dto.TileDTO;
 import marten.aoe.dto.MovementDTO;
 import marten.aoe.dto.PointDTO;
@@ -46,15 +47,15 @@ public abstract class Tile {
         return this.unit != null;
     }
     /** Returns a standard Tile Data Transfer Object for this tile.*/
-    public abstract FullTileDTO getDTO(Player player);
+    public abstract FullTileDTO getDTO(PlayerDTO player);
     /** Returns a minimal Tile Data Transfer Object for this tile.*/
-    public abstract TileDTO getMinimalDTO(Player player);
+    public abstract TileDTO getMinimalDTO(PlayerDTO player);
     
     /** Removes the unit from this tile and triggers appropriate events.
      * @return the unit formerly in this tile or <code>null</code> if there was no unit. 
      * @see marten.aoe.engine.Tile#removeUnit()*/
-    public final Unit popUnit(Player player) {
-        if (player == this.unit.getOwner() || player == Player.SYSTEM) {
+    public final Unit popUnit(PlayerDTO player) {
+        if (player == this.unit.getOwner() || player == PlayerDTO.SYSTEM) {
             this.onUnitExit();
             this.unit.onTileExit(this);
             return this.removeUnit(player);
@@ -64,8 +65,8 @@ public abstract class Tile {
     /** Insert a unit into this tile, triggering appropriate events and applying movement cost. 
      * @return <code>false</code> if the action failed due to a unit already being in this tile, unit having insufficient movement allowance or no unit being pushed in, <code>true</code> otherwise. 
      * @see marten.aoe.engine.Tile#insertUnit(Unit)*/
-    public final boolean pushUnit(Player player, Unit unit) {
-        if ((player == this.unit.getOwner() || player == Player.SYSTEM) && this.unit == null && unit != null && (unit.applyMovementCost(this.getMovementCost(unit.getUnitSize(), unit.getUnitType())) > -1)) {
+    public final boolean pushUnit(PlayerDTO player, Unit unit) {
+        if ((player == this.unit.getOwner() || player == PlayerDTO.SYSTEM) && this.unit == null && unit != null && (unit.applyMovementCost(this.getMovementCost(unit.getUnitSize(), unit.getUnitType())) > -1)) {
             this.unit = unit;
             this.unit.onTileEntry(this);
             this.onUnitEntry();
@@ -76,8 +77,8 @@ public abstract class Tile {
     /** Removes the unit from this tile without triggering events.
      * @return the unit in this tile (and removes it from the tile) or <code>null</code>.
      * @see marten.aoe.engine.Tile#popUnit()*/
-    public final Unit removeUnit(Player player) {
-        if (player == this.unit.getOwner() || player == Player.SYSTEM) {
+    public final Unit removeUnit(PlayerDTO player) {
+        if (player == this.unit.getOwner() || player == PlayerDTO.SYSTEM) {
             Unit answer = this.unit;
             this.unit = null;
             return answer;
@@ -87,8 +88,8 @@ public abstract class Tile {
     /** Insert a unit into this tile, without triggering appropriate events and applying movement cost. 
      * @return <code>false</code> if the action failed due to a unit already being in this tile, unit having insufficient movement allowance or no unit being pushed in, <code>true</code> otherwise. 
      * @see marten.aoe.engine.Tile#pushUnit(Unit)*/
-    public final boolean insertUnit(Player player, Unit unit) {
-        if ((player == this.unit.getOwner() || player == Player.SYSTEM) && this.unit == null && unit != null) {
+    public final boolean insertUnit(PlayerDTO player, Unit unit) {
+        if ((player == this.unit.getOwner() || player == PlayerDTO.SYSTEM) && this.unit == null && unit != null) {
             this.unit = unit;
             return true;
         }

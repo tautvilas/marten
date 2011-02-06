@@ -5,8 +5,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import marten.aoe.Path;
+import marten.aoe.dto.PlayerDTO;
 import marten.aoe.dto.PointDTO;
-import marten.aoe.engine.Player;
 import marten.aoe.engine.Unit;
 
 import org.apache.log4j.Logger;
@@ -24,7 +24,7 @@ public final class UnitLoader {
         }
         return unitNameList;
     }
-    public static Unit loadUnit (String unitName, Player owner, PointDTO location) {
+    public static Unit loadUnit (String unitName, PlayerDTO owner, PointDTO location) {
         List<String> availableUnits = UnitLoader.getAvailableUnits();
         if (!availableUnits.contains(unitName)) {
             UnitLoader.log.warn(unitName + " not found.");
@@ -34,7 +34,7 @@ public final class UnitLoader {
         Object unitInstance = null;
         try {
             unitClass = Class.forName(Path.TILE_PACKAGE + unitName);
-            unitInstance = unitClass.getConstructor(Player.class, PointDTO.class).newInstance(owner, location);
+            unitInstance = unitClass.getConstructor(PlayerDTO.class, PointDTO.class).newInstance(owner, location);
         }
         catch (Exception e) {
             e.printStackTrace();
