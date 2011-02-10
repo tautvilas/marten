@@ -15,8 +15,6 @@ import marten.aoe.dto.UnitDTO;
 import marten.aoe.engine.loader.MapLoader;
 import marten.aoe.engine.loader.UnitLoader;
 
-import org.junit.Assert;
-
 /** The main node of the AoE engine, which should be used by all connected clients to perform operations on the engine.
  * @author Petras Ražanskas*/
 public final class Engine {
@@ -26,19 +24,31 @@ public final class Engine {
     private final java.util.Map<PlayerDTO, List<EngineListener>> listeners = new HashMap<PlayerDTO, List<EngineListener>>();
     /** Initializes the engine with given map and players.
      * @param mapName - the name of the Map subclass to be loaded.
-     * @param playerList - an array of Player instances that will participate in this battle. */
+     * @param playerList - an array of Player instances that will participate in this battle.
+     * @throws IllegalArgumentException if any of the parameters are <code>null</code> <b>or</b> the list of players contains any <code>null</code> entries <b>or</b> the list of players includes more or less players than defined for the map.*/
     public Engine (String mapName, PlayerDTO[] playerList) {
+        if (mapName == null || playerList == null) {
+            throw new IllegalArgumentException("Null arguments are not accepted");
+        }
+        for (PlayerDTO player : playerList) {
+            if (player == null) {
+                throw new IllegalArgumentException("Player list may not contain null players");
+            }
+        }
         this.map = MapLoader.loadMap(this, mapName);
-        Assert.assertNotNull(this.map);
         this.playerList = playerList;
-        Assert.assertNotNull(this.playerList);
-        Assert.assertTrue(this.playerList.length != this.map.getPlayerLimit());
+        if (this.playerList.length != this.map.getPlayerLimit()) {
+            throw new IllegalArgumentException("Player list must provide as many players as the map requires");
+        }
     }
     /** Switches the map of the engine to a new one (useful for multi-map scenarios).
-     * @param mapName - the name of the new Map subclass to be loaded.*/
+     * @param mapName - the name of the new Map subclass to be loaded.
+     * @throws IllegalArgumentException if the argument is <code>null</code>*/
     public synchronized void switchMap (String mapName) {
+        if (mapName == null) {
+            throw new IllegalArgumentException("Null arguments are not accepted.");
+        }
         this.map = MapLoader.loadMap(this, mapName);
-        Assert.assertNotNull(this.map);
         this.invokeGlobalEvent(GlobalEvent.MAP_CHANGE);
     }
     /** @return the description of the currently active player.*/
@@ -47,72 +57,87 @@ public final class Engine {
     }
     /** Registers a new listener for this engine to intercept engine events.
      * @param listener - the new engine listener.
-     * @param player - the player this listener represents*/
+     * @param player - the player this listener represents.
+     * @throws IllegalArgumentException if any of the arguments is <code>null</code>.*/
     public synchronized void addListener (EngineListener listener, PlayerDTO player) {
-        Assert.assertNotNull(listener);
-        Assert.assertNotNull(player);
+        if (listener == null || player == null) {
+            throw new IllegalArgumentException("Null arguments are not accepted.");
+        }
         if (!this.listeners.containsKey(player)) {
             this.listeners.put(player, new ArrayList<EngineListener>());
         }
         this.listeners.get(player).add(listener);
     }
     /** Unregisters a listener from this engine so it no longer receives engine events.
-     * @param listener - the listener to be unregistered.*/
+     * @param listener - the listener to be unregistered.
+     * @throws IllegalArgumentException if the argument is <code>null</code>.*/
     public synchronized void removeListener (EngineListener listener) {
-        Assert.assertNotNull(listener);
+        if (listener == null) {
+            throw new IllegalArgumentException("Null arguments are not accepted.");
+        }
         this.listeners.remove(listener);
     }
     /** @return the full short description of the map as applicable to the given player.
-     * @param player - the player to whom this information concerns.*/
+     * @param player - the player to whom this information concerns.
+     * @throws IllegalArgumentException if the argument is <code>null</code>.*/
     public synchronized MapDTO getMapDTO (PlayerDTO player) {
-        Assert.assertNotNull(player);
+        if (player == null) {
+            throw new IllegalArgumentException("Null arguments are not accepted.");
+        }
         return this.map.getDTO(player);
     }
     /** @return the full verbose description of the map as applicable to the given player.
-     * @param player - the player to whom this information concerns.*/
+     * @param player - the player to whom this information concerns.
+     * @throws IllegalArgumentException if the argument is <code>null</code>.*/
     public synchronized FullMapDTO getFullMapDTO (PlayerDTO player) {
-        Assert.assertNotNull(player);
+        if (player == null) {
+            throw new IllegalArgumentException("Null arguments are not accepted.");
+        }
         return this.map.getFullDTO(player);
     }
     /** @return the full short description of a tile at the given location.
      * @param player - the player to whom this information concerns.
-     * @param location - the location of the concerned tile.*/
+     * @param location - the location of the concerned tile.
+     * @throws IllegalArgumentException if any of the arguments are <code>null</code>.*/
     public synchronized TileDTO getTileDTO (PlayerDTO player, PointDTO location) {
-        Assert.assertNotNull(player);
-        Assert.assertNotNull(location);
+        if (player == null || location == null) {
+            throw new IllegalArgumentException("Null arguments are not accepted.");
+        }
         Tile tile = this.map.getTile(location);
-        Assert.assertNotNull(tile);
         return tile.getDTO(player);
     }
     /** @return the full verbose description of a tile at the given location.
      * @param player - the player to whom this information concerns.
-     * @param location - the location of the concerned tile.*/
+     * @param location - the location of the concerned tile.
+     * @throws IllegalArgumentException if any of the arguments are <code>null</code>.*/
     public synchronized FullTileDTO getFullTileDTO (PlayerDTO player, PointDTO location) {
-        Assert.assertNotNull(player);
-        Assert.assertNotNull(location);
+        if (player == null || location == null) {
+            throw new IllegalArgumentException("Null arguments are not accepted.");
+        }
         Tile tile = this.map.getTile(location);
-        Assert.assertNotNull(tile);
         return tile.getFullDTO(player);
     }
     /** @return the full short description of a unit at the given location <b>or</b> <code>null</code> if there is no unit there.
      * @param player - the player to whom this information concerns.
-     * @param location - the location of the concerned unit.*/
+     * @param location - the location of the concerned unit.
+     * @throws IllegalArgumentException if any of the arguments are <code>null</code>.*/
     public synchronized UnitDTO getUnitDTO (PlayerDTO player, PointDTO location) {
-        Assert.assertNotNull(player);
-        Assert.assertNotNull(location);
+        if (player == null || location == null) {
+            throw new IllegalArgumentException("Null arguments are not accepted.");
+        }
         Tile tile = this.map.getTile(location);
-        Assert.assertNotNull(tile);
         Unit unit = tile.getUnit();
         return (unit != null ? unit.getDTO(player) : null);
     }
     /** @return the full verbose description of a unit at the given location <b>or</b> <code>null</code> if there is no unit there.
      * @param player - the player to whom this information concerns.
-     * @param location - the location of the concerned unit.*/
+     * @param location - the location of the concerned unit.
+     * @throws IllegalArgumentException if any of the arguments are <code>null</code>.*/
     public synchronized FullUnitDTO getFullUnitDTO (PlayerDTO player, PointDTO location) {
-        Assert.assertNotNull(player);
-        Assert.assertNotNull(location);
+        if (player == null || location == null) {
+            throw new IllegalArgumentException("Null arguments are not accepted.");
+        }
         Tile tile = this.map.getTile(location);
-        Assert.assertNotNull(tile);
         Unit unit = tile.getUnit();
         return (unit != null ? unit.getFullDTO(player) : null);
     }
@@ -121,11 +146,12 @@ public final class Engine {
      * @param player - the player who is performing the movement.
      * @param from - the location from where the movement commences.
      * @param to - the location to which the movement commences.
-     * @deprecated The players should rely on unit actions to perform movement.*/
+     * @deprecated The players should rely on unit actions to perform movement.
+     * @throws IllegalArgumentException if any of the arguments are <code>null</code>.*/
     @Deprecated public synchronized boolean moveUnit (PlayerDTO player, PointDTO from, PointDTO to) {
-        Assert.assertNotNull(player);
-        Assert.assertNotNull(from);
-        Assert.assertNotNull(to);
+        if (player == null || from == null || to == null) {
+            throw new IllegalArgumentException("Null arguments are not accepted.");
+        }
         return this.map.moveUnit(player, from, to);
     }
     /** Creates a unit at the given location, provided the location is empty.
@@ -133,13 +159,13 @@ public final class Engine {
      * @param player - the player who is creatinf the unit.
      * @param name - the name of the Unit subclass to be instantiated.
      * @param at - the location where the Unit is to be created.
-     * @deprecated The players should rely on their buildings or map events to provide new units.*/
+     * @deprecated The players should rely on their buildings or map events to provide new units.
+     * @throws IllegalArgumentException if any of the arguments are <code>null</code>.*/
     @Deprecated public synchronized boolean createUnit (PlayerDTO player, String name, PointDTO at) {
-        Assert.assertNotNull(player);
-        Assert.assertNotNull(name);
-        Assert.assertNotNull(at);
+        if (player == null || name == null || at == null) {
+            throw new IllegalArgumentException("Null arguments are not accepted.");
+        }
         Tile activeTile = this.map.getTile(at);
-        Assert.assertNotNull(activeTile);
         if (!activeTile.isOccupied()) {
             UnitLoader.loadUnit(name, player, activeTile);
             return true;
@@ -148,9 +174,12 @@ public final class Engine {
     }
     /** Terminates the turn, if its the given player's turn.
      * @return <code>false</code> if it is not the given player's turn (nothing changes), <code>true</code> otherwise.
-     * @param player - the player who attempts to end his turn. */
+     * @param player - the player who attempts to end his turn.
+     * @throws IllegalArgumentException if the argument is <code>null</code>.*/
     public synchronized boolean endTurn (PlayerDTO player) {
-        Assert.assertNotNull(player);
+        if (player == null) {
+            throw new IllegalArgumentException("Null arguments are not accepted.");
+        }
         if (player != this.playerList[this.currentPlayer]) {
             return false;
         }
@@ -167,18 +196,19 @@ public final class Engine {
      * @param player - the player trying to perform the action
      * @param actor - the location of the unit to perform the action.
      * @param action - an integer index (from 1 to 9) of the action to be performed.
-     * @param target - the location which is supposed to be affected by the action.*/
+     * @param target - the location which is supposed to be affected by the action.
+     * @throws IllegalArgumentException if any of the arguments are <code>null</code> <b>or</b> <code>action</code> index is not from the interval from 1 to 9.*/
     public synchronized boolean performAction (PlayerDTO player, PointDTO actor, int action, PointDTO target) {
-        Assert.assertNotNull(player);
-        Assert.assertNotNull(actor);
-        Assert.assertFalse(action < 1);
-        Assert.assertFalse(action > 9);
-        Assert.assertNotNull(target);
+        if (player == null || actor == null || target == null) {
+            throw new IllegalArgumentException("Null arguments are not accepted.");
+        }
+        if (action < 1 || action > 9) {
+            throw new IllegalArgumentException("Action must be an index between 1 and 9.");
+        }
         if (player != this.playerList[this.currentPlayer]) {
             return false;
         }
         Tile activeTile = this.map.getTile(actor);
-        Assert.assertNotNull(activeTile);
         Unit activeUnit = activeTile.getUnit();
         if (activeUnit == null || player != activeUnit.getOwner()) {
             return false;
@@ -209,21 +239,24 @@ public final class Engine {
     /** Forwards all local events to the listeners pertaining to given player.
      * @param event - the type of event.
      * @param location - the tile where the event happened.
-     * @param player - the player to be notified about the event.*/
+     * @param player - the player to be notified about the event.
+     * @throws IllegalArgumentException if any of the arguments are <code>null</code>.*/
     public void invokePlayerSpecificLocalEvent(LocalEvent event, Tile location, PlayerDTO player) {
-        Assert.assertNotNull(event);
-        Assert.assertNotNull(location);
-        Assert.assertNotNull(player);
+        if (event == null || location == null || player == null) {
+            throw new IllegalArgumentException("Null arguments are not accepted.");
+        }
         for (EngineListener listener : this.listeners.get(player)) {
             listener.onLocalEvent(event, location.getDTO(player));
         }
     }
     /** Forwards all local events to the listeners of this engine.
      * @param event - the type of event.
-     * @param location - the tile where the event happened.*/
+     * @param location - the tile where the event happened.
+     * @throws IllegalArgumentException if any of the arguments are <code>null</code>.*/
     public void invokeLocalEvent(LocalEvent event, Tile location) {
-        Assert.assertNotNull(event);
-        Assert.assertNotNull(location);
+        if (event == null || location == null) {
+            throw new IllegalArgumentException("Null arguments are not accepted.");
+        }
         for (PlayerDTO player : this.listeners.keySet()) {
             if (location.isVisible(player)) {
                 for (EngineListener listener : this.listeners.get(player)) {
@@ -233,9 +266,12 @@ public final class Engine {
         }
     }
     /** Forwards all global events to the listeners of this engine.
-     * @param event - the type of event.*/
+     * @param event - the type of event.
+     * @throws IllegalArgumentException if the argument is <code>null</code>.*/
     public void invokeGlobalEvent(GlobalEvent event) {
-        Assert.assertNotNull(event);
+        if (event == null) {
+            throw new IllegalArgumentException("Null arguments are not accepted.");
+        }
         for (List<EngineListener> listenerList : this.listeners.values()) {
             for (EngineListener listener : listenerList) {
                 listener.onGlobalEvent(event);

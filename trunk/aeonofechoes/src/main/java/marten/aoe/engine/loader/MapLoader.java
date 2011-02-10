@@ -8,10 +8,7 @@ import marten.aoe.Path;
 import marten.aoe.engine.Engine;
 import marten.aoe.engine.Map;
 
-import org.apache.log4j.Logger;
-
 public final class MapLoader {
-    private static org.apache.log4j.Logger log = Logger.getLogger(MapLoader.class);
     public static final List<String> getAvailableMaps () {
         File mapDirectory = new File(Path.MAP_PATH);
         String[] mapList = mapDirectory.list();
@@ -26,8 +23,7 @@ public final class MapLoader {
     public static Map loadMap (Engine engine, String mapName) {
         List<String> availableMaps = MapLoader.getAvailableMaps();
         if (!availableMaps.contains(mapName)) {
-            MapLoader.log.error("Map '" + mapName + "' was not found");
-            return null;
+            throw new RuntimeException("Map " + mapName + " not found.");
         }
         Class<?> mapClass = null;
         Object mapInstance = null;
@@ -37,12 +33,12 @@ public final class MapLoader {
         }
         catch (Exception e) {
             e.printStackTrace();
-            return null;
+            throw new RuntimeException("Failed to instantiate " + mapName + ".");
         }
         /* THE ROOT OF ALL THE EVIL, BE CAUTIOUS! */
         if (mapInstance instanceof Map) {
             return (Map)mapInstance;
         }
-        return null;
+        throw new RuntimeException("\"" + mapName + "\" is not a map.");
     }
 }
