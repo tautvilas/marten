@@ -1,6 +1,6 @@
 package marten.aoe.gui.scene;
 
-import java.io.IOException;
+import java.io.File;
 import java.rmi.Naming;
 
 import marten.age.core.AgeScene;
@@ -13,8 +13,6 @@ import marten.age.io.Loadable;
 import marten.age.io.LoadingState;
 import marten.age.io.SimpleLoader;
 import marten.aoe.Path;
-import marten.aoe.dto.MapDTO;
-import marten.aoe.dto.TileDTO;
 import marten.aoe.gui.widget.AoeString;
 import marten.aoe.server.face.EngineFace;
 import marten.aoe.server.serializable.GameDetails;
@@ -67,27 +65,21 @@ public class GameLoader extends AgeScene implements Loadable {
 
     @Override
     public synchronized void load(LoadingState state) {
-        state.status = "Loading map data";
+        state.status = "Loading map data 0%";
         try {
-            this.engine = (EngineFace) Naming.lookup(this.details.engineUrl);
+            this.engine = (EngineFace)Naming.lookup(this.details.engineUrl);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
         log.info("Loading map data for '" + this.details.mapName + "'...");
-        MapDTO mapData;
-        try {
-            mapData = engine.getMap();
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-        for (TileDTO[] tileLine : mapData.getTileMap()) {
-            for (TileDTO tile : tileLine) {
-                state.status = "Loading map images ";
-                // System.out.println(tile.getName());
-                ImageCache.loadImage("data/gui/tiles/"
-                        + tile.getName().toLowerCase() + ".png",
-                        Path.TILE_DATA_PATH + tile.getName());
-            }
+        File mapFolder = new File(Path.TILE_DATA_PATH);
+        String[] filenames = mapFolder.list();
+        for (int i = 0; i < filenames.length; i++) {
+            state.status = "Loading map data " + Integer.toString((i * 100) / filenames.length) + "%";
+            if (filenames[i].charAt(0) == '.')
+                continue;
+            ImageCache.loadImage(Path.TILE_DATA_PATH + filenames[i],
+                    Path.TILE_DATA_PATH + filenames[i].split("\\.")[0]);
         }
         state.status = "100%";
     }

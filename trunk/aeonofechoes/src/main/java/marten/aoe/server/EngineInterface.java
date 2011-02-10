@@ -2,6 +2,7 @@ package marten.aoe.server;
 
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
+import java.util.LinkedList;
 
 import marten.aoe.dto.MapDTO;
 import marten.aoe.dto.PlayerDTO;
@@ -12,24 +13,47 @@ import marten.aoe.engine.EngineListener;
 import marten.aoe.engine.GlobalEvent;
 import marten.aoe.engine.LocalEvent;
 import marten.aoe.server.face.EngineFace;
+import marten.aoe.server.serializable.EngineEvent;
 
 import org.apache.log4j.Logger;
 
 public class EngineInterface extends UnicastRemoteObject implements EngineFace {
     private static org.apache.log4j.Logger log = Logger
-    .getLogger(EngineFace.class);
+            .getLogger(EngineFace.class);
 
     private final Engine engine;
     private final PlayerDTO player;
+    private LinkedList<EngineEvent> events = new LinkedList<EngineEvent>();
+    private volatile LinkedList<TileDTO> tiles = new LinkedList<TileDTO>();
+    private static final long serialVersionUID = 1L;
 
-    protected EngineInterface(Engine engine, PlayerDTO player)
-    throws RemoteException {
+    public EngineInterface(Engine engine, PlayerDTO player)
+            throws RemoteException {
         super();
         this.engine = engine;
         this.player = player;
-    }
+        this.engine.addListener(new EngineListener() {
 
-    private static final long serialVersionUID = 1L;
+            @Override
+            public void onLocalEvent(LocalEvent event, TileDTO location) {
+//                EngineInterface.log.info(EngineInterface.this.player.getName()
+//                        + " " + event + ", " + location);
+                if (event == LocalEvent.TILE_EXPLORED || event == LocalEvent.UNIT_ENTRY) {
+                    synchronized (events) {
+                        events.add(EngineEvent.TILE_UPDATE);
+                        tiles.add(location);
+                        events.notifyAll();
+                    }
+                }
+            }
+
+            @Override
+            public void onGlobalEvent(GlobalEvent event) {
+                EngineInterface.log.info(EngineInterface.this.player.getName()
+                        + " " + event);
+            }
+        }, this.player);
+    }
 
     @Override
     public MapDTO getMap() throws RemoteException {
@@ -39,31 +63,29 @@ public class EngineInterface extends UnicastRemoteObject implements EngineFace {
     @Deprecated
     @Override
     public synchronized boolean moveUnit(PointDTO from, PointDTO to)
-    throws RemoteException {
+            throws RemoteException {
         return this.engine.moveUnit(this.player, from, to);
     }
 
     @Deprecated
     @Override
     public synchronized boolean createUnit(String name, PointDTO at)
-    throws RemoteException {
+            throws RemoteException {
         return this.engine.createUnit(this.player, name, at);
     }
 
     @Override
-    public void addListener() throws RemoteException {
-        this.engine.addListener(new EngineListener() {
-
-            @Override
-            public void onLocalEvent(LocalEvent event, TileDTO location) {
-                EngineInterface.log.info(EngineInterface.this.player.getName() + " " + event + ", " + location);
+    public EngineEvent listen() throws RemoteException {
+        synchronized (this.events) {
+            if (this.events.isEmpty()) {
+                try {
+                    this.events.wait();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
             }
-
-            @Override
-            public void onGlobalEvent(GlobalEvent event) {
-                EngineInterface.log.info(EngineInterface.this.player.getName() + " " + event);
-            }
-        }, this.player);
+        }
+        return this.events.pop();
     }
 
     @Override
@@ -76,4 +98,13 @@ public class EngineInterface extends UnicastRemoteObject implements EngineFace {
         return this.engine.getActivePlayer();
     }
 
+    @Override
+    public TileDTO popTile() {
+        if (!tiles.isEmpty()) {
+            return this.tiles.pop();
+        } else {
+            log.error("The tiles stack is empty!");
+            return null;
+        }
+    }
 }

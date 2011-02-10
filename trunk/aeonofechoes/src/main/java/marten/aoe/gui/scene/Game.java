@@ -17,7 +17,9 @@ import marten.aoe.dto.PointDTO;
 import marten.aoe.gui.widget.AoeButtonFactory;
 import marten.aoe.gui.widget.MapWidget;
 import marten.aoe.gui.widget.Sidebar;
+import marten.aoe.server.NetworkListener;
 import marten.aoe.server.face.EngineFace;
+import marten.aoe.server.serializable.EngineEvent;
 import marten.aoe.server.serializable.GameDetails;
 
 import org.apache.log4j.Logger;
@@ -35,6 +37,7 @@ public class Game extends AgeScene {
     private EngineFace engine;
     private Sidebar sidebar;
     private MouseController mouseController = new MouseController();
+    private NetworkListener listener;
 
     @SuppressWarnings("deprecation")
     public Game(EngineFace engineFace, GameDetails details) {
@@ -96,13 +99,14 @@ public class Game extends AgeScene {
         this.registerControllable(endTurnButton);
         flatland.compile();
         try {
-            this.engine.addListener();
             this.engine.createUnit("Dwarf", new PointDTO(13, 6));
             log.info("Game scene is initialized. Active player is '"
                     + this.engine.getActivePlayer().getName() + "'");
         } catch (RemoteException e) {
             throw new RuntimeException(e);
         }
+
+        this.registerNetworkListener();
     }
 
     @Override
@@ -123,6 +127,32 @@ public class Game extends AgeScene {
     @Override
     public void render() {
         flatland.render();
+    }
+
+    private void registerNetworkListener() {
+        listener = new NetworkListener() {
+            @Override
+            public void listen() {
+                EngineEvent event;
+                try {
+                    event = engine.listen();
+                } catch (RemoteException e) {
+                    throw new RuntimeException(e);
+                }
+                if (event == EngineEvent.TILE_UPDATE) {
+                    try {
+                        map.updateTile(engine.popTile());
+                    } catch (RemoteException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        };
+        listener.start();
+    }
+
+    public void cleanup() {
+        this.listener.quit();
     }
 
 }
