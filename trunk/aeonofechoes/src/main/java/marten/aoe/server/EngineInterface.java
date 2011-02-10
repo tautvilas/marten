@@ -11,22 +11,20 @@ import marten.aoe.server.face.EngineFace;
 public class EngineInterface extends UnicastRemoteObject implements EngineFace {
 
     private final Engine engine;
-    @SuppressWarnings("unused")
-    private final String username;
+    private final PlayerDTO player;
 
-    protected EngineInterface(Engine engine, String username)
+    protected EngineInterface(Engine engine, PlayerDTO player)
             throws RemoteException {
         super();
         this.engine = engine;
-        this.username = username;
+        this.player = player;
     }
 
     private static final long serialVersionUID = 1L;
 
     @Override
     public MapDTO getMap() throws RemoteException {
-        // FIXME: patched to prevent compilation errors, MUST be changed appropriately.
-        return engine.getMinimalMapDTO(PlayerDTO.SYSTEM);
+        return engine.getMinimalMapDTO(this.player);
     }
 
 }
