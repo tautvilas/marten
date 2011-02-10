@@ -64,7 +64,7 @@ public final class Engine {
         // rely on buildings and/or map events to get new units.
         Tile activeTile = this.map.getTile(at);
         if (!activeTile.isOccupied()) {
-            UnitLoader.loadUnit(name, player, at);
+            UnitLoader.loadUnit(name, player, activeTile);
         }
         return false;
     }
