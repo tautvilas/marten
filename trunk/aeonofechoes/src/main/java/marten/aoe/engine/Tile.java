@@ -173,7 +173,7 @@ public abstract class Tile {
         for (int x = this.coordinates.getX() - distance; x <= this.coordinates.getX() + distance; ++x) {
             for (int y = this.coordinates.getY() - distance; y <= this.coordinates.getY() + distance; ++y) {
                 Tile candidate = this.map.getTile(new PointDTO(x, y));
-                if (this.distanceTo(candidate) <= distance) {
+                if (candidate != null && this.distanceTo(candidate) <= distance) {
                     answer.add(candidate);
                 }
             }
