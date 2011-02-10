@@ -103,7 +103,8 @@ public abstract class Unit {
                         this.currentHitPoints,
                         this.maxHitPoints,
                         this.detectionRange,
-                        this.getSpecialFeatures()
+                        this.getSpecialFeatures(),
+                        this.owner
                 );
             }
         }
@@ -118,7 +119,7 @@ public abstract class Unit {
     public final UnitDTO getDTO(PlayerDTO player) {
         for (Unit unit : this.getMap().getAllUnits(player)) {
             if (this.getLocation().distanceTo(unit.getLocation()) + this.detectionModifier <= unit.detectionRange) {
-                return new UnitDTO(this.name);
+                return new UnitDTO(this.name, this.owner);
             }
         }
         return null;

@@ -111,9 +111,6 @@ public abstract class Map {
         Unit unit = startTile.popUnit(player);
         for (Tile pathTile : path) {
             pathTile.pushUnit(player, unit);
-            for (Tile exploredTile : pathTile.neighbors(unit.getDetectionRange())) {
-                exploredTile.markAsExplored(player);
-            }
             if (pathTile != finishTile) {
                 pathTile.popUnit(player);
             }
