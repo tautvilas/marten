@@ -4,6 +4,7 @@ import java.awt.Font;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedList;
 
 import marten.age.control.MouseListener;
 import marten.age.graphics.BasicSceneGraphBranch;
@@ -51,6 +52,7 @@ public class MapWidget extends BasicSceneGraphBranch implements Widget,
     private final ComplexModel cm = new ComplexModel();
     private TextureSprite tileHighlight = null;
     private Dimension dimension;
+    private volatile LinkedList<TileDTO> updatedTiles = new LinkedList<TileDTO>();
 
     public MapWidget(MapDTO map, Dimension dimension) {
         this.dimension = dimension;
@@ -64,18 +66,7 @@ public class MapWidget extends BasicSceneGraphBranch implements Widget,
         }
         for (TileDTO[] tileLine : this.map.getTileMap()) {
             for (TileDTO tile : tileLine) {
-                Point tileCoordinates = this.getTileDisplayCoordinates(tile
-                        .getCoordinates());
-                Geometry geometry = new Rectangle(new Dimension(TILE_WIDTH,
-                        TILE_HEIGHT), tileCoordinates);
-                if (!this.terrainCache.containsKey(tile.getName())) {
-                    Texture terrain = TextureLoader.loadTexture(ImageCache
-                            .getImage(Path.TILE_DATA_PATH + tile.getName()));
-                    terrainCache.put(tile.getName(), new SimpleModel(
-                            new Appearance(terrain)));
-                }
-                SimpleModel sm = terrainCache.get(tile.getName());
-                sm.addGeometry(geometry);
+                this.updateTile(tile);
             }
         }
         cm.setAppearance(new Appearance(new Color(1.0, 1.0, 1.0)));
@@ -92,7 +83,7 @@ public class MapWidget extends BasicSceneGraphBranch implements Widget,
                         1.0, 0.0));
                 coords.setPosition(this.getTileDisplayCoordinates(tile
                         .getCoordinates()));
-                tg.addChild(coords);
+                // tg.addChild(coords);
             }
         }
         this.addChild(tg);
@@ -207,6 +198,54 @@ public class MapWidget extends BasicSceneGraphBranch implements Widget,
     public void ScrollRight(int numPixels) {
         this.setPosition(new Point(this.getPosition().x - numPixels, this
                 .getPosition().y));
+    }
+
+    public void updateTile(TileDTO tile) {
+        this.updatedTiles.add(tile);
+    }
+
+    @Override
+    public void render() {
+        while (!this.updatedTiles.isEmpty()) {
+            TileDTO tile = this.updatedTiles.pop();
+            Point tileDisplayCoordinates = this.getTileDisplayCoordinates(tile
+                    .getCoordinates());
+            PointDTO tileCoordinates = tile.getCoordinates();
+            // TileDTO oldTile =
+            // this.map.getTileMap()[tileCoordinates.getX()][tileCoordinates
+            // .getY()];
+            Geometry geometry = new Rectangle(new Dimension(TILE_WIDTH,
+                    TILE_HEIGHT), tileDisplayCoordinates);
+            if (!this.terrainCache.containsKey(tile.getName())) {
+                Texture terrain = TextureLoader.loadTexture(ImageCache
+                        .getImage(Path.TILE_DATA_PATH
+                                + tile.getName().toLowerCase()));
+                SimpleModel sm = new SimpleModel(new Appearance(terrain));
+                terrainCache.put(tile.getName(), sm);
+                this.cm.addPart(sm);
+            }
+            // remove old tile graphic
+            this.terrainCache
+                    .get(
+                            this.map.getTileMap()[tileCoordinates.getX()][tileCoordinates
+                                    .getY()].getName())
+                    .removeGeometry(geometry);
+            SimpleModel sm = terrainCache.get(tile.getName());
+            sm.addGeometry(geometry);
+            this.map.getTileMap()[tileCoordinates.getX()][tileCoordinates
+                    .getY()] = tile;
+            if (tile.getUnit() != null) {
+                BitmapString unit = new BitmapString(font, tile.getUnit()
+                        .getName().charAt(0)
+                        + "", new Color(0.0, 1.0, 0.0));
+                unit.setPosition(new Point(tileDisplayCoordinates.x
+                        + this.TILE_WIDTH / 2 - unit.getDimension().width / 2,
+                        tileDisplayCoordinates.y + this.TILE_HEIGHT / 2
+                                - unit.getDimension().height / 2));
+                this.tg.addChild(unit);
+            }
+        }
+        super.render();
     }
 
     @Override

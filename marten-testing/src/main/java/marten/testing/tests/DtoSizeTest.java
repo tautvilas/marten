@@ -17,7 +17,7 @@ public class DtoSizeTest implements ConsoleTest {
     public void run() {
         PointDTO point = new PointDTO(100, 100);
         PlayerDTO player = new PlayerDTO(0, "bastard");
-        UnitDTO unit = new UnitDTO("dwarf", player);
+        UnitDTO unit = new UnitDTO("dwarf", player, 40, 50);
         TileDTO tile = new TileDTO("River", point, unit, true);
         System.out.println("Point DTO size: " + getSize(point));
         System.out.println("Player DTO size: " + getSize(point));

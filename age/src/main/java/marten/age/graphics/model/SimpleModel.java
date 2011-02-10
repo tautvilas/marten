@@ -26,6 +26,15 @@ public class SimpleModel extends BasicSceneGraphChild {
         this.geometries.add(newGeometry);
     }
 
+    public boolean removeGeometry(Geometry geometry) {
+        if (this.geometries.contains(geometry)) {
+            this.geometries.remove(geometry);
+            return true;
+        } else {
+            return false;
+        }
+    }
+
     public Appearance getAppearance() {
         return appearance;
     }

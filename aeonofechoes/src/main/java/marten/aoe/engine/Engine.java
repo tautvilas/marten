@@ -37,7 +37,7 @@ public final class Engine {
         }
         this.map = MapLoader.loadMap(this, mapName);
         this.playerList = playerList;
-        if (this.playerList.length != this.map.getPlayerLimit()) {
+        if (this.playerList.length > this.map.getPlayerLimit()) {
             throw new IllegalArgumentException("Player list must provide as many players as the map requires");
         }
     }
