@@ -71,7 +71,7 @@ public abstract class Tile {
             this.unit = unit;
             this.unit.onTileEntry(this);
             this.onUnitEntry();
-            this.getOwner().invokeLocalEvent(LocalEvent.UNIT_ENTRY, this.coordinates);
+            this.getOwner().invokeLocalEvent(LocalEvent.UNIT_ENTRY, this);
             return true;
         }
         return false;
@@ -83,7 +83,7 @@ public abstract class Tile {
         if (player == this.unit.getOwner() || player == PlayerDTO.SYSTEM) {
             Unit answer = this.unit;
             this.unit = null;
-            this.getOwner().invokeLocalEvent(LocalEvent.UNIT_EXIT, this.coordinates);
+            this.getOwner().invokeLocalEvent(LocalEvent.UNIT_EXIT, this);
             return answer;
         }
         return null;
@@ -94,7 +94,7 @@ public abstract class Tile {
     public final boolean insertUnit(PlayerDTO player, Unit unit) {
         if ((player == this.unit.getOwner() || player == PlayerDTO.SYSTEM) && this.unit == null && unit != null) {
             this.unit = unit;
-            this.getOwner().invokeLocalEvent(LocalEvent.UNIT_ENTRY, this.coordinates);
+            this.getOwner().invokeLocalEvent(LocalEvent.UNIT_ENTRY, this);
             return true;
         }
         return false;

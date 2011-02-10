@@ -41,7 +41,7 @@ public abstract class Map {
     public final String getName () {
         return this.name;
     }
-    public final void invokeLocalEvent (LocalEvent event, PointDTO location) {
+    public final void invokeLocalEvent (LocalEvent event, Tile location) {
         this.engine.invokeLocalEvent(event, location);
     }
     public final FullMapDTO getDTO (PlayerDTO player) {
@@ -68,7 +68,8 @@ public abstract class Map {
         }
         return null;
     }
-    public final Tile switchTile (PointDTO point, Tile tile) {
+    public final Tile switchTile (Tile tile) {
+        PointDTO point = tile.getCoordinates();
         if (point.getX() >= 0 && point.getX() < this.width && point.getY() >= 0 && point.getY() < this.height) {
             Tile oldTile = this.map[point.getX()][point.getY()];
             if (oldTile != null) {
@@ -76,7 +77,7 @@ public abstract class Map {
                 tile.pushUnit(PlayerDTO.SYSTEM, unit);
             }
             this.map[point.getX()][point.getY()] = tile;
-            this.invokeLocalEvent(LocalEvent.TILE_CHANGE, point);
+            this.invokeLocalEvent(LocalEvent.TILE_CHANGE, tile);
             return oldTile;
         }
         return null;

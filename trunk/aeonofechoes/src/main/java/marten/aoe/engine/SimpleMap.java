@@ -38,7 +38,7 @@ public abstract class SimpleMap extends Map {
                                         tile = TileLoader.loadLayer(subsubsubbranch.value(), tile);
                                     }
                                 }
-                                this.switchTile(new PointDTO(x, y), tile);
+                                this.switchTile(tile);
                                 x++;
                             }
                         }
