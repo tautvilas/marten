@@ -92,7 +92,7 @@ public class MapWidget extends BasicSceneGraphBranch implements Widget,
                         1.0, 0.0));
                 coords.setPosition(this.getTileDisplayCoordinates(tile
                         .getCoordinates()));
-                // tg.addChild(coords);
+                tg.addChild(coords);
             }
         }
         this.addChild(tg);
