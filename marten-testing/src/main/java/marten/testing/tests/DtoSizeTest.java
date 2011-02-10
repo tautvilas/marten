@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
 
+import marten.aoe.dto.PlayerDTO;
 import marten.aoe.dto.PointDTO;
 import marten.aoe.dto.TileDTO;
 import marten.aoe.dto.UnitDTO;
@@ -15,9 +16,11 @@ public class DtoSizeTest implements ConsoleTest {
     @Override
     public void run() {
         PointDTO point = new PointDTO(100, 100);
-        UnitDTO unit = new UnitDTO("dwarf");
+        PlayerDTO player = new PlayerDTO(0, "bastard");
+        UnitDTO unit = new UnitDTO("dwarf", player);
         TileDTO tile = new TileDTO("River", point, unit, true);
         System.out.println("Point DTO size: " + getSize(point));
+        System.out.println("Player DTO size: " + getSize(point));
         System.out.println("Unit DTO size: " + getSize(unit));
         System.out.println("Tile DTO size: " + getSize(tile));
     }
