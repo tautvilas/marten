@@ -1,10 +1,8 @@
 package marten.aoe.engine;
 
-import marten.aoe.dto.FullTileDTO;
-import marten.aoe.dto.PlayerDTO;
+import marten.aoe.dto.TileDTO;
 
 public interface EngineListener {
-    void onLocalEvent(LocalEvent event, FullTileDTO location);
+    void onLocalEvent(LocalEvent event, TileDTO tileDTO);
     void onGlobalEvent(GlobalEvent event);
-    PlayerDTO getAssignedPlayer();
 }

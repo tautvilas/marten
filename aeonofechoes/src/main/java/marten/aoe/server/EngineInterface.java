@@ -3,10 +3,10 @@ package marten.aoe.server;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 
-import marten.aoe.dto.FullTileDTO;
 import marten.aoe.dto.MapDTO;
 import marten.aoe.dto.PlayerDTO;
 import marten.aoe.dto.PointDTO;
+import marten.aoe.dto.TileDTO;
 import marten.aoe.engine.Engine;
 import marten.aoe.engine.EngineListener;
 import marten.aoe.engine.GlobalEvent;
@@ -55,7 +55,7 @@ public class EngineInterface extends UnicastRemoteObject implements EngineFace {
         this.engine.addListener(new EngineListener() {
 
             @Override
-            public void onLocalEvent(LocalEvent event, FullTileDTO location) {
+            public void onLocalEvent(LocalEvent event, TileDTO location) {
                 EngineInterface.log.info(EngineInterface.this.player.getName() + " " + event + ", " + location);
             }
 
@@ -63,12 +63,7 @@ public class EngineInterface extends UnicastRemoteObject implements EngineFace {
             public void onGlobalEvent(GlobalEvent event) {
                 EngineInterface.log.info(EngineInterface.this.player.getName() + " " + event);
             }
-
-            @Override
-            public PlayerDTO getAssignedPlayer() {
-                return EngineInterface.this.player;
-            }
-        });
+        }, this.player);
     }
 
     @Override
