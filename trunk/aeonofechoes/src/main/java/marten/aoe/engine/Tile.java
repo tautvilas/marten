@@ -71,7 +71,7 @@ public abstract class Tile {
             this.unit.onTileEntry(this);
             this.onUnitEntry();
             for (Tile exploredTile : this.neighbors(unit.getDetectionRange())) {
-                exploredTile.markAsExplored(player);
+                exploredTile.recheckVisibility(player);
             }
             this.getMap().invokeLocalEvent(LocalEvent.UNIT_ENTRY, this.getCoordinates());
             return true;
@@ -97,7 +97,7 @@ public abstract class Tile {
         if (this.unit == null && unit != null && (player == unit.getOwner() || player == PlayerDTO.SYSTEM)) {
             this.unit = unit;
             for (Tile exploredTile : this.neighbors(unit.getDetectionRange())) {
-                exploredTile.markAsExplored(player);
+                exploredTile.recheckVisibility(player);
             }
             this.getMap().invokeLocalEvent(LocalEvent.UNIT_ENTRY, this.getCoordinates());
             return true;
@@ -182,5 +182,5 @@ public abstract class Tile {
     }
     public abstract boolean isExplored(PlayerDTO player);
     public abstract boolean isVisible(PlayerDTO player);
-    public abstract void markAsExplored(PlayerDTO player);
+    public abstract void recheckVisibility(PlayerDTO player);
 }

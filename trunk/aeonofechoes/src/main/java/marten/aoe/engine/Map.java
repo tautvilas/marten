@@ -44,6 +44,9 @@ public abstract class Map {
     public final void invokeLocalEvent (LocalEvent event, PointDTO location) {
         this.engine.invokeLocalEvent(event, this.map[location.getX()][location.getY()]);
     }
+    public final void invokePlayerSpecificLocalEvent (LocalEvent event, PointDTO location, PlayerDTO player) {
+        this.engine.invokePlayerSpecificLocalEvent(event, this.map[location.getX()][location.getY()], player);
+    }
     public final FullMapDTO getFullDTO (PlayerDTO player) {
         FullTileDTO[][] tiles = new FullTileDTO[this.width][this.height];
         for (int x = 0; x < this.width; x++) {

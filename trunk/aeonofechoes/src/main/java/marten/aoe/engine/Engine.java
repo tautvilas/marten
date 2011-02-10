@@ -17,7 +17,7 @@ import marten.aoe.engine.loader.UnitLoader;
 
 import org.junit.Assert;
 
-/** The main interface to the AoE engine, which should be used by all connected clients to perform operations on the engine.
+/** The main node of the AoE engine, which should be used by all connected clients to perform operations on the engine.
  * @author Petras Ražanskas*/
 public final class Engine {
     private Map map;
@@ -205,6 +205,18 @@ public final class Engine {
                 activeUnit.specialAction9(target); break;
         }
         return true;
+    }
+    /** Forwards all local events to the listeners pertaining to given player.
+     * @param event - the type of event.
+     * @param location - the tile where the event happened.
+     * @param player - the player to be notified about the event.*/
+    public void invokePlayerSpecificLocalEvent(LocalEvent event, Tile location, PlayerDTO player) {
+        Assert.assertNotNull(event);
+        Assert.assertNotNull(location);
+        Assert.assertNotNull(player);
+        for (EngineListener listener : this.listeners.get(player)) {
+            listener.onLocalEvent(event, location.getDTO(player));
+        }
     }
     /** Forwards all local events to the listeners of this engine.
      * @param event - the type of event.
