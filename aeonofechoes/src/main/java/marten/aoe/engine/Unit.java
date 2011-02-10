@@ -36,7 +36,7 @@ public abstract class Unit {
         this.detectionRange = other.detectionRange;
         this.detectionModifier = other.detectionModifier;
         if (location != null) {
-            location.insertUnit(PlayerDTO.SYSTEM, this);
+            location.insertUnit(this.owner, this);
         }
     }
     public Unit(String name, Tile location, PlayerDTO owner, UnitSize unitSize, UnitType unitType, int movementAllowance, int hitPoints, int detectionRange, int detectionModifier) {
@@ -50,7 +50,7 @@ public abstract class Unit {
         this.detectionRange = detectionRange;
         this.detectionModifier = detectionModifier;
         if (location != null) {
-            location.insertUnit(PlayerDTO.SYSTEM, this);
+            location.insertUnit(this.owner, this);
         }
     }
     /** @return the name of this unit */
