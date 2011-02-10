@@ -16,7 +16,7 @@ public abstract class TileBase extends Tile {
         super(name, owner, coordinates);
     }
     @Override public final FullTileDTO getFullDTO(PlayerDTO player) {
-        if (!this.isExplored(player)) {
+        if (player != PlayerDTO.SYSTEM && !this.isExplored(player)) {
             return new FullTileDTO(
                     "Shroud",
                     this.getCoordinates(),
@@ -40,7 +40,7 @@ public abstract class TileBase extends Tile {
         );
     }
     @Override public final TileDTO getDTO(PlayerDTO player) {
-        if (!this.isExplored(player)) {
+        if (player != PlayerDTO.SYSTEM && !this.isExplored(player)) {
             return new TileDTO("Shroud", this.getCoordinates(), null, false);
         }
         return new TileDTO(this.getName(), this.getCoordinates(), (this.getUnit() != null && this.isVisible(player) ? this.getUnit().getDTO(player) : null), this.isVisible(player));

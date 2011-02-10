@@ -91,6 +91,21 @@ public abstract class Unit {
     }
     /** Create a standard Unit Data Transfer Object. */
     public final FullUnitDTO getFullDTO(PlayerDTO player) {
+        if (player == PlayerDTO.SYSTEM) {
+            return new FullUnitDTO(
+                    this.name,
+                    this.unitSize,
+                    this.unitType,
+                    this.currentMovementAllowance,
+                    this.maxMovementAllowance,
+                    this.getDamageResistance(),
+                    this.currentHitPoints,
+                    this.maxHitPoints,
+                    this.detectionRange,
+                    this.getSpecialFeatures(),
+                    this.owner
+            );
+        }
         for (Unit unit : this.getMap().getAllUnits(player)) {
             if (this.getLocation().distanceTo(unit.getLocation()) + this.detectionModifier <= unit.detectionRange) {
                 return new FullUnitDTO(
@@ -117,6 +132,9 @@ public abstract class Unit {
     }
     /** Create a minimal Unit Data Transfer Object. */
     public final UnitDTO getDTO(PlayerDTO player) {
+        if (player == PlayerDTO.SYSTEM) {
+            return new UnitDTO(this.name, this.owner);
+        }
         for (Unit unit : this.getMap().getAllUnits(player)) {
             if (this.getLocation().distanceTo(unit.getLocation()) + this.detectionModifier <= unit.detectionRange) {
                 return new UnitDTO(this.name, this.owner);
