@@ -10,6 +10,7 @@ import marten.age.core.AppInfo;
 import marten.age.graphics.flat.Flatland;
 import marten.age.graphics.primitives.Dimension;
 import marten.age.graphics.primitives.Point;
+import marten.age.widget.Action;
 import marten.age.widget.Button;
 import marten.age.widget.obsolete.FpsCounter;
 import marten.aoe.gui.widget.AoeButtonFactory;
@@ -34,9 +35,9 @@ public class Game extends AgeScene {
     private Sidebar sidebar;
     private MouseController mouseController = new MouseController();
 
-    public Game(EngineFace engine, GameDetails details) {
+    public Game(EngineFace engineFace, GameDetails details) {
         this.params = details;
-        this.engine = engine;
+        this.engine = engineFace;
         try {
             this.map = new MapWidget(this.engine.getMap(),
                     new Dimension(AppInfo.getDisplayWidth() - 180, AppInfo
@@ -55,6 +56,16 @@ public class Game extends AgeScene {
                 .setPosition(new Point(AppInfo.getDisplayWidth() - 150, 25));
         flatland.addChild(sidebar);
         flatland.addChild(endTurnButton);
+        endTurnButton.setAction(new Action() {
+            @Override
+            public void perform() {
+                try {
+                    engine.endTurn();
+                } catch (RemoteException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
         flatland.addChild(new FpsCounter());
 
         KeyboardController keyboardController = new KeyboardController();
@@ -83,6 +94,7 @@ public class Game extends AgeScene {
         this.registerControllable(endTurnButton);
         flatland.compile();
         try {
+            this.engine.addListener();
             log.info("Game scene is initialized. Active player is '"
                     + this.engine.getActivePlayer().getName() + "'");
         } catch (RemoteException e) {
