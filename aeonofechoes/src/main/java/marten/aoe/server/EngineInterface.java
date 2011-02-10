@@ -33,7 +33,7 @@ public class EngineInterface extends UnicastRemoteObject implements EngineFace {
 
     @Override
     public MapDTO getMap() throws RemoteException {
-        return this.engine.getMinimalMapDTO(this.player);
+        return this.engine.getMapDTO(this.player);
     }
 
     @Deprecated

@@ -41,8 +41,8 @@ public abstract class Map {
     public final String getName () {
         return this.name;
     }
-    public final void invokeLocalEvent (LocalEvent event, Tile location) {
-        this.engine.invokeLocalEvent(event, location);
+    public final void invokeLocalEvent (LocalEvent event, PointDTO location) {
+        this.engine.invokeLocalEvent(event, this.map[location.getX()][location.getY()]);
     }
     public final FullMapDTO getFullDTO (PlayerDTO player) {
         FullTileDTO[][] tiles = new FullTileDTO[this.width][this.height];
@@ -77,7 +77,7 @@ public abstract class Map {
                 tile.pushUnit(PlayerDTO.SYSTEM, unit);
             }
             this.map[point.getX()][point.getY()] = tile;
-            this.invokeLocalEvent(LocalEvent.TILE_CHANGE, tile);
+            this.invokeLocalEvent(LocalEvent.TILE_CHANGE, point);
             return oldTile;
         }
         return null;
