@@ -8,6 +8,7 @@ import java.rmi.RemoteException;
 import java.security.SecureRandom;
 import java.util.ArrayList;
 
+import marten.aoe.dto.PlayerDTO;
 import marten.aoe.engine.Engine;
 import marten.aoe.server.serializable.GameDetails;
 import marten.aoe.server.serializable.ServerNotification;
@@ -86,20 +87,7 @@ public class ServerGame {
         details.gameName = this.gameName;
         details.players = members;
         details.open = this.open;
-        if (this.engine != null) {
-            if (client.getEngineUrl() == null) {
-                String url = this.serverUrl + "/" + client.getUsername()
-                + new BigInteger(130, new SecureRandom()).toString(32);
-                client.setEngineUrl(url);
-                try {
-                    Naming.rebind(client.getEngineUrl(), new EngineInterface(
-                            this.engine, client.getUsername()));
-                } catch (MalformedURLException e) {
-                    e.printStackTrace();
-                }
-            }
-            details.engineUrl = client.getEngineUrl();
-        }
+        details.engineUrl = client.getEngineUrl();
         return details;
     }
 
@@ -107,10 +95,26 @@ public class ServerGame {
         return this.getPlayers();
     }
 
-    public void start() {
+    public void start() throws RemoteException {
         this.open = false;
-        // FIXME: Engine constructor must be provided with a player list
-        this.engine = new Engine(this.mapName, null);
+        PlayerDTO[] players = new PlayerDTO[this.players.size()];
+        for (int i = 0; i < players.length; i++) {
+            ServerClient client = this.players.get(i);
+            players[i] = new PlayerDTO(i, client.getUsername());
+        }
+        this.engine = new Engine(this.mapName, players);
+        for (int i = 0; i < players.length; i++) {
+            ServerClient client = this.players.get(i);
+            String url = this.serverUrl + "/" + client.getUsername()
+                    + new BigInteger(130, new SecureRandom()).toString(32);
+            client.setEngineUrl(url);
+            try {
+                Naming.rebind(client.getEngineUrl(), new EngineInterface(
+                        this.engine, players[i]));
+            } catch (MalformedURLException e) {
+                e.printStackTrace();
+            }
+        }
         this.notify(ServerNotification.GAME_STARTED);
     }
 

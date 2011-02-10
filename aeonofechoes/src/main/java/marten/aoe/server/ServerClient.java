@@ -12,7 +12,7 @@ public class ServerClient {
     private LinkedList<ServerNotification> notifier = new LinkedList<ServerNotification>();
     private String username;
     private String secret;
-    private String engineUrl;
+    private String engineUrl = null;
     private long pingTime;
 
     public ServerClient(String username) {
