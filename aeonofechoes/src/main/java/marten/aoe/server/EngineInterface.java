@@ -3,6 +3,7 @@ package marten.aoe.server;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 
+import marten.aoe.dto.FullTileDTO;
 import marten.aoe.dto.MapDTO;
 import marten.aoe.dto.PlayerDTO;
 import marten.aoe.dto.PointDTO;
@@ -16,13 +17,13 @@ import org.apache.log4j.Logger;
 
 public class EngineInterface extends UnicastRemoteObject implements EngineFace {
     private static org.apache.log4j.Logger log = Logger
-            .getLogger(EngineFace.class);
+    .getLogger(EngineFace.class);
 
     private final Engine engine;
     private final PlayerDTO player;
 
     protected EngineInterface(Engine engine, PlayerDTO player)
-            throws RemoteException {
+    throws RemoteException {
         super();
         this.engine = engine;
         this.player = player;
@@ -32,20 +33,20 @@ public class EngineInterface extends UnicastRemoteObject implements EngineFace {
 
     @Override
     public MapDTO getMap() throws RemoteException {
-        return engine.getMinimalMapDTO(this.player);
+        return this.engine.getMinimalMapDTO(this.player);
     }
 
     @Deprecated
     @Override
     public synchronized boolean moveUnit(PointDTO from, PointDTO to)
-            throws RemoteException {
+    throws RemoteException {
         return this.engine.moveUnit(this.player, from, to);
     }
 
     @Deprecated
     @Override
     public synchronized boolean createUnit(String name, PointDTO at)
-            throws RemoteException {
+    throws RemoteException {
         return this.engine.createUnit(this.player, name, at);
     }
 
@@ -54,13 +55,18 @@ public class EngineInterface extends UnicastRemoteObject implements EngineFace {
         this.engine.addListener(new EngineListener() {
 
             @Override
-            public void onLocalEvent(LocalEvent event, PointDTO location) {
-                log.info(player.getName() + event + ", " + location);
+            public void onLocalEvent(LocalEvent event, FullTileDTO location) {
+                EngineInterface.log.info(EngineInterface.this.player.getName() + event + ", " + location);
             }
 
             @Override
             public void onGlobalEvent(GlobalEvent event) {
-                log.info(player.getName() + event);
+                EngineInterface.log.info(EngineInterface.this.player.getName() + event);
+            }
+
+            @Override
+            public PlayerDTO getAssignedPlayer() {
+                return EngineInterface.this.player;
             }
         });
     }

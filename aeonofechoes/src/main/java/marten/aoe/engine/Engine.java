@@ -115,9 +115,9 @@ public final class Engine {
                 throw new IllegalStateException("Illegal action index.");
         }
     }
-    public void invokeLocalEvent(LocalEvent event, PointDTO location) {
+    public void invokeLocalEvent(LocalEvent event, Tile location) {
         for (EngineListener listener : this.listeners) {
-            listener.onLocalEvent(event, location);
+            listener.onLocalEvent(event, location.getDTO(listener.getAssignedPlayer()));
         }
     }
     public void invokeGlobalEvent(GlobalEvent event) {
