@@ -40,6 +40,18 @@ public abstract class TileLayer extends Tile {
         this.base.setOverlay(overlay);
     }
     @Override public final FullTileDTO getFullDTO(PlayerDTO player) {
+        if (player == PlayerDTO.SYSTEM) {
+            return new FullTileDTO(
+                    this.getName(),
+                    this.getCoordinates(),
+                    this.getHeight(),
+                    this.getMovementCost(),
+                    this.getDefenseBonus(),
+                    (this.getUnit() != null ? this.getUnit().getFullDTO(player) : null),
+                    this.getSpecialFeatures(),
+                    true
+            );
+        }
         if (!this.isExplored(player)) {
             return new FullTileDTO(
                     "Shroud",
@@ -70,6 +82,14 @@ public abstract class TileLayer extends Tile {
     }
     @Override
     public final TileDTO getDTO(PlayerDTO player) {
+        if (player == PlayerDTO.SYSTEM) {
+            return new TileDTO(
+                    this.getName(),
+                    this.getCoordinates(),
+                    (this.getUnit() != null ? this.getUnit().getDTO(player) : null),
+                    true
+            );
+        }
         if (!this.isExplored(player)) {
             return new TileDTO("Shroud", this.getCoordinates(), null, false);
         }
