@@ -47,6 +47,7 @@ public abstract class TileBase extends Tile {
     }
     @Override public final void markAsExplored(PlayerDTO player) {
         this.exploredPlayers.add(player);
+        this.getMap().invokeLocalEvent(LocalEvent.TILE_EXPLORED, this.getCoordinates());
     }
     @Override public final boolean isExplored(PlayerDTO player) {
         return this.exploredPlayers.contains(player);
