@@ -97,7 +97,7 @@ public class Game extends AgeScene {
         flatland.compile();
         try {
             this.engine.addListener();
-            this.engine.createUnit("Dwarf", new PointDTO(5, 5));
+            this.engine.createUnit("Dwarf", new PointDTO(13, 6));
             log.info("Game scene is initialized. Active player is '"
                     + this.engine.getActivePlayer().getName() + "'");
         } catch (RemoteException e) {
