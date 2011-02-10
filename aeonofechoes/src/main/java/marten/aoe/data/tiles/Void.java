@@ -46,9 +46,9 @@ public final class Void extends TileBase {
         return this.movement;
     }
     @Override public String[] getSpecialFeatures() {
-        return new String[] {"Impassable"};
+        return new String[] {"Impassable", "Unexplored"};
     }
-    @Override public void onTurnOver() {        
+    @Override public void onTurnOver() {
     }
     @Override public void onUnitEntry() {
     }

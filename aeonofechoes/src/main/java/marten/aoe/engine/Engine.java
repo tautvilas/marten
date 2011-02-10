@@ -37,22 +37,64 @@ public final class Engine {
         this.listeners.remove(listener);
     }
     public synchronized MapDTO getMinimalMapDTO (PlayerDTO player) {
-        return (this.map != null) ? this.map.getMinimalDTO(player) : null;
+        if (this.map == null) {
+            return null;
+        }
+        return this.map.getDTO(player);
     }
     public synchronized FullMapDTO getMapDTO (PlayerDTO player) {
-        return (this.map != null) ? this.map.getDTO(player) : null;
+        if (this.map == null) {
+            return null;
+        }
+        return this.map.getFullDTO(player);
     }
     public synchronized TileDTO getMinimalTileDTO (PlayerDTO player, PointDTO location) {
-        return (this.map != null) ? this.map.getTile(location).getMinimalDTO(player) : null;
+        if (this.map == null) {
+            return null;
+        }
+        Tile tile = this.map.getTile(location);
+        if (tile == null) {
+            return null;
+        }
+        return tile.getDTO(player);
     }
     public synchronized FullTileDTO getTileDTO (PlayerDTO player, PointDTO location) {
-        return (this.map != null) ? this.map.getTile(location).getDTO(player) : null;
+        if (this.map == null) {
+            return null;
+        }
+        Tile tile = this.map.getTile(location);
+        if (tile == null) {
+            return null;
+        }
+        return tile.getFullDTO(player);
     }
     public synchronized UnitDTO getMinimalUnitDTO (PlayerDTO player, PointDTO location) {
-        return (this.map != null) ? this.map.getTile(location).getUnit().getMinimalDTO(player) : null;
+        if (this.map == null) {
+            return null;
+        }
+        Tile tile = this.map.getTile(location);
+        if (tile == null) {
+            return null;
+        }
+        Unit unit = tile.getUnit();
+        if (unit == null) {
+            return null;
+        }
+        return unit.getDTO(player);
     }
     public synchronized FullUnitDTO getUnitDTO (PlayerDTO player, PointDTO location) {
-        return (this.map != null) ? this.map.getTile(location).getUnit().getDTO(player) : null;
+        if (this.map == null) {
+            return null;
+        }
+        Tile tile = this.map.getTile(location);
+        if (tile == null) {
+            return null;
+        }
+        Unit unit = tile.getUnit();
+        if (unit == null) {
+            return null;
+        }
+        return unit.getFullDTO(player);
     }
     @Deprecated public synchronized boolean moveUnit (PlayerDTO player, PointDTO from, PointDTO to) {
         // For testing purposes only. In normal circumstances the players should
@@ -117,7 +159,7 @@ public final class Engine {
     }
     public void invokeLocalEvent(LocalEvent event, Tile location) {
         for (EngineListener listener : this.listeners) {
-            listener.onLocalEvent(event, location.getDTO(listener.getAssignedPlayer()));
+            listener.onLocalEvent(event, location.getFullDTO(listener.getAssignedPlayer()));
         }
     }
     public void invokeGlobalEvent(GlobalEvent event) {

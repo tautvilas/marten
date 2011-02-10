@@ -1,6 +1,8 @@
 package marten.aoe.engine;
 
+import marten.aoe.dto.DefenseDTO;
 import marten.aoe.dto.FullTileDTO;
+import marten.aoe.dto.MovementDTO;
 import marten.aoe.dto.PlayerDTO;
 import marten.aoe.dto.TileDTO;
 
@@ -37,33 +39,59 @@ public abstract class TileLayer extends Tile {
         }
         this.base.setOverlay(overlay);
     }
-    @Override public final FullTileDTO getDTO(PlayerDTO player) {
+    @Override public final FullTileDTO getFullDTO(PlayerDTO player) {
+        if (!this.isExplored(player)) {
+            return new FullTileDTO(
+                    "Shroud",
+                    this.getCoordinates(),
+                    0,
+                    new MovementDTO(null),
+                    new DefenseDTO(null),
+                    null,
+                    new String[] {"Unexplored"},
+                    false
+            );
+        }
         for (Unit unit : this.getOwner().getAllUnits(player)) {
-            if (this.distanceTo(unit.getLocation()) + this.detectionModifier <= 0) {
+            if (this.distanceTo(unit.getLocation()) + this.detectionModifier <= unit.getDetectionRange()) {
                 return new FullTileDTO(
                         this.getName(),
                         this.getCoordinates(),
                         this.getHeight(),
                         this.getMovementCost(),
                         this.getDefenseBonus(),
-                        (this.getUnit() != null ? this.getUnit().getDTO(player) : null),
-                        this.getSpecialFeatures()
+                        (this.getUnit() != null && this.isVisible(player) ? this.getUnit().getFullDTO(player) : null),
+                        this.getSpecialFeatures(),
+                        this.isVisible(player)
                 );
             }
         }
-        return this.base.getDTO(player);
+        return this.base.getFullDTO(player);
     }
     @Override
-    public final TileDTO getMinimalDTO(PlayerDTO player) {
+    public final TileDTO getDTO(PlayerDTO player) {
+        if (!this.isExplored(player)) {
+            return new TileDTO("Shroud", this.getCoordinates(), null, false);
+        }
         for (Unit unit : this.getOwner().getAllUnits(player)) {
             if (this.distanceTo(unit.getLocation()) + this.detectionModifier <= 0) {
                 return new TileDTO(
                         this.getName(),
                         this.getCoordinates(),
-                        (this.getUnit() != null ? this.getUnit().getMinimalDTO(player) : null)
+                        (this.getUnit() != null && this.isVisible(player) ? this.getUnit().getDTO(player) : null),
+                        this.isVisible(player)
                 );
             }
         }
-        return this.base.getMinimalDTO(player);
+        return this.base.getDTO(player);
+    }
+    @Override public final boolean isExplored(PlayerDTO player) {
+        return this.base.isExplored(player);
+    }
+    @Override public final boolean isVisible(PlayerDTO player) {
+        return this.base.isVisible(player);
+    }
+    @Override public final void markAsExplored(PlayerDTO player) {
+        this.base.markAsExplored(player);
     }
 }

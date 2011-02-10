@@ -44,20 +44,20 @@ public abstract class Map {
     public final void invokeLocalEvent (LocalEvent event, Tile location) {
         this.engine.invokeLocalEvent(event, location);
     }
-    public final FullMapDTO getDTO (PlayerDTO player) {
+    public final FullMapDTO getFullDTO (PlayerDTO player) {
         FullTileDTO[][] tiles = new FullTileDTO[this.width][this.height];
         for (int x = 0; x < this.width; x++) {
             for (int y = 0; y < this.height; y++) {
-                tiles[x][y] = (this.map[x][y] != null ? this.map[x][y].getDTO(player) : null);
+                tiles[x][y] = (this.map[x][y] != null ? this.map[x][y].getFullDTO(player) : null);
             }
         }
         return new FullMapDTO(tiles, this.width, this.height, this.name);
     }
-    public final MapDTO getMinimalDTO (PlayerDTO player) {
+    public final MapDTO getDTO (PlayerDTO player) {
         TileDTO[][] tiles = new TileDTO[this.width][this.height];
         for (int x = 0; x < this.width; x++) {
             for (int y = 0; y < this.height; y++) {
-                tiles[x][y] = (this.map[x][y] != null ? this.map[x][y].getMinimalDTO(player) : null);
+                tiles[x][y] = (this.map[x][y] != null ? this.map[x][y].getDTO(player) : null);
             }
         }
         return new MapDTO(tiles, this.width, this.height, this.name);
@@ -111,6 +111,9 @@ public abstract class Map {
         Unit unit = startTile.popUnit(player);
         for (Tile pathTile : path) {
             pathTile.pushUnit(player, unit);
+            for (Tile exploredTile : pathTile.neighbors(unit.getDetectionRange())) {
+                exploredTile.markAsExplored(player);
+            }
             if (pathTile != finishTile) {
                 pathTile.popUnit(player);
             }

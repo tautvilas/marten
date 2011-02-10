@@ -7,10 +7,12 @@ public final class TileDTO implements Serializable {
     private final UnitDTO unit;
     private final String name;
     private final PointDTO point;
-    public TileDTO (String name, PointDTO point, UnitDTO unit) {
+    private final boolean visible;
+    public TileDTO (String name, PointDTO point, UnitDTO unit, boolean visible) {
         this.name = name;
         this.unit = unit;
         this.point = point;
+        this.visible = visible;
     }
     public String getName () {
         return this.name;
@@ -20,5 +22,8 @@ public final class TileDTO implements Serializable {
     }
     public PointDTO getCoordinates () {
         return this.point;
+    }
+    public boolean getVisibility () {
+        return this.visible;
     }
 }
