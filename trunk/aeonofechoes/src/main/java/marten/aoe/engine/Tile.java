@@ -86,7 +86,7 @@ public abstract class Tile {
             Unit answer = this.unit;
             this.unit = null;
             this.getMap().invokeLocalEvent(LocalEvent.UNIT_EXIT, this.getCoordinates());
-            for (Tile exploredTile : this.neighbors(this.unit.getDetectionRange() + 1)) {
+            for (Tile exploredTile : this.neighbors(answer.getDetectionRange())) {
                 exploredTile.recheckVisibility(player);
             }
             return answer;
