@@ -111,7 +111,7 @@ public abstract class TileLayer extends Tile {
     @Override public final boolean isVisible(PlayerDTO player) {
         return this.base.isVisible(player);
     }
-    @Override public final void markAsExplored(PlayerDTO player) {
-        this.base.markAsExplored(player);
+    @Override public final void recheckVisibility(PlayerDTO player) {
+        this.base.recheckVisibility(player);
     }
 }
