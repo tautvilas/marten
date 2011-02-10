@@ -1,6 +1,7 @@
 package marten.aoe.engine;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import marten.aoe.dto.FullMapDTO;
@@ -22,7 +23,7 @@ public final class Engine {
     private Map map;
     private final PlayerDTO[] playerList;
     private int currentPlayer = 0;
-    private final List<EngineListener> listeners = new ArrayList<EngineListener>();
+    private final java.util.Map<PlayerDTO, List<EngineListener>> listeners = new HashMap<PlayerDTO, List<EngineListener>>();
     /** Initializes the engine with given map and players.
      * @param mapName - the name of the Map subclass to be loaded.
      * @param playerList - an array of Player instances that will participate in this battle. */
@@ -45,10 +46,15 @@ public final class Engine {
         return this.playerList[this.currentPlayer];
     }
     /** Registers a new listener for this engine to intercept engine events.
-     * @param listener - the new engine listener.*/
-    public synchronized void addListener (EngineListener listener) {
+     * @param listener - the new engine listener.
+     * @param player - the player this listener represents*/
+    public synchronized void addListener (EngineListener listener, PlayerDTO player) {
         Assert.assertNotNull(listener);
-        this.listeners.add(listener);
+        Assert.assertNotNull(player);
+        if (!this.listeners.containsKey(player)) {
+            this.listeners.put(player, new ArrayList<EngineListener>());
+        }
+        this.listeners.get(player).add(listener);
     }
     /** Unregisters a listener from this engine so it no longer receives engine events.
      * @param listener - the listener to be unregistered.*/
@@ -206,9 +212,11 @@ public final class Engine {
     public void invokeLocalEvent(LocalEvent event, Tile location) {
         Assert.assertNotNull(event);
         Assert.assertNotNull(location);
-        for (EngineListener listener : this.listeners) {
-            if (location.isVisible(listener.getAssignedPlayer())) {
-                listener.onLocalEvent(event, location.getFullDTO(listener.getAssignedPlayer()));
+        for (PlayerDTO player : this.listeners.keySet()) {
+            if (location.isVisible(player)) {
+                for (EngineListener listener : this.listeners.get(player)) {
+                    listener.onLocalEvent(event, location.getDTO(player));
+                }
             }
         }
     }
@@ -216,8 +224,10 @@ public final class Engine {
      * @param event - the type of event.*/
     public void invokeGlobalEvent(GlobalEvent event) {
         Assert.assertNotNull(event);
-        for (EngineListener listener : this.listeners) {
-            listener.onGlobalEvent(event);
+        for (List<EngineListener> listenerList : this.listeners.values()) {
+            for (EngineListener listener : listenerList) {
+                listener.onGlobalEvent(event);
+            }
         }
     }
 }
