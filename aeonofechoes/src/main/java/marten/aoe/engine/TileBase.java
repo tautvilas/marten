@@ -52,7 +52,7 @@ public abstract class TileBase extends Tile {
         return this.exploredPlayers.contains(player);
     }
     @Override public final boolean isVisible(PlayerDTO player) {
-        for (Unit unit : this.getOwner().getAllUnits(player)) {
+        for (Unit unit : this.getMap().getAllUnits(player)) {
             if (this.distanceTo(unit.getLocation()) <= unit.getDetectionRange()) {
                 return true;
             }
