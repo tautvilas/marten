@@ -14,7 +14,8 @@ public class FullUnitDTO implements Serializable {
     private final int maxHitPoints;
     private final int detectionRange;
     private final String[] specialFeatures;
-    public FullUnitDTO (String name, UnitSize size, UnitType type, int movementAllowance, int maximumMovementAllowance, DamageResistanceDTO damageResistance, int hitPoints, int maxHitPoints, int detectionRange, String[] specialFeatures) {
+    private final PlayerDTO owner;
+    public FullUnitDTO (String name, UnitSize size, UnitType type, int movementAllowance, int maximumMovementAllowance, DamageResistanceDTO damageResistance, int hitPoints, int maxHitPoints, int detectionRange, String[] specialFeatures, PlayerDTO owner) {
         this.name = name;
         this.size = size;
         this.type = type;
@@ -25,6 +26,7 @@ public class FullUnitDTO implements Serializable {
         this.maxHitPoints = maxHitPoints;
         this.detectionRange = detectionRange;
         this.specialFeatures = specialFeatures;
+        this.owner = owner;
     }
     public String getName () {
         return this.name;
@@ -55,5 +57,8 @@ public class FullUnitDTO implements Serializable {
     }
     public String[] getSpecialFeatures () {
         return this.specialFeatures;
+    }
+    public PlayerDTO getOwner () {
+        return this.owner;
     }
 }
