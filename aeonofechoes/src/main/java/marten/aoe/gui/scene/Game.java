@@ -24,7 +24,6 @@ import org.lwjgl.input.Keyboard;
 public class Game extends AgeScene {
     private final int MAP_SCROLL_SPEED = 30;
 
-    @SuppressWarnings("unused")
     private static org.apache.log4j.Logger log = Logger.getLogger(Game.class);
 
     private Flatland flatland;
@@ -83,6 +82,12 @@ public class Game extends AgeScene {
         this.registerControllable(map);
         this.registerControllable(endTurnButton);
         flatland.compile();
+        try {
+            log.info("Game scene is initialized. Active player is '"
+                    + this.engine.getActivePlayer().getName() + "'");
+        } catch (RemoteException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @Override
