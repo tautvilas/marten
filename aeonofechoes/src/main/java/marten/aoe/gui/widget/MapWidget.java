@@ -45,12 +45,14 @@ public class MapWidget extends BasicSceneGraphBranch implements Widget,
 
     private final HashMap<String, SimpleModel> terrainCache = new HashMap<String, SimpleModel>();
     private MapDTO map = null;
+    private PointDTO selectedTile = null;
 
     private final BitmapFont font = FontCache.getFont(new Font("Courier New",
             Font.BOLD, 20));
     private final TranslationGroup tg = new TranslationGroup();
     private final ComplexModel cm = new ComplexModel();
     private TextureSprite tileHighlight = null;
+    private TextureSprite tileSelection = null;
     private Dimension dimension;
     private volatile LinkedList<TileDTO> updatedTiles = new LinkedList<TileDTO>();
 
@@ -58,8 +60,11 @@ public class MapWidget extends BasicSceneGraphBranch implements Widget,
         this.dimension = dimension;
         this.map = map;
         try {
-            tileHighlight = new TextureSprite(new ImageData(
+            this.tileHighlight = new TextureSprite(new ImageData(
                     "data/gui/skin/tile-highlight.png"));
+            this.tileSelection = new TextureSprite(new ImageData(
+                    "data/gui/skin/tile-highlight.png"));
+            this.tileSelection.setColor(new Color(1.0, 0, 0));
             tileHighlight.setPosition(new Point(-10000, -10000));
         } catch (IOException e1) {
             throw (new RuntimeException(e1));
@@ -295,6 +300,15 @@ public class MapWidget extends BasicSceneGraphBranch implements Widget,
 
     @Override
     public void mouseUp(Point coords) {
+        TileDTO tile = tileHit(coords);
+        if (tile != null) {
+            this.tileSelection.setPosition(this.getTileDisplayCoordinates(tile
+                    .getCoordinates()));
+            if (this.selectedTile == null) {
+                tg.addChild(tileSelection);
+            }
+            this.selectedTile = tile.getCoordinates();
+        }
     }
 
     @Override
