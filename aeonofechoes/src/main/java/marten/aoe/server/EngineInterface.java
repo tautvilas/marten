@@ -56,12 +56,12 @@ public class EngineInterface extends UnicastRemoteObject implements EngineFace {
 
             @Override
             public void onLocalEvent(LocalEvent event, FullTileDTO location) {
-                EngineInterface.log.info(EngineInterface.this.player.getName() + event + ", " + location);
+                EngineInterface.log.info(EngineInterface.this.player.getName() + " " + event + ", " + location);
             }
 
             @Override
             public void onGlobalEvent(GlobalEvent event) {
-                EngineInterface.log.info(EngineInterface.this.player.getName() + event);
+                EngineInterface.log.info(EngineInterface.this.player.getName() + " " + event);
             }
 
             @Override
