@@ -17,22 +17,22 @@ import marten.aoe.dto.UnitType;
 public abstract class Tile {
 
     private Unit unit = null;
-    private final Map owner;
+    private final Map map;
     private final PointDTO coordinates;
     private final String name;
     private TileLayer overlay;
 
-    public Tile(String name, Map owner, PointDTO coordinates) {
+    public Tile(String name, Map map, PointDTO coordinates) {
         this.name = name;
-        this.owner = owner;
+        this.map = map;
         this.coordinates = coordinates;
     }
     public String getName() {
         return this.name;
     }
     /** @return the owner of this tile. */
-    public final Map getOwner() {
-        return this.owner;
+    public final Map getMap() {
+        return this.map;
     }
     /** @return the coordinates of this tile. */
     public final PointDTO getCoordinates() {
@@ -55,8 +55,7 @@ public abstract class Tile {
      * @return the unit formerly in this tile or <code>null</code> if there was no unit.
      * @see marten.aoe.engine.Tile#removeUnit()*/
     public final Unit popUnit(PlayerDTO player) {
-        if (player == this.unit.getOwner() || player == PlayerDTO.SYSTEM) {
-            this.unit = null;
+        if (this.unit != null && (player == this.unit.getOwner() || player == PlayerDTO.SYSTEM)) {
             this.onUnitExit();
             this.unit.onTileExit(this);
             return this.removeUnit(player);
@@ -67,11 +66,11 @@ public abstract class Tile {
      * @return <code>false</code> if the action failed due to a unit already being in this tile, unit having insufficient movement allowance or no unit being pushed in, <code>true</code> otherwise.
      * @see marten.aoe.engine.Tile#insertUnit(Unit)*/
     public final boolean pushUnit(PlayerDTO player, Unit unit) {
-        if ((player == unit.getOwner() || player == PlayerDTO.SYSTEM) && this.unit == null && unit != null && (unit.applyMovementCost(this.getMovementCost(unit.getUnitSize(), unit.getUnitType())) > -1)) {
+        if (this.unit == null && unit != null && (player == unit.getOwner() || player == PlayerDTO.SYSTEM) && (unit.applyMovementCost(this.getMovementCost(unit.getUnitSize(), unit.getUnitType())) > -1)) {
             this.unit = unit;
             this.unit.onTileEntry(this);
             this.onUnitEntry();
-            this.getOwner().invokeLocalEvent(LocalEvent.UNIT_ENTRY, this);
+            this.getMap().invokeLocalEvent(LocalEvent.UNIT_ENTRY, this);
             return true;
         }
         return false;
@@ -80,10 +79,10 @@ public abstract class Tile {
      * @return the unit in this tile (and removes it from the tile) or <code>null</code>.
      * @see marten.aoe.engine.Tile#popUnit()*/
     public final Unit removeUnit(PlayerDTO player) {
-        if (player == this.unit.getOwner() || player == PlayerDTO.SYSTEM) {
+        if (this.unit != null && (player == this.unit.getOwner() || player == PlayerDTO.SYSTEM)) {
             Unit answer = this.unit;
             this.unit = null;
-            this.getOwner().invokeLocalEvent(LocalEvent.UNIT_EXIT, this);
+            this.getMap().invokeLocalEvent(LocalEvent.UNIT_EXIT, this);
             return answer;
         }
         return null;
@@ -92,13 +91,14 @@ public abstract class Tile {
      * @return <code>false</code> if the action failed due to a unit already being in this tile, unit having insufficient movement allowance or no unit being pushed in, <code>true</code> otherwise.
      * @see marten.aoe.engine.Tile#pushUnit(Unit)*/
     public final boolean insertUnit(PlayerDTO player, Unit unit) {
-        if ((player == unit.getOwner() || player == PlayerDTO.SYSTEM) && this.unit == null && unit != null) {
+        if (this.unit == null && unit != null && (player == unit.getOwner() || player == PlayerDTO.SYSTEM)) {
             this.unit = unit;
-            this.getOwner().invokeLocalEvent(LocalEvent.UNIT_ENTRY, this);
+            this.getMap().invokeLocalEvent(LocalEvent.UNIT_ENTRY, this);
             return true;
         }
         return false;
     }
+    /** Redirects "turn over" message to the unit inside this tile.*/
     public final void turnOver() {
         if (this.unit != null) {
             this.unit.turnOver();
@@ -139,7 +139,7 @@ public abstract class Tile {
         this.overlay = overlay;
     }
     public final Tile adjacent (Direction direction) {
-        return this.owner.getTile(direction.adjust(this.coordinates));
+        return this.map.getTile(direction.adjust(this.coordinates));
     }
     public final int distanceTo (Tile other) {
         int minimumEstimate = other.coordinates.getX() - this.coordinates.getX();
@@ -166,7 +166,7 @@ public abstract class Tile {
         List<Tile> answer = new ArrayList<Tile>();
         for (int x = this.coordinates.getX() - distance; x <= this.coordinates.getX() + distance; ++x) {
             for (int y = this.coordinates.getY() - distance; y <= this.coordinates.getY() + distance; ++y) {
-                Tile candidate = this.owner.getTile(new PointDTO(x, y));
+                Tile candidate = this.map.getTile(new PointDTO(x, y));
                 if (this.distanceTo(candidate) <= distance) {
                     answer.add(candidate);
                 }

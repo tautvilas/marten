@@ -59,7 +59,7 @@ public abstract class Unit {
     }
     /** @return the map, where this unit is located.*/
     public final Map getMap() {
-        return this.location.getOwner();
+        return this.location.getMap();
     }
     /** @return the owner of this unit.*/
     public final PlayerDTO getOwner() {

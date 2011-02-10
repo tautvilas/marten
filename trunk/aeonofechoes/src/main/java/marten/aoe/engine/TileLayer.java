@@ -13,7 +13,7 @@ public abstract class TileLayer extends Tile {
         this (name, base, 0);
     }
     public TileLayer(String name, Tile base, int detectionModifier) {
-        super(base.getName() + " " + name, base.getOwner(), base.getCoordinates());
+        super(base.getName() + " " + name, base.getMap(), base.getCoordinates());
         this.base = base;
         this.detectionModifier = detectionModifier;
     }
@@ -52,7 +52,7 @@ public abstract class TileLayer extends Tile {
                     false
             );
         }
-        for (Unit unit : this.getOwner().getAllUnits(player)) {
+        for (Unit unit : this.getMap().getAllUnits(player)) {
             if (this.distanceTo(unit.getLocation()) + this.detectionModifier <= unit.getDetectionRange()) {
                 return new FullTileDTO(
                         this.getName(),
@@ -73,7 +73,7 @@ public abstract class TileLayer extends Tile {
         if (!this.isExplored(player)) {
             return new TileDTO("Shroud", this.getCoordinates(), null, false);
         }
-        for (Unit unit : this.getOwner().getAllUnits(player)) {
+        for (Unit unit : this.getMap().getAllUnits(player)) {
             if (this.distanceTo(unit.getLocation()) + this.detectionModifier <= 0) {
                 return new TileDTO(
                         this.getName(),
