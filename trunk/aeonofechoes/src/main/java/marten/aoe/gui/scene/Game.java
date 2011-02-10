@@ -13,6 +13,7 @@ import marten.age.graphics.primitives.Point;
 import marten.age.widget.Action;
 import marten.age.widget.Button;
 import marten.age.widget.obsolete.FpsCounter;
+import marten.aoe.dto.PointDTO;
 import marten.aoe.gui.widget.AoeButtonFactory;
 import marten.aoe.gui.widget.MapWidget;
 import marten.aoe.gui.widget.Sidebar;
@@ -35,6 +36,7 @@ public class Game extends AgeScene {
     private Sidebar sidebar;
     private MouseController mouseController = new MouseController();
 
+    @SuppressWarnings("deprecation")
     public Game(EngineFace engineFace, GameDetails details) {
         this.params = details;
         this.engine = engineFace;
@@ -95,6 +97,7 @@ public class Game extends AgeScene {
         flatland.compile();
         try {
             this.engine.addListener();
+            this.engine.createUnit("Dwarf", new PointDTO(5, 5));
             log.info("Game scene is initialized. Active player is '"
                     + this.engine.getActivePlayer().getName() + "'");
         } catch (RemoteException e) {

@@ -33,7 +33,7 @@ public final class UnitLoader {
         Class<?> unitClass = null;
         Object unitInstance = null;
         try {
-            unitClass = Class.forName(Path.TILE_PACKAGE + unitName);
+            unitClass = Class.forName(Path.UNIT_PACKAGE + unitName);
             unitInstance = unitClass.getConstructor(PlayerDTO.class, PointDTO.class).newInstance(owner, location);
         }
         catch (Exception e) {
