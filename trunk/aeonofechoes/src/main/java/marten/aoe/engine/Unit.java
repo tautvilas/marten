@@ -90,9 +90,9 @@ public abstract class Unit {
         return this.detectionModifier;
     }
     /** Create a standard Unit Data Transfer Object. */
-    public final FullUnitDTO getDTO(PlayerDTO player) {
+    public final FullUnitDTO getFullDTO(PlayerDTO player) {
         for (Unit unit : this.getMap().getAllUnits(player)) {
-            if (this.getLocation().distanceTo(unit.getLocation()) + this.detectionModifier <= 0) {
+            if (this.getLocation().distanceTo(unit.getLocation()) + this.detectionModifier <= unit.detectionRange) {
                 return new FullUnitDTO(
                         this.name,
                         this.unitSize,
@@ -115,8 +115,13 @@ public abstract class Unit {
         this.onTurnOver();
     }
     /** Create a minimal Unit Data Transfer Object. */
-    public final UnitDTO getMinimalDTO(PlayerDTO player) {
-        return new UnitDTO(this.name);
+    public final UnitDTO getDTO(PlayerDTO player) {
+        for (Unit unit : this.getMap().getAllUnits(player)) {
+            if (this.getLocation().distanceTo(unit.getLocation()) + this.detectionModifier <= unit.detectionRange) {
+                return new UnitDTO(this.name);
+            }
+        }
+        return null;
     }
     /** Find out the remaining movement capacity of the unit*/
     public final int getMovementAllowance () {

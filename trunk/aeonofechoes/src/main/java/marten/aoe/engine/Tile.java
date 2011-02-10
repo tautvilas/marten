@@ -47,9 +47,9 @@ public abstract class Tile {
         return this.unit != null;
     }
     /** Returns a standard Tile Data Transfer Object for this tile.*/
-    public abstract FullTileDTO getDTO(PlayerDTO player);
+    public abstract FullTileDTO getFullDTO(PlayerDTO player);
     /** Returns a minimal Tile Data Transfer Object for this tile.*/
-    public abstract TileDTO getMinimalDTO(PlayerDTO player);
+    public abstract TileDTO getDTO(PlayerDTO player);
 
     /** Removes the unit from this tile and triggers appropriate events.
      * @return the unit formerly in this tile or <code>null</code> if there was no unit.
@@ -67,7 +67,7 @@ public abstract class Tile {
      * @return <code>false</code> if the action failed due to a unit already being in this tile, unit having insufficient movement allowance or no unit being pushed in, <code>true</code> otherwise.
      * @see marten.aoe.engine.Tile#insertUnit(Unit)*/
     public final boolean pushUnit(PlayerDTO player, Unit unit) {
-        if ((player == this.unit.getOwner() || player == PlayerDTO.SYSTEM) && this.unit == null && unit != null && (unit.applyMovementCost(this.getMovementCost(unit.getUnitSize(), unit.getUnitType())) > -1)) {
+        if ((player == unit.getOwner() || player == PlayerDTO.SYSTEM) && this.unit == null && unit != null && (unit.applyMovementCost(this.getMovementCost(unit.getUnitSize(), unit.getUnitType())) > -1)) {
             this.unit = unit;
             this.unit.onTileEntry(this);
             this.onUnitEntry();
@@ -92,7 +92,7 @@ public abstract class Tile {
      * @return <code>false</code> if the action failed due to a unit already being in this tile, unit having insufficient movement allowance or no unit being pushed in, <code>true</code> otherwise.
      * @see marten.aoe.engine.Tile#pushUnit(Unit)*/
     public final boolean insertUnit(PlayerDTO player, Unit unit) {
-        if ((player == this.unit.getOwner() || player == PlayerDTO.SYSTEM) && this.unit == null && unit != null) {
+        if ((player == unit.getOwner() || player == PlayerDTO.SYSTEM) && this.unit == null && unit != null) {
             this.unit = unit;
             this.getOwner().invokeLocalEvent(LocalEvent.UNIT_ENTRY, this);
             return true;
@@ -174,4 +174,7 @@ public abstract class Tile {
         }
         return answer;
     }
+    public abstract boolean isExplored(PlayerDTO player);
+    public abstract boolean isVisible(PlayerDTO player);
+    public abstract void markAsExplored(PlayerDTO player);
 }

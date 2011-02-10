@@ -11,8 +11,9 @@ public final class FullTileDTO implements Serializable {
     private final DefenseDTO defense;
     private final int height;
     private final String[] description;
-    
-    public FullTileDTO (String name, PointDTO location, int height, MovementDTO movement, DefenseDTO defense, FullUnitDTO unit, String[] description) {
+    private final boolean visible;
+
+    public FullTileDTO (String name, PointDTO location, int height, MovementDTO movement, DefenseDTO defense, FullUnitDTO unit, String[] description, boolean visible) {
         this.name = name;
         this.location = location;
         this.movement = movement;
@@ -20,6 +21,7 @@ public final class FullTileDTO implements Serializable {
         this.unit = unit;
         this.height = height;
         this.description = description;
+        this.visible = visible;
     }
     public String getName () {
         return this.name;
@@ -39,7 +41,10 @@ public final class FullTileDTO implements Serializable {
     public FullUnitDTO getUnit () {
         return this.unit;
     }
-    public String[] description () {
+    public String[] getDescription () {
         return this.description;
+    }
+    public boolean getVisibility () {
+        return this.visible;
     }
 }
