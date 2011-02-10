@@ -136,8 +136,6 @@ public class MapWidget extends BasicSceneGraphBranch implements Widget,
         mouseCoords.y -= this.getPosition().y;
         // Create a copy of mouse coordinates for modification
         Point coords = new Point(mouseCoords);
-        mouseCoords.x -= this.getPosition().x;
-        mouseCoords.y -= this.getPosition().y;
         // Tile hit candidate array
         ArrayList<TileDTO> candidates = new ArrayList<TileDTO>();
 
