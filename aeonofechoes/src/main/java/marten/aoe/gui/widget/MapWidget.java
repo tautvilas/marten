@@ -31,6 +31,7 @@ import marten.aoe.Path;
 import marten.aoe.dto.MapDTO;
 import marten.aoe.dto.PointDTO;
 import marten.aoe.dto.TileDTO;
+import marten.aoe.gui.MapWidgetListener;
 
 import org.apache.log4j.Logger;
 
@@ -46,6 +47,7 @@ public class MapWidget extends BasicSceneGraphBranch implements Widget,
     private final HashMap<String, SimpleModel> terrainCache = new HashMap<String, SimpleModel>();
     private MapDTO map = null;
     private PointDTO selectedTile = null;
+    private MapWidgetListener listener;
 
     private final BitmapFont font = FontCache.getFont(new Font("Courier New",
             Font.BOLD, 20));
@@ -56,7 +58,8 @@ public class MapWidget extends BasicSceneGraphBranch implements Widget,
     private Dimension dimension;
     private volatile LinkedList<TileDTO> updatedTiles = new LinkedList<TileDTO>();
 
-    public MapWidget(MapDTO map, Dimension dimension) {
+    public MapWidget(MapDTO map, Dimension dimension, MapWidgetListener listener) {
+        this.listener = listener;
         this.dimension = dimension;
         this.map = map;
         try {
@@ -88,7 +91,7 @@ public class MapWidget extends BasicSceneGraphBranch implements Widget,
                         1.0, 0.0));
                 coords.setPosition(this.getTileDisplayCoordinates(tile
                         .getCoordinates()));
-                // tg.addChild(coords);
+                 tg.addChild(coords);
             }
         }
         this.addChild(tg);
@@ -306,6 +309,11 @@ public class MapWidget extends BasicSceneGraphBranch implements Widget,
                     .getCoordinates()));
             if (this.selectedTile == null) {
                 tg.addChild(tileSelection);
+            } else {
+                TileDTO oldTile = this.map.getTileDTO(this.selectedTile);
+                if (oldTile.getUnit() != null) {
+                    this.listener.moveUnit(this.selectedTile, tile.getCoordinates());
+                }
             }
             this.selectedTile = tile.getCoordinates();
         }

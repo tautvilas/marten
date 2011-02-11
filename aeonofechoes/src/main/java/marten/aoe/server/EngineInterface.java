@@ -39,6 +39,9 @@ public class EngineInterface extends UnicastRemoteObject implements EngineFace {
 //                EngineInterface.log.info(EngineInterface.this.player.getName()
 //                        + " " + event + ", " + location);
                 if (event == LocalEvent.TILE_EXPLORED || event == LocalEvent.UNIT_ENTRY) {
+                    if (event == LocalEvent.UNIT_ENTRY) {
+                        log.info(location.getCoordinates().getX() + " " + location.getCoordinates().getY());
+                    }
                     synchronized (events) {
                         events.add(EngineEvent.TILE_UPDATE);
                         tiles.add(location);

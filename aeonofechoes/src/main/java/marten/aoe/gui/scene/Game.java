@@ -14,6 +14,7 @@ import marten.age.widget.Action;
 import marten.age.widget.Button;
 import marten.age.widget.obsolete.FpsCounter;
 import marten.aoe.dto.PointDTO;
+import marten.aoe.gui.MapWidgetListener;
 import marten.aoe.gui.widget.AoeButtonFactory;
 import marten.aoe.gui.widget.MapWidget;
 import marten.aoe.gui.widget.Sidebar;
@@ -25,7 +26,7 @@ import marten.aoe.server.serializable.GameDetails;
 import org.apache.log4j.Logger;
 import org.lwjgl.input.Keyboard;
 
-public class Game extends AgeScene {
+public class Game extends AgeScene implements MapWidgetListener {
     private final int MAP_SCROLL_SPEED = 30;
 
     private static org.apache.log4j.Logger log = Logger.getLogger(Game.class);
@@ -46,7 +47,7 @@ public class Game extends AgeScene {
         try {
             this.map = new MapWidget(this.engine.getMap(),
                     new Dimension(AppInfo.getDisplayWidth() - 180, AppInfo
-                            .getDisplayHeight()));
+                            .getDisplayHeight()), this);
         } catch (RemoteException e) {
             throw new RuntimeException(e);
         }
@@ -153,6 +154,17 @@ public class Game extends AgeScene {
 
     public void cleanup() {
         this.listener.quit();
+    }
+
+    @SuppressWarnings("deprecation")
+    @Override
+    public void moveUnit(PointDTO from, PointDTO to) {
+        try {
+            System.out.println(from.getX() + " " + from.getY() + " " + to.getX() + " " + to.getY());
+            this.engine.moveUnit(from, to);
+        } catch (RemoteException e) {
+            e.printStackTrace();
+        }
     }
 
 }
