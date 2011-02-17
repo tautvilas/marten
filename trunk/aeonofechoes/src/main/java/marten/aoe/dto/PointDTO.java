@@ -16,6 +16,9 @@ public final class PointDTO implements Serializable {
     public final int getY () {
         return this.y;
     }
+    @Override public String toString() {
+        return this.x + " " + this.y;
+    }
     @Override public final int hashCode () {
         // Somewhat evil code follows
         return this.x ^ ~this.y;
