@@ -32,7 +32,7 @@ public final class Water extends TileBase {
             for (UnitSize size : UnitSize.values()) {
                 switch (type) {
                     case GROUND:
-                        data2.put(size, Integer.MAX_VALUE);
+                        data2.put(size, 0);
                         break;
                     case AERIAL:
                         data2.put(size, 1);
@@ -61,6 +61,6 @@ public final class Water extends TileBase {
     }
     @Override public final void onUnitEntry() {
     }
-    @Override public final void onUnitExit() {        
+    @Override public final void onUnitExit() {
     }
 }

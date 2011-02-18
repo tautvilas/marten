@@ -30,7 +30,7 @@ public final class Void extends TileBase {
         for (UnitType type : UnitType.values()) {
             EnumMap<UnitSize, Integer> data2 = new EnumMap<UnitSize, Integer>(UnitSize.class);
             for (UnitSize size : UnitSize.values()) {
-                data2.put(size, Integer.MAX_VALUE);
+                data2.put(size, 0);
             }
             data.put(type, data2);
         }
