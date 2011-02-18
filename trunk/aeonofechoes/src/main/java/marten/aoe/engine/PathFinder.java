@@ -19,18 +19,22 @@ public final class PathFinder {
             return;
         }
         Tile lastTile = seed.getLastTile();
-        if (this.paths.containsKey(lastTile.getCoordinates())) {
-            if (this.paths.get(lastTile.getCoordinates()).getLength() <= seed.getLength()) {
+        PointDTO lastLocation = lastTile.getCoordinates();
+        if (this.paths.containsKey(lastLocation)) {
+            if (this.paths.get(lastLocation).getLength() <= seed.getLength()) {
                 return;
             }
         }
-        if (lastTile.getUnit() != null && lastTile.getUnit() != unit) {
+        if (lastTile.isOccupied() && lastTile.getUnit() != unit) {
             return;
         }
-        this.paths.put(lastTile.getCoordinates(), seed);
+        this.paths.put(lastLocation, seed);
         List<Tile> extensions = lastTile.neighbors(1);
         for (Tile extension : extensions) {
-            this.buildPath(seed.extend(extension, extension.getMovementCost(unit.getUnitSize(), unit.getUnitType())), unit);
+            int movementCost = extension.getMovementCost(unit.getUnitSize(), unit.getUnitType());
+            if (movementCost > 0) {
+                this.buildPath(seed.extend(extension, movementCost), unit);
+            }
         }
     }
     public Map getMap() {

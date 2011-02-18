@@ -162,7 +162,7 @@ public abstract class Unit {
      * @param cost - the integer cost of entering a tile.
      * @return <code>-1</code> if movement was impossible to complete for any reason, remaining movement points otherwise.*/
     public final int applyMovementCost(int cost) {
-        if (cost > this.currentMovementAllowance) {
+        if (cost <= 0 || cost > this.currentMovementAllowance) {
             return -1;
         }
         this.currentMovementAllowance -= cost;

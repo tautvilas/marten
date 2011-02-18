@@ -44,7 +44,7 @@ public abstract class StandardTerrainBase extends TileBase {
                         data2.put(size, 1);
                         break;
                     case MARINE:
-                        data2.put(size, Integer.MAX_VALUE);
+                        data2.put(size, 0);
                 }
             }
             data.put(type, data2);
@@ -73,6 +73,6 @@ public abstract class StandardTerrainBase extends TileBase {
             this.getUnit().applyDamage(this.entryDamage);
         }
     }
-    @Override public final void onUnitExit() {        
+    @Override public final void onUnitExit() {
     }
 }
