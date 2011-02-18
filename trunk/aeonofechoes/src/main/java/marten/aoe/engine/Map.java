@@ -111,9 +111,11 @@ public abstract class Map {
         if (path == null) {
             return false;
         }
-        Unit unit = startTile.popUnit(player);
+        Unit unit = startTile.getUnit();
         for (Tile pathTile : path) {
-            pathTile.pushUnit(player, unit);
+            if (pathTile != startTile) {
+                pathTile.pushUnit(player, unit);
+            }
             if (pathTile != finishTile) {
                 pathTile.popUnit(player);
             }
