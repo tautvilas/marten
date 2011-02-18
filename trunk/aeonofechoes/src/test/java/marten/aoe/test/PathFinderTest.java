@@ -30,7 +30,6 @@ public class PathFinderTest {
             }
             @Override
             public void onLocalEvent(LocalEvent event, TileDTO tileDTO) {
-                System.out.println(event.toString() + " @ " + tileDTO.getCoordinates().toString());
                 if (event == LocalEvent.UNIT_ENTRY) {
                     Assert.assertEquals(tileDTO.getCoordinates(), this.expectedPath[this.index]);
                     this.index++;
