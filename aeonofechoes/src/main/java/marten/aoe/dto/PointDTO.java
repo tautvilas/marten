@@ -21,7 +21,7 @@ public final class PointDTO implements Serializable {
     }
     @Override public final int hashCode () {
         // Somewhat evil code follows
-        return this.x ^ ~this.y;
+        return this.x ^ -this.y;
     }
     @Override public final boolean equals (Object other) {
         // Evil code follows
