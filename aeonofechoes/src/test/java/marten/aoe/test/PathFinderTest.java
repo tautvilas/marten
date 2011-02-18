@@ -8,7 +8,6 @@ import marten.aoe.engine.Engine;
 import marten.aoe.engine.EngineListener;
 import marten.aoe.engine.GlobalEvent;
 import marten.aoe.engine.LocalEvent;
-import marten.aoe.engine.loader.MapLoader;
 
 import org.junit.Test;
 
@@ -18,7 +17,6 @@ public class PathFinderTest {
     public void adjacentTileTest() {
         PlayerDTO[] players = {new PlayerDTO(0, "player")};
         Engine engine = new Engine("Freelands", players);
-        MapLoader.loadMap(engine, "Freelands");
         engine.addListener(new EngineListener() {
             private int index = 0;
             private final PointDTO[] expectedPath = new PointDTO[] {
