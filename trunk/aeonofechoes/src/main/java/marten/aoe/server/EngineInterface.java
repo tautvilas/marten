@@ -36,17 +36,25 @@ public class EngineInterface extends UnicastRemoteObject implements EngineFace {
 
             @Override
             public void onLocalEvent(LocalEvent event, TileDTO location) {
-//                EngineInterface.log.info(EngineInterface.this.player.getName()
-//                        + " " + event + ", " + location);
-                if (event == LocalEvent.TILE_EXPLORED || event == LocalEvent.UNIT_ENTRY) {
-                    if (event == LocalEvent.UNIT_ENTRY) {
-                        log.info(location.getCoordinates().getX() + " " + location.getCoordinates().getY());
-                    }
+                // EngineInterface.log.info(EngineInterface.this.player.getName()
+                // + " " + event + ", " + location);
+                if (event == LocalEvent.TILE_EXPLORED
+                        || event == LocalEvent.UNIT_ENTRY
+                        || event == LocalEvent.UNIT_EXIT
+                        || event == LocalEvent.TILE_INVISIBLE
+                        || event == LocalEvent.TILE_VISIBLE) {
                     synchronized (events) {
                         events.add(EngineEvent.TILE_UPDATE);
                         tiles.add(location);
                         events.notifyAll();
+                        if (event == LocalEvent.TILE_EXPLORED) {
+                            log.info(location.getName() + " " + location.getCoordinates());
+                        }
                     }
+                } else {
+                    EngineInterface.log.info(EngineInterface.this.player
+                            .getName()
+                            + " " + event);
                 }
             }
 

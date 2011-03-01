@@ -53,6 +53,7 @@ public class MapWidget extends BasicSceneGraphBranch implements Widget,
             Font.BOLD, 20));
     private final TranslationGroup tg = new TranslationGroup();
     private final ComplexModel cm = new ComplexModel();
+//    private HashMap<PointDTO, UnitDTO> units = new HashMap<PointDTO, UnitDTO>();
     private TextureSprite tileHighlight = null;
     private TextureSprite tileSelection = null;
     private Dimension dimension;
@@ -91,7 +92,7 @@ public class MapWidget extends BasicSceneGraphBranch implements Widget,
                         1.0, 0.0));
                 coords.setPosition(this.getTileDisplayCoordinates(tile
                         .getCoordinates()));
-                 tg.addChild(coords);
+//                tg.addChild(coords);
             }
         }
         this.addChild(tg);
@@ -219,9 +220,8 @@ public class MapWidget extends BasicSceneGraphBranch implements Widget,
             Point tileDisplayCoordinates = this.getTileDisplayCoordinates(tile
                     .getCoordinates());
             PointDTO tileCoordinates = tile.getCoordinates();
-            // TileDTO oldTile =
-            // this.map.getTileMap()[tileCoordinates.getX()][tileCoordinates
-            // .getY()];
+            TileDTO oldTile = this.map.getTileMap()[tileCoordinates.getX()][tileCoordinates
+                    .getY()];
             Geometry geometry = new Rectangle(new Dimension(TILE_WIDTH,
                     TILE_HEIGHT), tileDisplayCoordinates);
             if (!this.terrainCache.containsKey(tile.getName())) {
@@ -233,11 +233,7 @@ public class MapWidget extends BasicSceneGraphBranch implements Widget,
                 this.cm.addPart(sm);
             }
             // remove old tile graphic
-            this.terrainCache
-                    .get(
-                            this.map.getTileMap()[tileCoordinates.getX()][tileCoordinates
-                                    .getY()].getName())
-                    .removeGeometry(geometry);
+            this.terrainCache.get(oldTile.getName()).removeGeometry(geometry);
             SimpleModel sm = terrainCache.get(tile.getName());
             sm.addGeometry(geometry);
             this.map.getTileMap()[tileCoordinates.getX()][tileCoordinates
@@ -312,7 +308,10 @@ public class MapWidget extends BasicSceneGraphBranch implements Widget,
             } else {
                 TileDTO oldTile = this.map.getTileDTO(this.selectedTile);
                 if (oldTile.getUnit() != null) {
-                    this.listener.moveUnit(this.selectedTile, tile.getCoordinates());
+                    this.listener.moveUnit(this.selectedTile, tile
+                            .getCoordinates());
+                    this.selectedTile = null;
+                    return;
                 }
             }
             this.selectedTile = tile.getCoordinates();

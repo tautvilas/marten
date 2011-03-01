@@ -130,7 +130,6 @@ public class GameGate extends AgeScene {
                 ServerNotification notification;
                 try {
                     notification = gameServer.listen(session);
-                    System.out.println(notification);
                 } catch (RemoteException e) {
                     throw new RuntimeException(e);
                 }
