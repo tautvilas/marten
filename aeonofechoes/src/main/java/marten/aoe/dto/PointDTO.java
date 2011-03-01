@@ -21,7 +21,14 @@ public final class PointDTO implements Serializable {
     }
     @Override public final int hashCode () {
         // Somewhat evil code follows
-        return this.x ^ -this.y;
+        int realY = this.y;
+        int invertedY = 0;
+        for (int index = 0; index < 32; index++) {
+            invertedY <<= 1;
+            invertedY |= (realY & 1);
+            realY >>= 1;
+        }
+        return this.x ^ invertedY;
     }
     @Override public final boolean equals (Object other) {
         // Evil code follows
