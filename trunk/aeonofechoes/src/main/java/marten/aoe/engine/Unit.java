@@ -126,7 +126,7 @@ public abstract class Unit {
         return null;
     }
     /** Invoke the actions applicable to the end of a turn. */
-    public void turnOver() {
+    public final void turnOver() {
         this.currentMovementAllowance = this.maxMovementAllowance;
         this.onTurnOver();
     }
