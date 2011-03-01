@@ -103,6 +103,10 @@ public abstract class Map {
         if (!startTile.isOccupied() || startTile.getUnit().getOwner() != player) {
             return false;
         }
+        Unit unit = startTile.getUnit();
+        if (unit.getMovementAllowance() == 0) {
+            return false;
+        }
         Tile finishTile = this.map[to.getX()][to.getY()];
         if (this.pathCache == null || this.pathCache.getOrigin() != startTile) {
             this.pathCache = new PathFinder(this, startTile);
@@ -111,7 +115,6 @@ public abstract class Map {
         if (path == null) {
             return false;
         }
-        Unit unit = startTile.getUnit();
         for (Tile pathTile : path) {
             if (pathTile != startTile) {
                 pathTile.pushUnit(player, unit);
