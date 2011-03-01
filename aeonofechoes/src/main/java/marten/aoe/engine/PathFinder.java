@@ -44,6 +44,10 @@ public final class PathFinder {
         return this.origin;
     }
     public List<Tile> findPathTo (Tile finish) {
+        Path path = this.paths.get(finish.getCoordinates());
+        if (path == null) {
+            return null;
+        }
         return this.paths.get(finish.getCoordinates()).getPath();
     }
 }
