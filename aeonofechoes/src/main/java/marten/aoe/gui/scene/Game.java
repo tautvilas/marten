@@ -160,7 +160,6 @@ public class Game extends AgeScene implements MapWidgetListener {
     @Override
     public void moveUnit(PointDTO from, PointDTO to) {
         try {
-            System.out.println(from.getX() + " " + from.getY() + " " + to.getX() + " " + to.getY());
             this.engine.moveUnit(from, to);
         } catch (RemoteException e) {
             e.printStackTrace();
