@@ -48,6 +48,6 @@ public final class PathFinder {
         if (path == null) {
             return null;
         }
-        return this.paths.get(finish.getCoordinates()).getPath();
+        return path.getPath();
     }
 }
