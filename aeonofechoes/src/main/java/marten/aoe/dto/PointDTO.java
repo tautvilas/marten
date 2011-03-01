@@ -23,7 +23,7 @@ public final class PointDTO implements Serializable {
         // Somewhat evil code follows
         int realY = this.y;
         int invertedY = 0;
-        for (int index = 0; index < 32; index++) {
+        for (int index = 0; index < Integer.SIZE; index++) {
             invertedY <<= 1;
             invertedY |= (realY & 1);
             realY >>= 1;
