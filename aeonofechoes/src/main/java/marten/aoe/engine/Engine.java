@@ -278,4 +278,16 @@ public final class Engine {
             }
         }
     }
+    public void invokeLocalEventConcealUnit(LocalEvent event, Tile location) {
+        if (event == null || location == null) {
+            throw new IllegalArgumentException("Null arguments are not accepted.");
+        }
+        for (PlayerDTO player : this.listeners.keySet()) {
+            if (location.isVisible(player)) {
+                for (EngineListener listener : this.listeners.get(player)) {
+                    listener.onLocalEvent(event, location.getDTOConcealUnit(player));
+                }
+            }
+        }
+    }
 }
