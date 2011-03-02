@@ -24,7 +24,7 @@ public class EngineInterface extends UnicastRemoteObject implements EngineFace {
     private final Engine engine;
     private final PlayerDTO player;
     private LinkedList<EngineEvent> events = new LinkedList<EngineEvent>();
-    private volatile LinkedList<TileDTO> tiles = new LinkedList<TileDTO>();
+    private LinkedList<TileDTO> tiles = new LinkedList<TileDTO>();
     private static final long serialVersionUID = 1L;
 
     public EngineInterface(Engine engine, PlayerDTO player)
@@ -43,9 +43,11 @@ public class EngineInterface extends UnicastRemoteObject implements EngineFace {
                         || event == LocalEvent.UNIT_EXIT
                         || event == LocalEvent.TILE_INVISIBLE
                         || event == LocalEvent.TILE_VISIBLE) {
+                    synchronized (tiles) {
+                        tiles.add(location);
+                    }
                     synchronized (events) {
                         events.add(EngineEvent.TILE_UPDATE);
-                        tiles.add(location);
                         events.notifyAll();
 //                        if (event == LocalEvent.UNIT_ENTRY || event == LocalEvent.UNIT_EXIT) {
 //                            log.info(event + " " + location.getName() + " " + location.getCoordinates());
@@ -95,8 +97,8 @@ public class EngineInterface extends UnicastRemoteObject implements EngineFace {
                     e.printStackTrace();
                 }
             }
+            return this.events.pop();
         }
-        return this.events.pop();
     }
 
     @Override
@@ -111,11 +113,13 @@ public class EngineInterface extends UnicastRemoteObject implements EngineFace {
 
     @Override
     public TileDTO popTile() {
-        if (!tiles.isEmpty()) {
-            return this.tiles.pop();
-        } else {
-            log.error("The tiles stack is empty!");
-            return null;
+        synchronized (tiles) {
+            if (!tiles.isEmpty()) {
+                return this.tiles.pop();
+            } else {
+                log.error("The tiles stack is empty!");
+                return null;
+            }
         }
     }
 }
