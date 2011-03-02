@@ -57,7 +57,7 @@ public class MapWidget extends BasicSceneGraphBranch implements Widget,
     private TextureSprite tileHighlight = null;
     private TextureSprite tileSelection = null;
     private Dimension dimension;
-    private volatile LinkedList<TileDTO> updatedTiles = new LinkedList<TileDTO>();
+    private LinkedList<TileDTO> updatedTiles = new LinkedList<TileDTO>();
 
     public MapWidget(MapDTO map, Dimension dimension, MapWidgetListener listener) {
         this.listener = listener;
@@ -210,51 +210,55 @@ public class MapWidget extends BasicSceneGraphBranch implements Widget,
     }
 
     public void updateTile(TileDTO tile) {
-        this.updatedTiles.add(tile);
+        synchronized(this.updatedTiles) {
+            this.updatedTiles.add(tile);
+        }
     }
 
     @Override
     public void render() {
-        while (!this.updatedTiles.isEmpty()) {
-            TileDTO tile = this.updatedTiles.pop();
-            Point tileDisplayCoordinates = this.getTileDisplayCoordinates(tile
-                    .getCoordinates());
-            PointDTO tileCoordinates = tile.getCoordinates();
-            TileDTO oldTile = this.map.getTileMap()[tileCoordinates.getX()][tileCoordinates
-                    .getY()];
-            Geometry geometry = new Rectangle(new Dimension(TILE_WIDTH,
-                    TILE_HEIGHT), tileDisplayCoordinates);
-            if (!MapWidget.terrainCache.containsKey(tile.getName())) {
-                Texture terrain = TextureLoader.loadTexture(ImageCache
-                        .getImage(Path.TILE_DATA_PATH
-                                + tile.getName().toLowerCase()));
-                SimpleModel sm = new SimpleModel(new Appearance(terrain));
-                terrainCache.put(tile.getName(), sm);
-                this.cm.addPart(sm);
-            }
-            // remove old tile graphic
-            MapWidget.terrainCache.get(oldTile.getName()).removeGeometry(
-                    geometry);
-            SimpleModel sm = terrainCache.get(tile.getName());
-            sm.addGeometry(geometry);
-            this.map.getTileMap()[tileCoordinates.getX()][tileCoordinates
-                    .getY()] = tile;
-            if (tile.getUnit() != null) {
-                if (!this.units.containsKey(tile.getCoordinates())) {
-                    BitmapString unit = new BitmapString(font, tile.getUnit()
-                            .getName().charAt(0)
-                            + "", new Color(0.0, 1.0, 0.0));
-                    unit.setPosition(new Point(tileDisplayCoordinates.x
-                            + this.TILE_WIDTH / 2 - unit.getDimension().width
-                            / 2, tileDisplayCoordinates.y + this.TILE_HEIGHT
-                            / 2 - unit.getDimension().height / 2));
-                    this.tg.addChild(unit);
-                    units.put(tile.getCoordinates(), unit);
+        synchronized(this.updatedTiles) {
+            while (!this.updatedTiles.isEmpty()) {
+                TileDTO tile = this.updatedTiles.pop();
+                Point tileDisplayCoordinates = this.getTileDisplayCoordinates(tile
+                        .getCoordinates());
+                PointDTO tileCoordinates = tile.getCoordinates();
+                TileDTO oldTile = this.map.getTileMap()[tileCoordinates.getX()][tileCoordinates
+                        .getY()];
+                Geometry geometry = new Rectangle(new Dimension(TILE_WIDTH,
+                        TILE_HEIGHT), tileDisplayCoordinates);
+                if (!MapWidget.terrainCache.containsKey(tile.getName())) {
+                    Texture terrain = TextureLoader.loadTexture(ImageCache
+                            .getImage(Path.TILE_DATA_PATH
+                                    + tile.getName().toLowerCase()));
+                    SimpleModel sm = new SimpleModel(new Appearance(terrain));
+                    terrainCache.put(tile.getName(), sm);
+                    this.cm.addPart(sm);
                 }
-            } else if (this.units.containsKey(tile.getCoordinates())) {
-                BitmapString unit = this.units.get(tile.getCoordinates());
-                this.tg.removeChild(unit);
-                this.units.remove(tile.getCoordinates());
+                // remove old tile graphic
+                MapWidget.terrainCache.get(oldTile.getName()).removeGeometry(
+                        geometry);
+                SimpleModel sm = terrainCache.get(tile.getName());
+                sm.addGeometry(geometry);
+                this.map.getTileMap()[tileCoordinates.getX()][tileCoordinates
+                        .getY()] = tile;
+                if (tile.getUnit() != null) {
+                    if (!this.units.containsKey(tile.getCoordinates())) {
+                        BitmapString unit = new BitmapString(font, tile.getUnit()
+                                .getName().charAt(0)
+                                + "", new Color(0.0, 1.0, 0.0));
+                        unit.setPosition(new Point(tileDisplayCoordinates.x
+                                + this.TILE_WIDTH / 2 - unit.getDimension().width
+                                / 2, tileDisplayCoordinates.y + this.TILE_HEIGHT
+                                / 2 - unit.getDimension().height / 2));
+                        this.tg.addChild(unit);
+                        units.put(tile.getCoordinates(), unit);
+                    }
+                } else if (this.units.containsKey(tile.getCoordinates())) {
+                    BitmapString unit = this.units.get(tile.getCoordinates());
+                    this.tg.removeChild(unit);
+                    this.units.remove(tile.getCoordinates());
+                }
             }
         }
         super.render();
