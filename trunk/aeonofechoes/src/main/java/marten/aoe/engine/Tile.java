@@ -46,13 +46,24 @@ public abstract class Tile {
     public final boolean isOccupied() {
         return this.unit != null;
     }
-    /** Returns a standard Tile Data Transfer Object for this tile.*/
+    /** @param player - the player from whose perspective the data should be presented. Generally this means that data, invisible to this player, is concealed.
+     * @return a standard Tile Data Transfer Object for this tile.*/
     public abstract FullTileDTO getFullDTO(PlayerDTO player);
-    /** Returns a minimal Tile Data Transfer Object for this tile.*/
+    /** @param player - the player from whose perspective the data should be presented. Generally this means that data, invisible to this player, is concealed.
+     * @return a minimal Tile Data Transfer Object for this tile.
+     * @see marten.aoe.engine.Tile#getDTOConcealUnit(PlayerDTO)*/
     public abstract TileDTO getDTO(PlayerDTO player);
-
+    /** This getter should be used instead of {@link #getDTO(PlayerDTO)} whenever the unit is about to be removed from the map and is needed only for visibility purposes, e.g., firing events.
+     * @param player - the player from whose perspective the data should be presented. Generally this means that data, invisible to this player, is concealed.
+     * @return a minimal Tile Data Transfer Object with nullified unit data.
+     * @see marten.aoe.engine.Tile#getDTO(PlayerDTO)*/
+    public final TileDTO getDTOConcealUnit(PlayerDTO player) {
+        TileDTO fullDTO = this.getDTO(player);
+        return new TileDTO (fullDTO.getName(), fullDTO.getCoordinates(), null, fullDTO.getVisibility());
+    }
     /** Removes the unit from this tile and triggers appropriate events.
-     * @return the unit formerly in this tile or <code>null</code> if there was no unit.
+     * @param player - the player who is performing the action.
+     * @return <code>null</code> if the player is unauthorized to perform this action or there is no unit to be removed, the removed unit otherwise.
      * @see marten.aoe.engine.Tile#removeUnit()*/
     public final Unit popUnit(PlayerDTO player) {
         if (this.unit != null && (player == this.unit.getOwner() || player == PlayerDTO.SYSTEM)) {
@@ -63,12 +74,15 @@ public abstract class Tile {
         return null;
     }
     /** Insert a unit into this tile, triggering appropriate events and applying movement cost.
-     * @return <code>false</code> if the action failed due to a unit already being in this tile, unit having insufficient movement allowance or no unit being pushed in, <code>true</code> otherwise.
+     * @param player - the player who is performing the action.
+     * @param unit - the unit which is being pushed into the tile.
+     * @return <code>false</code> if the action failed due to player being unauthorized to perform this action, a unit already being in this tile, unit having insufficient movement allowance or no unit being pushed in, <code>true</code> otherwise.
      * @see marten.aoe.engine.Tile#insertUnit(Unit)*/
     public final boolean pushUnit(PlayerDTO player, Unit unit) {
         if (this.unit == null && unit != null && (player == unit.getOwner() || player == PlayerDTO.SYSTEM) && (unit.applyMovementCost(this.getMovementCost(unit.getUnitSize(), unit.getUnitType())) > -1)) {
             this.unit = unit;
             this.unit.onTileEntry(this);
+            this.unit.setLocation(this);
             this.onUnitEntry();
             this.getMap().invokeLocalEvent(LocalEvent.UNIT_ENTRY, this.getCoordinates());
             for (Tile exploredTile : this.neighbors(unit.getDetectionRange())) {
@@ -79,13 +93,15 @@ public abstract class Tile {
         return false;
     }
     /** Removes the unit from this tile without triggering events.
+     * @param player - the player who is performing the action.
      * @return the unit in this tile (and removes it from the tile) or <code>null</code>.
      * @see marten.aoe.engine.Tile#popUnit()*/
     public final Unit removeUnit(PlayerDTO player) {
         if (this.unit != null && (player == this.unit.getOwner() || player == PlayerDTO.SYSTEM)) {
+            this.getMap().invokeLocalEventConcealUnit(LocalEvent.UNIT_EXIT, this.getCoordinates());
             Unit answer = this.unit;
             this.unit = null;
-            this.getMap().invokeLocalEvent(LocalEvent.UNIT_EXIT, this.getCoordinates());
+            answer.setLocation(null);
             for (Tile exploredTile : this.neighbors(answer.getDetectionRange())) {
                 exploredTile.recheckVisibility(player);
             }
@@ -94,11 +110,14 @@ public abstract class Tile {
         return null;
     }
     /** Insert a unit into this tile, without triggering appropriate events and applying movement cost.
+     * @param player - the player who is performing the action.
+     * @param unit - the unit which is being pushed into the tile.
      * @return <code>false</code> if the action failed due to a unit already being in this tile, unit having insufficient movement allowance or no unit being pushed in, <code>true</code> otherwise.
      * @see marten.aoe.engine.Tile#pushUnit(Unit)*/
     public final boolean insertUnit(PlayerDTO player, Unit unit) {
         if (this.unit == null && unit != null && (player == unit.getOwner() || player == PlayerDTO.SYSTEM)) {
             this.unit = unit;
+            this.unit.setLocation(this);
             this.getMap().invokeLocalEvent(LocalEvent.UNIT_ENTRY, this.getCoordinates());
             for (Tile exploredTile : this.neighbors(unit.getDetectionRange())) {
                 exploredTile.recheckVisibility(player);
@@ -122,13 +141,19 @@ public abstract class Tile {
     public abstract void onTurnOver();
     /** Calculates all movement costs and returns it as a DTO.*/
     public abstract MovementDTO getMovementCost();
-    /** Calculates the movement cost of entering this tile. */
+    /** Calculates the movement cost of entering this tile.
+     * @param size - the size of the unit.
+     * @param type - the type of the unit.
+     * @return the amount of movement points to be subtracted if the unit enters this tile. */
     public final int getMovementCost(UnitSize size, UnitType type) {
         return this.getMovementCost().getValue(size, type);
     }
     /** Calculates all defense bonuses and returns it as a DTO.*/
     public abstract DefenseDTO getDefenseBonus();
-    /** Calculates the defense value of being in this tile. */
+    /** Calculates the defense value of being in this tile.
+     * @param size - the size of the unit.
+     * @param type - the type of the unit.
+     * @return the amount of points the maximum attacking force is reduced by when the unit is defending in this tile.*/
     public final int getDefenseBonus(UnitSize size, UnitType type) {
         return this.getDefenseBonus().getValue(size, type);
     }

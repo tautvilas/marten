@@ -44,6 +44,9 @@ public abstract class Map {
     public final void invokeLocalEvent (LocalEvent event, PointDTO location) {
         this.engine.invokeLocalEvent(event, this.map[location.getX()][location.getY()]);
     }
+    public final void invokeLocalEventConcealUnit (LocalEvent event, PointDTO location) {
+        this.engine.invokeLocalEventConcealUnit(event, this.map[location.getX()][location.getY()]);
+    }
     public final void invokePlayerSpecificLocalEvent (LocalEvent event, PointDTO location, PlayerDTO player) {
         this.engine.invokePlayerSpecificLocalEvent(event, this.map[location.getX()][location.getY()], player);
     }
