@@ -44,7 +44,7 @@ public class MapWidget extends BasicSceneGraphBranch implements Widget,
     private final int TILE_WIDTH = 64;
     private final int TILE_HEIGHT = 64;
 
-    private final HashMap<String, SimpleModel> terrainCache = new HashMap<String, SimpleModel>();
+    public static final HashMap<String, SimpleModel> terrainCache = new HashMap<String, SimpleModel>();
     private MapDTO map = null;
     private PointDTO selectedTile = null;
     private MapWidgetListener listener;
@@ -53,7 +53,7 @@ public class MapWidget extends BasicSceneGraphBranch implements Widget,
             Font.BOLD, 20));
     private final TranslationGroup tg = new TranslationGroup();
     private final ComplexModel cm = new ComplexModel();
-//    private HashMap<PointDTO, UnitDTO> units = new HashMap<PointDTO, UnitDTO>();
+    private HashMap<PointDTO, BitmapString> units = new HashMap<PointDTO, BitmapString>();
     private TextureSprite tileHighlight = null;
     private TextureSprite tileSelection = null;
     private Dimension dimension;
@@ -92,7 +92,7 @@ public class MapWidget extends BasicSceneGraphBranch implements Widget,
                         1.0, 0.0));
                 coords.setPosition(this.getTileDisplayCoordinates(tile
                         .getCoordinates()));
-//                tg.addChild(coords);
+                // tg.addChild(coords);
             }
         }
         this.addChild(tg);
@@ -224,7 +224,7 @@ public class MapWidget extends BasicSceneGraphBranch implements Widget,
                     .getY()];
             Geometry geometry = new Rectangle(new Dimension(TILE_WIDTH,
                     TILE_HEIGHT), tileDisplayCoordinates);
-            if (!this.terrainCache.containsKey(tile.getName())) {
+            if (!MapWidget.terrainCache.containsKey(tile.getName())) {
                 Texture terrain = TextureLoader.loadTexture(ImageCache
                         .getImage(Path.TILE_DATA_PATH
                                 + tile.getName().toLowerCase()));
@@ -233,20 +233,28 @@ public class MapWidget extends BasicSceneGraphBranch implements Widget,
                 this.cm.addPart(sm);
             }
             // remove old tile graphic
-            this.terrainCache.get(oldTile.getName()).removeGeometry(geometry);
+            MapWidget.terrainCache.get(oldTile.getName()).removeGeometry(
+                    geometry);
             SimpleModel sm = terrainCache.get(tile.getName());
             sm.addGeometry(geometry);
             this.map.getTileMap()[tileCoordinates.getX()][tileCoordinates
                     .getY()] = tile;
             if (tile.getUnit() != null) {
-                BitmapString unit = new BitmapString(font, tile.getUnit()
-                        .getName().charAt(0)
-                        + "", new Color(0.0, 1.0, 0.0));
-                unit.setPosition(new Point(tileDisplayCoordinates.x
-                        + this.TILE_WIDTH / 2 - unit.getDimension().width / 2,
-                        tileDisplayCoordinates.y + this.TILE_HEIGHT / 2
-                                - unit.getDimension().height / 2));
-                this.tg.addChild(unit);
+                if (!this.units.containsKey(tile.getCoordinates())) {
+                    BitmapString unit = new BitmapString(font, tile.getUnit()
+                            .getName().charAt(0)
+                            + "", new Color(0.0, 1.0, 0.0));
+                    unit.setPosition(new Point(tileDisplayCoordinates.x
+                            + this.TILE_WIDTH / 2 - unit.getDimension().width
+                            / 2, tileDisplayCoordinates.y + this.TILE_HEIGHT
+                            / 2 - unit.getDimension().height / 2));
+                    this.tg.addChild(unit);
+                    units.put(tile.getCoordinates(), unit);
+                }
+            } else if (this.units.containsKey(tile.getCoordinates())) {
+                BitmapString unit = this.units.get(tile.getCoordinates());
+                this.tg.removeChild(unit);
+                this.units.remove(tile.getCoordinates());
             }
         }
         super.render();
