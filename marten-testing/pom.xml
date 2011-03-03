@@ -16,10 +16,13 @@
 
   <dependencies>
     <dependency>
+      <groupId>org.aspectj</groupId>
+      <artifactId>aspectjrt</artifactId>
+    </dependency>
+    <dependency>
       <groupId>junit</groupId>
       <artifactId>junit</artifactId>
     </dependency>
-
     <dependency>
       <groupId>log4j</groupId>
       <artifactId>log4j</artifactId>
@@ -29,7 +32,7 @@
     <dependency>
       <groupId>marten</groupId>
       <artifactId>age</artifactId>
-  </dependency>
+    </dependency>
 
     <dependency>
       <groupId>marten</groupId>
