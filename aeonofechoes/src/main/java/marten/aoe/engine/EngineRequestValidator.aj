@@ -122,8 +122,8 @@ public final aspect EngineRequestValidator {
         if (engine.getMap().getPlayerLimit() < engine.getAllPlayers().length) {
             throw new IllegalArgumentException("There are more players than slots provided by the map.");
         }
-        for (int x = 0; x <= engine.getMap().getWidth(); x++) {
-            for (int y = 0; y <= engine.getMap().getHeight(); y++) {
+        for (int x = 0; x < engine.getMap().getWidth(); x++) {
+            for (int y = 0; y < engine.getMap().getHeight(); y++) {
                 if (engine.getMap().getTile(new PointDTO(x, y)) == null) {
                     throw new IllegalArgumentException("The loaded map is corrupted: some of the tiles are null.");
                 }
