@@ -1,10 +1,13 @@
 package marten.aoe.engine;
 
+import org.aspectj.lang.annotation.SuppressAjWarnings;
+
 import marten.aoe.dto.PlayerDTO;
 import marten.aoe.dto.PointDTO;
 import marten.aoe.engine.loader.MapLoader;
 import marten.aoe.engine.loader.UnitLoader;
 
+@SuppressAjWarnings({"adviceDidNotMatch"}) 
 public final aspect EngineRequestValidator {
     pointcut initiateEngine(String mapName, PlayerDTO[] playerList) : 
         call(Engine.new(String, PlayerDTO[])) &&
