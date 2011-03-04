@@ -10,7 +10,7 @@ public final aspect EngineRequestValidator {
         call(Engine.new(String, PlayerDTO[])) &&
         args(mapName, playerList);
     pointcut switchMap(Engine engine, String mapName, PlayerDTO[] playerList) : 
-        call(void Engine.switchMap(String, PlayerDTO)) &&
+        call(void Engine.switchMap(String, PlayerDTO[])) &&
         target(engine) &&
         args(mapName, playerList);
     pointcut retrieveGlobalData(Engine engine, PlayerDTO player) :
@@ -56,18 +56,23 @@ public final aspect EngineRequestValidator {
             }
         }
     }
+    /*
     after() returning(Engine engine) : initiateEngine(*, *) {
         this.validateNewMap(engine);
     }
+    /*
     after(Engine engine) : switchMap(engine, *, *) {
         this.validateNewMap(engine);
     }
+    */
     before(Engine engine, PlayerDTO player) : retrieveGlobalData(engine, player) || retrieveLocalData(engine, player, *) {
         this.validatePlayer(engine, player);
     }
+    /*
     before(Engine engine, PointDTO location) : retrieveLocalData(engine, *, location) {
         this.validateLocation(engine, location);
     }
+    */
     /* FIXME: The following advice targets a deprecated method */
     before(Engine engine, PlayerDTO player, PointDTO from, PointDTO to) : moveUnit(engine, player, from, to) {
         this.validatePlayer(engine, player);
@@ -104,6 +109,7 @@ public final aspect EngineRequestValidator {
             proceed(engine, player);
         }
     }
+    /*
     before(Engine engine, PlayerDTO player, PointDTO from, int action, PointDTO to) : performAction(engine, player, from, action, to) {
         this.validatePlayer(engine, player);
         this.validateLocation(engine, from);
@@ -112,13 +118,16 @@ public final aspect EngineRequestValidator {
             throw new IllegalArgumentException("Action index must be from 1 to 9 inclusive.");
         }
     }
+    */
+    /*
     boolean around(Engine engine, PlayerDTO player, PointDTO from, int action, PointDTO to) : performAction(engine, player, from, action, to) {
         if (engine.getActivePlayer() == player && engine.getMap().getTile(from).isOccupied() && engine.getMap().getTile(from).getUnit().getOwner() == player) {
             return proceed(engine, player, from, action, to);
         }
         return false;
     }
-    
+    */
+    /*
     private void validateNewMap(Engine engine) {
         if (engine.getMap().getPlayerLimit() < engine.getAllPlayers().length) {
             throw new IllegalArgumentException("There are more players than slots provided by the map.");
@@ -130,7 +139,7 @@ public final aspect EngineRequestValidator {
                 }
             }
         }
-    }
+    }*/
     private void validateLocation(Engine engine, PointDTO location) {
         if (location.getX() < 0 || location.getX() >= engine.getMap().getWidth() || location.getY() < 0 || location.getY() >= engine.getMap().getHeight()) {
             throw new IllegalArgumentException("The requested location is out of map bounds.");
