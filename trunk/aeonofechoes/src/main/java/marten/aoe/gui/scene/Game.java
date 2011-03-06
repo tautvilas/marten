@@ -100,7 +100,7 @@ public class Game extends AgeScene implements MapWidgetListener {
         this.registerControllable(endTurnButton);
         flatland.compile();
         try {
-            this.engine.createUnit("Dwarf", new PointDTO(13, 8));
+            this.engine.createUnit("Dwarf", this.engine.getStartPosition());
             log.info("Game scene is initialized. Active player is '"
                     + this.engine.getActivePlayer().getName() + "'");
         } catch (RemoteException e) {
