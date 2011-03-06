@@ -13,7 +13,7 @@ public interface EngineFace extends Remote {
     public MapDTO getMap() throws RemoteException;
 
     @Deprecated
-    public boolean moveUnit(PointDTO from, PointDTO to) throws RemoteException;
+    public void moveUnit(PointDTO from, PointDTO to) throws RemoteException;
 
     @Deprecated
     public boolean createUnit(String name, PointDTO at) throws RemoteException;
