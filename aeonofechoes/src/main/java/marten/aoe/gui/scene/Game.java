@@ -1,5 +1,6 @@
 package marten.aoe.gui.scene;
 
+import java.awt.Font;
 import java.rmi.RemoteException;
 
 import marten.age.control.KeyboardController;
@@ -7,12 +8,16 @@ import marten.age.control.KeyboardListener;
 import marten.age.control.MouseController;
 import marten.age.core.AgeScene;
 import marten.age.core.AppInfo;
+import marten.age.graphics.appearance.Color;
 import marten.age.graphics.flat.Flatland;
 import marten.age.graphics.primitives.Dimension;
 import marten.age.graphics.primitives.Point;
+import marten.age.graphics.text.BitmapString;
+import marten.age.graphics.text.FontCache;
 import marten.age.widget.Action;
 import marten.age.widget.Button;
 import marten.age.widget.obsolete.FpsCounter;
+import marten.aoe.GameInfo;
 import marten.aoe.dto.PointDTO;
 import marten.aoe.gui.MapWidgetListener;
 import marten.aoe.gui.widget.AoeButtonFactory;
@@ -39,6 +44,8 @@ public class Game extends AgeScene implements MapWidgetListener {
     private Sidebar sidebar;
     private MouseController mouseController = new MouseController();
     private NetworkListener listener;
+    private BitmapString turnNotify = null;
+    private boolean unitCreated = false;
 
     @SuppressWarnings("deprecation")
     public Game(EngineFace engineFace, GameDetails details) {
@@ -62,6 +69,11 @@ public class Game extends AgeScene implements MapWidgetListener {
                 .setPosition(new Point(AppInfo.getDisplayWidth() - 150, 25));
         flatland.addChild(sidebar);
         flatland.addChild(endTurnButton);
+        turnNotify = new BitmapString(FontCache.getFont(new Font("Arial",
+                Font.PLAIN, 20)));
+        turnNotify.setPosition(new Point(AppInfo.getDisplayWidth() - 150,
+                AppInfo.getDisplayHeight() - 50));
+        flatland.addChild(turnNotify);
         endTurnButton.setAction(new Action() {
             @Override
             public void perform() {
@@ -100,9 +112,19 @@ public class Game extends AgeScene implements MapWidgetListener {
         this.registerControllable(endTurnButton);
         flatland.compile();
         try {
-            this.engine.createUnit("Dwarf", this.engine.getStartPosition());
-            log.info("Game scene is initialized. Active player is '"
-                    + this.engine.getActivePlayer().getName() + "'");
+            if (this.engine.getActivePlayer().getName().equals(
+                    GameInfo.nickname)) {
+                this.turnNotify.setContent("Your turn");
+                this.turnNotify.setColor(new Color(0, 1, 0));
+//                log.info("##### " + this.engine.getStartPosition());
+                this.engine.createUnit("Dwarf", this.engine.getStartPosition());
+                log.info("Game scene is initialized. Active player is '"
+                        + this.engine.getActivePlayer().getName() + "'");
+                this.unitCreated = true;
+            } else {
+                this.turnNotify.setContent("Not your turn");
+                this.turnNotify.setColor(new Color(1, 0, 0));
+            }
         } catch (RemoteException e) {
             throw new RuntimeException(e);
         }
@@ -132,6 +154,7 @@ public class Game extends AgeScene implements MapWidgetListener {
 
     private void registerNetworkListener() {
         listener = new NetworkListener() {
+            @SuppressWarnings("deprecation")
             @Override
             public void listen() {
                 EngineEvent event;
@@ -145,6 +168,23 @@ public class Game extends AgeScene implements MapWidgetListener {
                         map.updateTile(engine.popTile());
                     } catch (RemoteException e) {
                         e.printStackTrace();
+                    }
+                } else if (event == EngineEvent.TURN_END) {
+                    try {
+                        if (engine.getActivePlayer().getName().equals(
+                                GameInfo.nickname)) {
+                            if (!unitCreated) {
+                                engine.createUnit("Elf", engine.getStartPosition());
+                                unitCreated = true;
+                            }
+                            turnNotify.setContent("Your turn");
+                            turnNotify.setColor(new Color(0, 1, 0));
+                        } else {
+                            turnNotify.setContent("Not your turn");
+                            turnNotify.setColor(new Color(1, 0, 0));
+                        }
+                    } catch (RemoteException e) {
+                        throw new RuntimeException(e);
                     }
                 }
             }

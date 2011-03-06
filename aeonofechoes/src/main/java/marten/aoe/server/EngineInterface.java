@@ -62,6 +62,12 @@ public class EngineInterface extends UnicastRemoteObject implements EngineFace {
 
             @Override
             public void onGlobalEvent(GlobalEvent event) {
+                if (event == GlobalEvent.TURN_END) {
+                    synchronized (events) {
+                        events.add(EngineEvent.TURN_END);
+                        events.notifyAll();
+                    }
+                }
                 EngineInterface.log.info(EngineInterface.this.player.getName()
                         + " " + event);
             }
@@ -128,8 +134,8 @@ public class EngineInterface extends UnicastRemoteObject implements EngineFace {
     public PointDTO getStartPosition() throws RemoteException {
         PlayerDTO[] players = this.engine.getAllPlayers();
         int position = 0;
-        for (int i = 0 ; i < 0; i ++) {
-            if (players[i].equals(this.player)) {
+        for (int i = 0 ; i < players.length; i ++) {
+            if (players[i].getName().equals(this.player.getName())) {
                 position = i;
                 break;
             }
