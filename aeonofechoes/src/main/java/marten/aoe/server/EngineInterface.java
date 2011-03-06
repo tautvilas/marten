@@ -81,9 +81,9 @@ public class EngineInterface extends UnicastRemoteObject implements EngineFace {
 
     @Deprecated
     @Override
-    public synchronized boolean moveUnit(PointDTO from, PointDTO to)
+    public synchronized void moveUnit(PointDTO from, PointDTO to)
             throws RemoteException {
-        return this.engine.moveUnit(this.player, from, to);
+        this.engine.performAction(player, from, 1, to);
     }
 
     @Deprecated
