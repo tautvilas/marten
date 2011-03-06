@@ -33,7 +33,7 @@ public aspect RestrictionEnforcer {
         for (int i = 0; i < o.length; i++) {
             if (o[i] == null) {
                 throw new IllegalArgumentException("Parameter number "
-                        + i + " can not be null for\n"
+                        + (i + 1) + " can not be null for\n"
                         + thisJoinPoint.getSignature());
             }
         }
@@ -63,7 +63,7 @@ public aspect RestrictionEnforcer {
                 for (Annotation annotation : annotations[i]) {
                     if (annotation instanceof NotNull && args[i] == null) {
                         throw new IllegalArgumentException("Parameter number "
-                                + i + " can not be null for\n"
+                                + (i + 1) + " can not be null for\n"
                                 + thisJoinPoint.getSignature());
                     }
                 }
@@ -102,7 +102,7 @@ public aspect RestrictionEnforcer {
                                 for (Object object : (Object[])args[i]) {
                                     if (object == null) {
                                         throw new IllegalArgumentException("Parameter number "
-                                                + i + " can not contain null values for\n"
+                                                + (i + 1) + " can not contain null values for\n"
                                                 + thisJoinPoint.getSignature());
                                     }                                    
                                 }
@@ -111,7 +111,7 @@ public aspect RestrictionEnforcer {
                                 for (Object object : (Collection<?>)args[i]) {
                                     if (object == null) {
                                         throw new IllegalArgumentException("Parameter number "
-                                                + i + " can not contain null values for\n"
+                                                + (i + 1) + " can not contain null values for\n"
                                                 + thisJoinPoint.getSignature());
                                     }
                                 }
@@ -123,7 +123,7 @@ public aspect RestrictionEnforcer {
                         }
                         else {
                             throw new IllegalArgumentException("Parameter number "
-                                    + i + " can neither contain null values nor be null itself for\n"
+                                    + (i + 1) + " can neither contain null values nor be null itself for\n"
                                     + thisJoinPoint.getSignature());
                         }
                     }                        
