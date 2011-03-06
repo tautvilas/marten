@@ -18,7 +18,6 @@ public final class AnnotatedRestrictionsTest {
             new AnnotatedRestrictionsTest.CrashDummy(null, new String[] {""}, 0);
         }
         catch (IllegalArgumentException e) {
-            e.printStackTrace();
             return;
         }
         Assert.fail("No exception caught");
@@ -29,7 +28,6 @@ public final class AnnotatedRestrictionsTest {
             new AnnotatedRestrictionsTest.CrashDummy("", null, 0);
         }
         catch (IllegalArgumentException e) {
-            e.printStackTrace();
             return;
         }
         Assert.fail("No exception caught");
@@ -40,7 +38,6 @@ public final class AnnotatedRestrictionsTest {
             new AnnotatedRestrictionsTest.CrashDummy("", new String[] {null}, 0);
         }
         catch (IllegalArgumentException e) {
-            e.printStackTrace();
             return;
         }
         Assert.fail("No exception caught");
@@ -51,7 +48,6 @@ public final class AnnotatedRestrictionsTest {
             new AnnotatedRestrictionsTest.CrashDummy("", new String[] {""}, -1);
         }
         catch (IllegalArgumentException e) {
-            e.printStackTrace();
             return;
         }
         Assert.fail("No exception caught");
@@ -63,7 +59,6 @@ public final class AnnotatedRestrictionsTest {
             dummy.testMethod(null, new String[] {""}, 0);
         }
         catch (IllegalArgumentException e) {
-            e.printStackTrace();
             return;
         }
         Assert.fail("No exception caught");
@@ -75,7 +70,6 @@ public final class AnnotatedRestrictionsTest {
             dummy.testMethod("", null, 0);
         }
         catch (IllegalArgumentException e) {
-            e.printStackTrace();
             return;
         }
         Assert.fail("No exception caught");
@@ -87,7 +81,6 @@ public final class AnnotatedRestrictionsTest {
             dummy.testMethod("", new String[] {null}, 0);
         }
         catch (IllegalArgumentException e) {
-            e.printStackTrace();
             return;
         }
         Assert.fail("No exception caught");
@@ -99,7 +92,6 @@ public final class AnnotatedRestrictionsTest {
             dummy.testMethod("", new String[] {""}, -1);
         }
         catch (IllegalArgumentException e) {
-            e.printStackTrace();
             return;
         }
         Assert.fail("No exception caught");
