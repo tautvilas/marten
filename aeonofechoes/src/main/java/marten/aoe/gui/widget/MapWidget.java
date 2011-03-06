@@ -53,7 +53,7 @@ public class MapWidget extends BasicSceneGraphBranch implements Widget,
             Font.BOLD, 20));
     private final TranslationGroup tg = new TranslationGroup();
     private final ComplexModel cm = new ComplexModel();
-    private HashMap<PointDTO, BitmapString> units = new HashMap<PointDTO, BitmapString>();
+    private HashMap<PointDTO, UnitWidget> units = new HashMap<PointDTO, UnitWidget>();
     private TextureSprite tileHighlight = null;
     private TextureSprite tileSelection = null;
     private Dimension dimension;
@@ -244,9 +244,7 @@ public class MapWidget extends BasicSceneGraphBranch implements Widget,
                         .getY()] = tile;
                 if (tile.getUnit() != null) {
                     if (!this.units.containsKey(tile.getCoordinates())) {
-                        BitmapString unit = new BitmapString(font, tile.getUnit()
-                                .getName().charAt(0)
-                                + "", new Color(0.0, 1.0, 0.0));
+                        UnitWidget unit = new UnitWidget(tile.getUnit());
                         unit.setPosition(new Point(tileDisplayCoordinates.x
                                 + this.TILE_WIDTH / 2 - unit.getDimension().width
                                 / 2, tileDisplayCoordinates.y + this.TILE_HEIGHT
@@ -255,7 +253,7 @@ public class MapWidget extends BasicSceneGraphBranch implements Widget,
                         units.put(tile.getCoordinates(), unit);
                     }
                 } else if (this.units.containsKey(tile.getCoordinates())) {
-                    BitmapString unit = this.units.get(tile.getCoordinates());
+                    UnitWidget unit = this.units.get(tile.getCoordinates());
                     this.tg.removeChild(unit);
                     this.units.remove(tile.getCoordinates());
                 }
