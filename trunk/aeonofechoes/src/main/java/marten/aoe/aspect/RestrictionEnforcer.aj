@@ -5,6 +5,7 @@ import java.lang.reflect.Constructor;
 import java.lang.reflect.Method;
 import java.util.Collection;
 
+import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.Signature;
 import org.aspectj.lang.annotation.SuppressAjWarnings;
 import org.aspectj.lang.reflect.ConstructorSignature;
@@ -12,6 +13,53 @@ import org.aspectj.lang.reflect.MethodSignature;
 
 @SuppressAjWarnings("adviceDidNotMatch")
 public aspect RestrictionEnforcer {
+
+    private class AnnotatedParameters {
+        private Annotation[][] annotations;
+        private Object[] arguments;
+        public AnnotatedParameters(Annotation[][] annotations, Object[] arguments) {
+            this.annotations = annotations;
+            this.arguments = arguments;
+            if (this.annotations.length != this.arguments.length) {
+                throw new RuntimeException("Annotations mismatch the arguments");
+            }
+        }
+        public int numOfArguments() {
+            return this.arguments.length;
+        }
+        public Annotation[] getAnnotations(int index) {
+            return this.annotations[index];
+        }
+        public Object getArgument(int index) {
+            return this.arguments[index];
+        }
+    }
+
+    private AnnotatedParameters extract(JoinPoint joinPoint) {
+        Signature signature = joinPoint.getSignature();
+        if (signature instanceof MethodSignature
+                || signature instanceof ConstructorSignature) {
+            Annotation[][] annotations = null;
+            Object[] args = null;
+            if (signature instanceof MethodSignature) {
+                Method method = ((MethodSignature)signature).getMethod();
+                annotations = method.getParameterAnnotations();
+                args = joinPoint.getArgs();
+            } else {
+                Constructor<?> constructor = ((ConstructorSignature)signature)
+                .getConstructor();
+                annotations = constructor.getParameterAnnotations();
+                Object[] tempArgs = joinPoint.getArgs();
+                args = new Object[tempArgs.length - 1];
+                for (int index = 1; index < tempArgs.length; index++) {
+                    args[index - 1] = tempArgs[index];
+                }
+            }
+            return this.new AnnotatedParameters(annotations, args);
+        }
+        return null;   
+    }
+
     pointcut methodExpectingNonNull():
         execution(* *(.., @NotNull (*), ..)) || 
         execution(*.new(.., @NotNull (*), ..));
@@ -19,11 +67,11 @@ public aspect RestrictionEnforcer {
     pointcut methodExpectingNoNulls():
         execution(@NoNullArgs * *(..)) ||
         execution(@NoNullArgs *.new(..));
-    
+
     pointcut methodWithNoNullCollection():
         execution(* *(.., @NoNullEntries (*), ..)) ||
         execution(*.new(.., @NoNullEntries (*), ..));
-    
+
     pointcut methodWithRangedIntegers():
         execution(* *(.., @Range (*), ..)) ||
         execution(*.new(.., @Range (*), ..));
@@ -40,147 +88,94 @@ public aspect RestrictionEnforcer {
     }
 
     before(): methodExpectingNonNull() {
-        Signature signature = thisJoinPoint.getSignature();
-        if (signature instanceof MethodSignature
-                || signature instanceof ConstructorSignature) {
-            Annotation[][] annotations = null;
-            Object[] args = null;
-            if (signature instanceof MethodSignature) {
-                Method method = ((MethodSignature)signature).getMethod();
-                annotations = method.getParameterAnnotations();
-                args = thisJoinPoint.getArgs();
-            } else {
-                Constructor<?> constructor = ((ConstructorSignature)signature)
-                        .getConstructor();
-                annotations = constructor.getParameterAnnotations();
-                Object[] tempArgs = thisJoinPoint.getArgs();
-                args = new Object[tempArgs.length - 1];
-                for (int index = 1; index < tempArgs.length; index++) {
-                    args[index - 1] = tempArgs[index];
-                }
-            }
-            for (int i = 0; i < args.length; i++) {
-                for (Annotation annotation : annotations[i]) {
-                    if (annotation instanceof NotNull && args[i] == null) {
-                        throw new IllegalArgumentException("Parameter number "
-                                + (i + 1) + " can not be null for\n"
-                                + thisJoinPoint.getSignature());
-                    }
-                }
-            }
-        } else {
+        AnnotatedParameters params = this.extract(thisJoinPoint);
+        if (params == null) {
             throw new RuntimeException(
-                    "@NotNull annotation can only be applied for method and constructor parameters");
+            "@NotNull annotation can only be applied for method and constructor parameters");
+        }
+        for (int i = 0; i < params.numOfArguments(); i++) {
+            for (Annotation annotation : params.getAnnotations(i)) {
+                if (annotation instanceof NotNull && params.getArgument(i) == null) {
+                    throw new IllegalArgumentException("Parameter number "
+                            + (i + 1) + " can not be null for\n"
+                            + thisJoinPoint.getSignature());                    
+                }
+            }
         }
     }
-    
+
     before(): methodWithNoNullCollection() {
-        Signature signature = thisJoinPoint.getSignature();
-        if (signature instanceof MethodSignature
-                || signature instanceof ConstructorSignature) {
-            Annotation[][] annotations = null;
-            Object[] args = null;
-            if (signature instanceof MethodSignature) {
-                Method method = ((MethodSignature)signature).getMethod();
-                annotations = method.getParameterAnnotations();
-                args = thisJoinPoint.getArgs();
-            } else {
-                Constructor<?> constructor = ((ConstructorSignature)signature)
-                        .getConstructor();
-                annotations = constructor.getParameterAnnotations();
-                Object[] tempArgs = thisJoinPoint.getArgs();
-                args = new Object[tempArgs.length - 1];
-                for (int index = 1; index < tempArgs.length; index++) {
-                    args[index - 1] = tempArgs[index];
-                }
-            }
-            for (int i = 0; i < args.length; i++) {
-                for (Annotation annotation : annotations[i]) {
-                    if (annotation instanceof NoNullEntries) {
-                        if (args[i] != null) {
-                            if (args[i] instanceof Object[]) {
-                                for (Object object : (Object[])args[i]) {
-                                    if (object == null) {
-                                        throw new IllegalArgumentException("Parameter number "
-                                                + (i + 1) + " can not contain null values for\n"
-                                                + thisJoinPoint.getSignature());
-                                    }                                    
-                                }
-                            }
-                            else if (args[i] instanceof Collection<?>) {
-                                for (Object object : (Collection<?>)args[i]) {
-                                    if (object == null) {
-                                        throw new IllegalArgumentException("Parameter number "
-                                                + (i + 1) + " can not contain null values for\n"
-                                                + thisJoinPoint.getSignature());
-                                    }
-                                }
-                            }
-                            else {
-                                throw new RuntimeException("@NoNullEntries annotation can only be applied for "+
-                                "method or constructor parameters which are arrays or collections");
-                            }
-                        }
-                        else {
-                            throw new IllegalArgumentException("Parameter number "
-                                    + (i + 1) + " can neither contain null values nor be null itself for\n"
-                                    + thisJoinPoint.getSignature());
-                        }
-                    }                        
-                }
-            }
-        } else {
+        AnnotatedParameters params = this.extract(thisJoinPoint);
+        if (params == null) {
             throw new RuntimeException(
-                    "@NoNullEntries annotation can only be applied for method and constructor parameters");
+            "@NoNullEntries annotation can only be applied for method and constructor parameters");
         }
-    }
-    
-    before(): methodWithRangedIntegers() {
-        Signature signature = thisJoinPoint.getSignature();
-        if (signature instanceof MethodSignature
-                || signature instanceof ConstructorSignature) {
-            Annotation[][] annotations = null;
-            Object[] args = null;
-            if (signature instanceof MethodSignature) {
-                Method method = ((MethodSignature)signature).getMethod();
-                annotations = method.getParameterAnnotations();
-                args = thisJoinPoint.getArgs();
-            } else {
-                Constructor<?> constructor = ((ConstructorSignature)signature)
-                        .getConstructor();
-                annotations = constructor.getParameterAnnotations();
-                Object[] tempArgs = thisJoinPoint.getArgs();
-                args = new Object[tempArgs.length - 1];
-                for (int index = 1; index < tempArgs.length; index++) {
-                    args[index - 1] = tempArgs[index];
-                }
-            }
-            for (int i = 0; i < args.length; i++) {
-                for (Annotation annotation : annotations[i]) {
-                    if (annotation instanceof Range) {
-                        if (args[i] != null) {
-                            if (args[i] instanceof Number) {
-                                Number number = (Number)args[i];
-                                Range range = (Range)annotation;
-                                if (number.doubleValue() < range.from() || number.doubleValue() > range.to()) {
+        for (int i = 0; i < params.numOfArguments(); i++) {
+            for (Annotation annotation : params.getAnnotations(i)) {
+                if (annotation instanceof NoNullEntries) {
+                    Object argument = params.getArgument(i);
+                    if (argument != null) {
+                        if (argument instanceof Object[]) {
+                            for (Object object : (Object[])argument) {
+                                if (object == null) {
                                     throw new IllegalArgumentException("Parameter number "
-                                            + (i + 1) + " must be within the range from "
-                                            + range.from() + " to " 
-                                            + range.to() + " inclusive for\n"
+                                            + (i + 1) + " can not contain null values for\n"
+                                            + thisJoinPoint.getSignature());
+                                }                                    
+                            }
+                        }
+                        else if (argument instanceof Collection<?>) {
+                            for (Object object : (Collection<?>)argument) {
+                                if (object == null) {
+                                    throw new IllegalArgumentException("Parameter number "
+                                            + (i + 1) + " can not contain null values for\n"
                                             + thisJoinPoint.getSignature());
                                 }
                             }
-                            else {
-                                throw new RuntimeException("@Range annotation can only be applied for "+
-                                "method or constructor parameters which are numbers");
-                            }
                         }
-                    }                        
-                }
+                        else {
+                            throw new RuntimeException("@NoNullEntries annotation can only be applied for "+
+                            "method or constructor parameters which are arrays or collections");
+                        }
+                    }
+                    else {
+                        throw new IllegalArgumentException("Parameter number "
+                                + (i + 1) + " can neither contain null values nor be null itself for\n"
+                                + thisJoinPoint.getSignature());
+                    }
+                }                        
             }
-        } else {
+
+        }
+    }
+
+    before(): methodWithRangedIntegers() {
+        AnnotatedParameters params = this.extract(thisJoinPoint);
+        if (params == null) {
             throw new RuntimeException(
-                    "@NoNullEntries annotation can only be applied for method and constructor parameters");
+            "@NoNullEntries annotation can only be applied for method and constructor parameters");
+        }
+        for (int i = 0; i < params.numOfArguments(); i++) {
+            for (Annotation annotation : params.getAnnotations(i)) {
+                if (annotation instanceof Range) {
+                    Object argument = params.getArgument(i);
+                    if (argument != null && argument instanceof Number) {
+                        Number number = (Number)argument;
+                        Range range = (Range)annotation;
+                        if (number.doubleValue() < range.from() || number.doubleValue() > range.to()) {
+                            throw new IllegalArgumentException("Parameter number "
+                                    + (i + 1) + " must be within the range from "
+                                    + range.from() + " to " 
+                                    + range.to() + " inclusive for\n"
+                                    + thisJoinPoint.getSignature());
+                        }
+                    }
+                    else {
+                        throw new RuntimeException("@Range annotation can only be applied for "+
+                        "method or constructor parameters which are numbers");
+                    }
+                }                                        
+            }
         }
     }
 }
