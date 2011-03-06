@@ -13,23 +13,27 @@ import org.aspectj.lang.reflect.MethodSignature;
 @SuppressAjWarnings("adviceDidNotMatch")
 public aspect RestrictionEnforcer {
     pointcut methodExpectingNonNull():
-        execution(* *(.., @NotNull (*), ..));
+        execution(* *(.., @NotNull (*), ..)) || 
+        execution(*.new(.., @NotNull (*), ..));
 
     pointcut methodExpectingNoNulls():
-        execution(@NoNullArgs * *(..));
+        execution(@NoNullArgs * *(..)) ||
+        execution(@NoNullArgs *.new(..));
     
     pointcut methodWithNoNullCollection():
-        execution(* *(.., @NoNullEntries (*), ..));
+        execution(* *(.., @NoNullEntries (*), ..)) ||
+        execution(*.new(.., @NoNullEntries (*), ..));
     
     pointcut methodWithRangedIntegers():
-        execution(* *(.., @Range (*), ..));
+        execution(* *(.., @Range (*), ..)) ||
+        execution(*.new(.., @Range (*), ..));
 
     before(): methodExpectingNoNulls() {
         Object o[] = thisJoinPoint.getArgs();
         for (int i = 0; i < o.length; i++) {
             if (o[i] == null) {
                 throw new IllegalArgumentException("Parameter number "
-                        + (i + 1) + " can not be null for\n"
+                        + i + " can not be null for\n"
                         + thisJoinPoint.getSignature());
             }
         }
@@ -40,20 +44,26 @@ public aspect RestrictionEnforcer {
         if (signature instanceof MethodSignature
                 || signature instanceof ConstructorSignature) {
             Annotation[][] annotations = null;
+            Object[] args = null;
             if (signature instanceof MethodSignature) {
                 Method method = ((MethodSignature)signature).getMethod();
                 annotations = method.getParameterAnnotations();
+                args = thisJoinPoint.getArgs();
             } else {
                 Constructor<?> constructor = ((ConstructorSignature)signature)
                         .getConstructor();
                 annotations = constructor.getParameterAnnotations();
+                Object[] tempArgs = thisJoinPoint.getArgs();
+                args = new Object[tempArgs.length - 1];
+                for (int index = 1; index < tempArgs.length; index++) {
+                    args[index - 1] = tempArgs[index];
+                }
             }
-            Object args[] = thisJoinPoint.getArgs();
             for (int i = 0; i < args.length; i++) {
                 for (Annotation annotation : annotations[i]) {
                     if (annotation instanceof NotNull && args[i] == null) {
                         throw new IllegalArgumentException("Parameter number "
-                                + (i + 1) + " can not be null for\n"
+                                + i + " can not be null for\n"
                                 + thisJoinPoint.getSignature());
                     }
                 }
@@ -69,15 +79,21 @@ public aspect RestrictionEnforcer {
         if (signature instanceof MethodSignature
                 || signature instanceof ConstructorSignature) {
             Annotation[][] annotations = null;
+            Object[] args = null;
             if (signature instanceof MethodSignature) {
                 Method method = ((MethodSignature)signature).getMethod();
                 annotations = method.getParameterAnnotations();
+                args = thisJoinPoint.getArgs();
             } else {
                 Constructor<?> constructor = ((ConstructorSignature)signature)
                         .getConstructor();
                 annotations = constructor.getParameterAnnotations();
+                Object[] tempArgs = thisJoinPoint.getArgs();
+                args = new Object[tempArgs.length - 1];
+                for (int index = 1; index < tempArgs.length; index++) {
+                    args[index - 1] = tempArgs[index];
+                }
             }
-            Object args[] = thisJoinPoint.getArgs();
             for (int i = 0; i < args.length; i++) {
                 for (Annotation annotation : annotations[i]) {
                     if (annotation instanceof NoNullEntries) {
@@ -86,7 +102,7 @@ public aspect RestrictionEnforcer {
                                 for (Object object : (Object[])args[i]) {
                                     if (object == null) {
                                         throw new IllegalArgumentException("Parameter number "
-                                                + (i + 1) + " can not contain null values for\n"
+                                                + i + " can not contain null values for\n"
                                                 + thisJoinPoint.getSignature());
                                     }                                    
                                 }
@@ -95,7 +111,7 @@ public aspect RestrictionEnforcer {
                                 for (Object object : (Collection<?>)args[i]) {
                                     if (object == null) {
                                         throw new IllegalArgumentException("Parameter number "
-                                                + (i + 1) + " can not contain null values for\n"
+                                                + i + " can not contain null values for\n"
                                                 + thisJoinPoint.getSignature());
                                     }
                                 }
@@ -104,6 +120,11 @@ public aspect RestrictionEnforcer {
                                 throw new RuntimeException("@NoNullEntries annotation can only be applied for "+
                                 "method or constructor parameters which are arrays or collections");
                             }
+                        }
+                        else {
+                            throw new IllegalArgumentException("Parameter number "
+                                    + i + " can neither contain null values nor be null itself for\n"
+                                    + thisJoinPoint.getSignature());
                         }
                     }                        
                 }
@@ -119,15 +140,21 @@ public aspect RestrictionEnforcer {
         if (signature instanceof MethodSignature
                 || signature instanceof ConstructorSignature) {
             Annotation[][] annotations = null;
+            Object[] args = null;
             if (signature instanceof MethodSignature) {
                 Method method = ((MethodSignature)signature).getMethod();
                 annotations = method.getParameterAnnotations();
+                args = thisJoinPoint.getArgs();
             } else {
                 Constructor<?> constructor = ((ConstructorSignature)signature)
                         .getConstructor();
                 annotations = constructor.getParameterAnnotations();
+                Object[] tempArgs = thisJoinPoint.getArgs();
+                args = new Object[tempArgs.length - 1];
+                for (int index = 1; index < tempArgs.length; index++) {
+                    args[index - 1] = tempArgs[index];
+                }
             }
-            Object args[] = thisJoinPoint.getArgs();
             for (int i = 0; i < args.length; i++) {
                 for (Annotation annotation : annotations[i]) {
                     if (annotation instanceof Range) {
