@@ -25,4 +25,7 @@ public interface EngineFace extends Remote {
     public PlayerDTO getActivePlayer() throws RemoteException;
 
     public TileDTO popTile() throws RemoteException;
+
+    @Deprecated
+    public PointDTO getStartPosition() throws RemoteException;
 }

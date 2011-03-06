@@ -122,4 +122,18 @@ public class EngineInterface extends UnicastRemoteObject implements EngineFace {
             }
         }
     }
+
+    @Deprecated
+    @Override
+    public PointDTO getStartPosition() throws RemoteException {
+        PlayerDTO[] players = this.engine.getAllPlayers();
+        int position = 0;
+        for (int i = 0 ; i < 0; i ++) {
+            if (players[i].equals(this.player)) {
+                position = i;
+                break;
+            }
+        }
+        return new PointDTO(13, 8 - position * 2);
+    }
 }
