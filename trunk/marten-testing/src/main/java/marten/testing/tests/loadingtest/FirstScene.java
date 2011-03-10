@@ -33,7 +33,8 @@ public class FirstScene extends AgeScene {
         BitmapFont font = FontCache.getFont(new Font("Courier New", Font.BOLD,
                 20));
         info = new BitmapString(font, "Click 'load' to load.");
-        this.flatland.addText(info, new Point(200, 400));
+        info.setPosition(new Point(200, 400));
+        this.flatland.addChild(info);
 
         button = new Button(buttonImage);
         button.setPosition(new Point(200, 200));
