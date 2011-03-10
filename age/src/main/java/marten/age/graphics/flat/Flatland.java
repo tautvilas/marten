@@ -1,52 +1,36 @@
 package marten.age.graphics.flat;
 
-import marten.age.graphics.SceneGraphChild;
-import marten.age.graphics.camera.FrustumCamera;
-import marten.age.graphics.primitives.Point;
-import marten.age.graphics.root.SimpleRoot;
-import marten.age.graphics.text.BitmapString;
-import marten.age.graphics.transform.TranslationGroup;
+import marten.age.core.AppInfo;
+import marten.age.graphics.root.Root;
 
-public class Flatland {
+import org.apache.log4j.Logger;
+import org.lwjgl.opengl.GL11;
 
-    private Hud hud;
-    private SimpleRoot sr;
-    private FrustumCamera mainCamera;
+public class Flatland extends Root {
+
+    private static org.apache.log4j.Logger log = Logger
+            .getLogger(Flatland.class);
 
     public Flatland() {
-        sr = new SimpleRoot();
-
-        mainCamera = new FrustumCamera();
-        sr.addCamera("front", mainCamera);
-        sr.setActiveCamera("front");
-        hud = new Hud();
-        sr.addChild(hud);
+        log.info("GL_VENDOR: " + GL11.glGetString(GL11.GL_VENDOR));
+        log.info("GL_RENDERER: " + GL11.glGetString(GL11.GL_RENDERER));
+        log.info("GL_VERSION: " + GL11.glGetString(GL11.GL_VERSION));
+        GL11.glDisable(GL11.GL_LIGHTING);
+        GL11.glDisable(GL11.GL_DEPTH_TEST);
+        GL11.glEnable(GL11.GL_BLEND);
+        GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
     }
 
     public void render() {
-        sr.render();
-    }
-
-    public void compile() {
-        sr.compile();
-    }
-
-    public void addChild(SceneGraphChild sprite) {
-        hud.addChild(sprite);
-    }
-
-    public void removeChild(SceneGraphChild sprite) {
-        hud.removeChild(sprite);
-    }
-
-    public void removeChildren() {
-        hud.removeChildren();
-    }
-
-    public void addText(BitmapString text, Point position) {
-        TranslationGroup translation = new TranslationGroup();
-        translation.setPosition(position);
-        translation.addChild(text);
-        hud.addChild(translation);
+        GL11.glClear(GL11.GL_COLOR_BUFFER_BIT | GL11.GL_DEPTH_BUFFER_BIT);
+        GL11.glMatrixMode(GL11.GL_PROJECTION);
+        GL11.glLoadIdentity();
+        GL11.glOrtho(0, AppInfo.getDisplayWidth(), AppInfo.getDisplayHeight(),
+                0, 0, 1);
+        GL11.glScalef(1, -1, 1);
+        GL11.glTranslatef(0, -AppInfo.getDisplayHeight(), 0);
+        GL11.glMatrixMode(GL11.GL_MODELVIEW);
+        super.render();
+        GL11.glFlush();
     }
 }
