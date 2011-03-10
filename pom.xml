@@ -73,6 +73,19 @@
           <version>1.6.10</version>
           <scope>runtime</scope>
         </dependency>
+        <!-- Lwjgl deps -->
+        <dependency>
+          <groupId>org.lwjgl</groupId>
+          <artifactId>lwjgl</artifactId>
+          <scope>compile</scope>
+          <version>2.4.2</version>
+        </dependency>
+        <dependency>
+          <groupId>org.lwjgl</groupId>
+          <artifactId>lwjgl_util</artifactId>
+          <scope>compile</scope>
+          <version>2.4.2</version>
+        </dependency>
         <!-- testing -->
         <dependency>
           <groupId>junit</groupId>
