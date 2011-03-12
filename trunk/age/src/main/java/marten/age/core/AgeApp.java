@@ -1,12 +1,18 @@
 package marten.age.core;
 
+import java.io.IOException;
+
 import marten.age.control.Controller;
 import marten.age.event.AgeEvent;
 import marten.age.event.AgeEventListener;
 import marten.age.event.AgeSceneSwitchEvent;
+import marten.age.graphics.flat.sprite.TextureSprite;
+import marten.age.graphics.image.ImageData;
+import marten.age.graphics.primitives.Point;
 
 import org.apache.log4j.Logger;
 import org.lwjgl.input.Keyboard;
+import org.lwjgl.input.Mouse;
 import org.lwjgl.opengl.Display;
 import org.lwjgl.opengl.DisplayMode;
 import org.lwjgl.opengl.GL11;
@@ -15,6 +21,7 @@ public abstract class AgeApp {
     private static org.apache.log4j.Logger log = Logger.getLogger(AgeApp.class);
 
     private AgeScene activeScene = null;
+    private TextureSprite cursor = null;
 
     // private Resource res = new FileSystemResource(Constants.UNIT_BEANS_PATH);
     // private BeanFactory factory = new XmlBeanFactory(res);
@@ -77,6 +84,11 @@ public abstract class AgeApp {
 
             activeScene.compute();
             activeScene.render();
+            if (this.cursor != null) {
+                this.cursor.setPosition(new Point(Mouse.getX(), Mouse.getY()
+                        - this.cursor.getDimension().height + 1));
+                this.cursor.render();
+            }
             Display.sync(FRAMERATE);
         }
     }
@@ -88,6 +100,17 @@ public abstract class AgeApp {
         scene.registerListener(new CoreAgeEventListener());
         this.activeScene = scene;
         this.sceneChanged = true;
+    }
+
+    protected void setCursor(String imagePath) {
+        ImageData cursorImage = null;
+        try {
+            cursorImage = new ImageData(imagePath);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        this.cursor = new TextureSprite(cursorImage);
+        Mouse.setGrabbed(true);
     }
 
     private void destroy() {
@@ -116,7 +139,7 @@ public abstract class AgeApp {
         } else {
             Display.setDisplayMode(mode);
         }
-//        Display.setVSyncEnabled(true);
+        // Display.setVSyncEnabled(true);
         Display.create();
 
     }
@@ -170,7 +193,7 @@ public abstract class AgeApp {
         @Override
         public void handle(AgeEvent e) {
             if (e instanceof AgeSceneSwitchEvent) {
-                AgeSceneSwitchEvent event = (AgeSceneSwitchEvent) e;
+                AgeSceneSwitchEvent event = (AgeSceneSwitchEvent)e;
                 log.debug("Switching AGE scene to " + event.newScene);
                 setActiveScene(event.newScene);
             } else {
