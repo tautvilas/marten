@@ -110,12 +110,13 @@ public abstract class AgeApp {
             height = mode.getHeight();
         }
 
-        Display.setDisplayMode(mode);
         Display.setTitle(title);
         if (fullscreen) {
-            Display.setFullscreen(true);
+            Display.setDisplayModeAndFullscreen(mode);
+        } else {
+            Display.setDisplayMode(mode);
         }
-        Display.setVSyncEnabled(true);
+//        Display.setVSyncEnabled(true);
         Display.create();
 
     }
