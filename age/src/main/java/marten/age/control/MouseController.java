@@ -10,7 +10,6 @@ public class MouseController extends Controller {
     private int wheelD;
     private int mouseDX;
     private int mouseDY;
-    private int mouseDW;
     private boolean mouseDown = false;
     private boolean mouseUp = false;
 
@@ -34,7 +33,6 @@ public class MouseController extends Controller {
         wheelD = Mouse.getDWheel();
         mouseDX = Mouse.getDX();
         mouseDY = Mouse.getDY();
-        mouseDW = Mouse.getDWheel();
         cursor.x = Mouse.getX();
         cursor.y = Mouse.getY();
 
@@ -67,7 +65,7 @@ public class MouseController extends Controller {
         if (wheelD != 0) {
             listener.mouseWheelRoll(wheelD, coordinates);
         }
-        if (mouseDX != 0 || mouseDY != 0 || mouseDW != 0) {
+        if (mouseDX != 0 || mouseDY != 0) {
             listener.mouseMove(coordinates);
         }
         if (mouseDown) {
