@@ -32,7 +32,7 @@ public abstract class AgeApp {
     private String title = "";
     private boolean sceneChanged = false;
 
-    private static final int FRAMERATE = 50;
+//    private static final int FRAMERATE = 50;
 
     public int width = DEFAULT_WIDHT;
     public int height = DEFAULT_HEIGHT;
@@ -70,26 +70,29 @@ public abstract class AgeApp {
         activeScene.init();
         while (!Keyboard.isKeyDown(Keyboard.KEY_ESCAPE)
                 && !Display.isCloseRequested()) {
-            Display.update();
-
-            // publish events to controller listeners
-            for (Controller c : activeScene.getControllers()) {
-                c.publishEvents();
-            }
 
             if (sceneChanged) {
                 this.activeScene.init();
                 sceneChanged = false;
             }
 
+            Display.processMessages();
+
+            for (Controller c : activeScene.getControllers()) {
+                c.publishEvents();
+            }
+
             activeScene.compute();
             activeScene.render();
+
             if (this.cursor != null) {
+                Mouse.poll();
                 this.cursor.setPosition(new Point(Mouse.getX(), Mouse.getY()
                         - this.cursor.getDimension().height + 1));
                 this.cursor.render();
             }
-            Display.sync(FRAMERATE);
+            Display.update(false);
+//            Display.sync(FRAMERATE);
         }
     }
 
@@ -139,7 +142,7 @@ public abstract class AgeApp {
         } else {
             Display.setDisplayMode(mode);
         }
-        // Display.setVSyncEnabled(true);
+        Display.setVSyncEnabled(true);
         Display.create();
 
     }
