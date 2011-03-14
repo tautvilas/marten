@@ -1,6 +1,7 @@
 package marten.aoe.test;
 
 import junit.framework.Assert;
+import marten.aoe.dto.Action;
 import marten.aoe.dto.PlayerDTO;
 import marten.aoe.dto.PointDTO;
 import marten.aoe.dto.TileDTO;
@@ -23,17 +24,14 @@ public class PathFinderTest {
                     new PointDTO(13, 6), // unit creation
                     new PointDTO(13, 7)  // unit movement
             };
-            @Override
-            public void onGlobalEvent(GlobalEvent event) {
-            }
-            @Override
-            public void onLocalEvent(LocalEvent event, TileDTO tileDTO) {
+            @Override public void onGlobalEvent(GlobalEvent event) {}
+            @Override public void onLocalEvent(LocalEvent event, TileDTO tileDTO) {
                 if (event == LocalEvent.UNIT_ENTRY) {
                     Assert.assertEquals(tileDTO.getCoordinates(), this.expectedPath[this.index]);
                     this.index++;
                 }
             }}, players[0]);
-        engine.createUnit(players[0], "Dwarf", new PointDTO(13, 6));
-        engine.moveUnit(players[0], new PointDTO(13, 6), new PointDTO(13, 7));
+        engine.spawnUnit(players[0], "Dwarf", new PointDTO(13, 6));
+        engine.performAction(players[0], new PointDTO(13, 6), Action.FIRST, new PointDTO(13, 7));
     }
 }

@@ -155,15 +155,15 @@ public abstract class Map {
             }
         }
         for (int x = 0; x < this.width; x++) {
-            for (int y = 0; y < this.width; y++) {
+            for (int y = 0; y < this.height; y++) {
+                if (!currentVisibilityMatrix[x][y] && newVisibilityMatrix[x][y]) {
+                    this.map[x][y].setVisible(player);
+                }
                 if (!currentExplorationMatrix[x][y] && newExplorationMatrix[x][y]) {
                     this.map[x][y].setExplored(player);
                 }
                 if (currentVisibilityMatrix[x][y] && !newVisibilityMatrix[x][y]) {
                     this.map[x][y].setInvisible(player);
-                }
-                if (!currentVisibilityMatrix[x][y] && newVisibilityMatrix[x][y]) {
-                    this.map[x][y].setVisible(player);
                 }
             }
         }
