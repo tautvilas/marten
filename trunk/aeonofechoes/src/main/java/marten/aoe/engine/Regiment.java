@@ -1,5 +1,6 @@
 package marten.aoe.engine;
 
+import marten.aoe.dto.Action;
 import marten.aoe.dto.DamageDTO;
 import marten.aoe.dto.PlayerDTO;
 import marten.aoe.dto.PointDTO;
@@ -23,27 +24,31 @@ public abstract class Regiment extends Unit {
         this.meleeDamage = meleeDamage;
         this.rangedDamage = rangedDamage;
     }
-    /** Special action 1 for regiments is movement.*/
-    @Override public final void specialAction1(PointDTO target) {
-        this.getMap().moveUnit(this.getOwner(), this.getLocation().getCoordinates(), target);
-    }
-    /** Special action 2 for regiments is melee attack.*/
-    @Override public final void specialAction2(PointDTO target) {
+    /** Special actions for regiments.
+     * By default action {@code FIRST} is movement, action {@code SECOND} is melee attack, action {@code THIRD} is ranged attack.*/
+    @Override public final void specialAction(PointDTO target, Action action) {
         Tile targetTile = this.getMap().getTile(target);
-        if (targetTile.distanceTo(this.getLocation()) != 1) {
-            return;
+        switch (action) {
+            case FIRST:
+                this.getMap().moveUnit(this.getOwner(), this.getLocation().getCoordinates(), target);
+                break;
+            case SECOND:
+                if (targetTile.distanceTo(this.getLocation()) != 1) {
+                    return;
+                }
+                targetTile.applyDamage(this.meleeDamage);
+            case THIRD:
+                if (this.attackRange < 2) {
+                    return;
+                }
+                if (targetTile.distanceTo(this.getLocation()) < 2 && targetTile.distanceTo(this.getLocation()) > this.attackRange) {
+                    return;
+                }
+                targetTile.applyDamage(this.rangedDamage);
+            default:
+                this.extendedSpecialAction(target, action);
         }
-        targetTile.applyDamage(this.meleeDamage);
+
     }
-    /** Special action 3 for regiments is ranged attack.*/
-    @Override public void specialAction3(PointDTO target) {
-        if (this.attackRange < 2) {
-            return;
-        }
-        Tile targetTile = this.getMap().getTile(target);
-        if (targetTile.distanceTo(this.getLocation()) < 2 && targetTile.distanceTo(this.getLocation()) > this.attackRange) {
-            return;
-        }
-        targetTile.applyDamage(this.rangedDamage);
-    }
+    public abstract void extendedSpecialAction(PointDTO target, Action action);
 }

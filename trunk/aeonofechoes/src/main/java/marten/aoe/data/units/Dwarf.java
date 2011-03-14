@@ -1,5 +1,6 @@
 package marten.aoe.data.units;
 
+import marten.aoe.dto.Action;
 import marten.aoe.dto.DamageDTO;
 import marten.aoe.dto.DamageResistanceDTO;
 import marten.aoe.dto.DamageType;
@@ -31,10 +32,5 @@ public final class Dwarf extends Regiment {
     @Override public void onTileEntry(Tile tile) {}
     @Override public void onTileExit(Tile tile) {}
     @Override public void onTurnOver() {}
-    @Override public void specialAction4(PointDTO target) {}
-    @Override public void specialAction5(PointDTO target) {}
-    @Override public void specialAction6(PointDTO target) {}
-    @Override public void specialAction7(PointDTO target) {}
-    @Override public void specialAction8(PointDTO target) {}
-    @Override public void specialAction9(PointDTO target) {}
+    @Override public void extendedSpecialAction(PointDTO target, Action action) {}
 }

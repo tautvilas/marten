@@ -1,4 +1,4 @@
-package marten.aoe.aspect;
+package marten.aoe.aspectj;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Constructor;
@@ -21,7 +21,7 @@ public aspect RestrictionEnforcer {
             this.annotations = annotations;
             this.arguments = arguments;
             if (this.annotations.length != this.arguments.length) {
-                throw new RuntimeException("Annotations mismatch the arguments");
+                throw new RuntimeException("Annotations mismatch the number of arguments "+this.annotations.length+" against "+this.arguments.length);
             }
         }
         public int numOfArguments() {
@@ -49,13 +49,13 @@ public aspect RestrictionEnforcer {
                 Constructor<?> constructor = ((ConstructorSignature)signature)
                 .getConstructor();
                 annotations = constructor.getParameterAnnotations();
-                Object[] tempArgs = joinPoint.getArgs();
-                args = new Object[tempArgs.length - 1];
-                for (int index = 1; index < tempArgs.length; index++) {
-                    args[index - 1] = tempArgs[index];
-                }
+                args = joinPoint.getArgs();
             }
-            return this.new AnnotatedParameters(annotations, args);
+            Object[] finalArgs = new Object[annotations.length];
+            for (int i = 0; i < annotations.length; i++) {
+                finalArgs[i] = args[i + args.length - annotations.length];
+            }
+            return this.new AnnotatedParameters(annotations, finalArgs);
         }
         return null;   
     }

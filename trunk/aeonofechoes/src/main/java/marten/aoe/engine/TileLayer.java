@@ -1,5 +1,6 @@
 package marten.aoe.engine;
 
+import marten.aoe.dto.DamageDTO;
 import marten.aoe.dto.DefenseDTO;
 import marten.aoe.dto.FullTileDTO;
 import marten.aoe.dto.MovementDTO;
@@ -98,7 +99,7 @@ public abstract class TileLayer extends Tile {
                 return new TileDTO(
                         this.getName(),
                         this.getCoordinates(),
-                        (this.getUnit() != null && this.isVisible(player) ? this.getUnit().getDTO(player) : null),
+                        (this.getUnit() != null ? this.getUnit().getDTO(player) : null),
                         this.isVisible(player)
                 );
             }
@@ -111,7 +112,44 @@ public abstract class TileLayer extends Tile {
     @Override public final boolean isVisible(PlayerDTO player) {
         return this.base.isVisible(player);
     }
-    @Override public final void recheckVisibility(PlayerDTO player) {
-        this.base.recheckVisibility(player);
+    @Override public final void setExplored(PlayerDTO player) {
+        this.base.setExplored(player);
     }
+    @Override public final void setVisible(PlayerDTO player) {
+        this.base.setVisible(player);
+    }
+    @Override public final void setInvisible(PlayerDTO player) {
+        this.base.setInvisible(player);
+    }
+    @Override public final Unit getUnit() {
+        return this.base.getUnit();
+    }
+    @Override public final Unit popUnit(PlayerDTO player) {
+        Unit unit = this.base.popUnit(player);
+        if (unit != null) {
+            this.onUnitExit();
+        }
+        return unit;
+    }
+    @Override public final boolean pushUnit(PlayerDTO player, Unit unit) {
+        boolean answer = this.base.pushUnit(player, unit);
+        if (answer) {
+            this.onUnitEntry();
+        }
+        return answer;
+    }
+    @Override public final Unit removeUnit(PlayerDTO player) {
+        return this.base.removeUnit(player);
+    }
+    @Override public final boolean insertUnit(PlayerDTO player, Unit unit) {
+        return this.base.insertUnit(player, unit);
+    }
+    @Override public final void applyDamage(DamageDTO damage) {
+        this.base.applyDamage(damage);
+    }
+    @Override public final void turnOver() {
+        this.base.turnOver();
+        this.onTurnOver();
+    }
+    public abstract void onTurnOver();
 }

@@ -1,8 +1,8 @@
 package marten.aoe.test;
 
-import marten.aoe.aspect.NoNullEntries;
-import marten.aoe.aspect.NotNull;
-import marten.aoe.aspect.Range;
+import marten.aoe.aspectj.NoNullEntries;
+import marten.aoe.aspectj.NotNull;
+import marten.aoe.aspectj.Range;
 
 import org.junit.Assert;
 import org.junit.Test;

@@ -4,6 +4,7 @@ import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.LinkedList;
 
+import marten.aoe.dto.Action;
 import marten.aoe.dto.MapDTO;
 import marten.aoe.dto.PlayerDTO;
 import marten.aoe.dto.PointDTO;
@@ -19,16 +20,16 @@ import org.apache.log4j.Logger;
 
 public class EngineInterface extends UnicastRemoteObject implements EngineFace {
     private static org.apache.log4j.Logger log = Logger
-            .getLogger(EngineFace.class);
+    .getLogger(EngineFace.class);
 
     private final Engine engine;
     private final PlayerDTO player;
-    private LinkedList<EngineEvent> events = new LinkedList<EngineEvent>();
-    private LinkedList<TileDTO> tiles = new LinkedList<TileDTO>();
+    private final LinkedList<EngineEvent> events = new LinkedList<EngineEvent>();
+    private final LinkedList<TileDTO> tiles = new LinkedList<TileDTO>();
     private static final long serialVersionUID = 1L;
 
     public EngineInterface(Engine engine, PlayerDTO player)
-            throws RemoteException {
+    throws RemoteException {
         super();
         this.engine = engine;
         this.player = player;
@@ -43,15 +44,15 @@ public class EngineInterface extends UnicastRemoteObject implements EngineFace {
                         || event == LocalEvent.UNIT_EXIT
                         || event == LocalEvent.TILE_INVISIBLE
                         || event == LocalEvent.TILE_VISIBLE) {
-                    synchronized (tiles) {
-                        tiles.add(location);
+                    synchronized (EngineInterface.this.tiles) {
+                        EngineInterface.this.tiles.add(location);
                     }
-                    synchronized (events) {
-                        events.add(EngineEvent.TILE_UPDATE);
-                        events.notifyAll();
-//                        if (event == LocalEvent.UNIT_ENTRY || event == LocalEvent.UNIT_EXIT) {
-//                            log.info(event + " " + location.getName() + " " + location.getCoordinates());
-//                        }
+                    synchronized (EngineInterface.this.events) {
+                        EngineInterface.this.events.add(EngineEvent.TILE_UPDATE);
+                        EngineInterface.this.events.notifyAll();
+                        //                        if (event == LocalEvent.UNIT_ENTRY || event == LocalEvent.UNIT_EXIT) {
+                        //                            log.info(event + " " + location.getName() + " " + location.getCoordinates());
+                        //                        }
                     }
                 } else {
                     EngineInterface.log.info(EngineInterface.this.player
@@ -63,9 +64,9 @@ public class EngineInterface extends UnicastRemoteObject implements EngineFace {
             @Override
             public void onGlobalEvent(GlobalEvent event) {
                 if (event == GlobalEvent.TURN_END) {
-                    synchronized (events) {
-                        events.add(EngineEvent.TURN_END);
-                        events.notifyAll();
+                    synchronized (EngineInterface.this.events) {
+                        EngineInterface.this.events.add(EngineEvent.TURN_END);
+                        EngineInterface.this.events.notifyAll();
                     }
                 }
                 EngineInterface.log.info(EngineInterface.this.player.getName()
@@ -82,14 +83,14 @@ public class EngineInterface extends UnicastRemoteObject implements EngineFace {
     @Deprecated
     @Override
     public synchronized void moveUnit(PointDTO from, PointDTO to)
-            throws RemoteException {
-        this.engine.performAction(player, from, 1, to);
+    throws RemoteException {
+        this.engine.performAction(this.player, from, Action.FIRST, to);
     }
 
     @Deprecated
     @Override
     public synchronized boolean createUnit(String name, PointDTO at)
-            throws RemoteException {
+    throws RemoteException {
         return this.engine.createUnit(this.player, name, at);
     }
 
@@ -119,11 +120,11 @@ public class EngineInterface extends UnicastRemoteObject implements EngineFace {
 
     @Override
     public TileDTO popTile() {
-        synchronized (tiles) {
-            if (!tiles.isEmpty()) {
+        synchronized (this.tiles) {
+            if (!this.tiles.isEmpty()) {
                 return this.tiles.pop();
             } else {
-                log.error("The tiles stack is empty!");
+                EngineInterface.log.error("The tiles stack is empty!");
                 return null;
             }
         }
