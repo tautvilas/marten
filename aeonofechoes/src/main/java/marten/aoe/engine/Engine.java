@@ -1,12 +1,8 @@
 package marten.aoe.engine;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-
-import marten.aoe.aspect.NoNullEntries;
-import marten.aoe.aspect.NotNull;
-import marten.aoe.aspect.Range;
+import marten.aoe.aspectj.NoNullEntries;
+import marten.aoe.aspectj.NotNull;
+import marten.aoe.dto.Action;
 import marten.aoe.dto.FullMapDTO;
 import marten.aoe.dto.FullTileDTO;
 import marten.aoe.dto.FullUnitDTO;
@@ -15,6 +11,7 @@ import marten.aoe.dto.PlayerDTO;
 import marten.aoe.dto.PointDTO;
 import marten.aoe.dto.TileDTO;
 import marten.aoe.dto.UnitDTO;
+import marten.aoe.engine.aspectj.EngineMonitor;
 import marten.aoe.engine.loader.MapLoader;
 import marten.aoe.engine.loader.UnitLoader;
 
@@ -26,7 +23,6 @@ public final class Engine {
     private Map map;
     private PlayerDTO[] playerList;
     private int currentPlayer = 0;
-    private final java.util.Map<PlayerDTO, List<EngineListener>> listeners = new HashMap<PlayerDTO, List<EngineListener>>();
 
     /** Constructs a new Engine initialized with provided map and list of players.
      * The map is loaded as a part of this constructor.
@@ -53,7 +49,6 @@ public final class Engine {
         this.playerList = playerList;
         this.validateNewMap();
         this.currentPlayer = 0;
-        this.invokeGlobalEvent(GlobalEvent.MAP_CHANGE);
     }
 
     /** @return the player data for the currently active player.*/
@@ -69,25 +64,6 @@ public final class Engine {
     /** @return the map that is currently loaded in the engine.*/
     public synchronized Map getMap() {
         return this.map;
-    }
-
-    // FIXME: move this to EngineMonitor
-    public synchronized void addListener (EngineListener listener, PlayerDTO player) {
-        if (listener == null || player == null) {
-            throw new IllegalArgumentException("Null arguments are not accepted.");
-        }
-        if (!this.listeners.containsKey(player)) {
-            this.listeners.put(player, new ArrayList<EngineListener>());
-        }
-        this.listeners.get(player).add(listener);
-    }
-
-    // FIXME: move this to EngineMonitor
-    public synchronized void removeListener (EngineListener listener, PlayerDTO player) {
-        if (listener == null) {
-            throw new IllegalArgumentException("Null arguments are not accepted.");
-        }
-        this.listeners.get(player).remove(listener);
     }
 
     /** @return the brief description of the map as seen from the perspective of the given player.
@@ -165,7 +141,6 @@ public final class Engine {
             this.currentPlayer = 0;
         }
         this.map.endTurn();
-        this.invokeGlobalEvent(GlobalEvent.TURN_END);
     }
 
     /** Cause a unit in the "from" location to perform the given action on the "to" location.
@@ -173,81 +148,14 @@ public final class Engine {
      * @param from - the location from which the action originates.
      * @param action - the index of the action which is to be performed.
      * @param to - the location which is meant to be influenced by this action.*/
-    public synchronized void performAction (@NotNull PlayerDTO player, @NotNull PointDTO from, @Range(from = 1, to = 9) int action, @NotNull PointDTO to) {
+    public synchronized void performAction (@NotNull PlayerDTO player, @NotNull PointDTO from, @NotNull Action action, @NotNull PointDTO to) {
         Unit activeUnit = this.map.getTile(from).getUnit();
-        // QUITE UGLY CODE FOLLOWS
-        switch (action) {
-            case 1:
-                activeUnit.specialAction1(to); break;
-            case 2:
-                activeUnit.specialAction2(to); break;
-            case 3:
-                activeUnit.specialAction3(to); break;
-            case 4:
-                activeUnit.specialAction4(to); break;
-            case 5:
-                activeUnit.specialAction5(to); break;
-            case 6:
-                activeUnit.specialAction6(to); break;
-            case 7:
-                activeUnit.specialAction7(to); break;
-            case 8:
-                activeUnit.specialAction8(to); break;
-            case 9:
-                activeUnit.specialAction9(to); break;
+        if (activeUnit != null) {
+            activeUnit.specialAction(to, action);
         }
     }
 
-    // FIXME: move this functionality to EngineMonitor
-    public void invokePlayerSpecificLocalEvent(LocalEvent event, Tile location, PlayerDTO player) {
-        if (event == null || location == null || player == null) {
-            throw new IllegalArgumentException("Null arguments are not accepted.");
-        }
-        for (EngineListener listener : this.listeners.get(player)) {
-            listener.onLocalEvent(event, location.getDTO(player));
-        }
-    }
-
-    // FIXME: move this functionality to EngineMonitor
-    public void invokeLocalEvent(LocalEvent event, Tile location) {
-        if (event == null || location == null) {
-            throw new IllegalArgumentException("Null arguments are not accepted.");
-        }
-        for (PlayerDTO player : this.listeners.keySet()) {
-            if (location.isVisible(player)) {
-                for (EngineListener listener : this.listeners.get(player)) {
-                    listener.onLocalEvent(event, location.getDTO(player));
-                }
-            }
-        }
-    }
-
-    // FIXME: move this functionality to EngineMonitor
-    public void invokeGlobalEvent(GlobalEvent event) {
-        if (event == null) {
-            throw new IllegalArgumentException("Null arguments are not accepted.");
-        }
-        for (List<EngineListener> listenerList : this.listeners.values()) {
-            for (EngineListener listener : listenerList) {
-                listener.onGlobalEvent(event);
-            }
-        }
-    }
-
-    // FIXME: move this functionality to EngineMonitor
-    public void invokeLocalEventConcealUnit(LocalEvent event, Tile location) {
-        if (event == null || location == null) {
-            throw new IllegalArgumentException("Null arguments are not accepted.");
-        }
-        for (PlayerDTO player : this.listeners.keySet()) {
-            if (location.isVisible(player)) {
-                for (EngineListener listener : this.listeners.get(player)) {
-                    listener.onLocalEvent(event, location.getDTOConcealUnit(player));
-                }
-            }
-        }
-    }
-
+    // FIXME: could be better located at MapLoader?
     private void validateNewMap() {
         if (this.map.getPlayerLimit() < this.playerList.length) {
             throw new IllegalArgumentException("There are more players than slots provided by the map.");
@@ -275,5 +183,13 @@ public final class Engine {
         if (!isPlayerValid) {
             throw new IllegalArgumentException("This player is not registered on this engine.");
         }
+    }
+
+    public void addListener(EngineListener engineListener, PlayerDTO playerDTO) {
+        EngineMonitor.aspectOf().addListener(this, playerDTO, engineListener);
+    }
+
+    public void removeListener(EngineListener engineListener, PlayerDTO playerDTO) {
+        EngineMonitor.aspectOf().addListener(this, playerDTO, engineListener);
     }
 }

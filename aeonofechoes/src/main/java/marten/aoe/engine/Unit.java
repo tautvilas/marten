@@ -2,6 +2,7 @@ package marten.aoe.engine;
 
 import java.util.Random;
 
+import marten.aoe.dto.Action;
 import marten.aoe.dto.DamageDTO;
 import marten.aoe.dto.DamageResistanceDTO;
 import marten.aoe.dto.DamageType;
@@ -189,12 +190,10 @@ public abstract class Unit {
         rolledDamage = rolledDamage + this.getDamageResistance(damage.getDamageType()) + this.getLocation().getDefenseBonus(this.unitSize, this.unitType);
         if (rolledDamage > 0) {
             this.currentHitPoints -= rolledDamage;
-            this.getMap().invokeLocalEvent(LocalEvent.UNIT_HURT, this.getLocation().getCoordinates());
         }
         if (this.currentHitPoints <= 0) {
             this.getLocation().removeUnit(PlayerDTO.SYSTEM);
             this.onDeath();
-            this.getMap().invokeLocalEvent(LocalEvent.UNIT_DEAD, this.getLocation().getCoordinates());
         }
     }
     /** It is invoked whenever the health of the unit reaches 0 or below*/
@@ -204,13 +203,5 @@ public abstract class Unit {
     /** @return a perfect copy of the unit in given location*/
     public abstract Unit clone(Tile location);
     /***/
-    public abstract void specialAction1(PointDTO target);
-    public abstract void specialAction2(PointDTO target);
-    public abstract void specialAction3(PointDTO target);
-    public abstract void specialAction4(PointDTO target);
-    public abstract void specialAction5(PointDTO target);
-    public abstract void specialAction6(PointDTO target);
-    public abstract void specialAction7(PointDTO target);
-    public abstract void specialAction8(PointDTO target);
-    public abstract void specialAction9(PointDTO target);
+    public abstract void specialAction(PointDTO target, Action action);
 }

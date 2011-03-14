@@ -1,4 +1,4 @@
-package marten.aoe.aspect;
+package marten.aoe.aspectj;
 
 import java.lang.annotation.Documented;
 import java.lang.annotation.ElementType;
