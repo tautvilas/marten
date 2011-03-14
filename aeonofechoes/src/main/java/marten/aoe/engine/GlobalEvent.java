@@ -11,5 +11,9 @@ public enum GlobalEvent {
      * A listener should not expect to get any more events from its monitor.*/
     MAP_TERMINATED,
     /** This event is invoked whenever the acting player announces the end of his turn.*/
-    TURN_END
+    TURN_END,
+    /** This event precedes any burst of information from the server.*/
+    STREAM_START,
+    /** This event comes after all information about changes was transmitted.*/
+    STREAM_END
 }

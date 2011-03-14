@@ -91,7 +91,7 @@ public class EngineInterface extends UnicastRemoteObject implements EngineFace {
     @Override
     public synchronized boolean createUnit(String name, PointDTO at)
     throws RemoteException {
-        return this.engine.createUnit(this.player, name, at);
+        return this.engine.spawnUnit(this.player, name, at);
     }
 
     @Override

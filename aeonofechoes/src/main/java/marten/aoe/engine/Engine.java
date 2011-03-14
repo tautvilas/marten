@@ -118,14 +118,15 @@ public final class Engine {
         return (unit != null ? unit.getFullDTO(player) : null);
     }
 
-    // FIXME: remove this at the first possible opportunity
-    @Deprecated public synchronized boolean moveUnit (PlayerDTO player, PointDTO from, PointDTO to) {
-        return this.map.moveUnit(player, from, to);
-    }
-
-    // FIXME: remove this at the first possible opportunity
-    @Deprecated public synchronized boolean createUnit (PlayerDTO player, String name, PointDTO at) {
+    /** Allows spawning units during the scenarios or their initialization.
+     * @return {@code true} if the unit was spawned successfully.
+     * @param player - the player who will control the unit after spawning.
+     * @param name - the class name of the unit to be created.
+     * @param at - the location where the unit will spawn.*/
+    // FIXME: this method should be transfered to Map class at the first available opportunity.
+    public synchronized boolean spawnUnit (PlayerDTO player, String name, PointDTO at) {
         UnitLoader.loadUnit(name, player, this.map.getTile(at));
+        this.map.recalculateVisibility(player);
         return true;
     }
 
