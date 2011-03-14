@@ -4,6 +4,9 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import marten.aoe.aspect.NoNullEntries;
+import marten.aoe.aspect.NotNull;
+import marten.aoe.aspect.Range;
 import marten.aoe.dto.FullMapDTO;
 import marten.aoe.dto.FullTileDTO;
 import marten.aoe.dto.FullUnitDTO;
@@ -29,18 +32,26 @@ public final class Engine {
      * The map is loaded as a part of this constructor.
      * @param mapname - the name of the class (subclass of {@link Map}) to be loaded.
      * @param playerList - an array of players that will be allowed access to this engine.*/
-    public Engine (String mapName, PlayerDTO[] playerList) {
+    public Engine (@NotNull String mapName, @NoNullEntries PlayerDTO[] playerList) {
+        if (!MapLoader.getAvailableMaps().contains(mapName)) {
+            throw new IllegalArgumentException("Unknown map name");
+        }
         this.map = MapLoader.loadMap(this, mapName);
         this.playerList = playerList;
+        this.validateNewMap();
     }
 
     /** Switches the engine to another map with provided name, and with a new list of players.
      * The old map is unloaded and the new one is loaded as part of this procedure.
      * @param mapname - the name of the class (subclass of {@link Map}) to be loaded.
      * @param playerList - a new array of players that will be allowed access to this engine.*/
-    public synchronized void switchMap (String mapName, PlayerDTO[] playerList) {
+    public synchronized void switchMap (@NotNull String mapName, @NoNullEntries PlayerDTO[] playerList) {
+        if (!MapLoader.getAvailableMaps().contains(mapName)) {
+            throw new IllegalArgumentException("Unknown map name");
+        }
         this.map = MapLoader.loadMap(this, mapName);
         this.playerList = playerList;
+        this.validateNewMap();
         this.currentPlayer = 0;
         this.invokeGlobalEvent(GlobalEvent.MAP_CHANGE);
     }
@@ -72,43 +83,51 @@ public final class Engine {
     }
 
     // FIXME: move this to EngineMonitor
-    public synchronized void removeListener (EngineListener listener) {
+    public synchronized void removeListener (EngineListener listener, PlayerDTO player) {
         if (listener == null) {
             throw new IllegalArgumentException("Null arguments are not accepted.");
         }
-        this.listeners.remove(listener);
+        this.listeners.get(player).remove(listener);
     }
 
     /** @return the brief description of the map as seen from the perspective of the given player.
      * @param player - the player who is requesting the data.*/
-    public synchronized MapDTO getMapDTO (PlayerDTO player) {
+    public synchronized MapDTO getMapDTO (@NotNull PlayerDTO player) {
+        this.validatePlayer(player);
         return this.map.getDTO(player);
     }
 
     /** @return the verbose description of the map as seen from the perspective of the given player.
      * @param player - the player who is requesting the data.*/
-    public synchronized FullMapDTO getFullMapDTO (PlayerDTO player) {
+    public synchronized FullMapDTO getFullMapDTO (@NotNull PlayerDTO player) {
+        this.validatePlayer(player);
         return this.map.getFullDTO(player);
     }
 
     /** @return the brief description of the tile at given coordinates as seen from the perspective of the given player.
      * @param player - the player who is requesting the data.
      * @param location - the coordinates at which the queried tile is located.*/
-    public synchronized TileDTO getTileDTO (PlayerDTO player, PointDTO location) {
+    public synchronized TileDTO getTileDTO (@NotNull PlayerDTO player, @NotNull PointDTO location) {
+        this.validatePlayer(player);
+        this.validateLocation(location);
         return this.map.getTile(location).getDTO(player);
     }
 
     /** @return the verbose description of the tile at given coordinates as seen from the perspective of the given player.
      * @param player - the player who is requesting the data.
      * @param location - the coordinates at which the queried tile is located.*/
-    public synchronized FullTileDTO getFullTileDTO (PlayerDTO player, PointDTO location) {
+    public synchronized FullTileDTO getFullTileDTO (@NotNull PlayerDTO player, @NotNull PointDTO location) {
+        this.validatePlayer(player);
+        this.validateLocation(location);
         return this.map.getTile(location).getFullDTO(player);
     }
 
     /** @return the brief description of the unit at given coordinates as seen from the perspective of the given player, or {@code null} if no unit exists there.
      * @param player - the player who is requesting the data.
      * @param location - the coordinates at which the queried unit is located.*/
-    public synchronized UnitDTO getUnitDTO (PlayerDTO player, PointDTO location) {
+    public synchronized UnitDTO getUnitDTO (@NotNull PlayerDTO player, @NotNull PointDTO location) {
+        this.validatePlayer(player);
+        this.validateLocation(location);
         Unit unit = this.map.getTile(location).getUnit();
         return (unit != null ? unit.getDTO(player) : null);
     }
@@ -116,7 +135,9 @@ public final class Engine {
     /** @return the verbose description of the unit at given coordinates as seen from the perspective of the given player, or {@code null} if no unit exists there.
      * @param player - the player who is requesting the data.
      * @param location - the coordinates at which the queried unit is located.*/
-    public synchronized FullUnitDTO getFullUnitDTO (PlayerDTO player, PointDTO location) {
+    public synchronized FullUnitDTO getFullUnitDTO (@NotNull PlayerDTO player, @NotNull PointDTO location) {
+        this.validatePlayer(player);
+        this.validateLocation(location);
         Unit unit = this.map.getTile(location).getUnit();
         return (unit != null ? unit.getFullDTO(player) : null);
     }
@@ -134,7 +155,11 @@ public final class Engine {
 
     /** Cause the end of turn sequence on the map and relinquish control to another player.
      * @param player - the player who is finishing his turn.*/
-    public synchronized void endTurn (PlayerDTO player) {
+    public synchronized void endTurn (@NotNull PlayerDTO player) {
+        this.validatePlayer(player);
+        if (player != this.getActivePlayer()) {
+            return;
+        }
         this.currentPlayer++;
         if (this.currentPlayer == this.playerList.length) {
             this.currentPlayer = 0;
@@ -148,7 +173,7 @@ public final class Engine {
      * @param from - the location from which the action originates.
      * @param action - the index of the action which is to be performed.
      * @param to - the location which is meant to be influenced by this action.*/
-    public synchronized void performAction (PlayerDTO player, PointDTO from, int action, PointDTO to) {
+    public synchronized void performAction (@NotNull PlayerDTO player, @NotNull PointDTO from, @Range(from = 1, to = 9) int action, @NotNull PointDTO to) {
         Unit activeUnit = this.map.getTile(from).getUnit();
         // QUITE UGLY CODE FOLLOWS
         switch (action) {
@@ -220,6 +245,35 @@ public final class Engine {
                     listener.onLocalEvent(event, location.getDTOConcealUnit(player));
                 }
             }
+        }
+    }
+
+    private void validateNewMap() {
+        if (this.map.getPlayerLimit() < this.playerList.length) {
+            throw new IllegalArgumentException("There are more players than slots provided by the map.");
+        }
+        for (int x = 0; x < this.map.getWidth(); x++) {
+            for (int y = 0; y < this.map.getHeight(); y++) {
+                if (this.map.getTile(new PointDTO(x, y)) == null) {
+                    throw new IllegalArgumentException("The loaded map is corrupted: some of the tiles are null.");
+                }
+            }
+        }
+    }
+
+    private void validateLocation(PointDTO location) {
+        if (location.getX() < 0 || location.getX() >= this.map.getWidth() || location.getY() < 0 || location.getY() >= this.map.getHeight()) {
+            throw new IllegalArgumentException("The requested location is out of map bounds.");
+        }
+    }
+
+    private void validatePlayer(PlayerDTO player) {
+        boolean isPlayerValid = false;
+        for (PlayerDTO validPlayer : this.playerList) {
+            isPlayerValid |= (validPlayer == player);
+        }
+        if (!isPlayerValid) {
+            throw new IllegalArgumentException("This player is not registered on this engine.");
         }
     }
 }
