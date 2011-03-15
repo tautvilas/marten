@@ -4,7 +4,6 @@ import java.awt.Font;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.LinkedList;
 
 import marten.age.control.MouseListener;
 import marten.age.graphics.BasicSceneGraphBranch;
@@ -50,7 +49,6 @@ public class MapWidget extends BasicSceneGraphBranch implements Widget,
     private TextureSprite tileSelection = null;
     private Dimension dimension;
     private Dimension size;
-    private LinkedList<TileDTO> updatedTiles = new LinkedList<TileDTO>();
 
     public MapWidget(MapDTO map, Dimension dimension, MapWidgetListener listener) {
         this.listener = listener;
@@ -205,52 +203,40 @@ public class MapWidget extends BasicSceneGraphBranch implements Widget,
     }
 
     public void updateTile(TileDTO tile) {
-        synchronized (this.updatedTiles) {
-            this.updatedTiles.add(tile);
+        Point tileDisplayCoordinates = this.getTileDisplayCoordinates(tile
+                .getCoordinates());
+        PointDTO tileCoordinates = tile.getCoordinates();
+        if (!TerrainCache.containsType(tile)) {
+            this.cm.addPart(TerrainCache.addType(tile));
+            this.cm.addPart(TerrainCache.addFogType(tile));
         }
-    }
+        if (!tiles.containsKey(tileCoordinates)) {
+            TileWidget tileWidget = new TileWidget(tile,
+                    tileDisplayCoordinates, new Dimension(TILE_WIDTH,
+                            TILE_HEIGHT));
+            tiles.put(tileCoordinates, tileWidget);
+        } else {
+            tiles.get(tileCoordinates).update(tile);
+        }
 
-    public void compute() {
-        synchronized (this.updatedTiles) {
-            while (!this.updatedTiles.isEmpty()) {
-                TileDTO tile = this.updatedTiles.pop();
-                Point tileDisplayCoordinates = this
-                        .getTileDisplayCoordinates(tile.getCoordinates());
-                PointDTO tileCoordinates = tile.getCoordinates();
-                if (!TerrainCache.containsType(tile)) {
-                    this.cm.addPart(TerrainCache.addType(tile));
-                    this.cm.addPart(TerrainCache.addFogType(tile));
-                }
-                if (!tiles.containsKey(tileCoordinates)) {
-                    TileWidget tileWidget = new TileWidget(tile,
-                            tileDisplayCoordinates, new Dimension(TILE_WIDTH,
-                                    TILE_HEIGHT));
-                    tiles.put(tileCoordinates, tileWidget);
-                } else {
-                    tiles.get(tileCoordinates).update(tile);
-                }
-
-                // Update units
-                if (tile.getUnit() != null) {
-                    if (!this.units.containsKey(tile.getCoordinates())) {
-                        UnitWidget unit = new UnitWidget(tile.getUnit());
-                        unit.setPosition(new Point(tileDisplayCoordinates.x
-                                + this.TILE_WIDTH / 2
-                                - unit.getDimension().width / 2,
-                                tileDisplayCoordinates.y + this.TILE_HEIGHT / 2
-                                        - unit.getDimension().height / 2));
-                        this.tg.addChild(unit);
-                        units.put(tile.getCoordinates(), unit);
-                    }
-//                    } else {
-//                        units.get(tileCoordinates).update(tile.getUnit());
-//                    }
-                } else if (this.units.containsKey(tile.getCoordinates())) {
-                    UnitWidget unit = this.units.get(tile.getCoordinates());
-                    this.tg.removeChild(unit);
-                    this.units.remove(tile.getCoordinates());
-                }
+        // Update units
+        if (tile.getUnit() != null) {
+            if (!this.units.containsKey(tile.getCoordinates())) {
+                UnitWidget unit = new UnitWidget(tile.getUnit());
+                unit.setPosition(new Point(tileDisplayCoordinates.x
+                        + this.TILE_WIDTH / 2 - unit.getDimension().width / 2,
+                        tileDisplayCoordinates.y + this.TILE_HEIGHT / 2
+                                - unit.getDimension().height / 2));
+                this.tg.addChild(unit);
+                units.put(tile.getCoordinates(), unit);
             }
+            // } else {
+            // units.get(tileCoordinates).update(tile.getUnit());
+            // }
+        } else if (this.units.containsKey(tile.getCoordinates())) {
+            UnitWidget unit = this.units.get(tile.getCoordinates());
+            this.tg.removeChild(unit);
+            this.units.remove(tile.getCoordinates());
         }
     }
 

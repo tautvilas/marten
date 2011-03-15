@@ -48,6 +48,8 @@ public class Game extends AgeScene implements MapWidgetListener {
     private NetworkListener listener;
     private BitmapString turnNotify = null;
     private boolean unitCreated = false;
+    private LinkedList<TileDTO> updatedTiles = new LinkedList<TileDTO>();
+    private LinkedList<EngineEvent> events = new LinkedList<EngineEvent>();
 
     @SuppressWarnings("deprecation")
     public Game(EngineFace engineFace, GameDetails details) {
@@ -134,8 +136,10 @@ public class Game extends AgeScene implements MapWidgetListener {
         this.registerNetworkListener();
     }
 
+    @SuppressWarnings("deprecation")
     @Override
     public void compute() {
+        // position map on the screen
         Point coords = mouseController.getMouseCoordinates();
         if (coords.x < 5) {
             map.ScrollLeft(this.MAP_SCROLL_SPEED);
@@ -147,30 +151,12 @@ public class Game extends AgeScene implements MapWidgetListener {
         } else if (coords.y > AppInfo.getDisplayHeight() - 5) {
             map.ScrollUp(this.MAP_SCROLL_SPEED);
         }
-        map.compute();
-    }
-
-    @Override
-    public void render() {
-        flatland.render();
-    }
-
-    private void registerNetworkListener() {
-        listener = new NetworkListener() {
-            @SuppressWarnings("deprecation")
-            @Override
-            public void listen() {
-                EngineEvent event;
-                try {
-                    event = engine.listen();
-                    if (event == EngineEvent.TILE_UPDATE) {
-                        map.updateTile(engine.popTile());
-                    } else if (event == EngineEvent.STREAM_UPDATE) {
-                        LinkedList<TileDTO> tiles = engine.popStream();
-                        for (TileDTO tile: tiles) {
-                            map.updateTile(tile);
-                        }
-                    } else if (event == EngineEvent.TURN_END) {
+        // check for new engine events
+        synchronized(this.events) {
+            while(!this.events.isEmpty()) {
+                EngineEvent event = this.events.pop();
+                if (event == EngineEvent.TURN_END) {
+                    try {
                         if (engine.getActivePlayer().getName().equals(
                                 GameInfo.nickname)) {
                             if (!unitCreated) {
@@ -183,6 +169,48 @@ public class Game extends AgeScene implements MapWidgetListener {
                         } else {
                             turnNotify.setContent("Not your turn");
                             turnNotify.setColor(new Color(1, 0, 0));
+                        }
+                    } catch (RemoteException e) {
+                        // TODO Auto-generated catch block
+                        e.printStackTrace();
+                    }
+                }
+            }
+        }
+        // check for map tile updates
+        synchronized (this.updatedTiles) {
+            for (TileDTO tile : this.updatedTiles) {
+                map.updateTile(tile);
+            }
+        }
+    }
+
+    @Override
+    public void render() {
+        flatland.render();
+    }
+
+    private void registerNetworkListener() {
+        listener = new NetworkListener() {
+            @Override
+            public void listen() {
+                EngineEvent event;
+                try {
+                    event = engine.listen();
+                    if (event == EngineEvent.TILE_UPDATE) {
+                        synchronized (updatedTiles) {
+                            updatedTiles.add(engine.popTile());
+                        }
+                    } else if (event == EngineEvent.STREAM_UPDATE) {
+                        LinkedList<TileDTO> tiles = engine.popStream();
+                        synchronized (updatedTiles) {
+                            for (TileDTO tile : tiles) {
+                                updatedTiles.add(tile);
+                            }
+                        }
+                    } else {
+                        synchronized(events) {
+                            events.add(event);
                         }
                     }
                 } catch (RemoteException e) {
