@@ -30,7 +30,7 @@ public abstract class AgeApp {
     private static final int DEFAULT_HEIGHT = 600;
 
     private String title = "";
-    private boolean sceneChanged = false;
+    private AgeScene sceneChanged = null;
 
 //    private static final int FRAMERATE = 50;
 
@@ -71,9 +71,11 @@ public abstract class AgeApp {
         while (!Keyboard.isKeyDown(Keyboard.KEY_ESCAPE)
                 && !Display.isCloseRequested()) {
 
-            if (sceneChanged) {
+            if (sceneChanged != null) {
+                this.activeScene.cleanup();
+                this.activeScene = sceneChanged;
                 this.activeScene.init();
-                sceneChanged = false;
+                sceneChanged = null;
             }
 
             Display.processMessages();
@@ -97,12 +99,12 @@ public abstract class AgeApp {
     }
 
     protected void setActiveScene(AgeScene scene) {
-        if (this.activeScene != null) {
-            this.activeScene.cleanup();
-        }
         scene.registerListener(new CoreAgeEventListener());
-        this.activeScene = scene;
-        this.sceneChanged = true;
+        if (this.activeScene == null) {
+            this.activeScene = scene;
+        } else {
+            this.sceneChanged = scene;
+        }
     }
 
     protected void setCursor(String imagePath) {

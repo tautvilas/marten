@@ -47,14 +47,14 @@ public class GameLoader extends AgeScene implements Loadable {
 
     @Override
     public void compute() {
-        if (this.loader.loadingFinished()) {
-            this.fireEvent(new AgeSceneSwitchEvent(new Game(engine,
-                    this.details)));
-        }
         String status = loader.getStatus();
         if (!this.status.equals(status)) {
             this.status = status;
             this.statusString.setContent(status);
+        }
+        if (this.loader.loadingFinished()) {
+            this.fireEvent(new AgeSceneSwitchEvent(new Game(engine,
+                    this.details)));
         }
     }
 
