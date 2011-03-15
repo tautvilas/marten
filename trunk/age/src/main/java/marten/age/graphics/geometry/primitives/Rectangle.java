@@ -1,10 +1,14 @@
 package marten.age.graphics.geometry.primitives;
 
+import java.nio.DoubleBuffer;
+import java.nio.IntBuffer;
+
 import marten.age.graphics.geometry.Geometry;
 import marten.age.graphics.primitives.Dimension;
 import marten.age.graphics.primitives.Point;
 
 import org.apache.log4j.Logger;
+import org.lwjgl.BufferUtils;
 import org.lwjgl.opengl.GL11;
 
 public class Rectangle implements Geometry {
@@ -13,39 +17,51 @@ public class Rectangle implements Geometry {
             .getLogger(Rectangle.class);
     private Dimension dimension;
     private Point position = new Point();
+    private DoubleBuffer vertices;
+    private IntBuffer texVertices;
 
     public Rectangle(Dimension dimension) {
-        this.dimension = dimension;
+        this(dimension, new Point());
     }
 
     public Rectangle(Dimension dimension, Point position) {
-        this(dimension);
+        this.dimension = dimension;
         this.position = position;
+        vertices = BufferUtils.createDoubleBuffer(8);
+        vertices.put(new double[] { position.x, position.y,
+                position.x + dimension.width, position.y,
+                position.x + dimension.width, position.y + dimension.height,
+                position.x, position.y + dimension.height });
+        vertices.rewind();
+        texVertices = BufferUtils.createIntBuffer(8);
+        texVertices.put(new int[] {0, 0, 1, 0, 1, 1, 0, 1});
+        texVertices.rewind();
     }
 
     @Override
     public void draw() {
-//        log.debug("Drawing rectangle " + dimension.width + "x"
-//                + dimension.height);
-        GL11.glBegin(GL11.GL_QUADS);
-        {
-            GL11.glTexCoord2d(0, 0);
-            GL11.glVertex2d(position.x, position.y);
-            GL11.glTexCoord2d(1.0, 0);
-            GL11.glVertex2d(position.x + dimension.width, position.y);
-            GL11.glTexCoord2d(1.0, 1.0);
-            GL11.glVertex2d(position.x + dimension.width, position.y
-                    + dimension.height);
-            GL11.glTexCoord2d(0, 1.0);
-            GL11.glVertex2d(position.x, position.y + dimension.height);
-        }
-        GL11.glEnd();
+        GL11.glVertexPointer(2, 0, vertices);
+        GL11.glTexCoordPointer(2, 0, texVertices);
+        GL11.glDrawArrays(GL11.GL_QUADS, 0, 4);
+//         GL11.glBegin(GL11.GL_QUADS);
+//         {
+//         GL11.glTexCoord2d(0, 0);
+//         GL11.glVertex2d(position.x, position.y);
+//         GL11.glTexCoord2d(1.0, 0);
+//         GL11.glVertex2d(position.x + dimension.width, position.y);
+//         GL11.glTexCoord2d(1.0, 1.0);
+//         GL11.glVertex2d(position.x + dimension.width, position.y
+//         + dimension.height);
+//         GL11.glTexCoord2d(0, 1.0);
+//         GL11.glVertex2d(position.x, position.y + dimension.height);
+//         }
+//        GL11.glEnd();
     }
 
     @Override
     public boolean equals(Object o) {
         if (o instanceof Rectangle) {
-            Rectangle r2 = (Rectangle) o;
+            Rectangle r2 = (Rectangle)o;
             if (r2.dimension.equals(this.dimension)
                     && r2.position.equals(this.position))
                 return true;
