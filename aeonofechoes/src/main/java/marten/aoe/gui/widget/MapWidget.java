@@ -11,23 +11,16 @@ import marten.age.graphics.BasicSceneGraphBranch;
 import marten.age.graphics.appearance.Appearance;
 import marten.age.graphics.appearance.Color;
 import marten.age.graphics.flat.sprite.TextureSprite;
-import marten.age.graphics.geometry.Geometry;
-import marten.age.graphics.geometry.primitives.Rectangle;
-import marten.age.graphics.image.ImageCache;
 import marten.age.graphics.image.ImageData;
 import marten.age.graphics.layout.BoxedObject;
 import marten.age.graphics.model.ComplexModel;
-import marten.age.graphics.model.SimpleModel;
 import marten.age.graphics.primitives.Dimension;
 import marten.age.graphics.primitives.Point;
 import marten.age.graphics.text.BitmapFont;
 import marten.age.graphics.text.BitmapString;
 import marten.age.graphics.text.FontCache;
-import marten.age.graphics.texture.Texture;
-import marten.age.graphics.texture.TextureLoader;
 import marten.age.graphics.transform.TranslationGroup;
 import marten.age.widget.Widget;
-import marten.aoe.Path;
 import marten.aoe.dto.MapDTO;
 import marten.aoe.dto.PointDTO;
 import marten.aoe.dto.TileDTO;
@@ -44,8 +37,6 @@ public class MapWidget extends BasicSceneGraphBranch implements Widget,
     private final int TILE_WIDTH = 64;
     private final int TILE_HEIGHT = 64;
 
-    public static final HashMap<String, SimpleModel> terrainCache = new HashMap<String, SimpleModel>();
-    private MapDTO map = null;
     private PointDTO selectedTile = null;
     private MapWidgetListener listener;
 
@@ -54,15 +45,17 @@ public class MapWidget extends BasicSceneGraphBranch implements Widget,
     private final TranslationGroup tg = new TranslationGroup();
     private final ComplexModel cm = new ComplexModel();
     private HashMap<PointDTO, UnitWidget> units = new HashMap<PointDTO, UnitWidget>();
+    private HashMap<PointDTO, TileWidget> tiles = new HashMap<PointDTO, TileWidget>();
     private TextureSprite tileHighlight = null;
     private TextureSprite tileSelection = null;
     private Dimension dimension;
+    private Dimension size;
     private LinkedList<TileDTO> updatedTiles = new LinkedList<TileDTO>();
 
     public MapWidget(MapDTO map, Dimension dimension, MapWidgetListener listener) {
         this.listener = listener;
         this.dimension = dimension;
-        this.map = map;
+        this.size = new Dimension(map.getWidth(), map.getHeight());
         try {
             this.tileHighlight = new TextureSprite(new ImageData(
                     "data/gui/skin/tile-highlight.png"));
@@ -73,15 +66,12 @@ public class MapWidget extends BasicSceneGraphBranch implements Widget,
         } catch (IOException e1) {
             throw (new RuntimeException(e1));
         }
-        for (TileDTO[] tileLine : this.map.getTileMap()) {
+        for (TileDTO[] tileLine : map.getTileMap()) {
             for (TileDTO tile : tileLine) {
                 this.updateTile(tile);
             }
         }
         cm.setAppearance(new Appearance(new Color(1.0, 1.0, 1.0)));
-        for (SimpleModel sm : terrainCache.values()) {
-            cm.addPart(sm);
-        }
         tg.addChild(cm);
         tg.addChild(tileHighlight);
         for (TileDTO[] tileLine : map.getTileMap()) {
@@ -92,7 +82,7 @@ public class MapWidget extends BasicSceneGraphBranch implements Widget,
                         1.0, 0.0));
                 coords.setPosition(this.getTileDisplayCoordinates(tile
                         .getCoordinates()));
-//                 tg.addChild(coords);
+                // tg.addChild(coords);
             }
         }
         this.addChild(tg);
@@ -117,6 +107,7 @@ public class MapWidget extends BasicSceneGraphBranch implements Widget,
 
     private TileDTO getTile(Point coords, boolean odd)
             throws IndexOutOfBoundsException {
+        PointDTO position = null;
         if (Math.abs(coords.x % (TILE_WIDTH + TILE_WIDTH / 2)) <= TILE_WIDTH) {
             int tileX = ((int)coords.x / (TILE_WIDTH + TILE_WIDTH / 2)) * 2;
             int tileY = (int)coords.y / (TILE_HEIGHT);
@@ -124,9 +115,13 @@ public class MapWidget extends BasicSceneGraphBranch implements Widget,
                 tileX -= 1;
             else if (odd)
                 tileX += 1;
-            return this.map.getTileMap()[tileX][tileY];
+            position = new PointDTO(tileX, tileY);
         }
-        throw new IndexOutOfBoundsException("Tile index is out of bounds");
+        if (tiles.containsKey(position)) {
+            return this.tiles.get(position).getDto();
+        } else {
+            throw new IndexOutOfBoundsException("Tile index is out of bounds");
+        }
     }
 
     private TileDTO tileHit(Point position) {
@@ -210,45 +205,40 @@ public class MapWidget extends BasicSceneGraphBranch implements Widget,
     }
 
     public void updateTile(TileDTO tile) {
-        synchronized(this.updatedTiles) {
+        synchronized (this.updatedTiles) {
             this.updatedTiles.add(tile);
         }
     }
 
-    @Override
-    public void render() {
-        synchronized(this.updatedTiles) {
+    public void compute() {
+        synchronized (this.updatedTiles) {
             while (!this.updatedTiles.isEmpty()) {
                 TileDTO tile = this.updatedTiles.pop();
-                Point tileDisplayCoordinates = this.getTileDisplayCoordinates(tile
-                        .getCoordinates());
+                Point tileDisplayCoordinates = this
+                        .getTileDisplayCoordinates(tile.getCoordinates());
                 PointDTO tileCoordinates = tile.getCoordinates();
-                TileDTO oldTile = this.map.getTileMap()[tileCoordinates.getX()][tileCoordinates
-                        .getY()];
-                Geometry geometry = new Rectangle(new Dimension(TILE_WIDTH,
-                        TILE_HEIGHT), tileDisplayCoordinates);
-                if (!MapWidget.terrainCache.containsKey(tile.getName())) {
-                    Texture terrain = TextureLoader.loadTexture(ImageCache
-                            .getImage(Path.TILE_DATA_PATH
-                                    + tile.getName().toLowerCase()));
-                    SimpleModel sm = new SimpleModel(new Appearance(terrain));
-                    terrainCache.put(tile.getName(), sm);
-                    this.cm.addPart(sm);
+                if (!TerrainCache.containsType(tile)) {
+                    this.cm.addPart(TerrainCache.addType(tile));
+                    this.cm.addPart(TerrainCache.addFogType(tile));
                 }
-                // remove old tile graphic
-                MapWidget.terrainCache.get(oldTile.getName()).removeGeometry(
-                        geometry);
-                SimpleModel sm = terrainCache.get(tile.getName());
-                sm.addGeometry(geometry);
-                this.map.getTileMap()[tileCoordinates.getX()][tileCoordinates
-                        .getY()] = tile;
+                if (!tiles.containsKey(tileCoordinates)) {
+                    TileWidget tileWidget = new TileWidget(tile,
+                            tileDisplayCoordinates, new Dimension(TILE_WIDTH,
+                                    TILE_HEIGHT));
+                    tiles.put(tileCoordinates, tileWidget);
+                } else {
+                    tiles.get(tileCoordinates).update(tile);
+                }
+
+                // Update units
                 if (tile.getUnit() != null) {
                     if (!this.units.containsKey(tile.getCoordinates())) {
                         UnitWidget unit = new UnitWidget(tile.getUnit());
                         unit.setPosition(new Point(tileDisplayCoordinates.x
-                                + this.TILE_WIDTH / 2 - unit.getDimension().width
-                                / 2, tileDisplayCoordinates.y + this.TILE_HEIGHT
-                                / 2 - unit.getDimension().height / 2));
+                                + this.TILE_WIDTH / 2
+                                - unit.getDimension().width / 2,
+                                tileDisplayCoordinates.y + this.TILE_HEIGHT / 2
+                                        - unit.getDimension().height / 2));
                         this.tg.addChild(unit);
                         units.put(tile.getCoordinates(), unit);
                     }
@@ -259,12 +249,16 @@ public class MapWidget extends BasicSceneGraphBranch implements Widget,
                 }
             }
         }
+    }
+
+    @Override
+    public void render() {
         super.render();
     }
 
     @Override
     public Dimension getDimension() {
-        return new Dimension(this.map.getWidth(), this.map.getHeight());
+        return this.size;
     }
 
     @Override
@@ -274,9 +268,9 @@ public class MapWidget extends BasicSceneGraphBranch implements Widget,
 
     @Override
     public void setPosition(Point position) {
-        int maxX = this.map.getWidth() * (this.TILE_WIDTH * 3 / 4)
+        int maxX = (int)this.size.width * (this.TILE_WIDTH * 3 / 4)
                 + this.TILE_WIDTH / 4;
-        int maxY = this.map.getHeight() * this.TILE_HEIGHT + this.TILE_HEIGHT
+        int maxY = (int)this.size.height * this.TILE_HEIGHT + this.TILE_HEIGHT
                 / 2;
         Point currentPosition = this.getPosition();
         if (currentPosition.x > 0 && position.x > currentPosition.x) {
@@ -316,7 +310,7 @@ public class MapWidget extends BasicSceneGraphBranch implements Widget,
             if (this.selectedTile == null) {
                 tg.addChild(tileSelection);
             } else {
-                TileDTO oldTile = this.map.getTileDTO(this.selectedTile);
+                TileDTO oldTile = this.tiles.get(this.selectedTile).getDto();
                 if (oldTile.getUnit() != null) {
                     this.listener.moveUnit(this.selectedTile, tile
                             .getCoordinates());

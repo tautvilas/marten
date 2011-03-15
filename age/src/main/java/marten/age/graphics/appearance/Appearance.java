@@ -146,6 +146,8 @@ public class Appearance {
     public void set() {
         if (this.color != null) {
             GL11.glColor3d(color.r, color.g, color.b);
+        } else {
+            GL11.glColor3d(1.0, 1.0, 1.0);
         }
         if (this.shininess != -1f) {
             GL11.glMaterialf(GL11.GL_FRONT_AND_BACK, GL11.GL_SHININESS,

@@ -145,6 +145,7 @@ public class Game extends AgeScene implements MapWidgetListener {
         } else if (coords.y > AppInfo.getDisplayHeight() - 5) {
             map.ScrollUp(this.MAP_SCROLL_SPEED);
         }
+        map.compute();
     }
 
     @Override
