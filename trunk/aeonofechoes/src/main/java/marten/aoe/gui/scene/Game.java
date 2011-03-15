@@ -179,8 +179,8 @@ public class Game extends AgeScene implements MapWidgetListener {
         }
         // check for map tile updates
         synchronized (this.updatedTiles) {
-            for (TileDTO tile : this.updatedTiles) {
-                map.updateTile(tile);
+            while (!this.updatedTiles.isEmpty()) {
+                map.updateTile(this.updatedTiles.pop());
             }
         }
     }
