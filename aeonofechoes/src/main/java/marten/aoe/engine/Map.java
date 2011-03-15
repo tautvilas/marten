@@ -172,4 +172,7 @@ public abstract class Map {
             }
         }
     }
+    public void selectUnit(PlayerDTO player, PointDTO location) {
+        this.pathCache = new PathFinder(this, this.map[location.getX()][location.getY()]);
+    }
 }

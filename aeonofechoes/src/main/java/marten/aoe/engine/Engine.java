@@ -150,9 +150,25 @@ public final class Engine {
      * @param action - the index of the action which is to be performed.
      * @param to - the location which is meant to be influenced by this action.*/
     public synchronized void performAction (@NotNull PlayerDTO player, @NotNull PointDTO from, @NotNull Action action, @NotNull PointDTO to) {
+        this.validatePlayer(player);
+        this.validateLocation(to);
+        this.validateLocation(from);
         Unit activeUnit = this.map.getTile(from).getUnit();
-        if (activeUnit != null) {
+        if (player == this.getActivePlayer() && activeUnit != null) {
             activeUnit.specialAction(to, action);
+        }
+    }
+
+    /** Select a unit for further instructions.
+     * This pre-calculates some of the useful data, including but not limited to path finding,
+     * while the player is (supposedly) contemplating his actions.
+     * Calling this method is unnecessary but recommended for better performance.*/
+    public synchronized void selectUnit (@NotNull PlayerDTO player, @NotNull PointDTO location) {
+        this.validatePlayer(player);
+        this.validateLocation(location);
+        Unit activeUnit = this.map.getTile(location).getUnit();
+        if (player == this.getActivePlayer() && activeUnit != null) {
+            this.map.selectUnit(player, location);
         }
     }
 
