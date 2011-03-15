@@ -88,6 +88,7 @@ public abstract class Map {
                 }
             }
         }
+        this.pathCache = null;
         this.onTurnOver();
     }
     public final boolean moveUnit (PlayerDTO player, PointDTO from, PointDTO to) {
