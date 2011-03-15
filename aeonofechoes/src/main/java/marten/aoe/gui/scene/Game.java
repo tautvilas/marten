@@ -2,6 +2,7 @@ package marten.aoe.gui.scene;
 
 import java.awt.Font;
 import java.rmi.RemoteException;
+import java.util.LinkedList;
 
 import marten.age.control.KeyboardController;
 import marten.age.control.KeyboardListener;
@@ -19,6 +20,7 @@ import marten.age.widget.Button;
 import marten.age.widget.obsolete.FpsCounter;
 import marten.aoe.GameInfo;
 import marten.aoe.dto.PointDTO;
+import marten.aoe.dto.TileDTO;
 import marten.aoe.gui.MapWidgetListener;
 import marten.aoe.gui.widget.AoeButtonFactory;
 import marten.aoe.gui.widget.MapWidget;
@@ -116,7 +118,7 @@ public class Game extends AgeScene implements MapWidgetListener {
                     GameInfo.nickname)) {
                 this.turnNotify.setContent("Your turn");
                 this.turnNotify.setColor(new Color(0, 1, 0));
-//                log.info("##### " + this.engine.getStartPosition());
+                // log.info("##### " + this.engine.getStartPosition());
                 this.engine.createUnit("Dwarf", this.engine.getStartPosition());
                 log.info("Game scene is initialized. Active player is '"
                         + this.engine.getActivePlayer().getName() + "'");
@@ -161,21 +163,19 @@ public class Game extends AgeScene implements MapWidgetListener {
                 EngineEvent event;
                 try {
                     event = engine.listen();
-                } catch (RemoteException e) {
-                    throw new RuntimeException(e);
-                }
-                if (event == EngineEvent.TILE_UPDATE) {
-                    try {
+                    if (event == EngineEvent.TILE_UPDATE) {
                         map.updateTile(engine.popTile());
-                    } catch (RemoteException e) {
-                        e.printStackTrace();
-                    }
-                } else if (event == EngineEvent.TURN_END) {
-                    try {
+                    } else if (event == EngineEvent.STREAM_UPDATE) {
+                        LinkedList<TileDTO> tiles = engine.popStream();
+                        for (TileDTO tile: tiles) {
+                            map.updateTile(tile);
+                        }
+                    } else if (event == EngineEvent.TURN_END) {
                         if (engine.getActivePlayer().getName().equals(
                                 GameInfo.nickname)) {
                             if (!unitCreated) {
-                                engine.createUnit("Elf", engine.getStartPosition());
+                                engine.createUnit("Elf", engine
+                                        .getStartPosition());
                                 unitCreated = true;
                             }
                             turnNotify.setContent("Your turn");
@@ -184,9 +184,9 @@ public class Game extends AgeScene implements MapWidgetListener {
                             turnNotify.setContent("Not your turn");
                             turnNotify.setColor(new Color(1, 0, 0));
                         }
-                    } catch (RemoteException e) {
-                        throw new RuntimeException(e);
                     }
+                } catch (RemoteException e) {
+                    throw new RuntimeException(e);
                 }
             }
         };
