@@ -17,12 +17,12 @@ public class DtoSizeTest implements ConsoleTest {
     public void run() {
         PointDTO point = new PointDTO(100, 100);
         PlayerDTO player = new PlayerDTO(0, "bastard");
-        UnitDTO unit = new UnitDTO("dwarf", player, 40, 50);
+        UnitDTO unit = new UnitDTO("dwarf", player, 40, 50, 5, 10);
         TileDTO tile = new TileDTO("River", point, unit, true);
-        System.out.println("Point DTO size: " + getSize(point));
-        System.out.println("Player DTO size: " + getSize(point));
-        System.out.println("Unit DTO size: " + getSize(unit));
-        System.out.println("Tile DTO size: " + getSize(tile));
+        System.out.println("Point DTO size: " + this.getSize(point));
+        System.out.println("Player DTO size: " + this.getSize(point));
+        System.out.println("Unit DTO size: " + this.getSize(unit));
+        System.out.println("Tile DTO size: " + this.getSize(tile));
     }
 
     private int getSize(Serializable object) {
