@@ -92,6 +92,9 @@ public abstract class Map {
     }
     public final boolean moveUnit (PlayerDTO player, PointDTO from, PointDTO to) {
         if (from.getX() < 0 || from.getX() >= this.width || from.getY() < 0 || from.getY() >= this.height || to.getX() < 0 || to.getX() >= this.width || to.getY() < 0 || to.getY() >= this.height) {
+            throw new IllegalArgumentException("Requested coordinates are out of bounds of the map.");
+        }
+        if (from.equals(to)) {
             return false;
         }
         Tile startTile = this.map[from.getX()][from.getY()];
