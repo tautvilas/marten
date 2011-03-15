@@ -2,6 +2,7 @@ package marten.aoe.server.face;
 
 import java.rmi.Remote;
 import java.rmi.RemoteException;
+import java.util.LinkedList;
 
 import marten.aoe.dto.MapDTO;
 import marten.aoe.dto.PlayerDTO;
@@ -23,6 +24,8 @@ public interface EngineFace extends Remote {
     public void endTurn() throws RemoteException;
 
     public PlayerDTO getActivePlayer() throws RemoteException;
+
+    public LinkedList<TileDTO> popStream() throws RemoteException;
 
     public TileDTO popTile() throws RemoteException;
 

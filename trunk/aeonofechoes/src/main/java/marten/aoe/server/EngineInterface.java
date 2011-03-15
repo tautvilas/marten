@@ -20,16 +20,18 @@ import org.apache.log4j.Logger;
 
 public class EngineInterface extends UnicastRemoteObject implements EngineFace {
     private static org.apache.log4j.Logger log = Logger
-    .getLogger(EngineFace.class);
+            .getLogger(EngineFace.class);
 
     private final Engine engine;
     private final PlayerDTO player;
     private final LinkedList<EngineEvent> events = new LinkedList<EngineEvent>();
+    private final LinkedList<LinkedList<TileDTO>> streams = new LinkedList<LinkedList<TileDTO>>();
     private final LinkedList<TileDTO> tiles = new LinkedList<TileDTO>();
+    private boolean streaming = false;
     private static final long serialVersionUID = 1L;
 
     public EngineInterface(Engine engine, PlayerDTO player)
-    throws RemoteException {
+            throws RemoteException {
         super();
         this.engine = engine;
         this.player = player;
@@ -47,12 +49,12 @@ public class EngineInterface extends UnicastRemoteObject implements EngineFace {
                     synchronized (EngineInterface.this.tiles) {
                         EngineInterface.this.tiles.add(location);
                     }
-                    synchronized (EngineInterface.this.events) {
-                        EngineInterface.this.events.add(EngineEvent.TILE_UPDATE);
-                        EngineInterface.this.events.notifyAll();
-                        //                        if (event == LocalEvent.UNIT_ENTRY || event == LocalEvent.UNIT_EXIT) {
-                        //                            log.info(event + " " + location.getName() + " " + location.getCoordinates());
-                        //                        }
+                    if (!EngineInterface.this.streaming) {
+                        synchronized (EngineInterface.this.events) {
+                            EngineInterface.this.events
+                                    .add(EngineEvent.TILE_UPDATE);
+                            EngineInterface.this.events.notifyAll();
+                        }
                     }
                 } else {
                     EngineInterface.log.info(EngineInterface.this.player
@@ -61,6 +63,7 @@ public class EngineInterface extends UnicastRemoteObject implements EngineFace {
                 }
             }
 
+            @SuppressWarnings("unchecked")
             @Override
             public void onGlobalEvent(GlobalEvent event) {
                 if (event == GlobalEvent.TURN_END) {
@@ -68,11 +71,27 @@ public class EngineInterface extends UnicastRemoteObject implements EngineFace {
                         EngineInterface.this.events.add(EngineEvent.TURN_END);
                         EngineInterface.this.events.notifyAll();
                     }
+                } else if (event == GlobalEvent.STREAM_START) {
+                    EngineInterface.this.streaming = true;
                 } else if (event == GlobalEvent.STREAM_END) {
-//                    System.out.println(getSize(tiles));
+                    synchronized (EngineInterface.this.tiles) {
+                        synchronized (EngineInterface.this.streams) {
+                            EngineInterface.this.streams
+                                    .add((LinkedList<TileDTO>)EngineInterface.this.tiles
+                                            .clone());
+                        }
+                        synchronized (EngineInterface.this.events) {
+                            EngineInterface.this.events
+                                    .add(EngineEvent.STREAM_UPDATE);
+                            EngineInterface.this.events.notifyAll();
+                        }
+                    }
+                    EngineInterface.this.streaming = false;
+                } else {
+                    EngineInterface.log.info(EngineInterface.this.player
+                            .getName()
+                            + " " + event);
                 }
-                EngineInterface.log.info(EngineInterface.this.player.getName()
-                        + " " + event);
             }
         }, this.player);
     }
@@ -85,14 +104,14 @@ public class EngineInterface extends UnicastRemoteObject implements EngineFace {
     @Deprecated
     @Override
     public synchronized void moveUnit(PointDTO from, PointDTO to)
-    throws RemoteException {
+            throws RemoteException {
         this.engine.performAction(this.player, from, Action.FIRST, to);
     }
 
     @Deprecated
     @Override
     public synchronized boolean createUnit(String name, PointDTO at)
-    throws RemoteException {
+            throws RemoteException {
         return this.engine.spawnUnit(this.player, name, at);
     }
 
@@ -132,12 +151,24 @@ public class EngineInterface extends UnicastRemoteObject implements EngineFace {
         }
     }
 
+    @Override
+    public LinkedList<TileDTO> popStream() {
+        synchronized (this.streams) {
+            if (!this.streams.isEmpty()) {
+                return this.streams.pop();
+            } else {
+                EngineInterface.log.error("The streams stack is empty!");
+                return null;
+            }
+        }
+    }
+
     @Deprecated
     @Override
     public PointDTO getStartPosition() throws RemoteException {
         PlayerDTO[] players = this.engine.getAllPlayers();
         int position = 0;
-        for (int i = 0 ; i < players.length; i ++) {
+        for (int i = 0; i < players.length; i++) {
             if (players[i].getName().equals(this.player.getName())) {
                 position = i;
                 break;
