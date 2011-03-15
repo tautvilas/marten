@@ -13,7 +13,6 @@ import marten.aoe.engine.LocalEvent;
 import org.junit.Test;
 
 public class PathFinderTest {
-    @SuppressWarnings("deprecation")
     @Test
     public void adjacentTileTest() {
         PlayerDTO[] players = {new PlayerDTO(0, "player")};
