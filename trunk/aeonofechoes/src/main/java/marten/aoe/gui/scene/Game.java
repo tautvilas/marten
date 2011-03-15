@@ -114,7 +114,7 @@ public class Game extends AgeScene implements MapWidgetListener {
         this.addController(mouseController);
         this.registerControllable(map);
         this.registerControllable(endTurnButton);
-        flatland.compile();
+//        flatland.compile();
         try {
             if (this.engine.getActivePlayer().getName().equals(
                     GameInfo.nickname)) {
