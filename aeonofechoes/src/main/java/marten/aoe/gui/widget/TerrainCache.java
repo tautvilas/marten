@@ -22,6 +22,11 @@ public class TerrainCache {
         } else {
             terrainCache.get(tile.getName() + "fog").addGeometry(geometry);
         }
+//        int sum = 0;
+//        for (SimpleModel model: terrainCache.values()) {
+//            sum += model.getGeometries().size();
+//        }
+//        System.out.println(sum);
     }
 
     public static void remove(TileDTO tile, Geometry geometry) {
