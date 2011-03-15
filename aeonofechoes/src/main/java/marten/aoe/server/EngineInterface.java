@@ -68,6 +68,8 @@ public class EngineInterface extends UnicastRemoteObject implements EngineFace {
                         EngineInterface.this.events.add(EngineEvent.TURN_END);
                         EngineInterface.this.events.notifyAll();
                     }
+                } else if (event == GlobalEvent.STREAM_END) {
+//                    System.out.println(getSize(tiles));
                 }
                 EngineInterface.log.info(EngineInterface.this.player.getName()
                         + " " + event);

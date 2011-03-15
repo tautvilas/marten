@@ -242,6 +242,9 @@ public class MapWidget extends BasicSceneGraphBranch implements Widget,
                         this.tg.addChild(unit);
                         units.put(tile.getCoordinates(), unit);
                     }
+//                    } else {
+//                        units.get(tileCoordinates).update(tile.getUnit());
+//                    }
                 } else if (this.units.containsKey(tile.getCoordinates())) {
                     UnitWidget unit = this.units.get(tile.getCoordinates());
                     this.tg.removeChild(unit);
