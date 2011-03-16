@@ -37,9 +37,6 @@ public abstract class BasicSceneGraphParent implements SceneGraphParent {
     }
 
     public void activateChildren() {
-        if (this.branches.isEmpty())
-            throw new RuntimeException(
-                    "Attempted to activate childless parent.");
         for (SceneGraphChild branch : this.branches)
             branch.render();
     }
