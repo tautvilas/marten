@@ -18,5 +18,9 @@ public enum LocalEvent {
     /** This event is invoked whenever it is detected that a tile has become visible.*/
     TILE_VISIBLE,
     /** This event is invoked whenever it is detected that a tile has become invisible.*/
-    TILE_INVISIBLE
+    TILE_INVISIBLE,
+    /** This event is invoked whenever an object which was previously invisible due to cloaking is revealed.*/
+    OBJECT_DETECTED,
+    /** This event is invoked whenever an object which was previously visible cloaks and thus becomes invisible.*/
+    OBJECT_CLOAKED
 }

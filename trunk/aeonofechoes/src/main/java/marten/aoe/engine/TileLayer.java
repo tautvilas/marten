@@ -1,5 +1,8 @@
 package marten.aoe.engine;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import marten.aoe.dto.DamageDTO;
 import marten.aoe.dto.DefenseDTO;
 import marten.aoe.dto.FullTileDTO;
@@ -9,14 +12,10 @@ import marten.aoe.dto.TileDTO;
 
 public abstract class TileLayer extends Tile {
     private Tile base;
-    private final int detectionModifier;
+    private final Set<PlayerDTO> playerDetection = new HashSet<PlayerDTO>();
     public TileLayer(String name, Tile base) {
-        this (name, base, 0);
-    }
-    public TileLayer(String name, Tile base, int detectionModifier) {
         super(base.getName() + " " + name, base.getMap(), base.getCoordinates());
         this.base = base;
-        this.detectionModifier = detectionModifier;
     }
     public final void setBase(Tile base) {
         this.base = base;
@@ -66,7 +65,9 @@ public abstract class TileLayer extends Tile {
             );
         }
         for (Unit unit : this.getMap().getAllUnits(player)) {
-            if (this.distanceTo(unit.getLocation()) + this.detectionModifier <= unit.getDetectionRange()) {
+            int distance = this.distanceTo(unit.getLocation());
+            if (distance == 0 || (distance <= unit.getDetectionRange()) &&
+                    (!this.isCloaked() || unit.isObserving())) {
                 return new FullTileDTO(
                         this.getName(),
                         this.getCoordinates(),
@@ -95,7 +96,9 @@ public abstract class TileLayer extends Tile {
             return new TileDTO("Shroud", this.getCoordinates(), null, false);
         }
         for (Unit unit : this.getMap().getAllUnits(player)) {
-            if (this.distanceTo(unit.getLocation()) + this.detectionModifier <= 0) {
+            int distance = this.distanceTo(unit.getLocation());
+            if (distance == 0 || (distance <= unit.getDetectionRange()) &&
+                    (!this.isCloaked() || unit.isObserving())) {
                 return new TileDTO(
                         this.getName(),
                         this.getCoordinates(),
@@ -152,4 +155,19 @@ public abstract class TileLayer extends Tile {
         this.onTurnOver();
     }
     public abstract void onTurnOver();
+    public abstract boolean isCloaked();
+    @Override public final boolean isDetected(PlayerDTO player) {
+        if (this.isCloaked()) {
+            return this.playerDetection.contains(player);
+        }
+        return this.base.isDetected(player);
+    }
+    @Override public final void setDetected(PlayerDTO player) {
+        this.playerDetection.add(player);
+        this.base.setDetected(player);
+    }
+    @Override public final void setUndetected(PlayerDTO player) {
+        this.playerDetection.remove(player);
+        this.base.setUndetected(player);
+    }
 }

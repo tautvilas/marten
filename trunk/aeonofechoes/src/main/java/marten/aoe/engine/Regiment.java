@@ -37,6 +37,8 @@ public abstract class Regiment extends Unit {
                     return;
                 }
                 targetTile.applyDamage(this.meleeDamage);
+                this.applyMovementCost(this.getMovementAllowance());
+                break;
             case THIRD:
                 if (this.attackRange < 2) {
                     return;
@@ -45,6 +47,8 @@ public abstract class Regiment extends Unit {
                     return;
                 }
                 targetTile.applyDamage(this.rangedDamage);
+                this.applyMovementCost(this.getMovementAllowance());
+                break;
             default:
                 this.extendedSpecialAction(target, action);
         }
