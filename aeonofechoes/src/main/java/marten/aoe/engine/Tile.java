@@ -121,6 +121,7 @@ public abstract class Tile {
     public abstract boolean isExplored(PlayerDTO player);
     public abstract boolean isVisible(PlayerDTO player);
     public abstract boolean isDetected(PlayerDTO player);
+    public abstract boolean hasAnythingCloaked(PlayerDTO player);
     public abstract void setExplored(PlayerDTO player);
     public abstract void setVisible(PlayerDTO player);
     public abstract void setInvisible(PlayerDTO player);

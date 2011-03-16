@@ -126,5 +126,11 @@ public abstract class TileBase extends Tile {
             this.unit.setUndetected(player);
         }
     }
+    @Override public final boolean hasAnythingCloaked(PlayerDTO player) {
+        if (this.unit == null) {
+            return false;
+        }
+        return this.unit.isCloaked();
+    }
 }
 

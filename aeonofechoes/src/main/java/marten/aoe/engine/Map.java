@@ -162,7 +162,7 @@ public abstract class Map {
             }
             for (Tile tile : unit.getLocation().neighbors(unit.getDetectionRange())) {
                 PointDTO coordinates = tile.getCoordinates();
-                if (unit.isObserving()) {
+                if (unit.isObserving() || !tile.hasAnythingCloaked(player)) {
                     newDetectionMatrix[coordinates.getX()][coordinates.getY()] = true;
                 }
                 newExplorationMatrix[coordinates.getX()][coordinates.getY()] = newVisibilityMatrix[coordinates.getX()][coordinates.getY()] = true;

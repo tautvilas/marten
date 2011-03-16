@@ -181,6 +181,7 @@ public abstract class Unit {
     public abstract void specialAction(PointDTO target, Action action);
     /***/
     public abstract boolean isObserving();
+    /***/
     public abstract boolean isCloaked();
     public final void setDetected(PlayerDTO player) {
         this.playerDetection.add(player);
