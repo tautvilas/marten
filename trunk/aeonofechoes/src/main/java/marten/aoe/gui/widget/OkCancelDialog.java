@@ -3,6 +3,7 @@ package marten.aoe.gui.widget;
 import marten.age.control.MouseListener;
 import marten.age.graphics.image.ImageCache;
 import marten.age.graphics.image.ImageData;
+import marten.age.graphics.layout.BoxedObject;
 import marten.age.graphics.layout.SimpleLayout;
 import marten.age.graphics.primitives.Dimension;
 import marten.age.graphics.primitives.Point;
@@ -10,15 +11,19 @@ import marten.age.widget.Action;
 import marten.age.widget.Button;
 import marten.aoe.Path;
 
-public class OkCancelDialog extends SimpleLayout implements MouseListener {
+public class OkCancelDialog extends SimpleLayout implements MouseListener, BoxedObject {
 
     private Button ok;
     private Button cancel;
 
+    public OkCancelDialog() {
+        this(new Dimension(300, 32));
+    }
+
     public OkCancelDialog(Dimension dimension) {
         super(dimension);
         ImageData buttonImage = ImageCache.getImage(Path.SKIN_DATA_PATH
-                + "menu-button.png");
+                + "editor-button.png");
         ok = new Button(buttonImage);
         ok.setLabel("OK");
         cancel = new Button(buttonImage);

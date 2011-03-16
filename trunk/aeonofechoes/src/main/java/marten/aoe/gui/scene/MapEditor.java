@@ -7,17 +7,20 @@ import marten.age.core.AgeScene;
 import marten.age.core.AppInfo;
 import marten.age.graphics.flat.Flatland;
 import marten.age.graphics.layout.BoxedObject;
+import marten.age.graphics.layout.LayoutContainer;
 import marten.age.graphics.layout.SimpleLayout;
 import marten.age.graphics.primitives.Dimension;
 import marten.age.graphics.primitives.Point;
 import marten.age.graphics.text.BitmapFont;
 import marten.age.graphics.text.BitmapString;
 import marten.age.graphics.text.FontCache;
-import marten.age.graphics.transform.TranslationGroup;
 import marten.age.widget.Action;
 import marten.age.widget.Button;
 import marten.age.widget.obsolete.FpsCounter;
 import marten.aoe.gui.widget.AoeButtonFactory;
+import marten.aoe.gui.widget.AoeField;
+import marten.aoe.gui.widget.Dialog;
+import marten.aoe.gui.widget.OkCancelDialog;
 import marten.aoe.gui.widget.Sidebar;
 
 public class MapEditor extends AgeScene {
@@ -25,8 +28,9 @@ public class MapEditor extends AgeScene {
     BitmapFont font = FontCache.getFont(new Font("Arial", Font.PLAIN, 16));
 
     private Flatland flatland = new Flatland();
-    private NewMapDialog newMapDialog = new NewMapDialog();
-    private SimpleLayout layout = new SimpleLayout(AppInfo.getDisplayDimension());
+    private NewMapDialog newMapDialog;
+    private SimpleLayout layout = new SimpleLayout(AppInfo
+            .getDisplayDimension());
 
     public MapEditor() {
         Button newButton = AoeButtonFactory.getEditorButton("New");
@@ -63,23 +67,36 @@ public class MapEditor extends AgeScene {
         // other stuff
         this.flatland.addChild(new FpsCounter());
         this.flatland.addChild(layout);
+        newMapDialog = new NewMapDialog();
     }
 
-    private class NewMapDialog extends TranslationGroup implements BoxedObject {
-
-        private Dimension dimension;
+    private class NewMapDialog extends Dialog implements BoxedObject {
 
         public NewMapDialog() {
+            super(new Dimension(500, 300));
+            LayoutContainer container = new LayoutContainer();
+            // ok cancel
+            OkCancelDialog okCancel = new OkCancelDialog();
+            container.addBoxedObject(okCancel);
+            okCancel.setCancelAction(new Action() {
+                @Override
+                public void perform() {
+                    MapEditor.this.layout.removeChild(NewMapDialog.this);
+                }
+            });
+            MapEditor.this.registerControllable(okCancel);
+            // field
+            AoeField field = new AoeField();
+            field.setPosition(new Point(0, +okCancel.getDimension().height));
+            container.addBoxedObject(field);
+            // text
             BitmapString text = new BitmapString(font, "Please enter map size");
-            this.addChild(text);
-            this.dimension = text.getDimension();
+            text.setPosition(new Point(0, okCancel.getDimension().height
+                    + field.getDimension().height));
+            container.addBoxedObject(text);
+            this.center(container);
         }
 
-        @Override
-        public Dimension getDimension() {
-            return this.dimension;
-        }
-        
     }
 
     @Override
