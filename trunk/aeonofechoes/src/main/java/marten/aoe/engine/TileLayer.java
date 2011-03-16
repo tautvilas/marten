@@ -67,7 +67,7 @@ public abstract class TileLayer extends Tile {
         for (Unit unit : this.getMap().getAllUnits(player)) {
             int distance = this.distanceTo(unit.getLocation());
             if (distance == 0 || (distance <= unit.getDetectionRange()) &&
-                    (!this.isCloaked() || unit.isObserving())) {
+                    (!this.isCloaked(player) || unit.isObserving())) {
                 return new FullTileDTO(
                         this.getName(),
                         this.getCoordinates(),
@@ -98,7 +98,7 @@ public abstract class TileLayer extends Tile {
         for (Unit unit : this.getMap().getAllUnits(player)) {
             int distance = this.distanceTo(unit.getLocation());
             if (distance == 0 || (distance <= unit.getDetectionRange()) &&
-                    (!this.isCloaked() || unit.isObserving())) {
+                    (!this.isCloaked(player) || unit.isObserving())) {
                 return new TileDTO(
                         this.getName(),
                         this.getCoordinates(),
@@ -155,9 +155,9 @@ public abstract class TileLayer extends Tile {
         this.onTurnOver();
     }
     public abstract void onTurnOver();
-    public abstract boolean isCloaked();
+    public abstract boolean isCloaked(PlayerDTO player);
     @Override public final boolean isDetected(PlayerDTO player) {
-        if (this.isCloaked()) {
+        if (this.isCloaked(player)) {
             return this.playerDetection.contains(player);
         }
         return this.base.isDetected(player);
@@ -169,5 +169,8 @@ public abstract class TileLayer extends Tile {
     @Override public final void setUndetected(PlayerDTO player) {
         this.playerDetection.remove(player);
         this.base.setUndetected(player);
+    }
+    @Override public final boolean hasAnythingCloaked(PlayerDTO player) {
+        return this.isCloaked(player) || this.base.hasAnythingCloaked(player);
     }
 }
