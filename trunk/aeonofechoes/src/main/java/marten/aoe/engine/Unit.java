@@ -100,7 +100,8 @@ public abstract class Unit {
                     this.maxHitPoints,
                     this.detectionRange,
                     this.getSpecialFeatures(),
-                    this.owner
+                    this.owner,
+                    this.isCloaked()
             );
         }
         return null;
@@ -113,7 +114,7 @@ public abstract class Unit {
     /** Create a minimal Unit Data Transfer Object. */
     public final UnitDTO getDTO(PlayerDTO player) {
         if (player == PlayerDTO.SYSTEM || this.isDetected(player)) {
-            return new UnitDTO(this.name, this.owner, this.currentHitPoints, this.maxHitPoints, this.currentMovementAllowance, this.maxMovementAllowance);
+            return new UnitDTO(this.name, this.owner, this.currentHitPoints, this.maxHitPoints, this.currentMovementAllowance, this.maxMovementAllowance, this.isCloaked());
         }
         return null;
     }

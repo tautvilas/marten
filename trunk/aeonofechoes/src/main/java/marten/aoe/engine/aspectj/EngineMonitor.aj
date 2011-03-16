@@ -173,8 +173,9 @@ public final aspect EngineMonitor {
     after (Tile tile) returning (boolean success) : onUnitEntry(tile) {
         Engine engine = tile.getMap().getOwner();
         if (success) {
+            Unit unit = tile.getUnit();
             for (PlayerDTO player : engine.listeners.keySet()) {
-                if (tile.isVisible(player)) {
+                if (unit.isDetected(player)) {
                     TileDTO tileData = tile.getMap().getTile(tile.getCoordinates()).getDTO(player);                    
                     for (EngineListener listener : engine.listeners.get(player)) {
                         listener.onLocalEvent(LocalEvent.UNIT_ENTRY, tileData);
@@ -188,7 +189,7 @@ public final aspect EngineMonitor {
         Engine engine = tile.getMap().getOwner();
         if (unit != null) {
             for (PlayerDTO player : engine.listeners.keySet()) {
-                if (tile.isVisible(player)) {
+                if (unit.isDetected(player)) {
                     for (EngineListener listener : engine.listeners.get(player)) {
                         listener.onLocalEvent(LocalEvent.UNIT_EXIT, tile.getDTO(player));
                     }
