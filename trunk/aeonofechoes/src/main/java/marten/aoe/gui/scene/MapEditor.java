@@ -1,10 +1,20 @@
 package marten.aoe.gui.scene;
 
+import java.awt.Font;
+
+import marten.age.control.MouseController;
 import marten.age.core.AgeScene;
 import marten.age.core.AppInfo;
 import marten.age.graphics.flat.Flatland;
+import marten.age.graphics.layout.BoxedObject;
+import marten.age.graphics.layout.SimpleLayout;
 import marten.age.graphics.primitives.Dimension;
 import marten.age.graphics.primitives.Point;
+import marten.age.graphics.text.BitmapFont;
+import marten.age.graphics.text.BitmapString;
+import marten.age.graphics.text.FontCache;
+import marten.age.graphics.transform.TranslationGroup;
+import marten.age.widget.Action;
 import marten.age.widget.Button;
 import marten.age.widget.obsolete.FpsCounter;
 import marten.aoe.gui.widget.AoeButtonFactory;
@@ -12,7 +22,11 @@ import marten.aoe.gui.widget.Sidebar;
 
 public class MapEditor extends AgeScene {
 
+    BitmapFont font = FontCache.getFont(new Font("Arial", Font.PLAIN, 16));
+
     private Flatland flatland = new Flatland();
+    private NewMapDialog newMapDialog = new NewMapDialog();
+    private SimpleLayout layout = new SimpleLayout(AppInfo.getDisplayDimension());
 
     public MapEditor() {
         Button newButton = AoeButtonFactory.getEditorButton("New");
@@ -21,9 +35,17 @@ public class MapEditor extends AgeScene {
         int windowHeight = AppInfo.getDisplayHeight();
         int windowWidth = AppInfo.getDisplayWidth();
         int padding = 5;
+        this.addController(new MouseController());
         // new button
         newButton.setPosition(new Point(0, windowHeight - buttonHeight));
         this.flatland.addChild(newButton);
+        newButton.setAction(new Action() {
+            @Override
+            public void perform() {
+                MapEditor.this.layout.center(newMapDialog);
+            }
+        });
+        this.registerControllable(newButton);
         // load button
         Button loadButton = AoeButtonFactory.getEditorButton("Load");
         loadButton.setPosition(new Point(buttonWidth + padding, windowHeight
@@ -38,8 +60,26 @@ public class MapEditor extends AgeScene {
         Sidebar sidebar = new Sidebar(new Dimension(256, windowHeight));
         sidebar.setPosition(new Point(windowWidth - 256, 0));
         flatland.addChild(sidebar);
-        // fps counter
+        // other stuff
         this.flatland.addChild(new FpsCounter());
+        this.flatland.addChild(layout);
+    }
+
+    private class NewMapDialog extends TranslationGroup implements BoxedObject {
+
+        private Dimension dimension;
+
+        public NewMapDialog() {
+            BitmapString text = new BitmapString(font, "Please enter map size");
+            this.addChild(text);
+            this.dimension = text.getDimension();
+        }
+
+        @Override
+        public Dimension getDimension() {
+            return this.dimension;
+        }
+        
     }
 
     @Override
