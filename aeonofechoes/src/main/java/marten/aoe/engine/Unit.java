@@ -1,6 +1,8 @@
 package marten.aoe.engine;
 
+import java.util.HashSet;
 import java.util.Random;
+import java.util.Set;
 
 import marten.aoe.dto.Action;
 import marten.aoe.dto.DamageDTO;
@@ -24,7 +26,7 @@ public abstract class Unit {
     private final int maxHitPoints;
     private int currentHitPoints;
     private final int detectionRange;
-    private final int detectionModifier;
+    private final Set<PlayerDTO> playerDetection = new HashSet<PlayerDTO>();
 
     public Unit (Unit other, Tile location) {
         this.name = other.name;
@@ -35,7 +37,6 @@ public abstract class Unit {
         this.maxMovementAllowance = this.currentMovementAllowance = other.maxMovementAllowance;
         this.maxHitPoints = this.currentHitPoints = other.maxHitPoints;
         this.detectionRange = other.detectionRange;
-        this.detectionModifier = other.detectionModifier;
         if (location != null) {
             location.insertUnit(this.owner, this);
         }
@@ -49,7 +50,6 @@ public abstract class Unit {
         this.maxMovementAllowance = this.currentMovementAllowance = movementAllowance;
         this.maxHitPoints = this.currentHitPoints = hitPoints;
         this.detectionRange = detectionRange;
-        this.detectionModifier = detectionModifier;
         if (location != null) {
             location.insertUnit(this.owner, this);
         }
@@ -86,13 +86,9 @@ public abstract class Unit {
     public final int getDetectionRange() {
         return this.detectionRange;
     }
-    /** @return the range modifier for enemies attempting detection. More negative is better.*/
-    public final int getDetectionModifier() {
-        return this.detectionModifier;
-    }
     /** Create a standard Unit Data Transfer Object. */
     public final FullUnitDTO getFullDTO(PlayerDTO player) {
-        if (player == PlayerDTO.SYSTEM) {
+        if (player == PlayerDTO.SYSTEM || this.isDetected(player)) {
             return new FullUnitDTO(
                     this.name,
                     this.unitSize,
@@ -107,23 +103,6 @@ public abstract class Unit {
                     this.owner
             );
         }
-        for (Unit unit : this.getMap().getAllUnits(player)) {
-            if (this.getLocation().distanceTo(unit.getLocation()) + this.detectionModifier <= unit.detectionRange) {
-                return new FullUnitDTO(
-                        this.name,
-                        this.unitSize,
-                        this.unitType,
-                        this.currentMovementAllowance,
-                        this.maxMovementAllowance,
-                        this.getDamageResistance(),
-                        this.currentHitPoints,
-                        this.maxHitPoints,
-                        this.detectionRange,
-                        this.getSpecialFeatures(),
-                        this.owner
-                );
-            }
-        }
         return null;
     }
     /** Invoke the actions applicable to the end of a turn. */
@@ -133,13 +112,8 @@ public abstract class Unit {
     }
     /** Create a minimal Unit Data Transfer Object. */
     public final UnitDTO getDTO(PlayerDTO player) {
-        if (player == PlayerDTO.SYSTEM) {
+        if (player == PlayerDTO.SYSTEM || this.isDetected(player)) {
             return new UnitDTO(this.name, this.owner, this.currentHitPoints, this.maxHitPoints, this.currentMovementAllowance, this.maxMovementAllowance);
-        }
-        for (Unit unit : this.getMap().getAllUnits(player)) {
-            if (this.getLocation().distanceTo(unit.getLocation()) + this.detectionModifier <= unit.detectionRange) {
-                return new UnitDTO(this.name, this.owner, this.currentHitPoints, this.maxHitPoints, this.currentMovementAllowance, this.maxMovementAllowance);
-            }
         }
         return null;
     }
@@ -204,4 +178,16 @@ public abstract class Unit {
     public abstract Unit clone(Tile location);
     /***/
     public abstract void specialAction(PointDTO target, Action action);
+    /***/
+    public abstract boolean isObserving();
+    public abstract boolean isCloaked();
+    public final void setDetected(PlayerDTO player) {
+        this.playerDetection.add(player);
+    }
+    public final void setUndetected(PlayerDTO player) {
+        this.playerDetection.remove(player);
+    }
+    public final boolean isDetected(PlayerDTO player) {
+        return this.playerDetection.contains(player);
+    }
 }

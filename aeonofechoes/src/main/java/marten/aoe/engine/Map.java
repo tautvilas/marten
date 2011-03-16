@@ -143,18 +143,28 @@ public abstract class Map {
     public void recalculateVisibility(PlayerDTO player) {
         boolean[][] currentVisibilityMatrix = new boolean[this.width][this.height];
         boolean[][] currentExplorationMatrix = new boolean[this.width][this.height];
+        boolean[][] currentDetectionMatrix = new boolean[this.width][this.height];
         boolean[][] newVisibilityMatrix = new boolean[this.width][this.height];
         boolean[][] newExplorationMatrix = new boolean[this.width][this.height];
+        boolean[][] newDetectionMatrix = new boolean[this.width][this.height];
         for (int x = 0; x < this.width; x++) {
             for (int y = 0; y < this.height; y++) {
+                currentDetectionMatrix[x][y] = this.map[x][y].isDetected(player);
                 currentVisibilityMatrix[x][y] = this.map[x][y].isVisible(player);
-                newVisibilityMatrix[x][y] = false;
+                newDetectionMatrix[x][y] = newVisibilityMatrix[x][y] = false;
                 newExplorationMatrix[x][y] = currentExplorationMatrix[x][y] = this.map[x][y].isExplored(player);
             }
         }
         for (Unit unit : this.getAllUnits(player)) {
+            for (Tile tile : unit.getLocation().neighbors(1)) {
+                PointDTO coordinates = tile.getCoordinates();
+                newDetectionMatrix[coordinates.getX()][coordinates.getY()] = true;
+            }
             for (Tile tile : unit.getLocation().neighbors(unit.getDetectionRange())) {
                 PointDTO coordinates = tile.getCoordinates();
+                if (unit.isObserving()) {
+                    newDetectionMatrix[coordinates.getX()][coordinates.getY()] = true;
+                }
                 newExplorationMatrix[coordinates.getX()][coordinates.getY()] = newVisibilityMatrix[coordinates.getX()][coordinates.getY()] = true;
             }
         }
@@ -163,11 +173,17 @@ public abstract class Map {
                 if (!currentVisibilityMatrix[x][y] && newVisibilityMatrix[x][y]) {
                     this.map[x][y].setVisible(player);
                 }
+                if (currentVisibilityMatrix[x][y] && !newVisibilityMatrix[x][y]) {
+                    this.map[x][y].setInvisible(player);
+                }
                 if (!currentExplorationMatrix[x][y] && newExplorationMatrix[x][y]) {
                     this.map[x][y].setExplored(player);
                 }
-                if (currentVisibilityMatrix[x][y] && !newVisibilityMatrix[x][y]) {
-                    this.map[x][y].setInvisible(player);
+                if (!currentDetectionMatrix[x][y] && newDetectionMatrix[x][y]) {
+                    this.map[x][y].setDetected(player);
+                }
+                if (currentDetectionMatrix[x][y] && !newDetectionMatrix[x][y]) {
+                    this.map[x][y].setUndetected(player);
                 }
             }
         }

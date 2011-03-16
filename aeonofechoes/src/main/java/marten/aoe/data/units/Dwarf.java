@@ -33,4 +33,10 @@ public final class Dwarf extends Regiment {
     @Override public void onTileExit(Tile tile) {}
     @Override public void onTurnOver() {}
     @Override public void extendedSpecialAction(PointDTO target, Action action) {}
+    @Override public boolean isCloaked() {
+        return false;
+    }
+    @Override public boolean isObserving() {
+        return false;
+    }
 }

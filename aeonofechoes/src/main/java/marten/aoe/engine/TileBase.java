@@ -113,5 +113,18 @@ public abstract class TileBase extends Tile {
         this.onTurnOver();
     }
     public abstract void onTurnOver();
+    @Override public final boolean isDetected(PlayerDTO player) {
+        return (this.unit != null ? this.unit.isDetected(player) : true);
+    }
+    @Override public final void setDetected(PlayerDTO player) {
+        if (this.unit != null) {
+            this.unit.setDetected(player);
+        }
+    }
+    @Override public final void setUndetected(PlayerDTO player) {
+        if (this.unit != null) {
+            this.unit.setUndetected(player);
+        }
+    }
 }
 

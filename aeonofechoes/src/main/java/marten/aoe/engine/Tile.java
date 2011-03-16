@@ -120,9 +120,12 @@ public abstract class Tile {
     }
     public abstract boolean isExplored(PlayerDTO player);
     public abstract boolean isVisible(PlayerDTO player);
+    public abstract boolean isDetected(PlayerDTO player);
     public abstract void setExplored(PlayerDTO player);
     public abstract void setVisible(PlayerDTO player);
     public abstract void setInvisible(PlayerDTO player);
+    public abstract void setDetected(PlayerDTO player);
+    public abstract void setUndetected(PlayerDTO player);
     public abstract Unit popUnit(PlayerDTO player);
     public abstract boolean pushUnit(PlayerDTO player, Unit unit);
     public abstract Unit removeUnit(PlayerDTO player);

@@ -126,7 +126,9 @@ public final class Engine {
     // FIXME: this method should be transfered to Map class at the first available opportunity.
     public synchronized boolean spawnUnit (PlayerDTO player, String name, PointDTO at) {
         UnitLoader.loadUnit(name, player, this.map.getTile(at));
-        this.map.recalculateVisibility(player);
+        for (PlayerDTO visibilityPlayer : this.playerList) {
+            this.map.recalculateVisibility(visibilityPlayer);
+        }
         return true;
     }
 
@@ -172,7 +174,6 @@ public final class Engine {
         }
     }
 
-    // FIXME: could be better located at MapLoader?
     private void validateNewMap() {
         if (this.map.getPlayerLimit() < this.playerList.length) {
             throw new IllegalArgumentException("There are more players than slots provided by the map.");

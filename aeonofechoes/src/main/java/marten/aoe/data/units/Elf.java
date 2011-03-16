@@ -26,11 +26,21 @@ public final class Elf extends Regiment {
         return new DamageResistanceDTO(new int[] {0, 0, 0, 0, 0, 0, +1, +1});
     }
     @Override public String[] getSpecialFeatures() {
-        return new String[] {"Frail", "Light armour", "Sword", "Long bow", "Calm", "Resistant to magic"};
+        return new String[] {"Frail", "Light armour", "Sword", "Long bow", "Calm", "Resistant to magic", "Ambush", "Keen eye"};
     }
     @Override public void onDeath() {}
     @Override public void onTileEntry(Tile tile) {}
     @Override public void onTileExit(Tile tile) {}
     @Override public void onTurnOver() {}
     @Override public void extendedSpecialAction(PointDTO target, Action action) {}
+    @Override public boolean isCloaked() {
+        if (this.getLocation().getName().matches(".*Forest.*")) {
+            return true;
+        }
+        return false;
+    }
+    @Override
+    public boolean isObserving() {
+        return true;
+    }
 }
