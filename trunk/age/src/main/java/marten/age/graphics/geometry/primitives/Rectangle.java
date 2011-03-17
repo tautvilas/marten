@@ -3,7 +3,9 @@ package marten.age.graphics.geometry.primitives;
 import java.nio.DoubleBuffer;
 import java.nio.IntBuffer;
 
+import marten.age.graphics.BasicSceneGraphChild;
 import marten.age.graphics.geometry.Geometry;
+import marten.age.graphics.layout.BoxedObject;
 import marten.age.graphics.primitives.Dimension;
 import marten.age.graphics.primitives.Point;
 
@@ -11,7 +13,7 @@ import org.apache.log4j.Logger;
 import org.lwjgl.BufferUtils;
 import org.lwjgl.opengl.GL11;
 
-public class Rectangle implements Geometry {
+public class Rectangle extends BasicSceneGraphChild implements BoxedObject, Geometry {
     @SuppressWarnings("unused")
     private static org.apache.log4j.Logger log = Logger
             .getLogger(Rectangle.class);
@@ -39,7 +41,7 @@ public class Rectangle implements Geometry {
     }
 
     @Override
-    public void draw() {
+    public void render() {
         GL11.glVertexPointer(2, 0, vertices);
         GL11.glTexCoordPointer(2, 0, texVertices);
         GL11.glDrawArrays(GL11.GL_QUADS, 0, 4);
@@ -70,5 +72,25 @@ public class Rectangle implements Geometry {
         } else {
             return super.equals(o);
         }
+    }
+
+    @Override
+    public Dimension getDimension() {
+        return this.dimension;
+    }
+
+    @Override
+    public Point getPosition() {
+        return this.position;
+    }
+
+    @Override
+    public void setPosition(Point position) {
+        vertices.put(new double[] { position.x, position.y,
+                position.x + dimension.width, position.y,
+                position.x + dimension.width, position.y + dimension.height,
+                position.x, position.y + dimension.height });
+        vertices.rewind();
+        this.position = position;
     }
 }

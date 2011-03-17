@@ -94,7 +94,7 @@ public class MapEditor extends AgeScene {
             text.setPosition(new Point(0, okCancel.getDimension().height
                     + field.getDimension().height));
             container.addBoxedObject(text);
-//            this.center(container);
+            this.center(container);
         }
 
     }

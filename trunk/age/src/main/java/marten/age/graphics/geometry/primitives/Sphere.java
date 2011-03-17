@@ -27,7 +27,7 @@ public class Sphere implements Geometry {
         return this.radius;
     }
 
-    public void draw() {
+    public void render() {
         sphere.setTextureFlag(true);
         sphere.draw((float) radius, stacks, slices);
     }

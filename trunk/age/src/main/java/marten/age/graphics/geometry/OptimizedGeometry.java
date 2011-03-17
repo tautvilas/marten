@@ -28,7 +28,7 @@ public final class OptimizedGeometry extends GeneratedGeometry {
         if (answer == 0)
             throw new RuntimeException("Out of graphics memory.");
         GL11.glNewList(answer, GL11.GL_COMPILE);
-        parentGeometry.draw();
+        parentGeometry.render();
         GL11.glEndList();
         this.setList(answer);
     }

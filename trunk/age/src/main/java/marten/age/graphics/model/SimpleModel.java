@@ -58,7 +58,7 @@ public class SimpleModel extends BasicSceneGraphChild {
     public void render() {
         appearance.set();
         for (Geometry geometry : this.geometries) {
-            geometry.draw();
+            geometry.render();
         }
     }
 }
