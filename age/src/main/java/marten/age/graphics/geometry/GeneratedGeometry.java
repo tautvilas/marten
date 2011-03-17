@@ -11,7 +11,7 @@ public abstract class GeneratedGeometry implements Geometry {
         this.list = list;
     }
 
-    public void draw() {
+    public void render() {
         if (list == 0) {
             this.generate();
         }
