@@ -1,11 +1,12 @@
 package marten.age.graphics.layout;
 
+import marten.age.graphics.BasicSceneGraphBranch;
 import marten.age.graphics.primitives.Dimension;
 import marten.age.graphics.primitives.Point;
-import marten.age.graphics.transform.TranslationGroup;
 
-public class SimpleLayout extends TranslationGroup implements BoxedObject {
+public class SimpleLayout extends BasicSceneGraphBranch<BoxedObject> implements BoxedObject {
     private Dimension dimension;
+    private Point position = new Point();
 
     public SimpleLayout(Dimension dimension) {
         this.dimension = dimension;
@@ -43,5 +44,19 @@ public class SimpleLayout extends TranslationGroup implements BoxedObject {
 
         sprite.setPosition(new Point(p2.x + d2.width / 2 - d1.width / 2, y));
         this.addChild(sprite);
+    }
+
+    @Override
+    public Point getPosition() {
+        return this.position;
+    }
+
+    @Override
+    public void setPosition(Point position) {
+        Point delta = position.substract(this.position);
+        for (BoxedObject node: this.getBranches()) {
+            node.setPosition(node.getPosition().move(delta));
+        }
+        this.position = position;
     }
 }
