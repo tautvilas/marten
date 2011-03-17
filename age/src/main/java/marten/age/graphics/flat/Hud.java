@@ -1,12 +1,13 @@
 package marten.age.graphics.flat;
 
 import marten.age.graphics.BasicSceneGraphBranch;
+import marten.age.graphics.SceneGraphChild;
 import marten.age.graphics.SceneGraphNode;
 
 import org.lwjgl.opengl.Display;
 import org.lwjgl.opengl.GL11;
 
-public class Hud extends BasicSceneGraphBranch {
+public class Hud extends BasicSceneGraphBranch<SceneGraphChild> {
 
     @Override
     public void render() {

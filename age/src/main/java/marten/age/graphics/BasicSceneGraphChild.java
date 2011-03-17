@@ -1,15 +1,15 @@
 package marten.age.graphics;
 
 public abstract class BasicSceneGraphChild implements SceneGraphChild {
-    private BasicSceneGraphBranch root = null;
+    private BasicSceneGraphBranch<? extends SceneGraphChild> root = null;
     
     @Override
-    public BasicSceneGraphBranch getRoot() {
+    public BasicSceneGraphBranch<? extends SceneGraphChild> getRoot() {
 	return this.root;
     }
     
     @Override
-    public void setRoot(BasicSceneGraphBranch newRoot) {
+    public void setRoot(BasicSceneGraphBranch<? extends SceneGraphChild> newRoot) {
 	this.root = newRoot;
     }
 }

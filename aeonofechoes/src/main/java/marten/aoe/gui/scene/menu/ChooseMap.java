@@ -55,7 +55,7 @@ public class ChooseMap extends AgeScene {
         layout.centerHorizontally(okCancel, 100);
         this.registerControllable(okCancel);
         this.flatland.addChild(layout);
-        this.flatland.compile();
+//        this.flatland.compile();
     }
 
     @Override

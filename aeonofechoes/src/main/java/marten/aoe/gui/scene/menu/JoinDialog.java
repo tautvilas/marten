@@ -61,7 +61,7 @@ public class JoinDialog extends MenuScene {
 
         // Registering and adding GUI elements
         this.flatland.addChild(layout);
-        this.flatland.compile();
+//        this.flatland.compile();
         this.addController(new KeyboardController());
         this.addController(new MouseController());
         this.registerControllable(urlField);

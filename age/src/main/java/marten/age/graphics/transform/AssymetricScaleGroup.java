@@ -1,11 +1,12 @@
 package marten.age.graphics.transform;
 
 import marten.age.graphics.BasicSceneGraphBranch;
+import marten.age.graphics.SceneGraphChild;
 
 import org.lwjgl.opengl.GL11;
 
 
-public final class AssymetricScaleGroup extends BasicSceneGraphBranch {
+public final class AssymetricScaleGroup extends BasicSceneGraphBranch<SceneGraphChild> {
 	private double scaleFactorX = 1.0, scaleFactorY = 1.0, scaleFactorZ = 1.0;
 	public AssymetricScaleGroup () {}
 	public AssymetricScaleGroup (double newScaleFactorX, double newScaleFactorY, double newScaleFactorZ) {

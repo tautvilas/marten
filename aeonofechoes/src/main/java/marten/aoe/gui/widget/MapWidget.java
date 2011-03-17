@@ -7,6 +7,7 @@ import java.util.HashMap;
 
 import marten.age.control.MouseListener;
 import marten.age.graphics.BasicSceneGraphBranch;
+import marten.age.graphics.SceneGraphChild;
 import marten.age.graphics.appearance.Appearance;
 import marten.age.graphics.appearance.Color;
 import marten.age.graphics.flat.sprite.TextureSprite;
@@ -27,7 +28,7 @@ import marten.aoe.gui.MapWidgetListener;
 
 import org.apache.log4j.Logger;
 
-public class MapWidget extends BasicSceneGraphBranch implements Widget,
+public class MapWidget extends BasicSceneGraphBranch<SceneGraphChild> implements Widget,
         MouseListener, BoxedObject {
     @SuppressWarnings("unused")
     private static org.apache.log4j.Logger log = Logger

@@ -32,7 +32,7 @@ public class FontSpacingTest extends AgeApp {
             flatland.addChild(sprite);
             flatland.addChild(string);
             flatland.addChild(string2);
-            flatland.compile();
+//            flatland.compile();
         }
 
         @Override

@@ -73,7 +73,7 @@ public class GameGate extends AgeScene {
         this.addController(new KeyboardController());
         this.registerControllable(chatField);
         this.registerControllable(dialog);
-        this.flatland.compile();
+//        this.flatland.compile();
     }
 
     /**
