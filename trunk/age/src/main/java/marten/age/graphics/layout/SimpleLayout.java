@@ -4,16 +4,40 @@ import marten.age.graphics.BasicSceneGraphBranch;
 import marten.age.graphics.primitives.Dimension;
 import marten.age.graphics.primitives.Point;
 
-public class SimpleLayout extends BasicSceneGraphBranch<BoxedObject> implements BoxedObject {
-    private Dimension dimension;
+public class SimpleLayout extends BasicSceneGraphBranch<BoxedObject> implements
+        BoxedObject {
+    private Dimension dimension = null;
     private Point position = new Point();
+
+    public SimpleLayout() {
+    }
 
     public SimpleLayout(Dimension dimension) {
         this.dimension = dimension;
     }
 
     public Dimension getDimension() {
-        return this.dimension;
+        if (this.dimension == null) {
+            int width = 0;
+            int height = 0;
+            int thisx = (int)this.position.x;
+            int thisy = (int)this.position.y;
+            for (BoxedObject object : this.getBranches()) {
+                int oWidth = (int)object.getPosition().x - thisx
+                        + (int)object.getDimension().width;
+                int oHeight = (int)object.getPosition().y - thisy
+                        + (int)object.getDimension().height;
+                if (oWidth > width) {
+                    width = oWidth;
+                }
+                if (oHeight > height) {
+                    height = oHeight;
+                }
+            }
+            return new Dimension(width, height);
+        } else {
+            return this.dimension;
+        }
     }
 
     public void addToLeft(BoxedObject sprite) {
@@ -22,7 +46,7 @@ public class SimpleLayout extends BasicSceneGraphBranch<BoxedObject> implements 
     }
 
     public void addToRight(BoxedObject sprite) {
-        sprite.setPosition(new Point(this.dimension.width
+        sprite.setPosition(new Point(this.getDimension().width
                 - sprite.getDimension().width, 0));
         this.addChild(sprite);
     }
@@ -54,7 +78,7 @@ public class SimpleLayout extends BasicSceneGraphBranch<BoxedObject> implements 
     @Override
     public void setPosition(Point position) {
         Point delta = position.substract(this.position);
-        for (BoxedObject node: this.getBranches()) {
+        for (BoxedObject node : this.getBranches()) {
             node.setPosition(node.getPosition().move(delta));
         }
         this.position = position;
