@@ -7,7 +7,6 @@ import marten.age.core.AgeScene;
 import marten.age.core.AppInfo;
 import marten.age.graphics.flat.Flatland;
 import marten.age.graphics.layout.BoxedObject;
-import marten.age.graphics.layout.LayoutContainer;
 import marten.age.graphics.layout.SimpleLayout;
 import marten.age.graphics.primitives.Dimension;
 import marten.age.graphics.primitives.Point;
@@ -74,10 +73,10 @@ public class MapEditor extends AgeScene {
 
         public NewMapDialog() {
             super(new Dimension(500, 300));
-            LayoutContainer container = new LayoutContainer();
+            SimpleLayout container = new SimpleLayout();
             // ok cancel
             OkCancelDialog okCancel = new OkCancelDialog();
-            container.addBoxedObject(okCancel);
+            container.addChild(okCancel);
             okCancel.setCancelAction(new Action() {
                 @Override
                 public void perform() {
@@ -88,12 +87,12 @@ public class MapEditor extends AgeScene {
             // field
             AoeField field = new AoeField();
             field.setPosition(new Point(0, +okCancel.getDimension().height));
-            container.addBoxedObject(field);
+            container.addChild(field);
             // text
             BitmapString text = new BitmapString(font, "Please enter map size");
             text.setPosition(new Point(0, okCancel.getDimension().height
                     + field.getDimension().height));
-            container.addBoxedObject(text);
+            container.addChild(text);
             this.center(container);
         }
 
