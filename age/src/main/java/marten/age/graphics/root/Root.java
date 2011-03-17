@@ -3,10 +3,10 @@ package marten.age.graphics.root;
 import java.util.ArrayList;
 
 import marten.age.graphics.BasicSceneGraphChild;
-import marten.age.graphics.BasicSceneGraphParent;
+import marten.age.graphics.BasicSceneGraphBranch;
 import marten.age.graphics.SceneGraphChild;
 import marten.age.graphics.SceneGraphNode;
-import marten.age.graphics.SceneGraphParent;
+import marten.age.graphics.SceneGraphBranch;
 import marten.age.graphics.geometry.GeneratedGeometry;
 import marten.age.graphics.geometry.Geometry;
 import marten.age.graphics.geometry.GeometryCache;
@@ -16,18 +16,18 @@ import marten.age.graphics.model.SimpleModel;
 
 import org.apache.log4j.Logger;
 
-public abstract class Root extends BasicSceneGraphParent {
+public abstract class Root extends BasicSceneGraphBranch {
     private static org.apache.log4j.Logger log = Logger.getLogger(Root.class);
 
     public void compile() {
         compileSceneParent(this);
     }
 
-    private void compileSceneParent(SceneGraphParent parent) {
+    private void compileSceneParent(SceneGraphBranch parent) {
         ArrayList<SceneGraphChild> parentBranches = parent.getBranches();
         for (SceneGraphNode child : parentBranches) {
-            if (child instanceof BasicSceneGraphParent) {
-                compileSceneParent((SceneGraphParent) child);
+            if (child instanceof BasicSceneGraphBranch) {
+                compileSceneParent((SceneGraphBranch) child);
             } else if (child instanceof BasicSceneGraphChild) {
                 compileSceneNode(child);
             }
