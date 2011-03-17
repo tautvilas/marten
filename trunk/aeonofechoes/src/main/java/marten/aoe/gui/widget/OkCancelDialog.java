@@ -42,21 +42,18 @@ public class OkCancelDialog extends SimpleLayout implements MouseListener, Boxed
 
     @Override
     public void mouseDown(Point coords) {
-        coords = coords.substract(this.getPosition());
         ok.mouseDown(coords);
         cancel.mouseDown(coords);
     }
 
     @Override
     public void mouseMove(Point coords) {
-        coords = coords.substract(this.getPosition());
         ok.mouseMove(coords);
         cancel.mouseMove(coords);
     }
 
     @Override
     public void mouseUp(Point coords) {
-        coords = coords.substract(this.getPosition());
         ok.mouseUp(coords);
         cancel.mouseUp(coords);
     }
