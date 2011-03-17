@@ -2,27 +2,28 @@ package marten.age.graphics;
 
 import java.util.ArrayList;
 
-public abstract class BasicSceneGraphBranch extends BasicSceneGraphChild implements SceneGraphBranch {
-    private ArrayList<SceneGraphChild> branches = new ArrayList<SceneGraphChild>();
+public abstract class BasicSceneGraphBranch<T extends SceneGraphChild> extends
+        BasicSceneGraphChild implements SceneGraphBranch<T> {
+    private ArrayList<T> branches = new ArrayList<T>();
 
     @Override
-    public void addChild(SceneGraphChild newBranch) {
+    public void addChild(T newBranch) {
         newBranch.setRoot(this);
         this.branches.add(newBranch);
     }
 
     @Override
-    public ArrayList<SceneGraphChild> getBranches() {
+    public ArrayList<T> getBranches() {
         return this.branches;
     }
 
     @Override
-    public void removeChild(SceneGraphChild oldBranch) {
+    public void removeChild(T oldBranch) {
         this.branches.remove(oldBranch);
     }
 
     @Override
-    public boolean hasChild(SceneGraphChild child) {
+    public boolean hasChild(T child) {
         return branches.contains(child);
     }
 
@@ -37,7 +38,7 @@ public abstract class BasicSceneGraphBranch extends BasicSceneGraphChild impleme
     }
 
     public void activateChildren() {
-        for (SceneGraphChild branch : this.branches)
+        for (T branch : this.branches)
             branch.render();
     }
 }

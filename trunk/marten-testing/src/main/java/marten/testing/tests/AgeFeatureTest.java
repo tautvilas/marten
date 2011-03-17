@@ -44,6 +44,7 @@ public class AgeFeatureTest extends AgeApp {
 
         private Body spaceship;
 
+        @SuppressWarnings("deprecation")
         public Scene() {
             /* Scene Init */
             sr = new SimpleRoot();

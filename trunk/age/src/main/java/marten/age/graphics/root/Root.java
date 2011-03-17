@@ -16,13 +16,15 @@ import marten.age.graphics.model.SimpleModel;
 
 import org.apache.log4j.Logger;
 
-public abstract class Root extends BasicSceneGraphBranch {
+public abstract class Root extends BasicSceneGraphBranch<SceneGraphChild> {
     private static org.apache.log4j.Logger log = Logger.getLogger(Root.class);
 
+    @Deprecated
     public void compile() {
         compileSceneParent(this);
     }
 
+    @SuppressWarnings("unchecked")
     private void compileSceneParent(SceneGraphBranch parent) {
         ArrayList<SceneGraphChild> parentBranches = parent.getBranches();
         for (SceneGraphNode child : parentBranches) {

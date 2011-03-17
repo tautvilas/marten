@@ -109,7 +109,7 @@ public class MainMenu extends MenuScene {
         this.flatland.addChild(layout);
         this.flatland.addChild(nickString);
         this.flatland.addChild(new FpsCounter());
-        this.flatland.compile();
+//        this.flatland.compile();
     }
 
     @Override

@@ -2,6 +2,7 @@ package marten.age.widget;
 
 import marten.age.control.KeyboardListener;
 import marten.age.graphics.BasicSceneGraphBranch;
+import marten.age.graphics.SceneGraphChild;
 import marten.age.graphics.flat.sprite.TextureSprite;
 import marten.age.graphics.image.ImageData;
 import marten.age.graphics.layout.BoxedObject;
@@ -13,7 +14,7 @@ import marten.age.graphics.transform.TranslationGroup;
 
 import org.lwjgl.input.Keyboard;
 
-public class AgeField extends BasicSceneGraphBranch implements Widget, KeyboardListener, BoxedObject {
+public class AgeField extends BasicSceneGraphBranch<SceneGraphChild> implements Widget, KeyboardListener, BoxedObject {
 
     private BitmapString input;
     private TextureSprite face;

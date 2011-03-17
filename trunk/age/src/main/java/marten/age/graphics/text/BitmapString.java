@@ -3,6 +3,7 @@ package marten.age.graphics.text;
 import java.util.HashMap;
 
 import marten.age.graphics.BasicSceneGraphBranch;
+import marten.age.graphics.SceneGraphChild;
 import marten.age.graphics.appearance.Color;
 import marten.age.graphics.layout.BoxedObject;
 import marten.age.graphics.primitives.Dimension;
@@ -10,7 +11,7 @@ import marten.age.graphics.primitives.Point;
 
 import org.lwjgl.opengl.GL11;
 
-public class BitmapString extends BasicSceneGraphBranch implements BoxedObject {
+public class BitmapString extends BasicSceneGraphBranch<SceneGraphChild> implements BoxedObject {
     private BitmapFont font;
     private String content = "";
     private int numLines = 0;
