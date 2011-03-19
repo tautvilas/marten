@@ -9,11 +9,16 @@ import marten.age.graphics.primitives.Dimension;
 
 public class Dialog extends SimpleLayout implements BoxedObject {
 
-    private Appearance appearance = new Appearance(new Color(0.5, 0.5, 0.5));
+    private Appearance appearance = new Appearance();
+
+    public Dialog(Dimension dimension, Color color) {
+        super(dimension);
+        appearance.setColor(color);
+        this.addChild(new Rectangle(dimension));
+    }
 
     public Dialog(Dimension dimension) {
-        super(dimension);
-        this.addChild(new Rectangle(dimension));
+        this(dimension, new Color(0.5, 0.5, 0.5));
     }
 
     @Override

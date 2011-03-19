@@ -18,7 +18,12 @@ public abstract class Controller {
     }
 
     public void removeListener(Listener l) {
+        listenerTypeCheck(l);
         listeners.remove(l);
+    }
+
+    public int getNumListeners() {
+        return this.listeners.size();
     }
 
     protected abstract void listenerTypeCheck(Listener l);

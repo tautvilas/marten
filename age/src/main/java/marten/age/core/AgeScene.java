@@ -1,19 +1,23 @@
 package marten.age.core;
 
 import java.util.HashSet;
-
-import org.apache.log4j.Logger;
+import java.util.LinkedList;
 
 import marten.age.control.Controller;
 import marten.age.control.Listener;
 import marten.age.event.AgeEvent;
 import marten.age.event.AgeEventListener;
 
+import org.apache.log4j.Logger;
+
 public abstract class AgeScene {
     private static org.apache.log4j.Logger log = Logger.getLogger(AgeScene.class);
 
     private HashSet<Controller> controllers = new HashSet<Controller>();
     private HashSet<AgeEventListener> listeners = new HashSet<AgeEventListener>();
+
+    private LinkedList<Listener> removedListeners = new LinkedList<Listener>();
+    private LinkedList<Listener> addedListeners = new LinkedList<Listener>();
 
     /* Game "business" logic should go here */
     public abstract void compute();
@@ -46,11 +50,34 @@ public abstract class AgeScene {
     }
 
     public void registerControllable(Listener listener) {
-        for (Controller controller : this.controllers) {
-            try {
-                controller.addListener(listener);
-                log.debug(listener + " listener was added to controller " + controller);
-            } catch (ClassCastException e) {
+        this.addedListeners.add(listener);
+    }
+
+    public void unbindControllable(Listener listener) {
+        this.removedListeners.add(listener);
+    }
+
+    // HACK: use this method to avoid concurrent modification exception while updating
+    // controllers
+    protected void updateControllers() {
+        while (!addedListeners.isEmpty()) {
+            Listener listener = addedListeners.pop();
+            for (Controller controller : this.controllers) {
+                try {
+                    controller.addListener(listener);
+                    log.debug(listener + " listener was added to controller " + controller);
+                } catch (ClassCastException e) {
+                }
+            }
+        }
+        while (!removedListeners.isEmpty()) {
+            Listener listener = removedListeners.pop();
+            for (Controller controller : this.controllers) {
+                try {
+                    controller.removeListener(listener);
+                    log.debug(listener + " listener was removed from controller " + controller);
+                } catch (ClassCastException e) {
+                }
             }
         }
     }
