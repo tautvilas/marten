@@ -38,6 +38,11 @@ public class KeyboardController extends Controller {
 
     @Override
     protected void harvestEvents() {
+        if (this.getNumListeners() == 0) {
+            while (Keyboard.next()) {
+                // flush events
+            }
+        }
     }
 
     @Override

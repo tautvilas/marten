@@ -80,6 +80,7 @@ public abstract class AgeApp {
 
             Display.processMessages();
 
+            this.activeScene.updateControllers();
             for (Controller c : activeScene.getControllers()) {
                 c.publishEvents();
             }
