@@ -34,7 +34,9 @@ public abstract class BasicSceneGraphBranch<T extends SceneGraphChild> extends
 
     @Override
     public void render() {
-        activateChildren();
+        if (!this.isHidden()) {
+            activateChildren();
+        }
     }
 
     public void activateChildren() {
