@@ -1,4 +1,4 @@
-package marten.aoe.gui.scene;
+package marten.aoe.gui.scene.editor;
 
 import java.awt.Font;
 
