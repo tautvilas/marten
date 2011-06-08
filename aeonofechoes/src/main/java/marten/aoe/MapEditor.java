@@ -1,7 +1,7 @@
 package marten.aoe;
 
 import marten.age.core.AgeApp;
-import marten.aoe.gui.scene.MapEditorLoader;
+import marten.aoe.gui.scene.editor.MapEditorLoader;
 
 public class MapEditor extends AgeApp {
 
