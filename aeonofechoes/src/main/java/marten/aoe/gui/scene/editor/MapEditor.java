@@ -16,6 +16,7 @@ import marten.age.widget.Action;
 import marten.age.widget.Button;
 import marten.age.widget.obsolete.FpsCounter;
 import marten.aoe.gui.widget.AoeButtonFactory;
+import marten.aoe.gui.widget.MapWidget;
 import marten.aoe.gui.widget.Sidebar;
 
 public class MapEditor extends AgeScene {
@@ -66,7 +67,14 @@ public class MapEditor extends AgeScene {
         // other stuff
         this.flatland.addChild(new FpsCounter());
         this.flatland.addChild(layout);
-        newMapDialog = new NewMapDialog(this);
+        newMapDialog = new NewMapDialog(this, new Action() {
+            @Override
+            public void perform() {
+                MapEditor.this.flatland.updateChild("map", new MapWidget(
+                        newMapDialog.getMapSize(), AppInfo
+                                .getDisplayDimension()), 0);
+            }
+        });
     }
 
     @Override

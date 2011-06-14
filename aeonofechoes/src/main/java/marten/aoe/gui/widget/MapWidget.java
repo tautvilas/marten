@@ -51,10 +51,7 @@ public class MapWidget extends BasicSceneGraphBranch<SceneGraphChild> implements
     private Dimension dimension;
     private Dimension size;
 
-    public MapWidget(MapDTO map, Dimension dimension, MapWidgetListener listener) {
-        this.listener = listener;
-        this.dimension = dimension;
-        this.size = new Dimension(map.getWidth(), map.getHeight());
+    private void init() {
         try {
             this.tileHighlight = new TextureSprite(new ImageData(
                     "data/gui/skin/tile-highlight.png"));
@@ -65,14 +62,34 @@ public class MapWidget extends BasicSceneGraphBranch<SceneGraphChild> implements
         } catch (IOException e1) {
             throw (new RuntimeException(e1));
         }
+        cm.setAppearance(new Appearance(new Color(1.0, 1.0, 1.0)));
+        tg.addChild(cm);
+        tg.addChild(tileHighlight);
+        this.addChild(tg);
+        this.setPosition(this.getPosition().move(new Point(0, 0)));
+    }
+
+    public MapWidget(int size, Dimension dimension) {
+        this.dimension = dimension;
+        this.size = new Dimension(size, size);
+        this.init();
+        for (int i = 0; i < size; i++) {
+            for (int j = 0; j < size; j++) {
+                this.updateTile(new TileDTO("grass", new PointDTO(i, j), null, true));
+            }
+        }
+    }
+
+    public MapWidget(MapDTO map, Dimension dimension, MapWidgetListener listener) {
+        this.listener = listener;
+        this.dimension = dimension;
+        this.size = new Dimension(map.getWidth(), map.getHeight());
+        this.init();
         for (TileDTO[] tileLine : map.getTileMap()) {
             for (TileDTO tile : tileLine) {
                 this.updateTile(tile);
             }
         }
-        cm.setAppearance(new Appearance(new Color(1.0, 1.0, 1.0)));
-        tg.addChild(cm);
-        tg.addChild(tileHighlight);
         for (TileDTO[] tileLine : map.getTileMap()) {
             for (TileDTO tile : tileLine) {
                 BitmapString coords = new BitmapString(font, tile
@@ -84,8 +101,6 @@ public class MapWidget extends BasicSceneGraphBranch<SceneGraphChild> implements
                 // tg.addChild(coords);
             }
         }
-        this.addChild(tg);
-        this.setPosition(this.getPosition().move(new Point(0, 0)));
     }
 
     private Point getTileDisplayCoordinates(PointDTO position) {

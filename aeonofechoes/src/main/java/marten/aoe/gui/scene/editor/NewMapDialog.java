@@ -26,12 +26,13 @@ public class NewMapDialog extends Dialog implements BoxedObject {
     private OkCancelDialog okCancel;
     private AgeScene parent;
     private BitmapString error;
+    private int mapSize;
 
-    public NewMapDialog(AgeScene parent) {
+    public NewMapDialog(AgeScene parent, final Action createMap) {
         super(new Dimension(500, 300));
         this.error = new BitmapString(font);
         this.error.setColor(new Color(1.0, 0.0, 0.0));
-        this.error.setPosition(new Point(100, 0));
+        this.error.setPosition(new Point(0, -50));
         this.parent = parent;
         container = new SimpleLayout();
         // ok cancel
@@ -48,12 +49,21 @@ public class NewMapDialog extends Dialog implements BoxedObject {
             @Override
             public void perform() {
                 try {
-//                    int size = Integer.parseInt(field.getValue());
-//                    MapEditor.this.mapSize = size;
-                    NewMapDialog.this.destroy();
+                    NewMapDialog.this.mapSize = Integer.parseInt(field
+                            .getValue());
                 } catch (NumberFormatException e) {
                     showError("Error: bad number format");
+                    return;
                 }
+                if (NewMapDialog.this.mapSize < 1) {
+                    showError("Number must be positive, you moron");
+                    return;
+                } else if (NewMapDialog.this.mapSize > 100) {
+                    showError("It's over 9000!");
+                    return;
+                }
+                NewMapDialog.this.destroy();
+                createMap.perform();
             }
         });
         // field
@@ -77,7 +87,6 @@ public class NewMapDialog extends Dialog implements BoxedObject {
         this.hideError();
     }
 
-
     private void showError(String error) {
         this.error.setContent(error);
     }
@@ -90,5 +99,9 @@ public class NewMapDialog extends Dialog implements BoxedObject {
         this.show();
         this.parent.registerControllable(okCancel);
         this.parent.registerControllable(this.field);
+    }
+
+    public int getMapSize() {
+        return this.mapSize;
     }
 }
