@@ -6,7 +6,7 @@ How to setup development environment
 4) Run 'mvn eclipse:eclipse' in this directory
 5) Install eclipse for Java developers
 6) Launch eclipse and install subclipse plugin (http://subclipse.tigris.org/)
-7) Install aspectj plugin for eclipse (http://www.eclipse.org/ajdt/)
+7) Install aspectj v2.1.1 plugin for eclipse (http://www.eclipse.org/ajdt/)
 8) In eclipse settings add new JAVA classpath variable M2_REPO=~/.m2/repository (For windows users the path is different)
 9) Import eclipse projects from this directory to eclipse
 10) Donwload LWJGL v2.4.2 binaries from http://sourceforge.net/projects/java-game-lib/files/
