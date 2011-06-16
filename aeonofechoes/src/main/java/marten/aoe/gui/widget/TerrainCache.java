@@ -62,4 +62,8 @@ public class TerrainCache {
         terrainCache.put(type + "fog", sm);
         return sm;
     }
+
+    public static void clear() {
+        terrainCache.clear();
+    }
 }

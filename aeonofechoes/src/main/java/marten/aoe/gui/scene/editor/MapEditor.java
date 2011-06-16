@@ -70,9 +70,12 @@ public class MapEditor extends AgeScene {
         newMapDialog = new NewMapDialog(this, new Action() {
             @Override
             public void perform() {
-                MapEditor.this.flatland.updateChild("map", new MapWidget(
+                MapWidget map = new MapWidget(
                         newMapDialog.getMapSize(), AppInfo
-                                .getDisplayDimension()), 0);
+                                .getDisplayDimension());
+                map.setId("map");
+                MapEditor.this.flatland.updateChild(map, 0);
+//                MapEditor.this.registerControllable(map.getId(), listener);
             }
         });
     }

@@ -65,6 +65,7 @@ public class MapWidget extends BasicSceneGraphBranch<SceneGraphChild> implements
         cm.setAppearance(new Appearance(new Color(1.0, 1.0, 1.0)));
         tg.addChild(cm);
         tg.addChild(tileHighlight);
+        TerrainCache.clear();
         this.addChild(tg);
         this.setPosition(this.getPosition().move(new Point(0, 0)));
     }

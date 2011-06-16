@@ -15,17 +15,21 @@ public abstract class BasicSceneGraphBranch<T extends SceneGraphChild> extends
     }
 
     @Override
-    public void addChild(int index, T newBranch) {
+    public void addChild(T newBranch, int index) {
         newBranch.setRoot(this);
         this.branches.add(index, newBranch);
     }
 
     @Override
-    public void updateChild(String id, T newBranch, int index) {
+    public void updateChild(T newBranch, int index) {
+        String id = newBranch.getId();
+        if (id == null) {
+            throw new RuntimeException("Child id can not be null");
+        }
         if (this.lookup.containsKey(id)) {
             this.removeChild(lookup.get(id));
         }
-        this.addChild(index, newBranch);
+        this.addChild(newBranch, index);
         this.lookup.put(id, newBranch);
     }
 
