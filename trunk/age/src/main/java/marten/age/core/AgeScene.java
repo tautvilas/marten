@@ -1,5 +1,6 @@
 package marten.age.core;
 
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedList;
 
@@ -18,6 +19,8 @@ public abstract class AgeScene {
 
     private LinkedList<Listener> removedListeners = new LinkedList<Listener>();
     private LinkedList<Listener> addedListeners = new LinkedList<Listener>();
+
+    private HashMap<String, Listener> lookup = new HashMap<String, Listener>(); 
 
     /* Game "business" logic should go here */
     public abstract void compute();
@@ -53,6 +56,14 @@ public abstract class AgeScene {
         this.addedListeners.add(listener);
     }
 
+    public void updateControllable(String id, Listener listener) {
+        if (this.lookup.containsKey(id)) {
+            this.removedListeners.add(lookup.get(id));
+        }
+        this.addedListeners.add(listener);
+        this.lookup.put(id, listener);
+    }
+
     public void unbindControllable(Listener listener) {
         this.removedListeners.add(listener);
     }
@@ -60,22 +71,22 @@ public abstract class AgeScene {
     // HACK: use this method to avoid concurrent modification exception while updating
     // controllers
     protected void updateControllers() {
-        while (!addedListeners.isEmpty()) {
-            Listener listener = addedListeners.pop();
-            for (Controller controller : this.controllers) {
-                try {
-                    controller.addListener(listener);
-                    log.debug(listener + " listener was added to controller " + controller);
-                } catch (ClassCastException e) {
-                }
-            }
-        }
         while (!removedListeners.isEmpty()) {
             Listener listener = removedListeners.pop();
             for (Controller controller : this.controllers) {
                 try {
                     controller.removeListener(listener);
                     log.debug(listener + " listener was removed from controller " + controller);
+                } catch (ClassCastException e) {
+                }
+            }
+        }
+        while (!addedListeners.isEmpty()) {
+            Listener listener = addedListeners.pop();
+            for (Controller controller : this.controllers) {
+                try {
+                    controller.addListener(listener);
+                    log.debug(listener + " listener was added to controller " + controller);
                 } catch (ClassCastException e) {
                 }
             }

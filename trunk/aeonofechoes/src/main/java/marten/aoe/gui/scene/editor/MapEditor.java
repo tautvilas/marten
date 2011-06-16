@@ -75,7 +75,7 @@ public class MapEditor extends AgeScene {
                                 .getDisplayDimension());
                 map.setId("map");
                 MapEditor.this.flatland.updateChild(map, 0);
-//                MapEditor.this.registerControllable(map.getId(), listener);
+                MapEditor.this.updateControllable(map.getId(), map);
             }
         });
     }
