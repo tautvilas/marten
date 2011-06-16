@@ -1,15 +1,17 @@
 How to setup development environment
 
-1) Install JDK
-1) Instal maven
-2) Install eclipse for Java developers with subclipse
-3) Run 'mvn eclipse:eclipse' in this directory
-4) Run eclipse
-5) In eclipse settings add new JAVA classpath variable M2_REPO=~/.m2/repository
-6) Import eclipse projects from this directory to eclipse
-7) Donwload LWJGL v2.4.2 binaries from http://sourceforge.net/projects/java-game-lib/files/
-8) Copy extracted binaries to /usr/lib/marten
-9) When setuping any marten run configuration in eclipse add new environment variable 'LD_LIBRARY_PATH=/usr/lib/marten'
+1) Install JDK (Java development kit)
+2) Instal maven (http://maven.apache.org/)
+3) Check out project source code from http://marten.googlecode.com/svn/trunk/ (Windows users could do it with tortoiseSVN client)
+4) Run 'mvn eclipse:eclipse' in this directory
+5) Install eclipse for Java developers
+6) Launch eclipse and install subclipse plugin (http://subclipse.tigris.org/)
+7) Install aspectj plugin for eclipse (http://www.eclipse.org/ajdt/)
+8) In eclipse settings add new JAVA classpath variable M2_REPO=~/.m2/repository (For windows users the path is different)
+9) Import eclipse projects from this directory to eclipse
+10) Donwload LWJGL v2.4.2 binaries from http://sourceforge.net/projects/java-game-lib/files/
+11) Copy extracted binaries to /usr/lib/marten or any other dir of your choice
+12) When setuping any marten run configuration in eclipse add new environment variable 'LD_LIBRARY_PATH=/usr/lib/marten' (use PATH instead of LD_LIBRARY_PATH in windows)
 
 Happy hacking!
 
