@@ -8,6 +8,6 @@ public interface SceneGraphBranch<T extends SceneGraphChild> extends SceneGraphC
     public boolean hasChild(T child);
     public ArrayList<T> getBranches();
     public void addChild(T newBranch);
-    public void addChild(int index, T newBranch);
-    public void updateChild(String id, T newBranch, int index);
+    public void addChild(T newBranch, int index);
+    public void updateChild(T newBranch, int index);
 }
