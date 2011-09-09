@@ -1,17 +1,18 @@
 package marten.aoe.gui.scene.editor;
 
 import java.io.File;
+import java.util.ArrayList;
 
 import marten.age.core.AgeScene;
 import marten.age.core.AppInfo;
 import marten.age.event.AgeSceneSwitchEvent;
 import marten.age.graphics.flat.Flatland;
-import marten.age.graphics.image.ImageCache;
 import marten.age.graphics.layout.SimpleLayout;
 import marten.age.io.Loadable;
 import marten.age.io.LoadingState;
 import marten.age.io.SimpleLoader;
 import marten.aoe.Path;
+import marten.aoe.gui.TileImageFactory;
 import marten.aoe.gui.widget.AoeString;
 
 import org.apache.log4j.Logger;
@@ -55,20 +56,33 @@ public class MapEditorLoader extends AgeScene implements Loadable {
         this.flatland.render();
     }
 
+    private void loadLayers(ArrayList<String> priorities, String path) {
+        File tileFolder = new File(path);
+        File[] files = tileFolder.listFiles();
+        for (int i = 0; i < files.length; i++) {
+            String filename = files[i].getName();
+            if (filename.charAt(0) == '.') continue;
+            String[] parts = filename.split("_");
+            String priority = parts[0];
+            String newPath = path + "/" + filename;
+            priorities.add(priority);
+            if (files[i].isDirectory()) {
+                priorities.add(priority);
+                this.loadLayers(priorities, newPath);
+            } else {
+                String[] priors = new String[priorities.size()];
+                priorities.toArray(priors);
+                TileImageFactory.addLayer(priors, parts[1].split("\\.")[0], newPath);
+            }
+            priorities.remove(priorities.size() - 1);
+        }
+    }
+
     @Override
     public synchronized void load(LoadingState state) {
         state.status = "Loading tile data 0%";
         log.info("Loading tile data...");
-        File tileFolder = new File(Path.TILE_DATA_PATH);
-        String[] filenames = tileFolder.list();
-        for (int i = 0; i < filenames.length; i++) {
-            state.status = "Loading map data "
-                    + Integer.toString((i * 100) / filenames.length) + "%";
-            if (filenames[i].charAt(0) == '.')
-                continue;
-            ImageCache.loadImage(Path.TILE_DATA_PATH + filenames[i],
-                    Path.TILE_DATA_PATH + filenames[i].split("\\.")[0]);
-        }
+        this.loadLayers(new ArrayList<String>(), Path.NEW_TILE_DATA_PATH);
         state.status = "100%";
     }
 }
