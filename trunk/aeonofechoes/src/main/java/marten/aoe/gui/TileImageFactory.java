@@ -1,5 +1,7 @@
 package marten.aoe.gui;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 
 import marten.age.graphics.image.ImageCache;
@@ -31,5 +33,14 @@ public class TileImageFactory {
             log.error("Could not find image for layer '" + layer + "'");
         }
         return TileImageFactory.images.get(layer);
+    }
+
+    public static ArrayList<TileLayer> getSortedLayerTypes() {
+        ArrayList<TileLayer> result = new ArrayList<TileLayer>();
+        for (String key : TileImageFactory.priorities.keySet()) {
+            result.add(new TileLayer(key, TileImageFactory.priorities.get(key)));
+        }
+        Collections.sort(result);
+        return result;
     }
 }

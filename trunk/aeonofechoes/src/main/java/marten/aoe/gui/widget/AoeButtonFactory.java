@@ -40,4 +40,15 @@ public class AoeButtonFactory {
         button.setLabel(label);
         return button;
     }
+
+    public static Button getEditorTab(String label) {
+        Button button = new Button(ImageCache.getImage(Path.SKIN_DATA_PATH
+                + "editor-tab.png"));
+        BitmapFont buttonFont = FontCache.getFont(new Font("Arial", Font.PLAIN,
+                16));
+        button.setId(label);
+        button.setFont(buttonFont);
+        button.setLabel(label);
+        return button;
+    }
 }

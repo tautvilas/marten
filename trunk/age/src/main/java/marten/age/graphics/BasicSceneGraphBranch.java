@@ -3,7 +3,7 @@ package marten.age.graphics;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public abstract class BasicSceneGraphBranch<T extends SceneGraphChild> extends
+public class BasicSceneGraphBranch<T extends SceneGraphChild> extends
         BasicSceneGraphChild implements SceneGraphBranch<T> {
     private ArrayList<T> branches = new ArrayList<T>();
     private HashMap<String, T> lookup = new HashMap<String, T>();
