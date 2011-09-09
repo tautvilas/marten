@@ -25,11 +25,11 @@ public abstract class Root extends BasicSceneGraphBranch<SceneGraphChild> {
     }
 
     @SuppressWarnings("unchecked")
-    private void compileSceneParent(SceneGraphBranch parent) {
+    private void compileSceneParent(SceneGraphBranch<SceneGraphChild> parent) {
         ArrayList<SceneGraphChild> parentBranches = parent.getBranches();
         for (SceneGraphNode child : parentBranches) {
             if (child instanceof BasicSceneGraphBranch) {
-                compileSceneParent((SceneGraphBranch) child);
+                compileSceneParent((SceneGraphBranch<SceneGraphChild>) child);
             } else if (child instanceof BasicSceneGraphChild) {
                 compileSceneNode(child);
             }
