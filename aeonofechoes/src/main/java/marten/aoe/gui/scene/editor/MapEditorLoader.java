@@ -63,7 +63,6 @@ public class MapEditorLoader extends AgeScene implements Loadable {
             String filename = files[i].getName();
             if (filename.charAt(0) == '.') continue;
             String[] parts = filename.split("_");
-            System.out.println(filename);
             String priority = parts[0];
             String newPath = path + "/" + filename;
             priorities.add(priority);

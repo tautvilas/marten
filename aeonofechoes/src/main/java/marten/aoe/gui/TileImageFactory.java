@@ -22,7 +22,6 @@ public class TileImageFactory {
             log.error("Layer '" + name + "' was allready added");
             return;
         }
-        System.out.println(name);
         TileImageFactory.priorities.put(name, priorities);
         TileImageFactory.images.put(name, ImageCache.getImage(imagePath));
     }
