@@ -2,6 +2,7 @@ package marten.aoe.gui.widget;
 
 import java.util.HashMap;
 
+import marten.age.graphics.SceneGraphBranch;
 import marten.age.graphics.appearance.Appearance;
 import marten.age.graphics.appearance.Color;
 import marten.age.graphics.geometry.Geometry;
@@ -12,6 +13,12 @@ import marten.aoe.dto.TileDTO;
 import marten.aoe.gui.TileImageFactory;
 
 public class TerrainCache {
+
+    private SceneGraphBranch context;
+
+    public TerrainCache(SceneGraphBranch context) {
+        this.context = context;
+    }
 
     private static final HashMap<String, SimpleModel> terrainCache = new HashMap<String, SimpleModel>();
 
