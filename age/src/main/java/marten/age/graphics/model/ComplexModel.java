@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import marten.age.graphics.BasicSceneGraphChild;
 import marten.age.graphics.appearance.Appearance;
 
+@Deprecated
 public class ComplexModel extends BasicSceneGraphChild {
     private ArrayList<SimpleModel> parts = new ArrayList<SimpleModel>();
     private Appearance appearance = new Appearance();
