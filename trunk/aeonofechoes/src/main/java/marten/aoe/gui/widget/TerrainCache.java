@@ -5,12 +5,11 @@ import java.util.HashMap;
 import marten.age.graphics.appearance.Appearance;
 import marten.age.graphics.appearance.Color;
 import marten.age.graphics.geometry.Geometry;
-import marten.age.graphics.image.ImageCache;
 import marten.age.graphics.model.SimpleModel;
 import marten.age.graphics.texture.Texture;
 import marten.age.graphics.texture.TextureLoader;
-import marten.aoe.Path;
 import marten.aoe.dto.TileDTO;
+import marten.aoe.gui.TileImageFactory;
 
 public class TerrainCache {
 
@@ -22,11 +21,6 @@ public class TerrainCache {
         } else {
             terrainCache.get(tile.getName() + "fog").addGeometry(geometry);
         }
-//        int sum = 0;
-//        for (SimpleModel model: terrainCache.values()) {
-//            sum += model.getGeometries().size();
-//        }
-//        System.out.println(sum);
     }
 
     public static void remove(TileDTO tile, Geometry geometry) {
@@ -43,9 +37,8 @@ public class TerrainCache {
 
     public static SimpleModel addType(TileDTO tile) {
         String type = tile.getName();
-        Texture terrain = TextureLoader.loadTexture(ImageCache
-                .getImage(Path.TILE_DATA_PATH
-                        + type.toLowerCase()));
+        Texture terrain = TextureLoader.loadTexture(TileImageFactory
+                .getTile(tile.getName()));
         SimpleModel sm = new SimpleModel(new Appearance(terrain));
         terrainCache.put(type, sm);
         return sm;
@@ -53,9 +46,8 @@ public class TerrainCache {
 
     public static SimpleModel addFogType(TileDTO tile) {
         String type = tile.getName();
-        Texture terrain = TextureLoader.loadTexture(ImageCache
-                .getImage(Path.TILE_DATA_PATH
-                        + type.toLowerCase()));
+        Texture terrain = TextureLoader.loadTexture(TileImageFactory
+                .getTile(tile.getName()));
         Appearance fog = new Appearance(terrain);
         fog.setColor(new Color(0.5, 0.4, 0.4));
         SimpleModel sm = new SimpleModel(fog);
