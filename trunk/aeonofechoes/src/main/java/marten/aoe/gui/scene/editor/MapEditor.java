@@ -94,13 +94,14 @@ public class MapEditor extends AgeScene {
         String tab = "";
         Point buttonPos = sidebar.getPosition().move(new Point(50, 500));
         Point iconPos = null;
+        int i = 0;
         SceneGraphBranch<SimpleModel> layout = null;
         for (TileLayer layer : layers) {
             if (!tab.equals(layer.getPriorities()[0])) {
+                i = 0;
                 layout = new BasicSceneGraphBranch<SimpleModel>();
                 layout.hide();
                 tab = layer.getPriorities()[0];
-                iconPos = sidebar.getPosition().move(new Point(50, 450));
                 final Button button = AoeButtonFactory.getEditorTab(tab);
                 button.setPosition(buttonPos);
                 this.flatland.addChild(button);
@@ -124,10 +125,11 @@ public class MapEditor extends AgeScene {
             }
             SimpleModel layerModel = TerrainCache.addType(new TileDTO(layer
                     .getType(), new PointDTO(0, 0), null, true));
+            iconPos = sidebar.getPosition().move(new Point(50 + i % 3 * 50, 450 - i / 3 * 50));
             layerModel.addGeometry(new Rectangle(new Dimension(32, 32),
                     iconPos));
-            iconPos = iconPos.move(new Point(0, -50));
             layout.addChild(layerModel);
+            i++;
         }
     }
 
