@@ -10,6 +10,7 @@ import marten.age.core.AgeScene;
 import marten.age.core.AppInfo;
 import marten.age.graphics.BasicSceneGraphBranch;
 import marten.age.graphics.SceneGraphBranch;
+import marten.age.graphics.appearance.Appearance;
 import marten.age.graphics.flat.Flatland;
 import marten.age.graphics.geometry.primitives.Rectangle;
 import marten.age.graphics.layout.SimpleLayout;
@@ -18,17 +19,15 @@ import marten.age.graphics.primitives.Dimension;
 import marten.age.graphics.primitives.Point;
 import marten.age.graphics.text.BitmapFont;
 import marten.age.graphics.text.FontCache;
+import marten.age.graphics.texture.TextureLoader;
 import marten.age.widget.Action;
 import marten.age.widget.Button;
 import marten.age.widget.obsolete.FpsCounter;
-import marten.aoe.dto.PointDTO;
-import marten.aoe.dto.TileDTO;
 import marten.aoe.gui.TileImageFactory;
 import marten.aoe.gui.TileLayer;
 import marten.aoe.gui.widget.AoeButtonFactory;
 import marten.aoe.gui.widget.MapWidget;
 import marten.aoe.gui.widget.Sidebar;
-import marten.aoe.gui.widget.TerrainCache;
 
 public class MapEditor extends AgeScene {
 
@@ -123,8 +122,9 @@ public class MapEditor extends AgeScene {
                 });
                 this.registerControllable(button);
             }
-            SimpleModel layerModel = TerrainCache.addType(new TileDTO(layer
-                    .getType(), new PointDTO(0, 0), null, true));
+            Appearance appearance = new Appearance();
+            appearance.setTexture(TextureLoader.loadTexture(TileImageFactory.getTile(layer.getType())));
+            SimpleModel layerModel = new SimpleModel(appearance);
             iconPos = sidebar.getPosition().move(new Point(50 + i % 3 * 50, 450 - i / 3 * 50));
             layerModel.addGeometry(new Rectangle(new Dimension(32, 32),
                     iconPos));

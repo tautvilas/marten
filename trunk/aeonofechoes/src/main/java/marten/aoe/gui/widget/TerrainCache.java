@@ -3,10 +3,14 @@ package marten.aoe.gui.widget;
 import java.util.HashMap;
 
 import marten.age.graphics.SceneGraphBranch;
+import marten.age.graphics.SceneGraphChild;
 import marten.age.graphics.appearance.Appearance;
 import marten.age.graphics.appearance.Color;
 import marten.age.graphics.geometry.Geometry;
+import marten.age.graphics.geometry.primitives.Rectangle;
 import marten.age.graphics.model.SimpleModel;
+import marten.age.graphics.primitives.Dimension;
+import marten.age.graphics.primitives.Point;
 import marten.age.graphics.texture.Texture;
 import marten.age.graphics.texture.TextureLoader;
 import marten.aoe.dto.TileDTO;
@@ -14,15 +18,27 @@ import marten.aoe.gui.TileImageFactory;
 
 public class TerrainCache {
 
-    private SceneGraphBranch context;
+    private SceneGraphBranch<SceneGraphChild> context;
 
-    public TerrainCache(SceneGraphBranch context) {
+    public TerrainCache(SceneGraphBranch<SceneGraphChild> context) {
         this.context = context;
     }
 
-    private static final HashMap<String, SimpleModel> terrainCache = new HashMap<String, SimpleModel>();
+    private final HashMap<String, SimpleModel> terrainCache = new HashMap<String, SimpleModel>();
 
-    public static void put(TileDTO tile, Geometry geometry) {
+    public void updateTile(TileDTO tile, TileDTO oldTile, Point displayCoords) {
+        if (!this.containsType(tile)) {
+            this.context.addChild(this.addFogType(tile));
+            this.context.addChild(this.addType(tile));
+        }
+        Rectangle geometry = new Rectangle(new Dimension(64, 64), displayCoords);
+        if (oldTile != null) {
+            this.remove(oldTile, geometry);
+        }
+        this.put(tile, geometry);
+    }
+
+    private void put(TileDTO tile, Geometry geometry) {
         if (tile.getVisibility()) {
             terrainCache.get(tile.getName()).addGeometry(geometry);
         } else {
@@ -30,7 +46,7 @@ public class TerrainCache {
         }
     }
 
-    public static void remove(TileDTO tile, Geometry geometry) {
+    private void remove(TileDTO tile, Geometry geometry) {
         if (tile.getVisibility()) {
             terrainCache.get(tile.getName()).removeGeometry(geometry);
         } else {
@@ -38,11 +54,11 @@ public class TerrainCache {
         }
     }
 
-    public static boolean containsType(TileDTO tile) {
+    private boolean containsType(TileDTO tile) {
         return terrainCache.containsKey(tile.getName());
     }
 
-    public static SimpleModel addType(TileDTO tile) {
+    private SimpleModel addType(TileDTO tile) {
         String type = tile.getName();
         Texture terrain = TextureLoader.loadTexture(TileImageFactory
                 .getTile(tile.getName()));
@@ -51,7 +67,7 @@ public class TerrainCache {
         return sm;
     }
 
-    public static SimpleModel addFogType(TileDTO tile) {
+    private SimpleModel addFogType(TileDTO tile) {
         String type = tile.getName();
         Texture terrain = TextureLoader.loadTexture(TileImageFactory
                 .getTile(tile.getName()));
@@ -60,9 +76,5 @@ public class TerrainCache {
         SimpleModel sm = new SimpleModel(fog);
         terrainCache.put(type + "fog", sm);
         return sm;
-    }
-
-    public static void clear() {
-        terrainCache.clear();
     }
 }
