@@ -19,7 +19,6 @@ import marten.age.graphics.text.BitmapFont;
 import marten.age.graphics.text.BitmapString;
 import marten.age.graphics.text.FontCache;
 import marten.age.graphics.transform.TranslationGroup;
-import marten.age.widget.Widget;
 import marten.aoe.dto.MapDTO;
 import marten.aoe.dto.PointDTO;
 import marten.aoe.dto.TileDTO;
@@ -27,7 +26,7 @@ import marten.aoe.gui.MapWidgetListener;
 
 import org.apache.log4j.Logger;
 
-public class MapWidget extends BasicSceneGraphBranch<SceneGraphChild> implements Widget,
+public class MapWidget extends BasicSceneGraphBranch<SceneGraphChild> implements
         MouseListener, BoxedObject {
     @SuppressWarnings("unused")
     private static org.apache.log4j.Logger log = Logger
@@ -42,7 +41,6 @@ public class MapWidget extends BasicSceneGraphBranch<SceneGraphChild> implements
     private final BitmapFont font = FontCache.getFont(new Font("Courier New",
             Font.BOLD, 20));
     private final TranslationGroup tg = new TranslationGroup();
-    private final SceneGraphBranch<SceneGraphChild> terrain = new BasicSceneGraphBranch<SceneGraphChild>();
     private HashMap<PointDTO, UnitWidget> units = new HashMap<PointDTO, UnitWidget>();
     private HashMap<PointDTO, TileDTO> tiles = new HashMap<PointDTO, TileDTO>();
     private TextureSprite tileHighlight = null;
@@ -50,7 +48,7 @@ public class MapWidget extends BasicSceneGraphBranch<SceneGraphChild> implements
     private Dimension dimension;
     private Dimension size;
 
-    private TerrainCache terrainCache = new TerrainCache(terrain);
+    private TerrainCache terrainCache;
 
     private void init() {
         try {
@@ -63,7 +61,9 @@ public class MapWidget extends BasicSceneGraphBranch<SceneGraphChild> implements
         } catch (IOException e1) {
             throw (new RuntimeException(e1));
         }
+        SceneGraphBranch<SceneGraphChild> terrain = new BasicSceneGraphBranch<SceneGraphChild>();
         tg.addChild(terrain);
+        this.terrainCache = new TerrainCache(terrain);
         tg.addChild(tileHighlight);
         this.addChild(tg);
         this.setPosition(this.getPosition().move(new Point(0, 0)));
@@ -75,7 +75,8 @@ public class MapWidget extends BasicSceneGraphBranch<SceneGraphChild> implements
         this.init();
         for (int i = 0; i < size; i++) {
             for (int j = 0; j < size; j++) {
-                this.updateTile(new TileDTO("grass", new PointDTO(i, j), null, true));
+                this.updateTile(new TileDTO("grass", new PointDTO(i, j), null,
+                        true));
             }
         }
     }
@@ -94,8 +95,9 @@ public class MapWidget extends BasicSceneGraphBranch<SceneGraphChild> implements
             for (TileDTO tile : tileLine) {
                 BitmapString coords = new BitmapString(font, tile
                         .getCoordinates().getX()
-                        + ":" + tile.getCoordinates().getY(), new Color(0.0,
-                        1.0, 0.0));
+                        + ":"
+                        + tile.getCoordinates().getY(),
+                        new Color(0.0, 1.0, 0.0));
                 coords.setPosition(this.getTileDisplayCoordinates(tile
                         .getCoordinates()));
                 // tg.addChild(coords);
@@ -113,9 +115,8 @@ public class MapWidget extends BasicSceneGraphBranch<SceneGraphChild> implements
             if (position.getX() < 0) {
                 deltax = -deltax;
             }
-            return new Point((position.getX() / 2) * delta + deltax, position
-                    .getY()
-                    * TILE_HEIGHT + TILE_HEIGHT / 2);
+            return new Point((position.getX() / 2) * delta + deltax,
+                    position.getY() * TILE_HEIGHT + TILE_HEIGHT / 2);
         }
     }
 
@@ -222,7 +223,8 @@ public class MapWidget extends BasicSceneGraphBranch<SceneGraphChild> implements
         Point tileDisplayCoordinates = this.getTileDisplayCoordinates(tile
                 .getCoordinates());
         PointDTO tileCoordinates = tile.getCoordinates();
-        this.terrainCache.updateTile(tile, tiles.get(tileCoordinates), tileDisplayCoordinates);
+        this.terrainCache.updateTile(tile, tiles.get(tileCoordinates),
+                tileDisplayCoordinates);
         this.tiles.put(tileCoordinates, tile);
 
         // Update units
@@ -307,8 +309,8 @@ public class MapWidget extends BasicSceneGraphBranch<SceneGraphChild> implements
             } else {
                 TileDTO oldTile = this.tiles.get(this.selectedTile);
                 if (oldTile.getUnit() != null) {
-                    this.listener.moveUnit(this.selectedTile, tile
-                            .getCoordinates());
+                    this.listener.moveUnit(this.selectedTile,
+                            tile.getCoordinates());
                     this.selectedTile = null;
                     return;
                 }

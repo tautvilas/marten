@@ -28,8 +28,8 @@ public class TerrainCache {
 
     public void updateTile(TileDTO tile, TileDTO oldTile, Point displayCoords) {
         if (!this.containsType(tile)) {
-            this.context.addChild(this.addFogType(tile));
-            this.context.addChild(this.addType(tile));
+            this.context.addChild(this.createFogType(tile));
+            this.context.addChild(this.cteateVisbileType(tile));
         }
         Rectangle geometry = new Rectangle(new Dimension(64, 64), displayCoords);
         if (oldTile != null) {
@@ -58,7 +58,7 @@ public class TerrainCache {
         return terrainCache.containsKey(tile.getName());
     }
 
-    private SimpleModel addType(TileDTO tile) {
+    private SimpleModel cteateVisbileType(TileDTO tile) {
         String type = tile.getName();
         Texture terrain = TextureLoader.loadTexture(TileImageFactory
                 .getTile(tile.getName()));
@@ -67,7 +67,7 @@ public class TerrainCache {
         return sm;
     }
 
-    private SimpleModel addFogType(TileDTO tile) {
+    private SimpleModel createFogType(TileDTO tile) {
         String type = tile.getName();
         Texture terrain = TextureLoader.loadTexture(TileImageFactory
                 .getTile(tile.getName()));
