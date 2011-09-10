@@ -1,4 +1,4 @@
-package marten.aoe.gui.widget;
+package marten.aoe.gui;
 
 import java.util.HashMap;
 
@@ -14,13 +14,12 @@ import marten.age.graphics.primitives.Point;
 import marten.age.graphics.texture.Texture;
 import marten.age.graphics.texture.TextureLoader;
 import marten.aoe.dto.TileDTO;
-import marten.aoe.gui.TileImageFactory;
 
-public class TerrainCache {
+public class TerrainDrawer {
 
     private SceneGraphBranch<SceneGraphChild> context;
 
-    public TerrainCache(SceneGraphBranch<SceneGraphChild> context) {
+    public TerrainDrawer(SceneGraphBranch<SceneGraphChild> context) {
         this.context = context;
     }
 

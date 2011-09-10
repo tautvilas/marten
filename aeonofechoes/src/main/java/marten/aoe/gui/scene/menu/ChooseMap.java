@@ -12,8 +12,8 @@ import marten.age.graphics.primitives.Dimension;
 import marten.age.widget.Action;
 import marten.age.widget.Button;
 import marten.aoe.Path;
+import marten.aoe.gui.AoeButtonFactory;
 import marten.aoe.gui.scene.GameGate;
-import marten.aoe.gui.widget.AoeButtonFactory;
 import marten.aoe.gui.widget.OkCancelDialog;
 
 public class ChooseMap extends AgeScene {
