@@ -23,6 +23,8 @@ import marten.aoe.dto.MapDTO;
 import marten.aoe.dto.PointDTO;
 import marten.aoe.dto.TileDTO;
 import marten.aoe.gui.MapWidgetListener;
+import marten.aoe.gui.TerrainDrawer;
+import marten.aoe.gui.UnitDrawer;
 
 import org.apache.log4j.Logger;
 
@@ -41,14 +43,14 @@ public class MapWidget extends BasicSceneGraphBranch<SceneGraphChild> implements
     private final BitmapFont font = FontCache.getFont(new Font("Courier New",
             Font.BOLD, 20));
     private final TranslationGroup tg = new TranslationGroup();
-    private HashMap<PointDTO, UnitWidget> units = new HashMap<PointDTO, UnitWidget>();
     private HashMap<PointDTO, TileDTO> tiles = new HashMap<PointDTO, TileDTO>();
     private TextureSprite tileHighlight = null;
     private TextureSprite tileSelection = null;
     private Dimension dimension;
     private Dimension size;
 
-    private TerrainCache terrainCache;
+    private TerrainDrawer terrainDrawer;
+    private UnitDrawer unitDrawer = new UnitDrawer(this.tg);
 
     private void init() {
         try {
@@ -63,7 +65,7 @@ public class MapWidget extends BasicSceneGraphBranch<SceneGraphChild> implements
         }
         SceneGraphBranch<SceneGraphChild> terrain = new BasicSceneGraphBranch<SceneGraphChild>();
         tg.addChild(terrain);
-        this.terrainCache = new TerrainCache(terrain);
+        this.terrainDrawer = new TerrainDrawer(terrain);
         tg.addChild(tileHighlight);
         this.addChild(tg);
         this.setPosition(this.getPosition().move(new Point(0, 0)));
@@ -223,29 +225,10 @@ public class MapWidget extends BasicSceneGraphBranch<SceneGraphChild> implements
         Point tileDisplayCoordinates = this.getTileDisplayCoordinates(tile
                 .getCoordinates());
         PointDTO tileCoordinates = tile.getCoordinates();
-        this.terrainCache.updateTile(tile, tiles.get(tileCoordinates),
+        this.terrainDrawer.updateTile(tile, tiles.get(tileCoordinates),
                 tileDisplayCoordinates);
         this.tiles.put(tileCoordinates, tile);
-
-        // Update units
-        if (tile.getUnit() != null) {
-            if (!this.units.containsKey(tile.getCoordinates())) {
-                UnitWidget unit = new UnitWidget(tile.getUnit());
-                unit.setPosition(new Point(tileDisplayCoordinates.x
-                        + this.TILE_WIDTH / 2 - unit.getDimension().width / 2,
-                        tileDisplayCoordinates.y + this.TILE_HEIGHT / 2
-                                - unit.getDimension().height / 2));
-                this.tg.addChild(unit);
-                units.put(tile.getCoordinates(), unit);
-            }
-            // } else {
-            // units.get(tileCoordinates).update(tile.getUnit());
-            // }
-        } else if (this.units.containsKey(tile.getCoordinates())) {
-            UnitWidget unit = this.units.get(tile.getCoordinates());
-            this.tg.removeChild(unit);
-            this.units.remove(tile.getCoordinates());
-        }
+        this.unitDrawer.updateTile(tile, tileDisplayCoordinates);
     }
 
     @Override

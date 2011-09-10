@@ -16,7 +16,7 @@ import marten.age.widget.Action;
 import marten.age.widget.Button;
 import marten.age.widget.obsolete.FpsCounter;
 import marten.aoe.GameInfo;
-import marten.aoe.gui.widget.AoeButtonFactory;
+import marten.aoe.gui.AoeButtonFactory;
 import marten.aoe.gui.widget.AoeField;
 import marten.aoe.gui.widget.AoeString;
 

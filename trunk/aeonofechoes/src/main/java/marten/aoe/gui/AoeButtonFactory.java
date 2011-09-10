@@ -1,4 +1,4 @@
-package marten.aoe.gui.widget;
+package marten.aoe.gui;
 
 import java.awt.Font;
 

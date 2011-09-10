@@ -23,9 +23,9 @@ import marten.age.graphics.texture.TextureLoader;
 import marten.age.widget.Action;
 import marten.age.widget.Button;
 import marten.age.widget.obsolete.FpsCounter;
+import marten.aoe.gui.AoeButtonFactory;
 import marten.aoe.gui.TileImageFactory;
 import marten.aoe.gui.TileLayer;
-import marten.aoe.gui.widget.AoeButtonFactory;
 import marten.aoe.gui.widget.MapWidget;
 import marten.aoe.gui.widget.Sidebar;
 
