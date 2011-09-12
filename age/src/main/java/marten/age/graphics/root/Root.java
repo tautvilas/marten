@@ -2,11 +2,10 @@ package marten.age.graphics.root;
 
 import java.util.ArrayList;
 
-import marten.age.graphics.BasicSceneGraphChild;
 import marten.age.graphics.BasicSceneGraphBranch;
-import marten.age.graphics.SceneGraphChild;
-import marten.age.graphics.SceneGraphNode;
+import marten.age.graphics.BasicSceneGraphChild;
 import marten.age.graphics.SceneGraphBranch;
+import marten.age.graphics.SceneGraphChild;
 import marten.age.graphics.geometry.GeneratedGeometry;
 import marten.age.graphics.geometry.Geometry;
 import marten.age.graphics.geometry.GeometryCache;
@@ -27,7 +26,7 @@ public abstract class Root extends BasicSceneGraphBranch<SceneGraphChild> {
     @SuppressWarnings("unchecked")
     private void compileSceneParent(SceneGraphBranch<SceneGraphChild> parent) {
         ArrayList<SceneGraphChild> parentBranches = parent.getBranches();
-        for (SceneGraphNode child : parentBranches) {
+        for (SceneGraphChild child : parentBranches) {
             if (child instanceof BasicSceneGraphBranch) {
                 compileSceneParent((SceneGraphBranch<SceneGraphChild>) child);
             } else if (child instanceof BasicSceneGraphChild) {
@@ -36,7 +35,7 @@ public abstract class Root extends BasicSceneGraphBranch<SceneGraphChild> {
         }
     }
 
-    private void compileSceneNode(SceneGraphNode node) {
+    private void compileSceneNode(SceneGraphChild node) {
         if (node instanceof SimpleModel) {
             SimpleModel sm = (SimpleModel) node;
             optimizeGeometry(sm);

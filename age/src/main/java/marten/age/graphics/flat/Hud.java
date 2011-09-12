@@ -2,7 +2,6 @@ package marten.age.graphics.flat;
 
 import marten.age.graphics.BasicSceneGraphBranch;
 import marten.age.graphics.SceneGraphChild;
-import marten.age.graphics.SceneGraphNode;
 
 import org.lwjgl.opengl.Display;
 import org.lwjgl.opengl.GL11;
@@ -32,7 +31,7 @@ public class Hud extends BasicSceneGraphBranch<SceneGraphChild> {
         GL11.glPushMatrix();
         GL11.glLoadIdentity();
 
-        for (SceneGraphNode node : this.getBranches()) {
+        for (SceneGraphChild node : this.getBranches()) {
             node.render();
         }
 
