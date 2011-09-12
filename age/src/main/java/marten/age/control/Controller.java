@@ -2,12 +2,19 @@ package marten.age.control;
 
 import java.util.HashSet;
 
+import marten.age.graphics.SceneGraphChild;
+
 public abstract class Controller {
     private HashSet<Listener> listeners = new HashSet<Listener>();
 
     public final void publishEvents() {
         harvestEvents();
         for (Listener l : listeners) {
+            if (l instanceof SceneGraphChild) {
+                if (((SceneGraphChild)l).isHidden()) {
+                    continue;
+                }
+            }
             publishEventsToListener(l);
         }
     }

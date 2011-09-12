@@ -8,12 +8,12 @@ public abstract class BasicSceneGraphChild implements SceneGraphChild {
 
     @Override
     public BasicSceneGraphBranch<? extends SceneGraphChild> getRoot() {
-	return this.root;
+        return this.root;
     }
-    
+
     @Override
     public void setRoot(BasicSceneGraphBranch<? extends SceneGraphChild> newRoot) {
-	this.root = newRoot;
+        this.root = newRoot;
     }
 
     @Override
@@ -26,9 +26,14 @@ public abstract class BasicSceneGraphChild implements SceneGraphChild {
         this.hidden = true;
     }
 
+    //TODO:zv:optimize, cache state
     @Override
     public boolean isHidden() {
-        return this.hidden;
+        if (this.getRoot() != null && this.getRoot().isHidden()) {
+            return true;
+        } else {
+            return this.hidden;
+        }
     }
 
     @Override
