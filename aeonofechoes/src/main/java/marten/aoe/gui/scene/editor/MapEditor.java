@@ -126,6 +126,7 @@ public class MapEditor extends AgeScene {
             layout.addChild(icon);
             i++;
         }
+        this.tabs.get("a").show();
     }
 
     @Override
