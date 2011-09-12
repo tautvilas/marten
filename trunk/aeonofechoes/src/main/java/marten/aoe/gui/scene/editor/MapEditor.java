@@ -1,11 +1,13 @@
 package marten.aoe.gui.scene.editor;
 
 import java.awt.Font;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 
 import marten.age.control.KeyboardController;
 import marten.age.control.MouseController;
+import marten.age.control.MouseListener;
 import marten.age.core.AgeScene;
 import marten.age.core.AppInfo;
 import marten.age.graphics.BasicSceneGraphBranch;
@@ -21,23 +23,25 @@ import marten.age.graphics.text.FontCache;
 import marten.age.widget.Action;
 import marten.age.widget.Button;
 import marten.age.widget.obsolete.FpsCounter;
+import marten.aoe.dto.TileDTO;
 import marten.aoe.gui.AoeButtonFactory;
 import marten.aoe.gui.TileImageFactory;
 import marten.aoe.gui.TileLayer;
 import marten.aoe.gui.widget.MapWidget;
 import marten.aoe.gui.widget.Sidebar;
 
-public class MapEditor extends AgeScene {
+public class MapEditor extends AgeScene implements MouseListener {
 
     BitmapFont font = FontCache.getFont(new Font("Arial", Font.PLAIN, 16));
 
     private Flatland flatland = new Flatland();
     private NewMapDialog newMapDialog;
-    @SuppressWarnings("unused")
-    private int mapSize = 0;
     private HashMap<String, SceneGraphBranch<SceneGraphChild>> tabs = new HashMap<String, SceneGraphBranch<SceneGraphChild>>();
     private SimpleLayout layout = new SimpleLayout(AppInfo
             .getDisplayDimension());
+    private String brush = "grass";
+    private boolean mouseDown = false;
+    private MapWidget map;
 
     public MapEditor() {
         Button newButton = AoeButtonFactory.getEditorButton("New");
@@ -79,8 +83,8 @@ public class MapEditor extends AgeScene {
         newMapDialog = new NewMapDialog(this, new Action() {
             @Override
             public void perform() {
-                MapWidget map = new MapWidget(newMapDialog.getMapSize(),
-                        AppInfo.getDisplayDimension());
+                map = new MapWidget(newMapDialog.getMapSize(), AppInfo
+                        .getDisplayDimension());
                 map.setId("map");
                 MapEditor.this.flatland.updateChild(map, 0);
                 MapEditor.this.updateControllable(map.getId(), map);
@@ -93,7 +97,7 @@ public class MapEditor extends AgeScene {
         Point iconPos = null;
         int i = 0;
         SceneGraphBranch<SceneGraphChild> layout = null;
-        for (TileLayer layer : layers) {
+        for (final TileLayer layer : layers) {
             if (!tab.equals(layer.getPriorities()[0])) {
                 i = 0;
                 layout = new BasicSceneGraphBranch<SceneGraphChild>();
@@ -108,8 +112,9 @@ public class MapEditor extends AgeScene {
                 button.setAction(new Action() {
                     @Override
                     public void perform() {
-                        for (String key: MapEditor.this.tabs.keySet()) {
-                            SceneGraphBranch<SceneGraphChild> branch = MapEditor.this.tabs.get(key);
+                        for (String key : MapEditor.this.tabs.keySet()) {
+                            SceneGraphBranch<SceneGraphChild> branch = MapEditor.this.tabs
+                                    .get(key);
                             if (key.equals(button.getId())) {
                                 branch.show();
                             } else {
@@ -120,13 +125,37 @@ public class MapEditor extends AgeScene {
                 });
                 this.registerControllable(button);
             }
-            Button icon = new Button(new TextureSprite(TileImageFactory.getTile(layer.getType()), new Dimension(32, 32)));
-            iconPos = sidebar.getPosition().move(new Point(50 + i % 3 * 50, 450 - i / 3 * 50));
+            Button icon = new Button(new TextureSprite(TileImageFactory
+                    .getTile(layer.getType()), new Dimension(32, 32)));
+            iconPos = sidebar.getPosition().move(
+                    new Point(50 + i % 3 * 50, 450 - i / 3 * 50));
             icon.setPosition(iconPos);
             layout.addChild(icon);
+            icon.setAction(new Action() {
+                @Override
+                public void perform() {
+                    MapEditor.this.brush = layer.getType();
+                }
+            });
+            this.registerControllable(icon);
             i++;
         }
         this.tabs.get("a").show();
+        this.registerControllable(this);
+    }
+
+    private void draw(Point coords) {
+        if (this.map == null)
+            return;
+        TileDTO tile = this.map.tileHit(coords);
+        if (tile == null)
+            return;
+        String[] layers = tile.getLayers();
+        if (!Arrays.asList(layers).contains(this.brush)) {
+            TileDTO newTile = new TileDTO(this.brush, tile.getCoordinates(),
+                    tile.getUnit());
+            this.map.updateTile(newTile);
+        }
     }
 
     @Override
@@ -136,6 +165,28 @@ public class MapEditor extends AgeScene {
     @Override
     public void render() {
         this.flatland.render();
+    }
+
+    @Override
+    public void mouseDown(Point coords) {
+        this.mouseDown = true;
+        this.draw(coords);
+    }
+
+    @Override
+    public void mouseMove(Point coords) {
+        if (this.mouseDown) {
+            this.draw(coords);
+        }
+    }
+
+    @Override
+    public void mouseUp(Point coords) {
+        this.mouseDown = false;
+    }
+
+    @Override
+    public void mouseWheelRoll(int delta, Point coords) {
     }
 
 }
