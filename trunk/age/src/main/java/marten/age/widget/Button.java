@@ -35,6 +35,12 @@ public class Button extends SimpleLayout implements Widget, MouseListener {
         this.addChild(face);
     }
 
+    public Button(TextureSprite sprite) {
+        super(sprite.getDimension());
+        this.face = sprite;
+        this.addChild(this.face);
+    }
+
     public void setFont(BitmapFont font) {
         this.font = font;
     }
