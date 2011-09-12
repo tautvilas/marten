@@ -17,7 +17,7 @@ import marten.age.graphics.transform.TranslationGroup;
 public class TextureSprite extends BasicSceneGraphBranch<SceneGraphChild> implements BoxedObject {
     private SimpleModel model;
     private TranslationGroup tg = new TranslationGroup();
-    private Texture texture;
+    private Dimension dimension;
 
     public TextureSprite(ImageData image) {
         this(TextureLoader.loadTexture(image));
@@ -25,12 +25,20 @@ public class TextureSprite extends BasicSceneGraphBranch<SceneGraphChild> implem
 
     public TextureSprite(ImageData image, Point position) {
         this(TextureLoader.loadTexture(image));
-        setPosition(position);
+        this.setPosition(position);
+    }
+
+    public TextureSprite(ImageData image, Dimension dimension) {
+        this(TextureLoader.loadTexture(image), dimension);
     }
 
     public TextureSprite(Texture texture) {
-        this.texture = texture;
-        model = new SimpleModel(new Rectangle(texture.getDimension()));
+        this(texture, texture.getDimension());
+    }
+
+    public TextureSprite(Texture texture, Dimension dimension) {
+        this.dimension = dimension;
+        model = new SimpleModel(new Rectangle(dimension));
         // glTexEnv(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_BLEND)
         // gl<...same shit...>, GL_REPLACE) for no background blending
         model.getAppearance().setColor(new Color(1.0, 1.0, 1.0));
@@ -54,7 +62,7 @@ public class TextureSprite extends BasicSceneGraphBranch<SceneGraphChild> implem
 
     @Override
     public Dimension getDimension() {
-        return texture.getDimension();
+        return this.dimension;
     }
 
     @Override

@@ -10,16 +10,14 @@ import marten.age.core.AgeScene;
 import marten.age.core.AppInfo;
 import marten.age.graphics.BasicSceneGraphBranch;
 import marten.age.graphics.SceneGraphBranch;
-import marten.age.graphics.appearance.Appearance;
+import marten.age.graphics.SceneGraphChild;
 import marten.age.graphics.flat.Flatland;
-import marten.age.graphics.geometry.primitives.Rectangle;
+import marten.age.graphics.flat.sprite.TextureSprite;
 import marten.age.graphics.layout.SimpleLayout;
-import marten.age.graphics.model.SimpleModel;
 import marten.age.graphics.primitives.Dimension;
 import marten.age.graphics.primitives.Point;
 import marten.age.graphics.text.BitmapFont;
 import marten.age.graphics.text.FontCache;
-import marten.age.graphics.texture.TextureLoader;
 import marten.age.widget.Action;
 import marten.age.widget.Button;
 import marten.age.widget.obsolete.FpsCounter;
@@ -37,7 +35,7 @@ public class MapEditor extends AgeScene {
     private NewMapDialog newMapDialog;
     @SuppressWarnings("unused")
     private int mapSize = 0;
-    private HashMap<String, SceneGraphBranch<SimpleModel>> tabs = new HashMap<String, SceneGraphBranch<SimpleModel>>();
+    private HashMap<String, SceneGraphBranch<SceneGraphChild>> tabs = new HashMap<String, SceneGraphBranch<SceneGraphChild>>();
     private SimpleLayout layout = new SimpleLayout(AppInfo
             .getDisplayDimension());
 
@@ -94,11 +92,11 @@ public class MapEditor extends AgeScene {
         Point buttonPos = sidebar.getPosition().move(new Point(50, 500));
         Point iconPos = null;
         int i = 0;
-        SceneGraphBranch<SimpleModel> layout = null;
+        SceneGraphBranch<SceneGraphChild> layout = null;
         for (TileLayer layer : layers) {
             if (!tab.equals(layer.getPriorities()[0])) {
                 i = 0;
-                layout = new BasicSceneGraphBranch<SimpleModel>();
+                layout = new BasicSceneGraphBranch<SceneGraphChild>();
                 layout.hide();
                 tab = layer.getPriorities()[0];
                 final Button button = AoeButtonFactory.getEditorTab(tab);
@@ -111,7 +109,7 @@ public class MapEditor extends AgeScene {
                     @Override
                     public void perform() {
                         for (String key: MapEditor.this.tabs.keySet()) {
-                            SceneGraphBranch<SimpleModel> branch =MapEditor.this.tabs.get(key);
+                            SceneGraphBranch<SceneGraphChild> branch = MapEditor.this.tabs.get(key);
                             if (key.equals(button.getId())) {
                                 branch.show();
                             } else {
@@ -122,13 +120,10 @@ public class MapEditor extends AgeScene {
                 });
                 this.registerControllable(button);
             }
-            Appearance appearance = new Appearance();
-            appearance.setTexture(TextureLoader.loadTexture(TileImageFactory.getTile(layer.getType())));
-            SimpleModel layerModel = new SimpleModel(appearance);
+            Button icon = new Button(new TextureSprite(TileImageFactory.getTile(layer.getType()), new Dimension(32, 32)));
             iconPos = sidebar.getPosition().move(new Point(50 + i % 3 * 50, 450 - i / 3 * 50));
-            layerModel.addGeometry(new Rectangle(new Dimension(32, 32),
-                    iconPos));
-            layout.addChild(layerModel);
+            icon.setPosition(iconPos);
+            layout.addChild(icon);
             i++;
         }
     }
