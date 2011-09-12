@@ -33,8 +33,10 @@ import marten.aoe.gui.widget.Sidebar;
 public class MapEditor extends AgeScene implements MouseListener {
 
     BitmapFont font = FontCache.getFont(new Font("Arial", Font.PLAIN, 16));
+    private final int MAP_SCROLL_SPEED = 15;
 
     private Flatland flatland = new Flatland();
+    private MouseController mouseController = new MouseController();
     private NewMapDialog newMapDialog;
     private HashMap<String, SceneGraphBranch<SceneGraphChild>> tabs = new HashMap<String, SceneGraphBranch<SceneGraphChild>>();
     private SimpleLayout layout = new SimpleLayout(AppInfo
@@ -50,7 +52,7 @@ public class MapEditor extends AgeScene implements MouseListener {
         int windowHeight = AppInfo.getDisplayHeight();
         int windowWidth = AppInfo.getDisplayWidth();
         int padding = 5;
-        this.addController(new MouseController());
+        this.addController(this.mouseController);
         this.addController(new KeyboardController());
         // new button
         newButton.setPosition(new Point(0, windowHeight - buttonHeight));
@@ -160,6 +162,19 @@ public class MapEditor extends AgeScene implements MouseListener {
 
     @Override
     public void compute() {
+        if (this.map == null)
+            return;
+        Point coords = this.mouseController.getMouseCoordinates();
+        if (coords.x < 5) {
+            map.ScrollLeft(this.MAP_SCROLL_SPEED);
+        } else if (coords.x > AppInfo.getDisplayWidth() - 5
+                && coords.x < AppInfo.getDisplayWidth()) {
+            map.ScrollRight(this.MAP_SCROLL_SPEED);
+        } else if (coords.y < 5) {
+            map.ScrollDown(this.MAP_SCROLL_SPEED);
+        } else if (coords.y > AppInfo.getDisplayHeight() - 5) {
+            map.ScrollUp(this.MAP_SCROLL_SPEED);
+        }
     }
 
     @Override
