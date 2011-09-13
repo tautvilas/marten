@@ -1,12 +1,15 @@
 package marten.aoe.gui;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.List;
 
 import marten.age.graphics.image.ImageCache;
 import marten.age.graphics.image.ImageData;
 import marten.age.graphics.image.ImageTransformations;
+import marten.aoe.dto.TileDTO;
 
 import org.apache.log4j.Logger;
 
@@ -48,6 +51,25 @@ public class TileImageFactory {
                     .get(collection.get(i).getType()));
         }
         return tile;
+    }
+
+    public static TileDTO blendTile(TileDTO base, String layer) {
+        List<String> layers = Arrays.asList(base.getLayers());
+        List<String> mergedLayers = new ArrayList<String>();
+        for (String baseLayer : layers) {
+            String p1 = TileImageFactory.priorities.get(baseLayer)
+                    .getPriorities()[0];
+            String p2 = TileImageFactory.priorities.get(layer).getPriorities()[0];
+            if (p1.equals(p2)) {
+                continue;
+            } else {
+                mergedLayers.add(baseLayer);
+            }
+        }
+        mergedLayers.add(layer);
+        String[] array = new String[mergedLayers.size()];
+        mergedLayers.toArray(array);
+        return new TileDTO(array, base.getCoordinates(), base.getUnit());
     }
 
     public static ArrayList<TileLayer> getSortedLayerTypes() {

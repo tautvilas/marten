@@ -1,7 +1,6 @@
 package marten.aoe.gui.scene.editor;
 
 import java.awt.Font;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 
@@ -152,12 +151,7 @@ public class MapEditor extends AgeScene implements MouseListener {
         TileDTO tile = this.map.tileHit(coords);
         if (tile == null)
             return;
-        String[] layers = tile.getLayers();
-        if (!Arrays.asList(layers).contains(this.brush)) {
-            TileDTO newTile = new TileDTO(this.brush, tile.getCoordinates(),
-                    tile.getUnit());
-            this.map.updateTile(newTile);
-        }
+        this.map.updateTile(TileImageFactory.blendTile(tile, this.brush));
     }
 
     @Override
