@@ -50,4 +50,40 @@ public final class ImageTransformations {
 
         return new ImageData(newbuffer, width, height);
     }
+
+    public static ImageData blend(ImageData base, ImageData top) {
+        if (base.width != top.width || base.height != top.height) {
+            throw new RuntimeException("Can not blend images, dimensions do not match");
+        }
+        int width = base.width;
+        int height = base.height;
+        int pixelSize = Constants.RGBA_NUM_BYTES;
+        byte[] buf1 = base.getBuffer();
+        byte[] buf2 = top.getBuffer();
+        byte[] newBuf = new byte[width * height * pixelSize];
+
+        for (int y = 0; y < height; y++) {
+            for (int x = 0; x < width; x++) {
+                int index = (y * width + x) * pixelSize;
+                float R = (float)(0xFF & buf1[index]) / 255;
+                float G = (float)(0xFF & buf1[index + 1]) / 255;
+                float B = (float)(0xFF & buf1[index + 2]) / 255;
+                float A = (float)(0xFF & buf1[index + 3]) / 255;
+                float r = (float)(0xFF & buf2[index]) / 255;
+                float g = (float)(0xFF & buf2[index + 1]) / 255;
+                float b = (float)(0xFF & buf2[index + 2]) / 255;
+                float a = (float)(0xFF & buf2[index + 3]) / 255;
+                float ax = (byte)(1 - (1 - a) * (1 - A));
+                byte rx = (byte)((r * a / ax + R * A * (1 - a) / ax) * 255);
+                byte gx = (byte)((g * a / ax + G * A * (1 - a) / ax) * 255);
+                byte bx = (byte)((b * a / ax + B * A * (1 - a) / ax) * 255);
+                newBuf[index] = rx;
+                newBuf[index + 1] = gx;
+                newBuf[index + 2] = bx;
+                newBuf[index + 3] = (byte)(ax * 255);
+            }
+        }
+
+        return new ImageData(newBuf, width, height);
+    }
 }
