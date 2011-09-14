@@ -44,7 +44,7 @@ public class TileImageFactory {
         for (int i = 0; i < layers.length; i++) {
             name += layers[i].toLowerCase();
             if (i != layers.length - 1) {
-                name += "-";
+                name += "_";
             }
         }
         return name;
@@ -74,9 +74,13 @@ public class TileImageFactory {
                 tile = ImageTransformations.blend(tile,
                         TileImageFactory.images.get(layers[i]));
             }
+            log.info("Putting " + name + " tile image to tile image cache");
+            TileImageFactory.images.put(name, tile);
             return tile;
         }
     }
+
+    /** Methods used by map editor **/
 
     public static TileDTO blendTile(TileDTO base, String layer) {
         List<String> layers = Arrays.asList(base.getLayers());
