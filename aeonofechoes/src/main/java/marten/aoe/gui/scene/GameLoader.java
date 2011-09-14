@@ -80,7 +80,6 @@ public class GameLoader extends AgeScene implements Loadable {
             String newPath = path + "/" + filename;
             priorities.add(priority);
             if (files[i].isDirectory()) {
-                priorities.add(priority);
                 this.loadLayers(priorities, newPath);
             } else {
                 String[] priors = new String[priorities.size()];
