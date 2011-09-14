@@ -31,26 +31,51 @@ public class TileImageFactory {
     }
 
     public static ImageData getTile(String layer) {
-        layer = layer.toLowerCase();
-        if (!images.containsKey(layer)) {
-            log.error("Could not find image for layer '" + layer + "'");
+        return TileImageFactory.getTile(new String[] { layer });
+    }
+
+    public static String getTileGuiId(TileDTO tile) {
+        return TileImageFactory.getTileGuiId(tile.getLayers());
+    }
+
+    public static String getTileGuiId(String[] layers) {
+        layers = TileImageFactory.sortLayers(layers);
+        String name = "";
+        for (int i = 0; i < layers.length; i++) {
+            name += layers[i].toLowerCase();
+            if (i != layers.length - 1) {
+                name += "-";
+            }
         }
-        return TileImageFactory.images.get(layer);
+        return name;
+    }
+
+    public static String[] sortLayers(String[] layers) {
+        ArrayList<TileLayer> collection = new ArrayList<TileLayer>();
+        for (String layer : layers) {
+            collection.add(TileImageFactory.priorities.get(layer.toLowerCase()));
+        }
+        Collections.sort(collection);
+        String[] result = new String[collection.size()];
+        for (int i = 0; i < result.length; i++) {
+            result[i] = collection.get(i).getType();
+        }
+        return result;
     }
 
     public static ImageData getTile(String[] layers) {
-        ArrayList<TileLayer> collection = new ArrayList<TileLayer>();
-        for (String layer : layers) {
-            collection.add(TileImageFactory.priorities.get(layer));
+        String name = TileImageFactory.getTileGuiId(layers);
+        if (TileImageFactory.images.containsKey(name)) {
+            return TileImageFactory.images.get(name);
+        } else {
+            layers = TileImageFactory.sortLayers(layers);
+            ImageData tile = TileImageFactory.images.get(layers[0]);
+            for (int i = 1; i < layers.length; i++) {
+                tile = ImageTransformations.blend(tile,
+                        TileImageFactory.images.get(layers[i]));
+            }
+            return tile;
         }
-        Collections.sort(collection);
-        ImageData tile = TileImageFactory.images.get(collection.get(0)
-                .getType());
-        for (int i = 1; i < collection.size(); i++) {
-            tile = ImageTransformations.blend(tile, TileImageFactory.images
-                    .get(collection.get(i).getType()));
-        }
-        return tile;
     }
 
     public static TileDTO blendTile(TileDTO base, String layer) {

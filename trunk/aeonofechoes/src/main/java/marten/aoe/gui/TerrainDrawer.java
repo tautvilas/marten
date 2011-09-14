@@ -26,54 +26,54 @@ public class TerrainDrawer {
     private final HashMap<String, SimpleModel> terrainCache = new HashMap<String, SimpleModel>();
 
     public void updateTile(TileDTO tile, TileDTO oldTile, Point displayCoords) {
-        if (!this.containsType(tile)) {
-            this.context.addChild(this.createFogType(tile));
-            this.context.addChild(this.cteateVisbileType(tile));
+        String tileId = TileImageFactory.getTileGuiId(tile);
+        if (!this.containsType(tileId)) {
+            this.context.addChild(this.createFogType(tileId, tile.getLayers()));
+            this.context.addChild(this.cteateVisbileType(tileId, tile.getLayers()));
         }
         Rectangle geometry = new Rectangle(new Dimension(64, 64), displayCoords);
         if (oldTile != null) {
-            this.remove(oldTile, geometry);
+            String oldTileId = TileImageFactory.getTileGuiId(oldTile);
+            this.remove(oldTileId, oldTile.getVisibility(), geometry);
         }
-        this.put(tile, geometry);
+        this.put(tileId, tile.getVisibility(), geometry);
     }
 
-    private void put(TileDTO tile, Geometry geometry) {
-        if (tile.getVisibility()) {
-            terrainCache.get(tile.getName()).addGeometry(geometry);
+    private void put(String tileId, boolean visible, Geometry geometry) {
+        if (visible) {
+            terrainCache.get(tileId).addGeometry(geometry);
         } else {
-            terrainCache.get(tile.getName() + "fog").addGeometry(geometry);
+            terrainCache.get(tileId + "fog").addGeometry(geometry);
         }
     }
 
-    private void remove(TileDTO tile, Geometry geometry) {
-        if (tile.getVisibility()) {
-            terrainCache.get(tile.getName()).removeGeometry(geometry);
+    private void remove(String tileId, boolean visible, Geometry geometry) {
+        if (visible) {
+            terrainCache.get(tileId).removeGeometry(geometry);
         } else {
-            terrainCache.get(tile.getName() + "fog").removeGeometry(geometry);
+            terrainCache.get(tileId + "fog").removeGeometry(geometry);
         }
     }
 
-    private boolean containsType(TileDTO tile) {
-        return terrainCache.containsKey(tile.getName());
+    private boolean containsType(String tileId) {
+        return terrainCache.containsKey(tileId);
     }
 
-    private SimpleModel cteateVisbileType(TileDTO tile) {
-        String type = tile.getName();
+    private SimpleModel cteateVisbileType(String tileId, String layers[]) {
         Texture terrain = TextureLoader.loadTexture(TileImageFactory
-                .getTile(tile.getName()));
+                .getTile(layers));
         SimpleModel sm = new SimpleModel(new Appearance(terrain));
-        terrainCache.put(type, sm);
+        terrainCache.put(tileId, sm);
         return sm;
     }
 
-    private SimpleModel createFogType(TileDTO tile) {
-        String type = tile.getName();
+    private SimpleModel createFogType(String tileId, String layers[]) {
         Texture terrain = TextureLoader.loadTexture(TileImageFactory
-                .getTile(tile.getName()));
+                .getTile(layers));
         Appearance fog = new Appearance(terrain);
         fog.setColor(new Color(0.5, 0.4, 0.4));
         SimpleModel sm = new SimpleModel(fog);
-        terrainCache.put(type + "fog", sm);
+        terrainCache.put(tileId + "fog", sm);
         return sm;
     }
 }
