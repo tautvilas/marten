@@ -1,10 +1,8 @@
 package marten.aoe.gui.scene;
 
-import java.io.File;
 import java.rmi.Naming;
 import java.util.ArrayList;
 
-import marten.age.core.AgeScene;
 import marten.age.core.AppInfo;
 import marten.age.event.AgeSceneSwitchEvent;
 import marten.age.graphics.flat.Flatland;
@@ -13,14 +11,13 @@ import marten.age.io.Loadable;
 import marten.age.io.LoadingState;
 import marten.age.io.SimpleLoader;
 import marten.aoe.Path;
-import marten.aoe.gui.TileImageFactory;
 import marten.aoe.gui.widget.AoeString;
 import marten.aoe.server.face.EngineFace;
 import marten.aoe.server.serializable.GameDetails;
 
 import org.apache.log4j.Logger;
 
-public class GameLoader extends AgeScene implements Loadable {
+public class GameLoader extends TileLoader implements Loadable {
     private static org.apache.log4j.Logger log = Logger
             .getLogger(GameLoader.class);
 
@@ -67,27 +64,6 @@ public class GameLoader extends AgeScene implements Loadable {
     @Override
     public void render() {
         this.flatland.render();
-    }
-
-    private void loadLayers(ArrayList<String> priorities, String path) {
-        File tileFolder = new File(path);
-        File[] files = tileFolder.listFiles();
-        for (int i = 0; i < files.length; i++) {
-            String filename = files[i].getName();
-            if (filename.charAt(0) == '.') continue;
-            String[] parts = filename.split("_");
-            String priority = parts[0];
-            String newPath = path + "/" + filename;
-            priorities.add(priority);
-            if (files[i].isDirectory()) {
-                this.loadLayers(priorities, newPath);
-            } else {
-                String[] priors = new String[priorities.size()];
-                priorities.toArray(priors);
-                TileImageFactory.addLayer(priors, parts[1].split("\\.")[0], newPath);
-            }
-            priorities.remove(priorities.size() - 1);
-        }
     }
 
     @Override
