@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import marten.aoe.Path;
+import marten.aoe.data.tiles.Generic;
 import marten.aoe.dto.PointDTO;
 import marten.aoe.engine.Map;
 import marten.aoe.engine.Tile;
@@ -28,13 +29,7 @@ public final class TileLoader {
         List<String> availableTiles = getAvailableTiles();
         if (!availableTiles.contains(tileName)) {
             log.warn(tileName + " not found.");
-            /*
-            log.debug("Detected tile types are:");
-            for (String availableTile : availableTiles) {
-                log.debug("\t"+availableTile);
-            }
-            */
-            return null;
+            return new Generic(tileName, owner, location);
         }
         Class<?> tileClass = null;
         Object tileInstance = null;

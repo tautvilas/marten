@@ -33,11 +33,11 @@ public abstract class TileLayer extends Tile {
     }
     public abstract String[] getLayerSpecificSpecialFeatures();
     public final void selfDestruct() {
-        TileLayer overlay = this.getOverlay();
-        if (overlay != null) {
-            overlay.setBase(this.base);
-        }
-        this.base.setOverlay(overlay);
+//        TileLayer overlay = this.getOverlay();
+//        if (overlay != null) {
+//            overlay.setBase(this.base);
+//        }
+//        this.base.setOverlay(overlay);
     }
     @Override public final FullTileDTO getFullDTO(PlayerDTO player) {
         if (player == PlayerDTO.SYSTEM) {

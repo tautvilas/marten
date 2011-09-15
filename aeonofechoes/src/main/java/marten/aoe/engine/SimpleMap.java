@@ -30,12 +30,16 @@ public abstract class SimpleMap extends Map {
                         for (DataTree subsubbranch : subbranch.branches()) {
                             if (subsubbranch.value().equals("Tile")) {
                                 Tile tile = null;
+                                Tile overlay = null;
                                 for (DataTree subsubsubbranch : subsubbranch.branches()) {
                                     if (tile == null) {
                                         tile = TileLoader.loadTile(subsubsubbranch.value(), this, new PointDTO(x, y));
+                                        overlay = tile;
                                     }
                                     else {
-                                        tile = TileLoader.loadLayer(subsubsubbranch.value(), tile);
+                                        Tile ov = TileLoader.loadTile(subsubsubbranch.value(), this, new PointDTO(x, y));
+                                        overlay.setOverlay(ov);
+                                        overlay = ov;
                                     }
                                 }
                                 this.switchTile(tile);

@@ -53,7 +53,15 @@ public class TileImageFactory {
     public static String[] sortLayers(String[] layers) {
         ArrayList<TileLayer> collection = new ArrayList<TileLayer>();
         for (String layer : layers) {
-            collection.add(TileImageFactory.priorities.get(layer.toLowerCase()));
+            TileLayer overlay = TileImageFactory.priorities.get(layer
+                    .toLowerCase());
+            if (overlay == null) {
+                throw new RuntimeException("Layer not in cache: "
+                        + layer.toLowerCase());
+            } else {
+                collection.add(TileImageFactory.priorities.get(layer
+                        .toLowerCase()));
+            }
         }
         Collections.sort(collection);
         String[] result = new String[collection.size()];
@@ -71,8 +79,8 @@ public class TileImageFactory {
             layers = TileImageFactory.sortLayers(layers);
             ImageData tile = TileImageFactory.images.get(layers[0]);
             for (int i = 1; i < layers.length; i++) {
-                tile = ImageTransformations.blend(tile,
-                        TileImageFactory.images.get(layers[i]));
+                tile = ImageTransformations.blend(tile, TileImageFactory.images
+                        .get(layers[i]));
             }
             log.info("Putting " + name + " tile image to tile image cache");
             TileImageFactory.images.put(name, tile);
