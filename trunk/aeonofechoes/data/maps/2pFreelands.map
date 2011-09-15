@@ -2,7 +2,6 @@ Header:
 	Name = Freelands_(BFW_Conversion)
     Width = 39
     Height = 26
-    Players = 2
     Player:
         StartX = 18
         StartY = 3
