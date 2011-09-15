@@ -8,13 +8,11 @@ import org.lwjgl.opengl.GL11;
 
 public class Flatland extends Root {
 
+    @SuppressWarnings("unused")
     private static org.apache.log4j.Logger log = Logger
             .getLogger(Flatland.class);
 
     public Flatland() {
-        log.info("GL_VENDOR: " + GL11.glGetString(GL11.GL_VENDOR));
-        log.info("GL_RENDERER: " + GL11.glGetString(GL11.GL_RENDERER));
-        log.info("GL_VERSION: " + GL11.glGetString(GL11.GL_VERSION));
         GL11.glDisable(GL11.GL_LIGHTING);
         GL11.glDisable(GL11.GL_DEPTH_TEST);
         GL11.glEnable(GL11.GL_BLEND);

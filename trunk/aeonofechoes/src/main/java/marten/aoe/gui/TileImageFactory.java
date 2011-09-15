@@ -14,20 +14,16 @@ import marten.aoe.dto.TileDTO;
 import org.apache.log4j.Logger;
 
 public class TileImageFactory {
+    @SuppressWarnings("unused")
     private static org.apache.log4j.Logger log = Logger
             .getLogger(TileImageFactory.class);
 
     private static HashMap<String, TileLayer> priorities = new HashMap<String, TileLayer>();
-    private static HashMap<String, ImageData> images = new HashMap<String, ImageData>();
 
     public static void addLayer(String[] priorities, String name,
             String imagePath) {
-        if (TileImageFactory.priorities.containsKey(name)) {
-            log.error("Layer '" + name + "' was allready added");
-            return;
-        }
         TileImageFactory.priorities.put(name, new TileLayer(name, priorities));
-        TileImageFactory.images.put(name, ImageCache.getImage(imagePath));
+        ImageCache.loadImage(imagePath, name);
     }
 
     public static ImageData getTile(String layer) {
@@ -72,17 +68,15 @@ public class TileImageFactory {
 
     public static ImageData getTile(String[] layers) {
         String name = TileImageFactory.getTileGuiId(layers);
-        if (TileImageFactory.images.containsKey(name)) {
-            return TileImageFactory.images.get(name);
+        if (TileImageFactory.priorities.containsKey(name)) {
+            return ImageCache.getImage(name);
         } else {
             layers = TileImageFactory.sortLayers(layers);
-            ImageData tile = TileImageFactory.images.get(layers[0]);
+            ImageData tile = ImageCache.getImage(layers[0]);
             for (int i = 1; i < layers.length; i++) {
-                tile = ImageTransformations.blend(tile, TileImageFactory.images
-                        .get(layers[i]));
+                tile = ImageTransformations.blend(tile, ImageCache.getImage(layers[i]));
             }
-            log.info("Putting " + name + " tile image to tile image cache");
-            TileImageFactory.images.put(name, tile);
+            ImageCache.addImage(name, tile);
             return tile;
         }
     }
