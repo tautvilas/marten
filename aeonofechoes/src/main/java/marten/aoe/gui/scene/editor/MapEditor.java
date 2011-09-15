@@ -43,6 +43,7 @@ public class MapEditor extends AgeScene implements MouseListener {
     private String brush = "grass";
     private boolean mouseDown = false;
     private MapWidget map;
+    private LoadMapDialog loadMapDialog;
 
     public MapEditor() {
         Button newButton = AoeButtonFactory.getEditorButton("New");
@@ -68,7 +69,21 @@ public class MapEditor extends AgeScene implements MouseListener {
         Button loadButton = AoeButtonFactory.getEditorButton("Load");
         loadButton.setPosition(new Point(buttonWidth + padding, windowHeight
                 - buttonHeight));
+        this.loadMapDialog = new LoadMapDialog(this, new Action() {
+            @Override
+            public void perform() {
+                System.out.println(loadMapDialog.getMapName());
+            }
+        });
+        loadButton.setAction(new Action() {
+            @Override
+            public void perform() {
+                MapEditor.this.loadMapDialog.show();
+            }
+        });
+        this.registerControllable(loadButton);
         this.flatland.addChild(loadButton);
+        this.layout.center(this.loadMapDialog);
         // save button
         Button saveButton = AoeButtonFactory.getEditorButton("Save");
         saveButton.setPosition(new Point((buttonWidth + padding) * 2,
