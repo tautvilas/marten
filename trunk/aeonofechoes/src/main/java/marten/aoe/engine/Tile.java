@@ -19,7 +19,7 @@ public abstract class Tile {
     private final Map map;
     private final PointDTO coordinates;
     private final String name;
-    private TileLayer overlay;
+    private Tile overlay;
 
     public Tile(String name, Map map, PointDTO coordinates) {
         this.name = name;
@@ -76,10 +76,10 @@ public abstract class Tile {
     public abstract int getHeight();
     /** Returns a description of the special features of this tile.*/
     public abstract String[] getSpecialFeatures();
-    public final TileLayer getOverlay() {
+    public final Tile getOverlay() {
         return this.overlay;
     }
-    public final void setOverlay(TileLayer overlay) {
+    public final void setOverlay(Tile overlay) {
         this.overlay = overlay;
     }
     public final Tile adjacent (Direction direction) {

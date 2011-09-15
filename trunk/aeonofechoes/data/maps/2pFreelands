@@ -102,7 +102,6 @@ Map:
         Tile:
             Rocks
             Mountain
-            Impassable
         Tile:
             Void
         Tile:
@@ -112,12 +111,12 @@ Map:
             Void
         Tile:
             Grassland
-            Forest
+            Trees
         Tile:
             Void
         Tile:
             Grassland
-            Forest
+            Trees
         Tile:
             Void
         Tile:
@@ -185,14 +184,12 @@ Map:
         Tile:
             Rocks
             Mountain
-            Impassable
         Tile:
             Rocks
             Mountain
         Tile:
             Rocks
             Mountain
-            Impassable
         Tile:
             Grassland
             Hill
@@ -201,7 +198,7 @@ Map:
             Village
         Tile:
             Grassland
-            Forest
+            Trees
         Tile:
             Grassland
             Hill
@@ -209,7 +206,7 @@ Map:
             Grassland
         Tile:
             Grassland
-            Forest
+            Trees
         Tile:
             Grassland
             Hill
@@ -228,10 +225,10 @@ Map:
             Grassland
         Tile:
             Grassland
-            Forest
+            Trees
         Tile:
             Grassland
-            Forest
+            Trees
         Tile:
             Rocks
             Mountain
@@ -244,7 +241,7 @@ Map:
             Swamp
         Tile:
             Grassland
-            Forest
+            Trees
         Tile:
             Void
         Tile:
@@ -285,7 +282,6 @@ Map:
         Tile:
             Rocks
             Mountain
-            Impassable
         Tile:
             Rocks
             Mountain
@@ -324,7 +320,7 @@ Map:
             Swamp
         Tile:
             Grassland
-            Forest
+            Trees
         Tile:
             Grassland
             Hill
@@ -334,7 +330,7 @@ Map:
             Grassland
         Tile:
             Grassland
-            Forest
+            Trees
         Tile:
             Water
         Tile:
@@ -363,7 +359,7 @@ Map:
             Void
         Tile:
             Grassland
-            Forest
+            Trees
         Tile:
             Grassland
             Hill
@@ -371,10 +367,10 @@ Map:
             Water
         Tile:
             Grassland
-            Forest
+            Trees
         Tile:
             Grassland
-            Forest
+            Trees
         Tile:
             Grassland
         Tile:
@@ -396,10 +392,8 @@ Map:
             Water
         Tile:
             Concrete
-            HQ
         Tile:
             Concrete
-            HQ
         Tile:
             Concrete
             City
@@ -428,7 +422,7 @@ Map:
             Water
         Tile:
             Grassland
-            Forest
+            Trees
         Tile:
             Grassland
             Hill
@@ -474,7 +468,7 @@ Map:
             Village
         Tile:
             Grassland
-            Forest
+            Trees
         Tile:
             Water
         Tile:
@@ -495,7 +489,7 @@ Map:
             Grassland
         Tile:
             Grassland
-            Forest
+            Trees
         Tile:
             Swamp
         Tile:
@@ -512,7 +506,7 @@ Map:
             Village
         Tile:
             Grassland
-            Forest
+            Trees
         Tile:
             Water
         Tile:
@@ -567,7 +561,7 @@ Map:
             Grassland
         Tile:
             Grassland
-            Forest
+            Trees
         Tile:
             Grassland
         Tile:
@@ -585,13 +579,13 @@ Map:
             Hill
         Tile:
             Grassland
-            Forest
+            Trees
         Tile:
             Grassland
             Hill
         Tile:
             Grassland
-            Forest
+            Trees
         Tile:
             Grassland
         Tile:
@@ -609,7 +603,6 @@ Map:
         Tile:
             Rocks
             Mountain
-            Impassable
         Tile:
             Void
         Tile:
@@ -631,19 +624,18 @@ Map:
             Water
         Tile:
             Grassland
-            Forest
-        Tile:
-            Rocks
-            Mountain
-            Impassable
-        Tile:
-            Grassland
-            Forest
+            Trees
         Tile:
             Rocks
             Mountain
         Tile:
             Grassland
+            Trees
+        Tile:
+            Rocks
+            Mountain
+        Tile:
+            Grassland
         Tile:
             Water
         Tile:
@@ -654,19 +646,16 @@ Map:
             Water
         Tile:
             Grassland
-            Forest
+            Trees
         Tile:
             Rocks
             Mountain
-            Impassable
         Tile:
             Rocks
             Mountain
-            Impassable
         Tile:
             Rocks
             Mountain
-            Impassable
         Tile:
             Grassland
             Hill
@@ -703,11 +692,10 @@ Map:
             Hill
         Tile:
             Grassland
-            Forest
+            Trees
         Tile:
             Rocks
             Mountain
-            Impassable
         Tile:
             Void
         Tile:
@@ -735,7 +723,6 @@ Map:
         Tile:
             Rocks
             Mountain
-            Impassable
         Tile:
             Grassland
             Hill
@@ -761,7 +748,6 @@ Map:
         Tile:
             Rocks
             Mountain
-            Impassable
         Tile:
             Grassland
             Hill
@@ -794,11 +780,9 @@ Map:
         Tile:
             Rocks
             Mountain
-            Impassable
         Tile:
             Rocks
             Mountain
-            Impassable
         Tile:
             Rocks
             Mountain
@@ -823,7 +807,7 @@ Map:
             Water
         Tile:
             Grassland
-            Forest
+            Trees
         Tile:
             Grassland
         Tile:
@@ -847,13 +831,12 @@ Map:
         Tile:
             Rocks
             Mountain
-            Impassable
         Tile:
             Grassland
-            Forest
+            Trees
         Tile:
             Grassland
-            Forest
+            Trees
         Tile:
             Grassland
             Hill
@@ -871,7 +854,7 @@ Map:
             Mountain
         Tile:
             Grassland
-            Forest
+            Trees
         Tile:
             Grassland
         Tile:
@@ -895,7 +878,6 @@ Map:
         Tile:
             Rocks
             Mountain
-            Impassable
         Tile:
             Rocks
             Mountain
@@ -918,7 +900,7 @@ Map:
             Void
         Tile:
             Grassland
-            Forest
+            Trees
         Tile:
             Water
         Tile:
@@ -940,15 +922,13 @@ Map:
             Grassland
         Tile:
             Grassland
-            Forest
+            Trees
         Tile:
             Rocks
             Mountain
-            Impassable
         Tile:
             Rocks
             Mountain
-            Impassable
         Tile:
             Grassland
             Hill
@@ -960,7 +940,7 @@ Map:
             Dirt
         Tile:
             Grassland
-            Forest
+            Trees
         Tile:
             Grassland
             Hill
@@ -992,11 +972,9 @@ Map:
         Tile:
             Rocks
             Mountain
-            Impassable
         Tile:
             Rocks
             Mountain
-            Impassable
         Tile:
             Void
         Tile:
@@ -1026,7 +1004,7 @@ Map:
             Mountain
         Tile:
             Grassland
-            Forest
+            Trees
         Tile:
             Grassland
         Tile:
@@ -1040,17 +1018,15 @@ Map:
         Tile:
             Rocks
             Mountain
-            Impassable
         Tile:
             Rocks
             Mountain
-            Impassable
         Tile:
             Rocks
             Mountain
         Tile:
             Grassland
-            Forest
+            Trees
         Tile:
             Grassland
         Tile:
@@ -1066,7 +1042,6 @@ Map:
         Tile:
             Rocks
             Mountain
-            Impassable
         Tile:
             Grassland
             Hill
@@ -1079,7 +1054,7 @@ Map:
             Water
         Tile:
             Grassland
-            Forest
+            Trees
         Tile:
             Water
         Tile:
@@ -1088,10 +1063,10 @@ Map:
             Grassland
         Tile:
             Grassland
-            Forest
+            Trees
         Tile:
             Grassland
-            Forest
+            Trees
         Tile:
             Void
         Tile:
@@ -1130,15 +1105,13 @@ Map:
             Grassland
         Tile:
             Grassland
-            Forest
+            Trees
         Tile:
             Rocks
             Mountain
-            Impassable
         Tile:
             Rocks
             Mountain
-            Impassable
         Tile:
             Grassland
             Hill
@@ -1160,7 +1133,6 @@ Map:
         Tile:
             Rocks
             Mountain
-            Impassable
         Tile:
             Rocks
             Mountain
@@ -1201,7 +1173,7 @@ Map:
             Void
         Tile:
             Grassland
-            Forest
+            Trees
         Tile:
             Grassland
         Tile:
@@ -1224,7 +1196,6 @@ Map:
         Tile:
             Rocks
             Mountain
-            Impassable
         Tile:
             Dirt
         Tile:
@@ -1245,14 +1216,12 @@ Map:
         Tile:
             Rocks
             Mountain
-            Impassable
         Tile:
             Rocks
             Mountain
-            Impassable
         Tile:
             Grassland
-            Forest
+            Trees
         Tile:
             Grassland
         Tile:
@@ -1263,7 +1232,7 @@ Map:
             Dirt
         Tile:
             Grassland
-            Forest
+            Trees
         Tile:
             Grassland
             Hill
@@ -1294,10 +1263,9 @@ Map:
         Tile:
             Rocks
             Mountain
-            Impassable
         Tile:
             Grassland
-            Forest
+            Trees
         Tile:
             Grassland
             Hill
@@ -1307,7 +1275,7 @@ Map:
             Grassland
         Tile:
             Grassland
-            Forest
+            Trees
         Tile:
             Concrete
             City
@@ -1336,18 +1304,16 @@ Map:
             Grassland
         Tile:
             Grassland
-            Forest
+            Trees
         Tile:
             Rocks
             Mountain
-            Impassable
         Tile:
             Rocks
             Mountain
-            Impassable
         Tile:
             Grassland
-            Forest
+            Trees
         Tile:
             Grassland
         Tile:
@@ -1370,7 +1336,7 @@ Map:
             Grassland
         Tile:
             Grassland
-            Forest
+            Trees
         Tile:
             Void
         Tile:
@@ -1394,7 +1360,6 @@ Map:
         Tile:
             Rocks
             Mountain
-            Impassable
         Tile:
             Rocks
             Mountain
@@ -1424,7 +1389,7 @@ Map:
             Mountain
         Tile:
             Grassland
-            Forest
+            Trees
         Tile:
             Grassland
             Hill
@@ -1439,11 +1404,10 @@ Map:
             Hill
         Tile:
             Grassland
-            Forest
+            Trees
         Tile:
             Rocks
             Mountain
-            Impassable
         Tile:
             Grassland
             Hill
@@ -1490,11 +1454,9 @@ Map:
         Tile:
             Rocks
             Mountain
-            Impassable
         Tile:
             Rocks
             Mountain
-            Impassable
         Tile:
             Grassland
             Hill
@@ -1514,7 +1476,7 @@ Map:
             Grassland
         Tile:
             Grassland
-            Forest
+            Trees
         Tile:
             Grassland
         Tile:
@@ -1529,14 +1491,13 @@ Map:
             Hill
         Tile:
             Grassland
-            Forest
+            Trees
         Tile:
             Grassland
             Hill
         Tile:
             Rocks
             Mountain
-            Impassable
         Tile:
             Rocks
             Mountain
@@ -1560,7 +1521,7 @@ Map:
             Grassland
         Tile:
             Grassland
-            Forest
+            Trees
         Tile:
             Water
         Tile:
@@ -1583,11 +1544,9 @@ Map:
         Tile:
             Rocks
             Mountain
-            Impassable
         Tile:
             Rocks
             Mountain
-            Impassable
         Tile:
             Grassland
             Hill
@@ -1624,17 +1583,15 @@ Map:
         Tile:
             Rocks
             Mountain
-            Impassable
         Tile:
             Rocks
             Mountain
-            Impassable
         Tile:
             Grassland
             Hill
         Tile:
             Grassland
-            Forest
+            Trees
         Tile:
             Grassland
         Tile:
@@ -1651,11 +1608,9 @@ Map:
         Tile:
             Rocks
             Mountain
-            Impassable
         Tile:
             Rocks
             Mountain
-            Impassable
         Tile:
             Rocks
             Mountain
@@ -1681,10 +1636,9 @@ Map:
         Tile:
             Rocks
             Mountain
-            Impassable
         Tile:
             Grassland
-            Forest
+            Trees
         Tile:
             Grassland
         Tile:
@@ -1699,13 +1653,13 @@ Map:
             Water
         Tile:
             Grassland
-            Forest
+            Trees
         Tile:
             Grassland
             Hill
         Tile:
             Grassland
-            Forest
+            Trees
         Tile:
             Grassland
         Tile:
@@ -1721,14 +1675,12 @@ Map:
         Tile:
             Rocks
             Mountain
-            Impassable
         Tile:
             Grassland
-            Forest
+            Trees
         Tile:
             Rocks
             Mountain
-            Impassable
         Tile:
             Water
         Tile:
@@ -1745,13 +1697,13 @@ Map:
             Grassland
         Tile:
             Grassland
-            Forest
+            Trees
         Tile:
             Grassland
             Hill
         Tile:
             Grassland
-            Forest
+            Trees
         Tile:
             Water
         Tile:
@@ -1801,7 +1753,7 @@ Map:
             Hill
         Tile:
             Grassland
-            Forest
+            Trees
         Tile:
             Grassland
         Tile:
@@ -1864,14 +1816,14 @@ Map:
             Water
         Tile:
             Grassland
-            Forest
+            Trees
         Tile:
             Water
         Tile:
             Water
         Tile:
             Grassland
-            Forest
+            Trees
         Tile:
             Grassland
             Hill
@@ -1897,7 +1849,6 @@ Map:
             City
         Tile:
             Concrete
-            HQ
         Tile:
             Concrete
             City
@@ -1910,7 +1861,7 @@ Map:
             Mountain
         Tile:
             Grassland
-            Forest
+            Trees
         Tile:
             Grassland
         Tile:
@@ -1921,7 +1872,7 @@ Map:
             Grassland
         Tile:
             Grassland
-            Forest
+            Trees
         Tile:
             Water
         Tile:
@@ -1930,7 +1881,7 @@ Map:
             Grassland
         Tile:
             Grassland
-            Forest
+            Trees
         Tile:
             Void
         Tile:
@@ -1960,7 +1911,7 @@ Map:
             Water
         Tile:
             Grassland
-            Forest
+            Trees
         Tile:
             Grassland
         Tile:
@@ -1969,7 +1920,7 @@ Map:
             Grassland
         Tile:
             Grassland
-            Forest
+            Trees
         Tile:
             Grassland
         Tile:
@@ -1985,7 +1936,6 @@ Map:
             City
         Tile:
             Concrete
-            HQ
         Tile:
             Concrete
             City
@@ -2005,7 +1955,7 @@ Map:
             Grassland
         Tile:
             Grassland
-            Forest
+            Trees
         Tile:
             Grassland
         Tile:
@@ -2013,7 +1963,7 @@ Map:
             Hill
         Tile:
             Grassland
-            Forest
+            Trees
         Tile:
             Water
         Tile:
@@ -2048,7 +1998,7 @@ Map:
             Water
         Tile:
             Grassland
-            Forest
+            Trees
         Tile:
             Grassland
         Tile:
@@ -2063,7 +2013,7 @@ Map:
             Swamp
         Tile:
             Grassland
-            Forest
+            Trees
         Tile:
             Grassland
         Tile:
@@ -2097,15 +2047,12 @@ Map:
         Tile:
             Rocks
             Mountain
-            Impassable
         Tile:
             Rocks
             Mountain
-            Impassable
         Tile:
             Rocks
             Mountain
-            Impassable
         Tile:
             Rocks
             Mountain
@@ -2152,7 +2099,7 @@ Map:
             Hill
         Tile:
             Grassland
-            Forest
+            Trees
         Tile:
             Grassland
             Hill
@@ -2173,18 +2120,18 @@ Map:
             Mountain
         Tile:
             Grassland
-            Forest
+            Trees
         Tile:
             Grassland
-            Forest
+            Trees
         Tile:
             Grassland
         Tile:
             Grassland
-            Forest
+            Trees
         Tile:
             Grassland
-            Forest
+            Trees
         Tile:
             Grassland
             Hill
@@ -2194,7 +2141,6 @@ Map:
         Tile:
             Rocks
             Mountain
-            Impassable
         Tile:
             Rocks
             Mountain
