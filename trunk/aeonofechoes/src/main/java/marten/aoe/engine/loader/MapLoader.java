@@ -41,7 +41,7 @@ public final class MapLoader {
         DataTree mapFile = DataFileHandler.read(Path.MAP_DATA_PATH + mapName + ".map");
         return MapLoader.retrieveMapMetaData(mapFile);
     }        
-    private static MapMetaDTO retrieveMapMetaData (DataTree mapFile) throws IOException {
+    public static MapMetaDTO retrieveMapMetaData (DataTree mapFile) {
         if (mapFile.value().equals("FILE")) {
             DataTree mapHeader = mapFile.branches().get(0);
             int width = 0;
@@ -85,7 +85,7 @@ public final class MapLoader {
             }
             return new MapMetaDTO(name, width, height, numberOfPlayers, startingPositions);
         }
-        throw new IOException("Major failure");
+        throw new IllegalArgumentException("Major failure");
     }
     public static Map loadMap (Engine engine, String mapName) {
         List<String> availableMaps = MapLoader.getAvailableMaps();
@@ -113,15 +113,14 @@ public final class MapLoader {
         if (!availableMaps.contains(mapName)) {
             throw new RuntimeException("Map " + mapName + " not found.");
         }
-        SimpleMap mapInstance;
+        DataTree mapFile;
         try {
-            DataTree mapFile = DataFileHandler.read(Path.MAP_DATA_PATH + mapName + ".map");
-            mapInstance = new SimpleMap(engine, MapLoader.retrieveMapMetaData(mapFile), mapFile);
+            mapFile = DataFileHandler.read(Path.MAP_DATA_PATH + mapName + ".map");             
         }
         catch (Exception e) {
             e.printStackTrace();
             throw new RuntimeException("Failed to instantiate " + mapName + ".");
         }
-        return mapInstance;
-    }
+        return new SimpleMap(engine, MapLoader.retrieveMapMetaData(mapFile), mapFile);
+    }    
 }

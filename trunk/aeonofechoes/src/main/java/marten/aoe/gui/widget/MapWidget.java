@@ -86,7 +86,7 @@ public class MapWidget extends BasicSceneGraphBranch<SceneGraphChild> implements
     public MapWidget(MapDTO map, Dimension dimension, MapWidgetListener listener) {
         this.listener = listener;
         this.dimension = dimension;
-        this.size = new Dimension(map.getWidth(), map.getHeight());
+        this.size = new Dimension(map.getMeta().getWidth(), map.getMeta().getHeight());
         this.init();
         for (TileDTO[] tileLine : map.getTileMap()) {
             for (TileDTO tile : tileLine) {
