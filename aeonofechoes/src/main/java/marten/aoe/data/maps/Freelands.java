@@ -2,29 +2,16 @@ package marten.aoe.data.maps;
 
 import java.io.IOException;
 
-import marten.aoe.dto.PlayerDTO;
-import marten.aoe.dto.PointDTO;
 import marten.aoe.engine.Engine;
-import marten.aoe.engine.SimpleMap;
+import marten.aoe.engine.LoadedMap;
+import marten.aoe.engine.loader.MapLoader;
+import marten.aoe.fileio.DataFileHandler;
 
-public final class Freelands extends SimpleMap {
+@Deprecated public final class Freelands extends LoadedMap {
 
     public Freelands(Engine engine) throws IOException {
-        super (engine, "2pFreelands", 39, 26);
-    }
-
-    @Override public int getPlayerLimit() {
-        return 2;
-    }
-
-    @Override public PointDTO getStartingPosition(PlayerDTO player) {
-        if (player.getTeam() == 1) {
-            return new PointDTO(18,3);
-        }
-        if (player.getTeam() == 2) {
-            return new PointDTO(18,20);
-        }
-        return null;
+        // FIXME: this is rather crude mock up to leave this class working despite the changes
+        super (engine, MapLoader.retrieveMapMetaData("2pFreelands"), DataFileHandler.read("2pFreelands.map"));
     }
 
     @Override public void onTurnOver() {
