@@ -60,7 +60,7 @@ public class BasicSceneGraphBranch<T extends SceneGraphChild> extends
         }
     }
 
-    public void activateChildren() {
+    protected void activateChildren() {
         for (T branch : this.branches)
             branch.render();
     }
