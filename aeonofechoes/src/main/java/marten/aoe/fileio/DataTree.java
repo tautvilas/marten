@@ -12,6 +12,15 @@ public final class DataTree {
     public void addBranch(DataTree branch) {
         this.branches.add(branch);
     }
+    public void addBranch(String value) {
+        this.branches.add(new DataTree(value));
+    }
+    public void addBranch(String key, String value) {
+        DataTree keyValue = new DataTree("KEYVALUE");
+        keyValue.addBranch(key);
+        keyValue.addBranch(value);
+        this.branches.add(keyValue);
+    }
     public String value() {
         return this.value;
     }

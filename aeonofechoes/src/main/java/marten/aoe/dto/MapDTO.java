@@ -78,5 +78,40 @@ public final class MapDTO implements Serializable {
         }
         return new MapDTO(map, meta);
     }
-    
+    public static final void writeToMapFile (String mapFileName, MapDTO mapData) {
+        DataTree data = new DataTree("FILE");
+        DataTree header = new DataTree("Header");
+        MapMetaDTO meta = mapData.getMeta();
+        header.addBranch("Name", meta.getName());
+        header.addBranch("Width", String.valueOf(meta.getWidth()));
+        header.addBranch("Height", String.valueOf(meta.getHeight()));
+        for (PointDTO startingLocation : meta.getStartingPositions()) {
+            DataTree player = new DataTree("Player");
+            player.addBranch("StartX", String.valueOf(startingLocation.getX()));
+            player.addBranch("StartY", String.valueOf(startingLocation.getY()));
+            header.addBranch(player);
+        }
+        data.addBranch(header);
+        DataTree map = new DataTree("Map");
+        TileDTO[][] tiles = mapData.getTileMap();
+        for (int y = meta.getHeight() - 1; y >= 0; y--) {
+            DataTree row = new DataTree("Row");
+            for (int x = 0; x < meta.getWidth(); x++) {
+                DataTree tile = new DataTree("Tile");
+                String[] layers = tiles[x][y].getLayers();
+                for (String layer : layers) {
+                    tile.addBranch(layer);
+                }
+                row.addBranch(tile);
+            }
+            map.addBranch(row);
+        }
+        data.addBranch(map);
+        try {
+            DataFileHandler.write(mapFileName + ".map", data);
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new RuntimeException("Failed to write map data into disk");
+        }
+    }
 }

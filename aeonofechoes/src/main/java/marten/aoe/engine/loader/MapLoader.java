@@ -46,7 +46,6 @@ public final class MapLoader {
             DataTree mapHeader = mapFile.branches().get(0);
             int width = 0;
             int height = 0;
-            int numberOfPlayers = 0;
             String name = "";
             List<PointDTO> startingPositions = new ArrayList<PointDTO>();
             for (DataTree entry : mapHeader.branches()) {
@@ -65,7 +64,6 @@ public final class MapLoader {
                 } else if (entry.value().equals("Player")) {
                     int x = 0;
                     int y = 0;
-                    numberOfPlayers++;
                     for (DataTree playerEntry : entry.branches()) {
                         if (playerEntry.value().equals("KEYVALUE")) {
                             String key = playerEntry.branches().get(0).value();
@@ -81,7 +79,7 @@ public final class MapLoader {
                     startingPositions.add(new PointDTO(x, y));
                 }                
             }
-            return new MapMetaDTO(name, width, height, numberOfPlayers, startingPositions);
+            return new MapMetaDTO(name, width, height, startingPositions);
         }
         throw new IllegalArgumentException("Major failure");
     }

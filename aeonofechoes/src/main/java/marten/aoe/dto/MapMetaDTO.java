@@ -9,13 +9,11 @@ public final class MapMetaDTO implements Serializable {
     private final String name;
     private final int width;
     private final int height;
-    private final int numberOfPlayers;
     private final List<PointDTO> startingPositions;
-    public MapMetaDTO(String name, int width, int height, int numberOfPlayers, List<PointDTO> startingPositions) {
+    public MapMetaDTO(String name, int width, int height, List<PointDTO> startingPositions) {
         this.name = name;
         this.width = width;
         this.height = height;
-        this.numberOfPlayers = numberOfPlayers;
         this.startingPositions = startingPositions;
     }
     public String getName() {
@@ -28,7 +26,7 @@ public final class MapMetaDTO implements Serializable {
         return this.height;
     }
     public int getNumberOfPlayers() {
-        return this.numberOfPlayers;
+        return this.startingPositions.size();
     }
     public List<PointDTO> getStartingPositions () {
         return this.startingPositions;
