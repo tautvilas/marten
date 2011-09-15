@@ -4,9 +4,9 @@ import java.io.IOException;
 
 import marten.aoe.Path;
 import marten.aoe.dto.PointDTO;
-import marten.aoe.engine.loader.DataFileReader;
-import marten.aoe.engine.loader.DataTree;
 import marten.aoe.engine.loader.TileLoader;
+import marten.aoe.fileio.DataFileHandler;
+import marten.aoe.fileio.DataTree;
 
 /** A branching point for all the maps that have a static layout, which is defined in a DataTree structure in data folder of the game.
  * This, however, does not imply any simplicity in a way the map operates, just that the map is not generated dynamically.*/
@@ -19,7 +19,7 @@ public abstract class SimpleMap extends Map {
      * @throws IOException whenever there are issues with files or map dimensions do not match the given ones.*/
     public SimpleMap (Engine engine, String fileName, int width, int height) throws IOException {
         super (engine, fileName, width, height);
-        DataTree mapFile = DataFileReader.read(Path.MAP_DATA_PATH + fileName);
+        DataTree mapFile = DataFileHandler.read(Path.MAP_DATA_PATH + fileName);
         if (mapFile.value().equals("FILE")) {
             DataTree mapData = mapFile.branches().get(0);
             if (mapData.value().equals("Map")) {

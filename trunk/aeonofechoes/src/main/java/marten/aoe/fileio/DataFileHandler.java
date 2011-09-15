@@ -1,17 +1,42 @@
-package marten.aoe.engine.loader;
+package marten.aoe.fileio;
 
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 
-public final class DataFileReader {
-    private DataFileReader() {}
+
+public final class DataFileHandler {
+    private DataFileHandler() {}
     private static final int MAX_LINE_LENGTH = 1024;
     private static final String LIST_START = "\\s*\\S+\\s*:\\s*";
     private static final String KEY_VALUE_PAIR = "\\s*\\S+?\\s*=\\s*\\S+\\s*";
     private static final String SINGLETON = "\\s*\\S+\\s*";
     private static final String EMPTY_LINE = "\\s*";
     private static final String COMMENT = "\\s*#.*";
+    
+    public static void write(String fileName, DataTree data) throws IOException {
+    	BufferedWriter file = new BufferedWriter(new FileWriter(fileName));
+    	write(file, 0, data);
+    }
+    
+    private static void write(BufferedWriter file, int level, DataTree data) throws IOException {
+        String identation = "";
+        for (int index = 0; index < level; index++) {
+            identation += "    ";
+        }
+        for (DataTree branch : data.branches()) {
+            if (branch.value().equals("KEYVALUE")) {
+                file.write(identation + branch.branches().get(0).value() + " = " + branch.branches().get(1).value() + "\n");
+            } else if (branch.branches().isEmpty()) {
+                file.write(identation + branch.value() + "\n");                
+            } else {
+                file.write(identation + branch.value() + ":\n");
+                write(file, level + 1, branch);
+            }            
+        }
+    }
     
     public static DataTree read(String fileName) throws IOException {
         BufferedReader file = new BufferedReader(new FileReader(fileName));
