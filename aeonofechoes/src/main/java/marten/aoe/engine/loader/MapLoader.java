@@ -59,15 +59,13 @@ public final class MapLoader {
                     if (key.equals("Height")) {
                         height = Integer.parseInt(value);                        
                     }
-                    if (key.equals("Players")) {
-                        numberOfPlayers = Integer.parseInt(value);
-                    }
                     if (key.equals("Name")) {
                         name = value;
                     }
                 } else if (entry.value().equals("Player")) {
                     int x = 0;
                     int y = 0;
+                    numberOfPlayers++;
                     for (DataTree playerEntry : entry.branches()) {
                         if (playerEntry.value().equals("KEYVALUE")) {
                             String key = playerEntry.branches().get(0).value();
