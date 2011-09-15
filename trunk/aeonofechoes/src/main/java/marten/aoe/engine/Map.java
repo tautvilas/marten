@@ -6,70 +6,61 @@ import java.util.List;
 import marten.aoe.dto.FullMapDTO;
 import marten.aoe.dto.FullTileDTO;
 import marten.aoe.dto.MapDTO;
+import marten.aoe.dto.MapMetaDTO;
 import marten.aoe.dto.PlayerDTO;
 import marten.aoe.dto.PointDTO;
 import marten.aoe.dto.TileDTO;
 
 public abstract class Map {
     private final Tile[][] map;
-    private final int width;
-    private final int height;
-    private final String name;
+    private final MapMetaDTO meta;
     private final Engine owner;
     // Since pathfinding for a unit is a costly procedure, we will do some caching
     private PathFinder pathCache = null;
 
-    public Map (Engine engine, String name, int width, int height) {
-        this.map = new Tile[width][height];
-        for (int x = 0; x < width; x++) {
-            for (int y = 0; y < height; y++) {
+    public Map (Engine engine, MapMetaDTO meta) {
+        this.meta = meta;
+        this.map = new Tile[meta.getWidth()][meta.getHeight()];
+        for (int x = 0; x < meta.getWidth(); x++) {
+            for (int y = 0; y < meta.getHeight(); y++) {
                 this.map[x][y] = null;
             }
         }
-        this.width = width;
-        this.height = height;
-        this.name = name;
         this.owner = engine;
     }
-    public final int getWidth () {
-        return this.width;
-    }
-    public final int getHeight () {
-        return this.height;
-    }
-    public final String getName () {
-        return this.name;
+    public final MapMetaDTO getMeta () {
+        return this.meta;
     }
     public final Engine getOwner () {
         return this.owner;
     }
     public final FullMapDTO getFullDTO (PlayerDTO player) {
-        FullTileDTO[][] tiles = new FullTileDTO[this.width][this.height];
-        for (int x = 0; x < this.width; x++) {
-            for (int y = 0; y < this.height; y++) {
+        FullTileDTO[][] tiles = new FullTileDTO[this.meta.getWidth()][this.meta.getHeight()];
+        for (int x = 0; x < this.meta.getWidth(); x++) {
+            for (int y = 0; y < this.meta.getHeight(); y++) {
                 tiles[x][y] = (this.map[x][y] != null ? this.map[x][y].getFullDTO(player) : null);
             }
         }
-        return new FullMapDTO(tiles, this.width, this.height, this.name);
+        return new FullMapDTO(tiles, this.meta.getWidth(), this.meta.getHeight(), this.meta.getName());
     }
     public final MapDTO getDTO (PlayerDTO player) {
-        TileDTO[][] tiles = new TileDTO[this.width][this.height];
-        for (int x = 0; x < this.width; x++) {
-            for (int y = 0; y < this.height; y++) {
+        TileDTO[][] tiles = new TileDTO[this.meta.getWidth()][this.meta.getHeight()];
+        for (int x = 0; x < this.meta.getWidth(); x++) {
+            for (int y = 0; y < this.meta.getHeight(); y++) {
                 tiles[x][y] = (this.map[x][y] != null ? this.map[x][y].getDTO(player) : null);
             }
         }
-        return new MapDTO(tiles, this.width, this.height, this.name);
+        return new MapDTO(tiles, this.meta.getWidth(), this.meta.getHeight(), this.meta.getName());
     }
     public final Tile getTile (PointDTO point) {
-        if (point.getX() >= 0 && point.getX() < this.width && point.getY() >= 0 && point.getY() < this.height) {
+        if (point.getX() >= 0 && point.getX() < this.meta.getWidth() && point.getY() >= 0 && point.getY() < this.meta.getHeight()) {
             return this.map[point.getX()][point.getY()];
         }
         return null;
     }
     public final Tile switchTile (Tile tile) {
         PointDTO point = tile.getCoordinates();
-        if (point.getX() >= 0 && point.getX() < this.width && point.getY() >= 0 && point.getY() < this.height) {
+        if (point.getX() >= 0 && point.getX() < this.meta.getWidth() && point.getY() >= 0 && point.getY() < this.meta.getHeight()) {
             Tile oldTile = this.map[point.getX()][point.getY()];
             if (oldTile != null) {
                 Unit unit = oldTile.popUnit(PlayerDTO.SYSTEM);
@@ -81,8 +72,8 @@ public abstract class Map {
         throw new IllegalArgumentException("The requested location is out of map bounds.");
     }
     public final void endTurn () {
-        for (int x = 0; x < this.width; x++) {
-            for (int y = 0; y < this.height; y++) {
+        for (int x = 0; x < this.meta.getWidth(); x++) {
+            for (int y = 0; y < this.meta.getHeight(); y++) {
                 if (this.map[x][y] != null) {
                     this.map[x][y].turnOver();
                 }
@@ -92,7 +83,7 @@ public abstract class Map {
         this.onTurnOver();
     }
     public final boolean moveUnit (PlayerDTO player, PointDTO from, PointDTO to) {
-        if (from.getX() < 0 || from.getX() >= this.width || from.getY() < 0 || from.getY() >= this.height || to.getX() < 0 || to.getX() >= this.width || to.getY() < 0 || to.getY() >= this.height) {
+        if (from.getX() < 0 || from.getX() >= this.meta.getWidth() || from.getY() < 0 || from.getY() >= this.meta.getHeight() || to.getX() < 0 || to.getX() >= this.meta.getWidth() || to.getY() < 0 || to.getY() >= this.meta.getHeight()) {
             throw new IllegalArgumentException("Requested coordinates are out of bounds of the map.");
         }
         if (from.equals(to)) {
@@ -125,13 +116,11 @@ public abstract class Map {
         return true;
     }
     public abstract void onTurnOver ();
-    public abstract PointDTO getStartingPosition (PlayerDTO player);
-    public abstract int getPlayerLimit ();
     /** @return all <code>Unit</code>s that belong to the given player.*/
     public final List<Unit> getAllUnits(PlayerDTO player) {
         List<Unit> answer = new ArrayList<Unit>();
-        for (int x = 0; x < this.width; x++) {
-            for (int y = 0; y < this.height; y++) {
+        for (int x = 0; x < this.meta.getWidth(); x++) {
+            for (int y = 0; y < this.meta.getHeight(); y++) {
                 Unit unit = this.map[x][y].getUnit();
                 if (unit != null && unit.getOwner() == player) {
                     answer.add(unit);
@@ -141,14 +130,14 @@ public abstract class Map {
         return answer;
     }
     public void recalculateVisibility(PlayerDTO player) {
-        boolean[][] currentVisibilityMatrix = new boolean[this.width][this.height];
-        boolean[][] currentExplorationMatrix = new boolean[this.width][this.height];
-        boolean[][] currentDetectionMatrix = new boolean[this.width][this.height];
-        boolean[][] newVisibilityMatrix = new boolean[this.width][this.height];
-        boolean[][] newExplorationMatrix = new boolean[this.width][this.height];
-        boolean[][] newDetectionMatrix = new boolean[this.width][this.height];
-        for (int x = 0; x < this.width; x++) {
-            for (int y = 0; y < this.height; y++) {
+        boolean[][] currentVisibilityMatrix = new boolean[this.meta.getWidth()][this.meta.getHeight()];
+        boolean[][] currentExplorationMatrix = new boolean[this.meta.getWidth()][this.meta.getHeight()];
+        boolean[][] currentDetectionMatrix = new boolean[this.meta.getWidth()][this.meta.getHeight()];
+        boolean[][] newVisibilityMatrix = new boolean[this.meta.getWidth()][this.meta.getHeight()];
+        boolean[][] newExplorationMatrix = new boolean[this.meta.getWidth()][this.meta.getHeight()];
+        boolean[][] newDetectionMatrix = new boolean[this.meta.getWidth()][this.meta.getHeight()];
+        for (int x = 0; x < this.meta.getWidth(); x++) {
+            for (int y = 0; y < this.meta.getHeight(); y++) {
                 currentDetectionMatrix[x][y] = this.map[x][y].isDetected(player);
                 currentVisibilityMatrix[x][y] = this.map[x][y].isVisible(player);
                 newDetectionMatrix[x][y] = newVisibilityMatrix[x][y] = false;
@@ -168,8 +157,8 @@ public abstract class Map {
                 newExplorationMatrix[coordinates.getX()][coordinates.getY()] = newVisibilityMatrix[coordinates.getX()][coordinates.getY()] = true;
             }
         }
-        for (int x = 0; x < this.width; x++) {
-            for (int y = 0; y < this.height; y++) {
+        for (int x = 0; x < this.meta.getWidth(); x++) {
+            for (int y = 0; y < this.meta.getHeight(); y++) {
                 if (!currentVisibilityMatrix[x][y] && newVisibilityMatrix[x][y]) {
                     this.map[x][y].setVisible(player);
                 }

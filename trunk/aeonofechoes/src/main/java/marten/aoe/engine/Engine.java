@@ -16,7 +16,6 @@ import marten.aoe.engine.loader.MapLoader;
 import marten.aoe.engine.loader.UnitLoader;
 
 /** The main access point to all functionality of the AoE engine.
- * Every call to methods of this class is supervised by {@link EngineRequestValidator}.
  * Monitoring of internal changes in the engine is provided by {@link EngineMonitor}.
  * @author Petras Ražanskas*/
 public final class Engine {
@@ -29,10 +28,13 @@ public final class Engine {
      * @param mapname - the name of the class (subclass of {@link Map}) to be loaded.
      * @param playerList - an array of players that will be allowed access to this engine.*/
     public Engine (@NotNull String mapName, @NoNullEntries PlayerDTO[] playerList) {
-        if (!MapLoader.getAvailableMaps().contains(mapName)) {
+        if (MapLoader.getAvailableMaps().contains(mapName)) {
+            this.map = MapLoader.loadMap(this, mapName);            
+        } else if (MapLoader.getAvailableSimpleMaps().contains(mapName)) {
+            this.map = MapLoader.loadSimpleMap(this, mapName);
+        } else {
             throw new IllegalArgumentException("Unknown map name");
         }
-        this.map = MapLoader.loadMap(this, mapName);
         this.playerList = playerList;
         this.validateNewMap();
     }
@@ -42,10 +44,13 @@ public final class Engine {
      * @param mapname - the name of the class (subclass of {@link Map}) to be loaded.
      * @param playerList - a new array of players that will be allowed access to this engine.*/
     public synchronized void switchMap (@NotNull String mapName, @NoNullEntries PlayerDTO[] playerList) {
-        if (!MapLoader.getAvailableMaps().contains(mapName)) {
+        if (MapLoader.getAvailableMaps().contains(mapName)) {
+            this.map = MapLoader.loadMap(this, mapName);            
+        } else if (MapLoader.getAvailableSimpleMaps().contains(mapName)) {
+            this.map = MapLoader.loadSimpleMap(this, mapName);
+        } else {
             throw new IllegalArgumentException("Unknown map name");
         }
-        this.map = MapLoader.loadMap(this, mapName);
         this.playerList = playerList;
         this.validateNewMap();
         this.currentPlayer = 0;
@@ -175,11 +180,11 @@ public final class Engine {
     }
 
     private void validateNewMap() {
-        if (this.map.getPlayerLimit() < this.playerList.length) {
+        if (this.map.getMeta().getNumberOfPlayers() < this.playerList.length) {
             throw new IllegalArgumentException("There are more players than slots provided by the map.");
         }
-        for (int x = 0; x < this.map.getWidth(); x++) {
-            for (int y = 0; y < this.map.getHeight(); y++) {
+        for (int x = 0; x < this.map.getMeta().getWidth(); x++) {
+            for (int y = 0; y < this.map.getMeta().getHeight(); y++) {
                 if (this.map.getTile(new PointDTO(x, y)) == null) {
                     throw new IllegalArgumentException("The loaded map is corrupted: some of the tiles are null.");
                 }
@@ -188,7 +193,7 @@ public final class Engine {
     }
 
     private void validateLocation(PointDTO location) {
-        if (location.getX() < 0 || location.getX() >= this.map.getWidth() || location.getY() < 0 || location.getY() >= this.map.getHeight()) {
+        if (location.getX() < 0 || location.getX() >= this.map.getMeta().getWidth() || location.getY() < 0 || location.getY() >= this.map.getMeta().getHeight()) {
             throw new IllegalArgumentException("The requested location is out of map bounds.");
         }
     }
