@@ -13,7 +13,7 @@ public class ImageCache {
         if (!images.containsKey(cacheId)) {
             ImageData image = ImageLoader.loadImage(path);
             images.put(cacheId, image);
-            log.debug("Image " + path + " added to image cache as " + cacheId);
+            log.debug("Image '" + cacheId + "' added to image cache as " + cacheId);
         } else {
             // log.debug("Image " + path + " is allready in font cache.");
         }
@@ -24,6 +24,15 @@ public class ImageCache {
             ImageData image = ImageLoader.loadImage(path);
             images.put(path, image);
             log.debug("Image " + path + " added to image cache.");
+        } else {
+            // log.debug("Image " + path + " is allready in font cache.");
+        }
+    }
+
+    public static void addImage(String cacheId, ImageData data) {
+        if (!images.containsKey(cacheId)) {
+            images.put(cacheId, data);
+            log.debug("Image '" + cacheId + "' added to image cache.");
         } else {
             // log.debug("Image " + path + " is allready in font cache.");
         }
