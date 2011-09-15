@@ -58,7 +58,7 @@ public class MapEditorLoader extends TileLoader implements Loadable {
     public synchronized void load(LoadingState state) {
         state.status = "Loading tile data 0%";
         log.info("Loading tile data...");
-        this.loadLayers(new ArrayList<String>(), Path.NEW_TILE_DATA_PATH);
+        this.loadLayers(new ArrayList<String>(), Path.TILE_DATA_PATH);
         state.status = "100%";
     }
 }
