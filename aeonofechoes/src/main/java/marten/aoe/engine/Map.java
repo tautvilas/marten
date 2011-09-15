@@ -50,7 +50,7 @@ public abstract class Map {
                 tiles[x][y] = (this.map[x][y] != null ? this.map[x][y].getDTO(player) : null);
             }
         }
-        return new MapDTO(tiles, this.meta.getWidth(), this.meta.getHeight(), this.meta.getName());
+        return new MapDTO(tiles, this.meta);
     }
     public final Tile getTile (PointDTO point) {
         if (point.getX() >= 0 && point.getX() < this.meta.getWidth() && point.getY() >= 0 && point.getY() < this.meta.getHeight()) {

@@ -1,7 +1,5 @@
 package marten.aoe.engine;
 
-import java.io.IOException;
-
 import marten.aoe.dto.MapMetaDTO;
 import marten.aoe.dto.PointDTO;
 import marten.aoe.engine.loader.TileLoader;
@@ -16,7 +14,7 @@ public abstract class LoadedMap extends Map {
      * @param width the width of each of a row in the map.
      * @param height the total number of the rows in the map.
      * @throws IOException whenever there are issues with files or map dimensions do not match the given ones.*/
-    public LoadedMap (Engine engine, MapMetaDTO meta, DataTree mapFile) throws IOException {
+    public LoadedMap (Engine engine, MapMetaDTO meta, DataTree mapFile) {
         super (engine, meta);
         if (mapFile.value().equals("FILE")) {
             // mapFile.branches().get(0) would get the map header, which is not interesting any more at this point
@@ -46,21 +44,21 @@ public abstract class LoadedMap extends Map {
                             }
                         }
                         if (x != meta.getWidth()) {
-                            throw new IOException("Row dimension mismatch. Expected: "+meta.getWidth()+", actual: "+x);
+                            throw new IllegalArgumentException("Row dimension mismatch. Expected: "+meta.getWidth()+", actual: "+x);
                         }
                         y--;
                     }
                 }
                 if (y != -1) {
-                    throw new IOException("Column dimension mismatch. Expected: "+meta.getHeight()+", actual: "+(meta.getHeight() - 1 - y));
+                    throw new IllegalArgumentException("Column dimension mismatch. Expected: "+meta.getHeight()+", actual: "+(meta.getHeight() - 1 - y));
                 }
             }
             else {
-                throw new IOException("Not a map file");
+                throw new IllegalArgumentException("Not a map file");
             }
         }
         else {
-            throw new IOException("Unknown major error");
+            throw new IllegalArgumentException("Unknown major error");
         }
     }
 }
