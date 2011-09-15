@@ -59,8 +59,7 @@ public class TileImageFactory {
                 throw new RuntimeException("Layer not in cache: "
                         + layer.toLowerCase());
             } else {
-                collection.add(TileImageFactory.priorities.get(layer
-                        .toLowerCase()));
+                collection.add(overlay);
             }
         }
         Collections.sort(collection);
