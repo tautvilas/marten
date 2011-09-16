@@ -19,6 +19,7 @@ public final class DataFileHandler {
     public static void write(String fileName, DataTree data) throws IOException {
     	BufferedWriter file = new BufferedWriter(new FileWriter(fileName));
     	write(file, 0, data);
+        file.close();
     }
     
     private static void write(BufferedWriter file, int level, DataTree data) throws IOException {
@@ -36,7 +37,6 @@ public final class DataFileHandler {
                 write(file, level + 1, branch);
             }            
         }
-        file.close();
     }
     
     public static DataTree read(String fileName) throws IOException {

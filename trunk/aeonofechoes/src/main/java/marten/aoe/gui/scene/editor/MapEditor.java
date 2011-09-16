@@ -80,7 +80,7 @@ public class MapEditor extends AgeScene implements MouseListener {
                 MapEditor.this.flatland.updateChild(map, 0);
                 MapEditor.this.updateControllable(map.getId(), map);
 //                MapDTO.writeToMapFile("Free", dto);
-//                loadMapDialog.hide();
+                loadMapDialog.hide();
             }
         });
         loadButton.setAction(new Action() {
