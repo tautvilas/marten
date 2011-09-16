@@ -41,7 +41,7 @@ public final class MapDTO implements Serializable {
             throw new RuntimeException("Failed to instantiate " + mapName + ".");
         }
         MapMetaDTO meta = MapLoader.retrieveMapMetaData(mapFile);
-        TileDTO[][] map = new TileDTO[meta.getHeight()][meta.getWidth()];
+        TileDTO[][] map = new TileDTO[meta.getWidth()][meta.getHeight()];
         if (mapFile.value().equals("FILE")) {
             DataTree mapData = mapFile.branches().get(1);
             if (mapData.value().equals("Map")) {
