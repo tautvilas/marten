@@ -77,7 +77,7 @@ public class MapWidget extends BasicSceneGraphBranch<SceneGraphChild> implements
         this.init();
         for (int i = 0; i < size; i++) {
             for (int j = 0; j < size; j++) {
-                this.updateTile(new TileDTO("grass", new PointDTO(i, j), null,
+                this.updateTile(new TileDTO("Grassland", new PointDTO(i, j), null,
                         true));
             }
         }

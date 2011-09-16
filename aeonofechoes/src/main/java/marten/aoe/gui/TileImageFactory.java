@@ -38,7 +38,7 @@ public class TileImageFactory {
         layers = TileImageFactory.sortLayers(layers);
         String name = "";
         for (int i = 0; i < layers.length; i++) {
-            name += layers[i].toLowerCase();
+            name += layers[i];
             if (i != layers.length - 1) {
                 name += "_";
             }
@@ -49,11 +49,9 @@ public class TileImageFactory {
     public static String[] sortLayers(String[] layers) {
         ArrayList<TileLayer> collection = new ArrayList<TileLayer>();
         for (String layer : layers) {
-            TileLayer overlay = TileImageFactory.priorities.get(layer
-                    .toLowerCase());
+            TileLayer overlay = TileImageFactory.priorities.get(layer);
             if (overlay == null) {
-                throw new RuntimeException("Layer not in cache: "
-                        + layer.toLowerCase());
+                throw new RuntimeException("Layer not in cache: " + layer);
             } else {
                 collection.add(overlay);
             }
@@ -74,7 +72,8 @@ public class TileImageFactory {
             layers = TileImageFactory.sortLayers(layers);
             ImageData tile = ImageCache.getImage(layers[0]);
             for (int i = 1; i < layers.length; i++) {
-                tile = ImageTransformations.blend(tile, ImageCache.getImage(layers[i]));
+                tile = ImageTransformations.blend(tile, ImageCache
+                        .getImage(layers[i]));
             }
             ImageCache.addImage(name, tile);
             return tile;

@@ -41,7 +41,7 @@ public class MapEditor extends AgeScene implements MouseListener {
     private HashMap<String, SceneGraphBranch<SceneGraphChild>> tabs = new HashMap<String, SceneGraphBranch<SceneGraphChild>>();
     private SimpleLayout layout = new SimpleLayout(AppInfo
             .getDisplayDimension());
-    private String brush = "grass";
+    private String brush = "Grassland";
     private boolean mouseDown = false;
     private MapWidget map;
     private LoadMapDialog loadMapDialog;
@@ -77,6 +77,7 @@ public class MapEditor extends AgeScene implements MouseListener {
                 MapEditor.this.map = new MapWidget(dto, AppInfo.getDisplayDimension());
                 map.setId("map");
                 MapEditor.this.flatland.updateChild(map, 0);
+                MapEditor.this.updateControllable(map.getId(), map);
                 loadMapDialog.hide();
             }
         });
