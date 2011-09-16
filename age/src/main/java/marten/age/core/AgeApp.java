@@ -32,7 +32,7 @@ public abstract class AgeApp {
     private String title = "";
     private AgeScene sceneChanged = null;
 
-//    private static final int FRAMERATE = 50;
+//    private static final int FRAMERATE = 60;
 
     public int width = DEFAULT_WIDHT;
     public int height = DEFAULT_HEIGHT;
