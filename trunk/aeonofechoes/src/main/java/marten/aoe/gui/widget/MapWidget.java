@@ -83,6 +83,10 @@ public class MapWidget extends BasicSceneGraphBranch<SceneGraphChild> implements
         }
     }
 
+    public MapWidget(MapDTO map, Dimension dimension) {
+        this(map, dimension, null);
+    }
+
     public MapWidget(MapDTO map, Dimension dimension, MapWidgetListener listener) {
         this.listener = listener;
         this.dimension = dimension;

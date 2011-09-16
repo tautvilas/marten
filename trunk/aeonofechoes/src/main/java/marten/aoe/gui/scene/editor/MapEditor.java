@@ -22,6 +22,7 @@ import marten.age.graphics.text.FontCache;
 import marten.age.widget.Action;
 import marten.age.widget.Button;
 import marten.age.widget.obsolete.FpsCounter;
+import marten.aoe.dto.MapDTO;
 import marten.aoe.dto.TileDTO;
 import marten.aoe.gui.AoeButtonFactory;
 import marten.aoe.gui.TileImageFactory;
@@ -72,7 +73,11 @@ public class MapEditor extends AgeScene implements MouseListener {
         this.loadMapDialog = new LoadMapDialog(this, new Action() {
             @Override
             public void perform() {
-                System.out.println(loadMapDialog.getMapName());
+                MapDTO dto = MapDTO.loadFromMapFile(loadMapDialog.getMapName());
+                MapEditor.this.map = new MapWidget(dto, AppInfo.getDisplayDimension());
+                map.setId("map");
+                MapEditor.this.flatland.updateChild(map, 0);
+                loadMapDialog.hide();
             }
         });
         loadButton.setAction(new Action() {
