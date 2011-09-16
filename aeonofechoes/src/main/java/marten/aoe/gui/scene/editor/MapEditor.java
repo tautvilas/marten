@@ -1,6 +1,9 @@
 package marten.aoe.gui.scene.editor;
 
 import java.awt.Font;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 
@@ -23,6 +26,8 @@ import marten.age.widget.Action;
 import marten.age.widget.Button;
 import marten.age.widget.obsolete.FpsCounter;
 import marten.aoe.dto.MapDTO;
+import marten.aoe.dto.MapMetaDTO;
+import marten.aoe.dto.PointDTO;
 import marten.aoe.dto.TileDTO;
 import marten.aoe.gui.AoeButtonFactory;
 import marten.aoe.gui.TileImageFactory;
@@ -75,11 +80,12 @@ public class MapEditor extends AgeScene implements MouseListener {
             @Override
             public void perform() {
                 MapDTO dto = MapDTO.loadFromMapFile(loadMapDialog.getMapName());
-                MapEditor.this.map = new MapWidget(dto, AppInfo.getDisplayDimension());
+                MapEditor.this.map = new MapWidget(dto, AppInfo
+                        .getDisplayDimension());
                 map.setId("map");
                 MapEditor.this.flatland.updateChild(map, 0);
                 MapEditor.this.updateControllable(map.getId(), map);
-//                MapDTO.writeToMapFile("Free", dto);
+                // MapDTO.writeToMapFile("Free", dto);
                 loadMapDialog.hide();
             }
         });
@@ -100,11 +106,18 @@ public class MapEditor extends AgeScene implements MouseListener {
         this.saveMapDialog = new LoadMapDialog(this, new Action() {
             @Override
             public void perform() {
-//                MapDTO dto = MapDTO.loadFromMapFile(loadMapDialog.getMapName());
-//                MapEditor.this.map = new MapWidget(dto, AppInfo.getDisplayDimension());
-//                map.setId("map");
-//                MapEditor.this.flatland.updateChild(map, 0);
-//                MapEditor.this.updateControllable(map.getId(), map);
+                List<PointDTO> startPositions = new ArrayList<PointDTO>();
+                Collection<TileDTO> tiles = MapEditor.this.map.getTiles();
+                for (TileDTO tile : tiles) {
+                    if (Arrays.asList(tile.getLayers()).contains("Hq")) {
+                        startPositions.add(tile.getCoordinates());
+                    }
+                }
+                Dimension size = map.getSize();
+                MapMetaDTO meta = new MapMetaDTO(saveMapDialog.getMapName(),
+                        (int)size.width, (int)size.height, startPositions);
+                MapDTO dto = new MapDTO(tiles, meta);
+                MapDTO.writeToMapFile(saveMapDialog.getMapName(), dto);
                 saveMapDialog.hide();
             }
         });
@@ -186,8 +199,7 @@ public class MapEditor extends AgeScene implements MouseListener {
         this.tabs.get("a").show();
         Button eraser = new Button(new TextureSprite(TileImageFactory
                 .getTile("Void"), new Dimension(32, 32)));
-        iconPos = sidebar.getPosition().move(
-                new Point(50, 550));
+        iconPos = sidebar.getPosition().move(new Point(50, 550));
         eraser.setPosition(iconPos);
         this.layout.addChild(eraser);
         eraser.setAction(new Action() {
@@ -207,7 +219,8 @@ public class MapEditor extends AgeScene implements MouseListener {
         if (tile == null)
             return;
         if (this.brush == "eraser") {
-            this.map.updateTile(new TileDTO("Void", tile.getCoordinates(), tile.getUnit()));
+            this.map.updateTile(new TileDTO("Void", tile.getCoordinates(), tile
+                    .getUnit()));
         } else {
             this.map.updateTile(TileImageFactory.blendTile(tile, this.brush));
         }
