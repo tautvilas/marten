@@ -95,7 +95,7 @@ public abstract class TileLayer extends Tile {
     }
     @Override
     public final TileDTO getDTO(PlayerDTO player) {        
-        if (player == PlayerDTO.SYSTEM) {         
+        if (player == PlayerDTO.SYSTEM) {
             return new TileDTO(
                     this.getLayers(player),
                     this.getCoordinates(),

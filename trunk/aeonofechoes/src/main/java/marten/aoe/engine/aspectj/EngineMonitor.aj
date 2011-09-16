@@ -190,8 +190,9 @@ public final aspect EngineMonitor {
         if (unit != null) {
             for (PlayerDTO player : engine.listeners.keySet()) {
                 if (unit.isDetected(player)) {
+                    TileDTO tileData = tile.getMap().getTile(tile.getCoordinates()).getDTO(player);                    
                     for (EngineListener listener : engine.listeners.get(player)) {
-                        listener.onLocalEvent(LocalEvent.UNIT_EXIT, tile.getDTO(player));
+                        listener.onLocalEvent(LocalEvent.UNIT_EXIT, tileData);
                     }
                 }
             }
