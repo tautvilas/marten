@@ -163,6 +163,19 @@ public class MapEditor extends AgeScene implements MouseListener {
             i++;
         }
         this.tabs.get("a").show();
+        Button eraser = new Button(new TextureSprite(TileImageFactory
+                .getTile("Void"), new Dimension(32, 32)));
+        iconPos = sidebar.getPosition().move(
+                new Point(50, 550));
+        eraser.setPosition(iconPos);
+        this.layout.addChild(eraser);
+        eraser.setAction(new Action() {
+            @Override
+            public void perform() {
+                MapEditor.this.brush = "eraser";
+            }
+        });
+        this.registerControllable(eraser);
         this.registerControllable(this);
     }
 
@@ -172,7 +185,11 @@ public class MapEditor extends AgeScene implements MouseListener {
         TileDTO tile = this.map.tileHit(coords);
         if (tile == null)
             return;
-        this.map.updateTile(TileImageFactory.blendTile(tile, this.brush));
+        if (this.brush == "eraser") {
+            this.map.updateTile(new TileDTO("Void", tile.getCoordinates(), tile.getUnit()));
+        } else {
+            this.map.updateTile(TileImageFactory.blendTile(tile, this.brush));
+        }
     }
 
     @Override
