@@ -45,6 +45,7 @@ public class MapEditor extends AgeScene implements MouseListener {
     private boolean mouseDown = false;
     private MapWidget map;
     private LoadMapDialog loadMapDialog;
+    private LoadMapDialog saveMapDialog;
 
     public MapEditor() {
         Button newButton = AoeButtonFactory.getEditorButton("New");
@@ -78,7 +79,8 @@ public class MapEditor extends AgeScene implements MouseListener {
                 map.setId("map");
                 MapEditor.this.flatland.updateChild(map, 0);
                 MapEditor.this.updateControllable(map.getId(), map);
-                loadMapDialog.hide();
+//                MapDTO.writeToMapFile("Free", dto);
+//                loadMapDialog.hide();
             }
         });
         loadButton.setAction(new Action() {
@@ -95,6 +97,25 @@ public class MapEditor extends AgeScene implements MouseListener {
         saveButton.setPosition(new Point((buttonWidth + padding) * 2,
                 windowHeight - buttonHeight));
         this.flatland.addChild(saveButton);
+        this.saveMapDialog = new LoadMapDialog(this, new Action() {
+            @Override
+            public void perform() {
+//                MapDTO dto = MapDTO.loadFromMapFile(loadMapDialog.getMapName());
+//                MapEditor.this.map = new MapWidget(dto, AppInfo.getDisplayDimension());
+//                map.setId("map");
+//                MapEditor.this.flatland.updateChild(map, 0);
+//                MapEditor.this.updateControllable(map.getId(), map);
+                saveMapDialog.hide();
+            }
+        });
+        saveButton.setAction(new Action() {
+            @Override
+            public void perform() {
+                MapEditor.this.saveMapDialog.show();
+            }
+        });
+        this.registerControllable(saveButton);
+        this.layout.center(this.saveMapDialog);
         // sidebar
         Sidebar sidebar = new Sidebar(new Dimension(256, windowHeight));
         sidebar.setPosition(new Point(windowWidth - 256, 0));
