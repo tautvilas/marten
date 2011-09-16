@@ -72,6 +72,12 @@ public class MapEditor extends AgeScene implements MouseListener {
             }
         });
         this.registerControllable(newButton);
+        // sidebar
+        Sidebar sidebar = new Sidebar(new Dimension(256, windowHeight));
+        sidebar.setPosition(new Point(windowWidth - 256, 0));
+        flatland.addChild(sidebar);
+        // map dimension
+        final Dimension mapDimension = new Dimension(AppInfo.getDisplayWidth() - sidebar.getDimension().width, AppInfo.getDisplayHeight() - 32);
         // load button
         Button loadButton = AoeButtonFactory.getEditorButton("Load");
         loadButton.setPosition(new Point(buttonWidth + padding, windowHeight
@@ -80,8 +86,7 @@ public class MapEditor extends AgeScene implements MouseListener {
             @Override
             public void perform() {
                 MapDTO dto = MapDTO.loadFromMapFile(loadMapDialog.getMapName());
-                MapEditor.this.map = new MapWidget(dto, AppInfo
-                        .getDisplayDimension());
+                MapEditor.this.map = new MapWidget(dto, mapDimension);
                 map.setId("map");
                 MapMetaDTO meta = dto.getMeta();
                 for (PointDTO point : meta.getStartingPositions()) {
@@ -134,18 +139,13 @@ public class MapEditor extends AgeScene implements MouseListener {
         });
         this.registerControllable(saveButton);
         this.layout.center(this.saveMapDialog);
-        // sidebar
-        Sidebar sidebar = new Sidebar(new Dimension(256, windowHeight));
-        sidebar.setPosition(new Point(windowWidth - 256, 0));
-        flatland.addChild(sidebar);
         // other stuff
         this.flatland.addChild(new FpsCounter());
         this.flatland.addChild(layout);
         newMapDialog = new NewMapDialog(this, new Action() {
             @Override
             public void perform() {
-                map = new MapWidget(newMapDialog.getMapSize(), AppInfo
-                        .getDisplayDimension());
+                map = new MapWidget(newMapDialog.getMapSize(), mapDimension);
                 map.setId("map");
                 MapEditor.this.flatland.updateChild(map, 0);
                 MapEditor.this.updateControllable(map.getId(), map);
