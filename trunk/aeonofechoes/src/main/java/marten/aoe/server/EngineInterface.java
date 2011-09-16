@@ -45,7 +45,8 @@ public class EngineInterface extends UnicastRemoteObject implements EngineFace {
                         || event == LocalEvent.UNIT_ENTRY
                         || event == LocalEvent.UNIT_EXIT
                         || event == LocalEvent.TILE_INVISIBLE
-                        || event == LocalEvent.TILE_VISIBLE) {
+                        || event == LocalEvent.TILE_VISIBLE
+                        || event == LocalEvent.UNIT_REFRESH) {
                     synchronized (EngineInterface.this.tiles) {
                         EngineInterface.this.tiles.add(location);
                     }
