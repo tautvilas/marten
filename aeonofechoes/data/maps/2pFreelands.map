@@ -6,7 +6,7 @@ Header:
         StartX = 18
         StartY = 3
     Player:
-    	StartX = 18
+        StartX = 18
         StartY = 20
 Map:
     Row:
