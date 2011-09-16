@@ -83,6 +83,11 @@ public class MapEditor extends AgeScene implements MouseListener {
                 MapEditor.this.map = new MapWidget(dto, AppInfo
                         .getDisplayDimension());
                 map.setId("map");
+                MapMetaDTO meta = dto.getMeta();
+                for (PointDTO point : meta.getStartingPositions()) {
+                    TileDTO tile = MapEditor.this.map.getTile(point);
+                    MapEditor.this.map.updateTile(TileImageFactory.blendTile(tile, "Hq"));
+                }
                 MapEditor.this.flatland.updateChild(map, 0);
                 MapEditor.this.updateControllable(map.getId(), map);
                 // MapDTO.writeToMapFile("Free", dto);
