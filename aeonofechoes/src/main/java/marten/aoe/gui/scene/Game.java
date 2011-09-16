@@ -21,6 +21,7 @@ import marten.age.widget.obsolete.FpsCounter;
 import marten.aoe.GameInfo;
 import marten.aoe.dto.PointDTO;
 import marten.aoe.dto.TileDTO;
+import marten.aoe.fileio.IoUtil;
 import marten.aoe.gui.AoeButtonFactory;
 import marten.aoe.gui.MapWidgetListener;
 import marten.aoe.gui.widget.MapWidget;
@@ -203,6 +204,7 @@ public class Game extends AgeScene implements MapWidgetListener {
                         }
                     } else if (event == EngineEvent.STREAM_UPDATE) {
                         LinkedList<TileDTO> tiles = engine.popStream();
+                        log.debug("Received stream size: " + IoUtil.getSize(tiles) + "b");
                         synchronized (updatedTiles) {
                             for (TileDTO tile : tiles) {
                                 updatedTiles.add(tile);

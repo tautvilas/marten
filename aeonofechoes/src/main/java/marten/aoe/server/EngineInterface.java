@@ -79,6 +79,7 @@ public class EngineInterface extends UnicastRemoteObject implements EngineFace {
                             EngineInterface.this.streams
                                     .add((LinkedList<TileDTO>)EngineInterface.this.tiles
                                             .clone());
+                            EngineInterface.this.tiles.clear();
                         }
                         synchronized (EngineInterface.this.events) {
                             EngineInterface.this.events
