@@ -35,6 +35,9 @@ public final aspect EngineMonitor {
     pointcut onTurnEnd (Engine engine) :
         target(engine) && execution(* Engine.endTurn(..));
     
+    pointcut onUnitTurnEnd (Unit unit) :
+        target(unit) && execution(* Unit.turnOver(..));
+    
     pointcut onTileSwitch (Map map, Tile tile) :
         target(map) && args(tile) && execution(* Map.switchTile(Tile));
     
@@ -121,11 +124,34 @@ public final aspect EngineMonitor {
     
     void around (Engine engine) : onTurnEnd(engine) {
         PlayerDTO activePlayer = engine.getActivePlayer();
+        int currentTurn = engine.getCurrentTurn();
+        for (List<EngineListener> listeners : engine.listeners.values()) {
+            for (EngineListener listener : listeners) {
+                listener.onGlobalEvent(GlobalEvent.STREAM_START);
+            }
+        }
         proceed(engine);
-        if (activePlayer != engine.getActivePlayer()) {
+        if (activePlayer != engine.getActivePlayer() || currentTurn != engine.getCurrentTurn()) {
             for (List<EngineListener> listeners : engine.listeners.values()) {
                 for (EngineListener listener : listeners) {
                     listener.onGlobalEvent(GlobalEvent.TURN_END);
+                }
+            }
+        }
+        for (List<EngineListener> listeners : engine.listeners.values()) {
+            for (EngineListener listener : listeners) {
+                listener.onGlobalEvent(GlobalEvent.STREAM_END);
+            }
+        }        
+    }
+    
+    after(Unit unit) : onUnitTurnEnd(unit) {
+        Engine engine = unit.getMap().getOwner();
+        for (PlayerDTO player : engine.listeners.keySet()) {
+            if (unit.getLocation().isVisible(player)) {
+                TileDTO tileData = unit.getMap().getTile(unit.getLocation().getCoordinates()).getDTO(player);
+                for (EngineListener listener : engine.listeners.get(player)) {
+                    listener.onLocalEvent(LocalEvent.UNIT_REFRESH, tileData);
                 }
             }
         }
