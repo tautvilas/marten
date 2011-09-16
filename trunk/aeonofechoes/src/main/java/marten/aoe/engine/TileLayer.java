@@ -64,10 +64,21 @@ public abstract class TileLayer extends Tile {
                     false
             );
         }
+        if (!this.isCloaked(player)) {
+            return new FullTileDTO(
+                    this.getLayers(player),
+                    this.getCoordinates(),
+                    this.getHeight(),
+                    this.getMovementCost(),
+                    this.getDefenseBonus(),
+                    (this.getUnit() != null && this.isVisible(player) ? this.getUnit().getFullDTO(player) : null),
+                    this.getSpecialFeatures(),
+                    this.isVisible(player)
+            );
+        }
         for (Unit unit : this.getMap().getAllUnits(player)) {
             int distance = this.distanceTo(unit.getLocation());
-            if (distance == 0 || (distance <= unit.getDetectionRange()) &&
-                    (!this.isCloaked(player) || unit.isObserving())) {
+            if (distance == 0 || (distance <= unit.getDetectionRange()) && unit.isObserving()) {
                 return new FullTileDTO(
                         this.getLayers(player),
                         this.getCoordinates(),
@@ -95,10 +106,17 @@ public abstract class TileLayer extends Tile {
         if (!this.isExplored(player)) {
             return new TileDTO("Shroud", this.getCoordinates(), null, false);
         }
+        if (!this.isCloaked(player)) {
+            return new TileDTO(
+                    this.getLayers(player),
+                    this.getCoordinates(),
+                    (this.getUnit() != null ? this.getUnit().getDTO(player) : null),
+                    this.isVisible(player)
+            );
+        }
         for (Unit unit : this.getMap().getAllUnits(player)) {
             int distance = this.distanceTo(unit.getLocation());
-            if (distance == 0 || (distance <= unit.getDetectionRange()) &&
-                    (!this.isCloaked(player) || unit.isObserving())) {
+            if (distance == 0 || (distance <= unit.getDetectionRange()) && unit.isObserving()) {
                 return new TileDTO(
                         this.getLayers(player),
                         this.getCoordinates(),
