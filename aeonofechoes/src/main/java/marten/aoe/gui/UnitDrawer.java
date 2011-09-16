@@ -19,20 +19,18 @@ public class UnitDrawer {
     }
 
     public void updateTile(TileDTO tile, Point tileDisplayCoordinates) {
-        if (tile.getUnit() != null) {
-            if (!this.units.containsKey(tile.getCoordinates())) {
-                UnitWidget unit = new UnitWidget(tile.getUnit());
-                unit.setPosition(new Point(tileDisplayCoordinates.x
-                        + 64 / 2 - unit.getDimension().width / 2,
-                        tileDisplayCoordinates.y + 64 / 2
-                                - unit.getDimension().height / 2));
-                this.context.addChild(unit);
-                units.put(tile.getCoordinates(), unit);
-            }
-        } else if (this.units.containsKey(tile.getCoordinates())) {
+        if (this.units.containsKey(tile.getCoordinates())) {
             UnitWidget unit = this.units.get(tile.getCoordinates());
             this.context.removeChild(unit);
             this.units.remove(tile.getCoordinates());
+        }
+        if (tile.getUnit() != null) {
+            UnitWidget unit = new UnitWidget(tile.getUnit());
+            unit.setPosition(new Point(tileDisplayCoordinates.x + 64 / 2
+                    - unit.getDimension().width / 2, tileDisplayCoordinates.y
+                    + 64 / 2 - unit.getDimension().height / 2));
+            this.context.addChild(unit);
+            units.put(tile.getCoordinates(), unit);
         }
     }
 }
