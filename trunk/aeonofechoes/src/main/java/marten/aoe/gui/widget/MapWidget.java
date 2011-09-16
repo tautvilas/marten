@@ -3,6 +3,7 @@ package marten.aoe.gui.widget;
 import java.awt.Font;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 
 import marten.age.control.MouseListener;
@@ -245,9 +246,17 @@ public class MapWidget extends BasicSceneGraphBranch<SceneGraphChild> implements
         return this.size;
     }
 
+    public Dimension getSize() {
+        return this.size;
+    }
+
     @Override
     public Point getPosition() {
         return tg.getPosition();
+    }
+
+    public Collection<TileDTO> getTiles() {
+        return this.tiles.values();
     }
 
     @Override

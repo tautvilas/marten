@@ -2,6 +2,7 @@ package marten.aoe.dto;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 import marten.aoe.Path;
@@ -17,7 +18,7 @@ public final class MapDTO implements Serializable {
         this.tileMap = tileMap;
         this.meta = meta;
     }
-    public MapDTO (List<TileDTO> tiles, MapMetaDTO meta) {
+    public MapDTO (Collection<TileDTO> tiles, MapMetaDTO meta) {
         this.tileMap = new TileDTO[meta.getWidth()][meta.getHeight()];
         for (TileDTO tile : tiles) {
             PointDTO position = tile.getCoordinates();
