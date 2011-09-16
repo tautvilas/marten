@@ -260,10 +260,17 @@ public final aspect EngineMonitor {
         }
     }    
     
+    before (Engine engine, PlayerDTO player, PointDTO location) : onUnitSpawned(engine, player, location) {
+        for (EngineListener listener : engine.listeners.get(player)) {
+            listener.onGlobalEvent(GlobalEvent.STREAM_START);
+        }
+    }
+    
     after (Engine engine, PlayerDTO player, PointDTO location) : onUnitSpawned(engine, player, location) {
         TileDTO tileData = engine.getMap().getTile(location).getDTO(player);        
         for (EngineListener listener : engine.listeners.get(player)) {
             listener.onLocalEvent(LocalEvent.UNIT_ENTRY, tileData);
+            listener.onGlobalEvent(GlobalEvent.STREAM_END);
         }
     }
 }
