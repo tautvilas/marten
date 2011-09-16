@@ -28,7 +28,7 @@ public final class TileDTO implements Serializable {
         this.layers = layers;
         this.unit = unit;
         this.point = point;
-        this.visible = visible;
+        this.visible = visible;        
     }
 
     public String getName() {
