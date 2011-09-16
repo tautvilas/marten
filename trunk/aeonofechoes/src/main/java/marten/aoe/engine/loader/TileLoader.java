@@ -9,6 +9,7 @@ import marten.aoe.data.tiles.Generic;
 import marten.aoe.dto.PointDTO;
 import marten.aoe.engine.Map;
 import marten.aoe.engine.Tile;
+import marten.aoe.engine.TileLayer;
 
 import org.apache.log4j.Logger;
 
@@ -47,17 +48,16 @@ public final class TileLoader {
         }
         return null;
     }
-    public static Tile loadLayer (String layerName, Tile tile) {
+    public static TileLayer loadLayer (String layerName, Tile tile) {
         List<String> availableTiles = getAvailableTiles();
         if (!availableTiles.contains(layerName)) {
-            log.warn(layerName + " not found.");
             /*
             log.debug("Detected tile types are:");
             for (String availableTile : availableTiles) {
                 log.debug("\t"+availableTile);
             }
             */
-            return tile;
+            throw new RuntimeException (layerName + " not found.");
         }
         Class<?> tileClass = null;
         Object tileInstance = null;
@@ -67,12 +67,12 @@ public final class TileLoader {
         }
         catch (Exception e) {
             e.printStackTrace();
-            return tile;
+            throw new RuntimeException (layerName + " failed to load.");
         }
         /* THE ROOT OF ALL THE EVIL, BE CAUTIOUS! */
-        if (tileInstance instanceof Tile) {
-            return (Tile)tileInstance;
+        if (tileInstance instanceof TileLayer) {
+            return (TileLayer)tileInstance;
         }        
-        return tile;
+        throw new RuntimeException (layerName + " is not a tile layer.");
     }
 }

@@ -6,7 +6,7 @@ public final class FullTileDTO implements Serializable {
     private static final long serialVersionUID = 8570422115600942749L;
     private final FullUnitDTO unit;
     private final PointDTO location;
-    private final String name;
+    private final String[] layers;
     private final MovementDTO movement;
     private final DefenseDTO defense;
     private final int height;
@@ -14,7 +14,17 @@ public final class FullTileDTO implements Serializable {
     private final boolean visible;
 
     public FullTileDTO (String name, PointDTO location, int height, MovementDTO movement, DefenseDTO defense, FullUnitDTO unit, String[] description, boolean visible) {
-        this.name = name;
+        this.layers = new String[] {name};
+        this.location = location;
+        this.movement = movement;
+        this.defense = defense;
+        this.unit = unit;
+        this.height = height;
+        this.description = description;
+        this.visible = visible;
+    }
+    public FullTileDTO (String[] layers, PointDTO location, int height, MovementDTO movement, DefenseDTO defense, FullUnitDTO unit, String[] description, boolean visible) {
+        this.layers = layers;
         this.location = location;
         this.movement = movement;
         this.defense = defense;
@@ -24,7 +34,10 @@ public final class FullTileDTO implements Serializable {
         this.visible = visible;
     }
     public String getName () {
-        return this.name;
+        return this.layers[0];
+    }
+    public String[] getLayers () {
+        return this.layers;
     }
     public PointDTO getLocation () {
         return this.location;
