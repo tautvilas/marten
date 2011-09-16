@@ -281,6 +281,10 @@ public class MapWidget extends BasicSceneGraphBranch<SceneGraphChild> implements
         tg.setPosition(position);
     }
 
+    public TileDTO getTile(PointDTO point) {
+        return this.tiles.get(point);
+    }
+
     @Override
     public void mouseMove(Point coords) {
         TileDTO tile = tileHit(coords);
