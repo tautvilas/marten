@@ -17,6 +17,14 @@ public final class MapDTO implements Serializable {
         this.tileMap = tileMap;
         this.meta = meta;
     }
+    public MapDTO (List<TileDTO> tiles, MapMetaDTO meta) {
+        this.tileMap = new TileDTO[meta.getWidth()][meta.getHeight()];
+        for (TileDTO tile : tiles) {
+            PointDTO position = tile.getCoordinates();
+            this.tileMap[position.getX()][position.getY()] = tile;
+        }
+        this.meta = meta;
+    }
     public TileDTO getTileDTO (PointDTO location) {
         return this.tileMap[location.getX()][location.getY()];
     }
