@@ -19,6 +19,7 @@ public class Flatland extends Root {
         GL11.glEnableClientState(GL11.GL_VERTEX_ARRAY);
         GL11.glEnableClientState(GL11.GL_TEXTURE_COORD_ARRAY);
         GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
+//        GL11.glEnable(GL11.GL_SCISSOR_TEST);
     }
 
     public void render() {
@@ -30,6 +31,7 @@ public class Flatland extends Root {
         GL11.glScalef(1, -1, 1);
         GL11.glTranslatef(0, -AppInfo.getDisplayHeight(), 0);
         GL11.glMatrixMode(GL11.GL_MODELVIEW);
+//        GL11.glScissor(0, 0, 500, AppInfo.getDisplayHeight());
         super.render();
         GL11.glFlush();
     }

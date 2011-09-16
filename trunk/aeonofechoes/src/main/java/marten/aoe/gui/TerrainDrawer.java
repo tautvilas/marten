@@ -63,6 +63,7 @@ public class TerrainDrawer {
         Texture terrain = TextureLoader.loadTexture(TileImageFactory
                 .getTile(layers));
         SimpleModel sm = new SimpleModel(new Appearance(terrain));
+        sm.setId(tileId);
         terrainCache.put(tileId, sm);
         return sm;
     }
@@ -74,6 +75,7 @@ public class TerrainDrawer {
         fog.setColor(new Color(0.5, 0.4, 0.4));
         SimpleModel sm = new SimpleModel(fog);
         terrainCache.put(tileId + "fog", sm);
+        sm.setId(tileId + "fog");
         return sm;
     }
 }
