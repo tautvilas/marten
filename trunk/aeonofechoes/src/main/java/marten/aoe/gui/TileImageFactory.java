@@ -98,7 +98,8 @@ public class TileImageFactory {
         mergedLayers.add(layer);
         String[] array = new String[mergedLayers.size()];
         mergedLayers.toArray(array);
-        return new TileDTO(array, base.getCoordinates(), base.getUnit());
+        return new TileDTO(TileImageFactory.sortLayers(array), base
+                .getCoordinates(), base.getUnit());
     }
 
     public static ArrayList<TileLayer> getSortedLayerTypes() {
