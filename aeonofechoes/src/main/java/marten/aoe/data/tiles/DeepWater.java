@@ -10,17 +10,17 @@ import marten.aoe.dto.UnitType;
 import marten.aoe.engine.Map;
 import marten.aoe.engine.TileBase;
 
-public final class Water extends TileBase {
+public final class DeepWater extends TileBase {
     private final DefenseDTO defense;
     private final MovementDTO movement;
-    public Water(Map owner, PointDTO coordinates) {
-        super("Water", owner, coordinates);
+    public DeepWater(Map owner, PointDTO coordinates) {
+        super("DeepWater", owner, coordinates);
         // Forming defense
         EnumMap<UnitType, EnumMap<UnitSize, Integer>> data = new EnumMap<UnitType, EnumMap<UnitSize, Integer>>(UnitType.class);
         for (UnitType type : UnitType.values()) {
             EnumMap<UnitSize, Integer> data2 = new EnumMap<UnitSize, Integer>(UnitSize.class);
             for (UnitSize size : UnitSize.values()) {
-                data2.put(size, type == UnitType.GROUND ? -2 : 0);
+                data2.put(size, 0);
             }
             data.put(type, data2);
         }
@@ -32,13 +32,13 @@ public final class Water extends TileBase {
             for (UnitSize size : UnitSize.values()) {
                 switch (type) {
                     case GROUND:
-                        data2.put(size, 3);
+                        data2.put(size, 0);
                         break;
                     case AERIAL:
                         data2.put(size, 1);
                         break;
                     case MARINE:
-                        data2.put(size, 2);
+                        data2.put(size, 1);
                 }
             }
             data.put(type, data2);
@@ -55,7 +55,7 @@ public final class Water extends TileBase {
         return this.movement;
     }
     @Override public final String[] getSpecialFeatures() {
-        return new String[] {"Difficult terrain", "Shallow water"};        
+        return new String[] {"Water"};
     }
     @Override public final void onTurnOver() {
     }

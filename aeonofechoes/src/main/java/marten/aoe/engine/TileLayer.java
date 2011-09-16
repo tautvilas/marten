@@ -42,7 +42,7 @@ public abstract class TileLayer extends Tile {
     @Override public final FullTileDTO getFullDTO(PlayerDTO player) {
         if (player == PlayerDTO.SYSTEM) {
             return new FullTileDTO(
-                    this.getName(),
+                    this.getLayers(player),
                     this.getCoordinates(),
                     this.getHeight(),
                     this.getMovementCost(),
@@ -100,7 +100,7 @@ public abstract class TileLayer extends Tile {
             if (distance == 0 || (distance <= unit.getDetectionRange()) &&
                     (!this.isCloaked(player) || unit.isObserving())) {
                 return new TileDTO(
-                        this.getName(),
+                        this.getLayers(player),
                         this.getCoordinates(),
                         (this.getUnit() != null ? this.getUnit().getDTO(player) : null),
                         this.isVisible(player)
