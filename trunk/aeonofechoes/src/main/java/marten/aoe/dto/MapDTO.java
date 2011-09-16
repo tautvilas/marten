@@ -108,7 +108,7 @@ public final class MapDTO implements Serializable {
         }
         data.addBranch(map);
         try {
-            DataFileHandler.write(mapFileName + ".map", data);
+            DataFileHandler.write(Path.MAP_DATA_PATH + mapFileName + ".map", data);
         } catch (Exception e) {
             e.printStackTrace();
             throw new RuntimeException("Failed to write map data into disk");

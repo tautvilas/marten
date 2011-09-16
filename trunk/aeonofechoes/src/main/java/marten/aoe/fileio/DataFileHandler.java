@@ -28,14 +28,15 @@ public final class DataFileHandler {
         }
         for (DataTree branch : data.branches()) {
             if (branch.value().equals("KEYVALUE")) {
-                file.write(identation + branch.branches().get(0).value() + " = " + branch.branches().get(1).value() + "\n");
+                file.write(identation + branch.branches().get(0).value().replace(' ', '_') + " = " + branch.branches().get(1).value().replace(' ', '_') + "\n");
             } else if (branch.branches().isEmpty()) {
-                file.write(identation + branch.value() + "\n");                
+                file.write(identation + branch.value().replace(' ', '_') + "\n");                
             } else {
-                file.write(identation + branch.value() + ":\n");
+                file.write(identation + branch.value().replace(' ', '_') + ":\n");
                 write(file, level + 1, branch);
             }            
         }
+        file.close();
     }
     
     public static DataTree read(String fileName) throws IOException {
