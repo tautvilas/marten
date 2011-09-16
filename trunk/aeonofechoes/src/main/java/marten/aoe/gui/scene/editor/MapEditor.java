@@ -31,7 +31,7 @@ import marten.aoe.dto.PointDTO;
 import marten.aoe.dto.TileDTO;
 import marten.aoe.gui.AoeButtonFactory;
 import marten.aoe.gui.TileImageFactory;
-import marten.aoe.gui.TileLayer;
+import marten.aoe.gui.LayerPriorities;
 import marten.aoe.gui.widget.MapWidget;
 import marten.aoe.gui.widget.Sidebar;
 
@@ -152,13 +152,13 @@ public class MapEditor extends AgeScene implements MouseListener {
             }
         });
         // sidebar buttons
-        List<TileLayer> layers = TileImageFactory.getSortedLayerTypes();
+        List<LayerPriorities> layers = TileImageFactory.getSortedLayerTypes();
         String tab = "";
         Point buttonPos = sidebar.getPosition().move(new Point(50, 500));
         Point iconPos = null;
         int i = 0;
         SceneGraphBranch<SceneGraphChild> layout = null;
-        for (final TileLayer layer : layers) {
+        for (final LayerPriorities layer : layers) {
             if (!tab.equals(layer.getPriorities()[0])) {
                 i = 0;
                 layout = new BasicSceneGraphBranch<SceneGraphChild>();

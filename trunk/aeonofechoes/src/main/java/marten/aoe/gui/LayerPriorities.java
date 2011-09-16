@@ -1,11 +1,11 @@
 package marten.aoe.gui;
 
-public class TileLayer implements Comparable<TileLayer> {
+public class LayerPriorities implements Comparable<LayerPriorities> {
     private String type;
 
     private String priorities[];
 
-    public TileLayer(String type, String[] priorities) {
+    public LayerPriorities(String type, String[] priorities) {
         super();
         this.type = type;
         this.priorities = priorities;
@@ -20,7 +20,7 @@ public class TileLayer implements Comparable<TileLayer> {
     }
 
     @Override
-    public int compareTo(TileLayer other) {
+    public int compareTo(LayerPriorities other) {
         for (int i = 0; i < this.priorities.length; i++) {
             if (i >= other.getPriorities().length)
                 break;

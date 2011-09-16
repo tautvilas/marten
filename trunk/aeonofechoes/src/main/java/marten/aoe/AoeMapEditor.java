@@ -3,10 +3,10 @@ package marten.aoe;
 import marten.age.core.AgeApp;
 import marten.aoe.gui.scene.editor.MapEditorLoader;
 
-public class MapEditor extends AgeApp {
+public class AoeMapEditor extends AgeApp {
 
     public static void main(String[] args) {
-        new MapEditor().execute();
+        new AoeMapEditor().execute();
     }
 
     @Override

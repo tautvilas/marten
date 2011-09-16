@@ -18,11 +18,11 @@ public class TileImageFactory {
     private static org.apache.log4j.Logger log = Logger
             .getLogger(TileImageFactory.class);
 
-    private static HashMap<String, TileLayer> priorities = new HashMap<String, TileLayer>();
+    private static HashMap<String, LayerPriorities> priorities = new HashMap<String, LayerPriorities>();
 
     public static void addLayer(String[] priorities, String name,
             String imagePath) {
-        TileImageFactory.priorities.put(name, new TileLayer(name, priorities));
+        TileImageFactory.priorities.put(name, new LayerPriorities(name, priorities));
         ImageCache.loadImage(imagePath, name);
     }
 
@@ -47,9 +47,9 @@ public class TileImageFactory {
     }
 
     public static String[] sortLayers(String[] layers) {
-        ArrayList<TileLayer> collection = new ArrayList<TileLayer>();
+        ArrayList<LayerPriorities> collection = new ArrayList<LayerPriorities>();
         for (String layer : layers) {
-            TileLayer overlay = TileImageFactory.priorities.get(layer);
+            LayerPriorities overlay = TileImageFactory.priorities.get(layer);
             if (overlay == null) {
                 throw new RuntimeException("Layer not in cache: " + layer);
             } else {
@@ -102,8 +102,8 @@ public class TileImageFactory {
                 .getCoordinates(), base.getUnit());
     }
 
-    public static ArrayList<TileLayer> getSortedLayerTypes() {
-        ArrayList<TileLayer> result = new ArrayList<TileLayer>();
+    public static ArrayList<LayerPriorities> getSortedLayerTypes() {
+        ArrayList<LayerPriorities> result = new ArrayList<LayerPriorities>();
         for (String key : TileImageFactory.priorities.keySet()) {
             result.add(TileImageFactory.priorities.get(key));
         }
