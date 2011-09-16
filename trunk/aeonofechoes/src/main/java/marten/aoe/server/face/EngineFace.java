@@ -13,7 +13,6 @@ import marten.aoe.server.serializable.EngineEvent;
 public interface EngineFace extends Remote {
     public MapDTO getMap() throws RemoteException;
 
-    @Deprecated
     public void moveUnit(PointDTO from, PointDTO to) throws RemoteException;
 
     @Deprecated

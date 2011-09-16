@@ -102,7 +102,6 @@ public class EngineInterface extends UnicastRemoteObject implements EngineFace {
         return this.engine.getMapDTO(this.player);
     }
 
-    @Deprecated
     @Override
     public synchronized void moveUnit(PointDTO from, PointDTO to)
             throws RemoteException {
