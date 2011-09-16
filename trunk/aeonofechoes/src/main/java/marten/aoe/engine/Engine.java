@@ -22,6 +22,7 @@ public final class Engine {
     private Map map;
     private PlayerDTO[] playerList;
     private int currentPlayer = 0;
+    private int turnCounter = 1;
 
     /** Constructs a new Engine initialized with provided map and list of players.
      * The map is loaded as a part of this constructor.
@@ -54,11 +55,17 @@ public final class Engine {
         this.playerList = playerList;
         this.validateNewMap();
         this.currentPlayer = 0;
+        this.turnCounter = 1;
     }
 
     /** @return the player data for the currently active player.*/
     public synchronized PlayerDTO getActivePlayer() {
         return this.playerList[this.currentPlayer];
+    }
+    
+    /** @return the number of the current turn.*/
+    public synchronized int getCurrentTurn() {
+        return this.turnCounter;
     }
 
     /** @return the complete list of players who are allowed access to this engine.*/
@@ -147,6 +154,7 @@ public final class Engine {
         this.currentPlayer++;
         if (this.currentPlayer == this.playerList.length) {
             this.currentPlayer = 0;
+            this.turnCounter++;
         }
         this.map.endTurn();
     }

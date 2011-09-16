@@ -3,6 +3,8 @@ package marten.aoe.engine;
 /** The enumerator of all possible events pertaining to a single location on the map.
  * @author Petras Ražanskas*/
 public enum LocalEvent {
+    /** This event is invoked whenever a unit information is refreshed, like regenerated movement points, etc.*/
+    UNIT_REFRESH,
     /** This event is invoked whenever a unit on the map suffers a reduction of hit points.*/
     UNIT_HURT,
     /** This event is invoked whenever a unit loses its last hit point and is removed from the map.*/
