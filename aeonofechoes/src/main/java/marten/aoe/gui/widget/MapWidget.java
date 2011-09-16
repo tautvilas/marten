@@ -147,6 +147,9 @@ public class MapWidget extends BasicSceneGraphBranch<SceneGraphChild> implements
     }
 
     public TileDTO tileHit(Point position) {
+        if (position.x > dimension.width || position.y > dimension.height) {
+            return null;
+        }
         // Substract map translation form mouse coordinates
         Point mouseCoords = new Point(position);
         mouseCoords.x -= this.getPosition().x;
