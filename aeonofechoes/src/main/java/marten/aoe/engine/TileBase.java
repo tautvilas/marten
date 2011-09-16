@@ -1,6 +1,5 @@
 package marten.aoe.engine;
 
-import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -20,7 +19,6 @@ public abstract class TileBase extends Tile {
     public TileBase(String name, Map owner, PointDTO coordinates) {
         super(name, owner, coordinates);
     }
-
     @Override
     public final FullTileDTO getFullDTO(PlayerDTO player) {
         if (player != PlayerDTO.SYSTEM && !this.isExplored(player)) {
@@ -40,15 +38,7 @@ public abstract class TileBase extends Tile {
         if (player != PlayerDTO.SYSTEM && !this.isExplored(player)) {
             return new TileDTO("Shroud", this.getCoordinates(), null, false);
         }
-        ArrayList<String> layers = new ArrayList<String>();
-        Tile overlay = this.getOverlay();
-        layers.add(this.getName());
-        while (overlay != null) {
-            layers.add(overlay.getName());
-            overlay = overlay.getOverlay();
-        }
-        String[] overlays = new String[layers.size()];
-        return new TileDTO(layers.toArray(overlays), this.getCoordinates(),
+        return new TileDTO(this.getName(), this.getCoordinates(),
                 (this.getUnit() != null && this.isVisible(player) ? this
                         .getUnit().getDTO(player) : null), this
                         .isVisible(player));
@@ -176,5 +166,10 @@ public abstract class TileBase extends Tile {
             return false;
         }
         return this.unit.isCloaked();
+    }
+    
+    @Override
+    public final String[] getLayers(PlayerDTO player) {
+        return new String[] {this.getName()};
     }
 }

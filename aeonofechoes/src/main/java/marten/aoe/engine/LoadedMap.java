@@ -27,16 +27,19 @@ public abstract class LoadedMap extends Map {
                         for (DataTree subsubbranch : subbranch.branches()) {
                             if (subsubbranch.value().equals("Tile")) {
                                 Tile tile = null;
-                                Tile overlay = null;
                                 for (DataTree subsubsubbranch : subsubbranch.branches()) {
                                     if (tile == null) {
-                                        tile = TileLoader.loadTile(subsubsubbranch.value(), this, new PointDTO(x, y));
-                                        overlay = tile;
+                                        tile = TileLoader.loadTile(subsubsubbranch.value(), this, new PointDTO(x, y));                                        
                                     }
                                     else {
-                                        Tile ov = TileLoader.loadTile(subsubsubbranch.value(), this, new PointDTO(x, y));
-                                        overlay.setOverlay(ov);
-                                        overlay = ov;
+                                        try {
+                                            TileLayer overlay = TileLoader.loadLayer(subsubsubbranch.value(), tile);
+                                            tile.setOverlay(overlay);
+                                            tile = overlay;
+                                        }
+                                        catch (RuntimeException e) {
+                                            System.err.println(subsubsubbranch.value() + " not found");
+                                        }
                                     }
                                 }
                                 this.switchTile(tile);

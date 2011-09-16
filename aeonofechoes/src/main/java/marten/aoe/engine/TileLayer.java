@@ -14,7 +14,7 @@ public abstract class TileLayer extends Tile {
     private Tile base;
     private final Set<PlayerDTO> playerDetection = new HashSet<PlayerDTO>();
     public TileLayer(String name, Tile base) {
-        super(base.getName() + " " + name, base.getMap(), base.getCoordinates());
+        super(name, base.getMap(), base.getCoordinates());
         this.base = base;
     }
     public final void setBase(Tile base) {
@@ -69,7 +69,7 @@ public abstract class TileLayer extends Tile {
             if (distance == 0 || (distance <= unit.getDetectionRange()) &&
                     (!this.isCloaked(player) || unit.isObserving())) {
                 return new FullTileDTO(
-                        this.getName(),
+                        this.getLayers(player),
                         this.getCoordinates(),
                         this.getHeight(),
                         this.getMovementCost(),
@@ -83,10 +83,10 @@ public abstract class TileLayer extends Tile {
         return this.base.getFullDTO(player);
     }
     @Override
-    public final TileDTO getDTO(PlayerDTO player) {
-        if (player == PlayerDTO.SYSTEM) {
+    public final TileDTO getDTO(PlayerDTO player) {        
+        if (player == PlayerDTO.SYSTEM) {         
             return new TileDTO(
-                    this.getName(),
+                    this.getLayers(player),
                     this.getCoordinates(),
                     (this.getUnit() != null ? this.getUnit().getDTO(player) : null),
                     true
@@ -172,5 +172,17 @@ public abstract class TileLayer extends Tile {
     }
     @Override public final boolean hasAnythingCloaked(PlayerDTO player) {
         return this.isCloaked(player) || this.base.hasAnythingCloaked(player);
+    }
+    @Override public final String[] getLayers(PlayerDTO player) {
+        String[] layersBelow = this.base.getLayers(player);
+        if (this.isCloaked(player) && !this.playerDetection.contains(player)) {
+            return layersBelow;
+        }
+        String[] layers = new String[layersBelow.length + 1];
+        for (int i = 0; i < layersBelow.length; i++) {
+            layers[i] = layersBelow[i];
+        }
+        layers[layersBelow.length] = this.getName();
+        return layers;
     }
 }
