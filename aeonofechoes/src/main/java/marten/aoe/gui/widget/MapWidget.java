@@ -118,7 +118,7 @@ public class MapWidget extends BasicSceneGraphBranch<SceneGraphChild> implements
             return new Point((position.getX() / 2) * delta, position.getY()
                     * TILE_HEIGHT);
         } else {
-            int deltax = TILE_HEIGHT * 3 / 4;
+            int deltax = TILE_WIDTH * 3 / 4;
             if (position.getX() < 0) {
                 deltax = -deltax;
             }
