@@ -12,6 +12,7 @@ public class AoeMapEditor extends AgeApp {
     @Override
     public void configure() {
         this.setActiveScene(new MapEditorLoader());
+        this.setCursor(Path.SKIN_DATA_PATH + "pointer.png");
     }
 
 }

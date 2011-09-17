@@ -1,16 +1,18 @@
 package marten.age.core;
 
 import java.io.IOException;
+import java.nio.IntBuffer;
 
 import marten.age.control.Controller;
 import marten.age.event.AgeEvent;
 import marten.age.event.AgeEventListener;
 import marten.age.event.AgeSceneSwitchEvent;
-import marten.age.graphics.flat.sprite.TextureSprite;
 import marten.age.graphics.image.ImageData;
-import marten.age.graphics.primitives.Point;
+import marten.age.graphics.image.ImageTransformations;
 
 import org.apache.log4j.Logger;
+import org.lwjgl.LWJGLException;
+import org.lwjgl.input.Cursor;
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;
 import org.lwjgl.opengl.Display;
@@ -21,7 +23,6 @@ public abstract class AgeApp {
     private static org.apache.log4j.Logger log = Logger.getLogger(AgeApp.class);
 
     private AgeScene activeScene = null;
-    private TextureSprite cursor = null;
 
     // private Resource res = new FileSystemResource(Constants.UNIT_BEANS_PATH);
     // private BeanFactory factory = new XmlBeanFactory(res);
@@ -32,7 +33,7 @@ public abstract class AgeApp {
     private String title = "";
     private AgeScene sceneChanged = null;
 
-//    private static final int FRAMERATE = 60;
+    // private static final int FRAMERATE = 60;
 
     public int width = DEFAULT_WIDHT;
     public int height = DEFAULT_HEIGHT;
@@ -88,14 +89,8 @@ public abstract class AgeApp {
             activeScene.compute();
             activeScene.render();
 
-            if (this.cursor != null) {
-                Mouse.poll();
-                this.cursor.setPosition(new Point(Mouse.getX(), Mouse.getY()
-                        - this.cursor.getDimension().height + 1));
-                this.cursor.render();
-            }
             Display.update(false);
-//            Display.sync(FRAMERATE);
+            // Display.sync(FRAMERATE);
         }
     }
 
@@ -115,8 +110,25 @@ public abstract class AgeApp {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-        this.cursor = new TextureSprite(cursorImage);
-        Mouse.setGrabbed(true);
+        cursorImage = ImageTransformations.flip(cursorImage);
+        byte[] bytes = cursorImage.getBuffer();
+        int[] ints = new int[bytes.length / 4];
+        for (int i = 0; i < ints.length; i++) {
+            int number = 0;
+            number += (int)(bytes[i * 4 + 3] & 0xFF) << 24;
+            number += (int)(bytes[i * 4] & 0xFF) << 16;
+            number += (int)(bytes[i * 4 + 1] & 0xFF) << 8;
+            number += (int)(bytes[i * 4 + 2] & 0xFF) << 0;
+            ints[i] = number;
+        }
+        IntBuffer buffer = IntBuffer.wrap(ints);
+        buffer.rewind();
+        try {
+            Mouse.setNativeCursor(new Cursor(16, 16, 0, 15, 1, buffer, null));
+        } catch (LWJGLException e) {
+            throw new RuntimeException(e);
+        }
+        // Mouse.setGrabbed(true);
     }
 
     private void destroy() {
