@@ -78,8 +78,8 @@ public class MapWidget extends BasicSceneGraphBranch<SceneGraphChild> implements
         this.init();
         for (int i = 0; i < size; i++) {
             for (int j = 0; j < size; j++) {
-                this.updateTile(new TileDTO("Grassland", new PointDTO(i, j), null,
-                        true));
+                this.updateTile(new TileDTO("Grassland", new PointDTO(i, j),
+                        null, true));
             }
         }
     }
@@ -91,7 +91,8 @@ public class MapWidget extends BasicSceneGraphBranch<SceneGraphChild> implements
     public MapWidget(MapDTO map, Dimension dimension, MapWidgetListener listener) {
         this.listener = listener;
         this.dimension = dimension;
-        this.size = new Dimension(map.getMeta().getWidth(), map.getMeta().getHeight());
+        this.size = new Dimension(map.getMeta().getWidth(), map.getMeta()
+                .getHeight());
         this.init();
         for (TileDTO[] tileLine : map.getTileMap()) {
             for (TileDTO tile : tileLine) {
@@ -127,18 +128,21 @@ public class MapWidget extends BasicSceneGraphBranch<SceneGraphChild> implements
         }
     }
 
-    private TileDTO getTile(Point coords, boolean odd)
+    private TileDTO getTile(Point coords, boolean even)
             throws IndexOutOfBoundsException {
         PointDTO position = null;
-        if (Math.abs(coords.x % (TILE_WIDTH + TILE_WIDTH / 2)) <= TILE_WIDTH) {
-            int tileX = ((int)coords.x / (TILE_WIDTH + TILE_WIDTH / 2)) * 2;
-            int tileY = (int)coords.y / (TILE_HEIGHT);
-            if (odd && coords.x < 0)
-                tileX -= 1;
-            else if (odd)
-                tileX += 1;
-            position = new PointDTO(tileX, tileY);
+        int mx = (int)coords.x;
+        int my = (int)coords.y;
+        int tileX;
+        int tileY;
+        if (even) {
+            tileX = mx / (TILE_WIDTH + TILE_WIDTH / 2) * 2;
+            tileY = my / TILE_HEIGHT;
+        } else {
+            tileX = (mx - TILE_WIDTH / 4) / (TILE_WIDTH + TILE_WIDTH / 2) * 2 + 1;
+            tileY = (my - TILE_HEIGHT / 2) / TILE_HEIGHT;
         }
+        position = new PointDTO(tileX, tileY);
         if (tiles.containsKey(position)) {
             return this.tiles.get(position);
         } else {
@@ -151,35 +155,19 @@ public class MapWidget extends BasicSceneGraphBranch<SceneGraphChild> implements
             return null;
         }
         // Substract map translation form mouse coordinates
-        Point mouseCoords = new Point(position);
-        mouseCoords.x -= this.getPosition().x;
-        mouseCoords.y -= this.getPosition().y;
-        // Create a copy of mouse coordinates for modification
-        Point coords = new Point(mouseCoords);
+        Point coords = position.substract(this.getPosition());
         // Tile hit candidate array
         ArrayList<TileDTO> candidates = new ArrayList<TileDTO>();
 
-        // Hack for dealing with negative coordinates
-        if (coords.y < 0)
-            coords.y -= TILE_WIDTH;
-        if (coords.x < 0)
-            coords.x -= TILE_WIDTH;
-
         // Check hit for even tile columns
         try {
-            TileDTO tile = getTile(coords, false);
+            TileDTO tile = getTile(coords, true);
             candidates.add(tile);
         } catch (IndexOutOfBoundsException e) {
         }
-
-        // check hit for odd tile columns
-        if (coords.x < 0)
-            coords.x += TILE_WIDTH * 3 / 4;
-        else
-            coords.x -= TILE_WIDTH * 3 / 4;
-        coords.y -= TILE_HEIGHT / 2;
+        // Check hit for odd tile columns
         try {
-            TileDTO tile = getTile(coords, true);
+            TileDTO tile = getTile(coords, false);
             candidates.add(tile);
         } catch (IndexOutOfBoundsException e) {
         }
@@ -197,8 +185,8 @@ public class MapWidget extends BasicSceneGraphBranch<SceneGraphChild> implements
                         .getCoordinates());
                 Point faceCenter = new Point(facePosition.x + TILE_WIDTH / 2,
                         facePosition.y + TILE_HEIGHT / 2);
-                double dx = Math.abs(faceCenter.x - mouseCoords.x);
-                double dy = Math.abs(faceCenter.y - mouseCoords.y);
+                double dx = Math.abs(faceCenter.x - coords.x);
+                double dy = Math.abs(faceCenter.y - coords.y);
                 double distance = Math.sqrt(dx * dx + dy * dy);
                 if (distance < mindistance) {
                     mindistance = distance;
