@@ -30,4 +30,9 @@ public final class Dimension {
             return super.equals(o);
         }
     }
+
+    @Override
+    public synchronized String toString() {
+        return "Dimension: (" + this.width + ", " + this.height + ")";
+    }
 }

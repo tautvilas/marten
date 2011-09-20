@@ -6,6 +6,7 @@ import marten.age.graphics.primitives.TextureCoords;
 
 public class Texture {
     private Dimension dimension;
+    private Dimension canvasDimension;
     private TextureCoords coords;
     private int textureId = -1;
 
@@ -13,12 +14,24 @@ public class Texture {
         this(textureId, dimension, dimension);
     }
 
-    public Texture(int textureId, Dimension dimension, Dimension canvasDimension) {
+    public Texture(int textureId, Point position, Dimension dimension,
+            Dimension canvasDimension) {
         this.textureId = textureId;
         this.dimension = dimension;
-        this.coords = new TextureCoords(new Point(), new Dimension(
-                dimension.width / canvasDimension.width, dimension.height
-                        / canvasDimension.height));
+        this.canvasDimension = canvasDimension;
+        this.coords = new TextureCoords(new Point(position.x
+                / canvasDimension.width, position.y / canvasDimension.height),
+                new Dimension(dimension.width / canvasDimension.width,
+                        dimension.height / canvasDimension.height));
+    }
+
+    public Texture(int textureId, Dimension dimension, Dimension canvasDimension) {
+        this(textureId, new Point(), dimension, canvasDimension);
+    }
+
+    public Texture crop(Point position, Dimension dimension) {
+        return new Texture(this.textureId, position, dimension,
+                this.canvasDimension);
     }
 
     public int getTextureId() {

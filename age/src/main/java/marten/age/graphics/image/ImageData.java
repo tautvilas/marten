@@ -111,7 +111,17 @@ public class ImageData {
         return this.buffer;
     }
 
-    public int getPixelType() {
+    public byte[] getPixel(int x, int y) {
+        int psize = this.getPixelSize();
+        byte[] pixel = new byte[psize];
+        int ind = (this.width * y + x) * psize;
+        for (int i = 0; i < psize; i++) {
+            pixel[i] = this.buffer[ind + i];
+        }
+        return pixel;
+    }
+
+    public int getLwjglPixelType() {
         return GL11.GL_RGBA;
     }
 

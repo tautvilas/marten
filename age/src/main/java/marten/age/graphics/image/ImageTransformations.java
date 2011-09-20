@@ -7,7 +7,7 @@ import org.lwjgl.opengl.GL11;
 public final class ImageTransformations {
     public static ImageData rotate(ImageData data) {
         int pixelSize = Constants.RGB_NUM_BYTES;
-        if (data.getPixelType() == GL11.GL_RGBA) {
+        if (data.getLwjglPixelType() == GL11.GL_RGBA) {
             pixelSize = Constants.RGBA_NUM_BYTES;
         }
 
@@ -30,7 +30,7 @@ public final class ImageTransformations {
 
     public static ImageData flip(ImageData data) {
         int pixelSize = Constants.RGB_NUM_BYTES;
-        if (data.getPixelType() == GL11.GL_RGBA) {
+        if (data.getLwjglPixelType() == GL11.GL_RGBA) {
             pixelSize = Constants.RGBA_NUM_BYTES;
         }
 
