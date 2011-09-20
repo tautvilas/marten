@@ -29,7 +29,7 @@ public final class TextureLoader {
     public static Texture loadTexture(ImageData data) {
         int width = TextureLoader.closestPowerOfTwo(data.width);
         int height = TextureLoader.closestPowerOfTwo(data.height);
-//        ImageData origData = data;
+        ImageData origData = data;
         if (data.width != width || data.height != height) {
             int psize = data.getPixelSize();
             byte buffer[] = data.getBuffer();
@@ -37,9 +37,12 @@ public final class TextureLoader {
             for (int y = 0; y < height; y++) {
                 for (int x = 0; x < width; x++) {
                     for (int i = 0; i < psize; i++) {
-                        int ind = (y * width + x) * psize + i;
+                        int newY = (y + height - origData.height) % height;
+                        int ind = (newY * width + x) * psize + i;
                         if (x >= data.width || y >= data.height) {
-                            newData[ind] = 0;
+                            // fill empty space with white color so that it
+                            // would be easier to trace errors
+                            newData[ind] = (byte)255;
                         } else {
                             int ind2 = (y * data.width + x) * psize + i;
                             newData[ind] = buffer[ind2];
@@ -68,6 +71,7 @@ public final class TextureLoader {
         GL11.glTexImage2D(GL11.GL_TEXTURE_2D, 0, pixelType, data.width,
                 data.height, 0, pixelType, GL11.GL_UNSIGNED_BYTE, byteBuffer);
 
-        return new Texture(textureId, new Dimension(width, height));
+        return new Texture(textureId, new Dimension(origData.width,
+                origData.height), new Dimension(width, height));
     }
 }
