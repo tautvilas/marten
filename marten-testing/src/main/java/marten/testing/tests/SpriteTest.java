@@ -48,7 +48,7 @@ public class SpriteTest extends AgeApp {
 
             hud.addChild(new FpsCounter());
 
-            /* Sprite */
+            /* Pixel sprite */
 
             ImageData data = null;
             try {
@@ -56,13 +56,28 @@ public class SpriteTest extends AgeApp {
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
-            Texture spriteTexture = TextureLoader.loadTexture(data);
-            TextureSprite sprite = new TextureSprite(spriteTexture,
-                    new Point(0, 0));
             PixelSprite sp = new PixelSprite(data);
-            sp.setPosition(new Point(10, 0));
-            hud.addChild(sprite);
+            sp.setPosition(new Point(100, 0));
             hud.addChild(sp);
+
+            /* Texture sprite */
+
+            Texture spriteTexture = TextureLoader.loadTexture(data);
+            TextureSprite sprite = new TextureSprite(spriteTexture, new Point(
+                    0, 0));
+            hud.addChild(sprite);
+
+            /* Not opengl friendly sprite (width/height != x^2) */
+
+            data = null;
+            try {
+                data = new ImageData("data/textures/sprite2.png");
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            spriteTexture = TextureLoader.loadTexture(data);
+            sprite = new TextureSprite(spriteTexture, new Point(200, 0));
+            hud.addChild(sprite);
 
             /* Simple model */
 
@@ -76,7 +91,6 @@ public class SpriteTest extends AgeApp {
 
         @Override
         public void compute() {
-            sr.render();
         }
 
         @Override
@@ -85,6 +99,7 @@ public class SpriteTest extends AgeApp {
 
         @Override
         public void render() {
+            sr.render();
         }
 
     }
