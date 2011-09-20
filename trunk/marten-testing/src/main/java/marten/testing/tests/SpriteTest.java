@@ -89,6 +89,8 @@ public class SpriteTest extends AgeApp {
                 e.printStackTrace();
             }
             spriteTexture = TextureLoader.loadTexture(data);
+            sprite = new TextureSprite(spriteTexture, new Point(200 - 7, 300));
+            hud.addChild(sprite);
             spriteTexture = spriteTexture.crop(new Point(7, 21), new Dimension(
                     30, 26));
             sprite = new TextureSprite(spriteTexture, new Point(200, 200));
