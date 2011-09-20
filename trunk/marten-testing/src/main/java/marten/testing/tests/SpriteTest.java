@@ -13,6 +13,7 @@ import marten.age.graphics.geometry.OptimizedGeometry;
 import marten.age.graphics.geometry.primitives.Sphere;
 import marten.age.graphics.image.ImageData;
 import marten.age.graphics.model.SimpleModel;
+import marten.age.graphics.primitives.Dimension;
 import marten.age.graphics.primitives.Point;
 import marten.age.graphics.primitives.Rotation;
 import marten.age.graphics.primitives.Vector;
@@ -77,6 +78,20 @@ public class SpriteTest extends AgeApp {
             }
             spriteTexture = TextureLoader.loadTexture(data);
             sprite = new TextureSprite(spriteTexture, new Point(200, 0));
+            hud.addChild(sprite);
+
+            /* Select only part of image as texture */
+
+            data = null;
+            try {
+                data = new ImageData("data/textures/sprite3.png");
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            spriteTexture = TextureLoader.loadTexture(data);
+            spriteTexture = spriteTexture.crop(new Point(7, 21), new Dimension(
+                    30, 26));
+            sprite = new TextureSprite(spriteTexture, new Point(200, 200));
             hud.addChild(sprite);
 
             /* Simple model */

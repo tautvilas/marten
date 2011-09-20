@@ -32,7 +32,7 @@ public class PixelSprite extends BasicSceneGraphChild implements BoxedObject {
         GL11.glPushAttrib(GL11.GL_ENABLE_BIT);
         GL11.glDisable(GL11.GL_TEXTURE_2D);
         GL11.glRasterPos2d(this.postition.x, this.postition.y);
-        GL11.glDrawPixels((int) data.width, (int) data.height, data.getPixelType(),
+        GL11.glDrawPixels((int) data.width, (int) data.height, data.getLwjglPixelType(),
                 GL11.GL_UNSIGNED_BYTE, data.getByteBuffer());
         GL11.glPopAttrib();
     }

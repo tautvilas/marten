@@ -200,6 +200,6 @@ public final class Point {
      */
     @Override
     public synchronized String toString() {
-        return "(" + this.x + ", " + this.y + ", " + this.z + ")";
+        return "Point: (" + this.x + ", " + this.y + ", " + this.z + ")";
     }
 }
