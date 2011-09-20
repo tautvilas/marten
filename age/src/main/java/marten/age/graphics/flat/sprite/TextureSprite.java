@@ -38,7 +38,7 @@ public class TextureSprite extends BasicSceneGraphBranch<SceneGraphChild> implem
 
     public TextureSprite(Texture texture, Dimension dimension) {
         this.dimension = dimension;
-        model = new SimpleModel(new Rectangle(dimension));
+        model = new SimpleModel(new Rectangle(dimension, texture.getCoords()));
         // glTexEnv(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_BLEND)
         // gl<...same shit...>, GL_REPLACE) for no background blending
         model.getAppearance().setColor(new Color(1.0, 1.0, 1.0));
