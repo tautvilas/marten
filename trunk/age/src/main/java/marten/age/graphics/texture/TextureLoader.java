@@ -11,7 +11,44 @@ import org.lwjgl.BufferUtils;
 import org.lwjgl.opengl.GL11;
 
 public final class TextureLoader {
+
+    private static int closestPowerOfTwo(int number) {
+        if (number == 0)
+            return 1;
+        int shift = 0;
+        while (number >> shift != 1) {
+            shift++;
+        }
+        if (number >> shift << shift != number) {
+            return 1 << shift + 1;
+        } else {
+            return number;
+        }
+    }
+
     public static Texture loadTexture(ImageData data) {
+        int width = TextureLoader.closestPowerOfTwo(data.width);
+        int height = TextureLoader.closestPowerOfTwo(data.height);
+//        ImageData origData = data;
+        if (data.width != width || data.height != height) {
+            int psize = data.getPixelSize();
+            byte buffer[] = data.getBuffer();
+            byte newData[] = new byte[height * width * psize];
+            for (int y = 0; y < height; y++) {
+                for (int x = 0; x < width; x++) {
+                    for (int i = 0; i < psize; i++) {
+                        int ind = (y * width + x) * psize + i;
+                        if (x >= data.width || y >= data.height) {
+                            newData[ind] = 0;
+                        } else {
+                            int ind2 = (y * data.width + x) * psize + i;
+                            newData[ind] = buffer[ind2];
+                        }
+                    }
+                }
+            }
+            data = new ImageData(newData, width, height);
+        }
         data = ImageTransformations.flip(data);
 
         int textureId;
@@ -31,6 +68,6 @@ public final class TextureLoader {
         GL11.glTexImage2D(GL11.GL_TEXTURE_2D, 0, pixelType, data.width,
                 data.height, 0, pixelType, GL11.GL_UNSIGNED_BYTE, byteBuffer);
 
-        return new Texture(textureId, new Dimension(data.width, data.height));
+        return new Texture(textureId, new Dimension(width, height));
     }
 }

@@ -102,18 +102,6 @@ public class ImageData {
     }
 
     private void sanityCheck() {
-        int test = 0;
-        while (width >> test != 1)
-            test++;
-        if (width >> test << test != width)
-            throw new RuntimeException("Image width is not a power of two.");
-        test = 0;
-        while (height >> test != 1)
-            test++;
-
-        if (height >> test << test != height)
-            throw new RuntimeException("Image height is not a power of two.");
-
         if (buffer.length != width * height * Constants.RGBA_NUM_BYTES) {
             throw new RuntimeException("Image data mismatch.");
         }
@@ -125,6 +113,10 @@ public class ImageData {
 
     public int getPixelType() {
         return GL11.GL_RGBA;
+    }
+
+    public int getPixelSize() {
+        return 4;
     }
 
     public ByteBuffer getByteBuffer() {
