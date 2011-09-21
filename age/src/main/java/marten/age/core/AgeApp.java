@@ -18,6 +18,7 @@ import org.lwjgl.input.Mouse;
 import org.lwjgl.opengl.Display;
 import org.lwjgl.opengl.DisplayMode;
 import org.lwjgl.opengl.GL11;
+import org.lwjgl.opengl.GLContext;
 
 public abstract class AgeApp {
     private static org.apache.log4j.Logger log = Logger.getLogger(AgeApp.class);
@@ -57,6 +58,10 @@ public abstract class AgeApp {
         log.info("GL_VENDOR: " + GL11.glGetString(GL11.GL_VENDOR));
         log.info("GL_RENDERER: " + GL11.glGetString(GL11.GL_RENDERER));
         log.info("GL_VERSION: " + GL11.glGetString(GL11.GL_VERSION));
+        boolean FBOenabled = GLContext.getCapabilities().GL_EXT_framebuffer_object;
+        if (!FBOenabled) {
+            log.warn("Frame buffer object is not supported by your graphics adapter");
+        }
         configure();
         runScene();
         destroy();

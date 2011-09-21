@@ -40,8 +40,6 @@ public class Rectangle extends BasicSceneGraphChild implements BoxedObject,
         this.position = position;
         this.texPos = coords.getPosition();
         this.texDim = coords.getDimension();
-        System.out.println(this.texPos);
-        System.out.println(this.texDim);
         // vertices = BufferUtils.createDoubleBuffer(8);
         // vertices.put(new double[] { position.x, position.y,
         // position.x + dimension.width, position.y,
