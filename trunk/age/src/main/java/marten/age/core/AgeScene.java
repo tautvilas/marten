@@ -76,7 +76,7 @@ public abstract class AgeScene {
             for (Controller controller : this.controllers) {
                 try {
                     controller.removeListener(listener);
-                    log.debug(listener + " listener was removed from controller " + controller);
+                    log.debug("LISTENER " + listener + " was removed from controller " + controller);
                 } catch (ClassCastException e) {
                 }
             }
@@ -86,7 +86,7 @@ public abstract class AgeScene {
             for (Controller controller : this.controllers) {
                 try {
                     controller.addListener(listener);
-                    log.debug(listener + " listener was added to controller " + controller);
+                    log.debug("LISTENER " + listener + " was added to controller " + controller);
                 } catch (ClassCastException e) {
                 }
             }
