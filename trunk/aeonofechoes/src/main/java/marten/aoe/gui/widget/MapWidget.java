@@ -35,8 +35,8 @@ public class MapWidget extends BasicSceneGraphBranch<SceneGraphChild> implements
     private static org.apache.log4j.Logger log = Logger
             .getLogger(MapWidget.class);
 
-    private final int TILE_WIDTH = 64;
-    private final int TILE_HEIGHT = 64;
+    private final int TILE_WIDTH = 84;
+    private final int TILE_HEIGHT = 72;
 
     private PointDTO selectedTile = null;
     private MapWidgetListener listener;
