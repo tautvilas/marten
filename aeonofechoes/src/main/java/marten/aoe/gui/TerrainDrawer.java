@@ -11,6 +11,7 @@ import marten.age.graphics.geometry.primitives.Rectangle;
 import marten.age.graphics.model.SimpleModel;
 import marten.age.graphics.primitives.Dimension;
 import marten.age.graphics.primitives.Point;
+import marten.age.graphics.primitives.TextureCoords;
 import marten.age.graphics.texture.Texture;
 import marten.age.graphics.texture.TextureLoader;
 import marten.aoe.dto.TileDTO;
@@ -31,7 +32,8 @@ public class TerrainDrawer {
             this.context.addChild(this.createFogType(tileId, tile.getLayers()));
             this.context.addChild(this.cteateVisbileType(tileId, tile.getLayers()));
         }
-        Rectangle geometry = new Rectangle(new Dimension(64, 64), displayCoords);
+        TextureCoords coords = this.terrainCache.get(tileId).getAppearance().getTexture().getCoords();
+        Rectangle geometry = new Rectangle(displayCoords, new Dimension(84, 72), coords);
         if (oldTile != null) {
             String oldTileId = TileImageFactory.getTileGuiId(oldTile);
             this.remove(oldTileId, oldTile.getVisibility(), geometry);
