@@ -73,7 +73,7 @@ public class TileImageFactory {
             ImageData tile = ImageCache.getImage(layers[0]);
             for (int i = 1; i < layers.length; i++) {
                 tile = ImageTransformations.blend(tile, ImageCache
-                        .getImage(layers[i]));
+                        .getImage(layers[i]), null);
             }
             ImageCache.addImage(name, tile);
             return tile;
