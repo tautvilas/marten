@@ -26,7 +26,7 @@ public class TerrainDrawer {
 
     private final HashMap<String, SimpleModel> terrainCache = new HashMap<String, SimpleModel>();
 
-    public void updateTile(TileDTO tile, TileDTO oldTile, Point displayCoords) {
+    public void updateTile(TileDTO tile, TileDTO oldTile, Point displayCoords, TileDTO[] surrounds) {
         String tileId = TileImageFactory.getTileGuiId(tile);
         if (!this.containsType(tileId)) {
             this.context.addChild(this.createFogType(tileId, tile.getLayers()));
