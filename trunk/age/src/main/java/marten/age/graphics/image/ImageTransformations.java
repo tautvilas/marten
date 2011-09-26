@@ -60,7 +60,12 @@ public final class ImageTransformations {
         int pixelSize = Constants.RGBA_NUM_BYTES;
         byte[] buf1 = base.getBuffer();
         byte[] buf2 = top.getBuffer();
-        byte[] maskBuf = mask.getBuffer();
+        byte[] maskBuf;
+        if (mask == null) {
+            maskBuf = buf2;
+        } else {
+            maskBuf = mask.getBuffer();
+        }
         byte[] newBuf = new byte[width * height * pixelSize];
 
         for (int y = 0; y < height; y++) {
@@ -73,10 +78,7 @@ public final class ImageTransformations {
                 float r = (float)(0xFF & buf2[index]) / 255;
                 float g = (float)(0xFF & buf2[index + 1]) / 255;
                 float b = (float)(0xFF & buf2[index + 2]) / 255;
-                float a = (float)(0xFF & buf2[index + 3]) / 255;
-                if (mask != null) {
-                    a = (float)(0xFF & maskBuf[index + 3]) / 255;
-                }
+                float a = (float)(0xFF & maskBuf[index + 3]) / 255;
                 float ax = (byte)(1 - (1 - a) * (1 - A));
                 byte rx = (byte)((r * a / ax + R * A * (1 - a) / ax) * 255);
                 byte gx = (byte)((g * a / ax + G * A * (1 - a) / ax) * 255);
