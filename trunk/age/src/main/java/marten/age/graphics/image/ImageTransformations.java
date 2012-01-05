@@ -5,6 +5,15 @@ import marten.age.Constants;
 import org.lwjgl.opengl.GL11;
 
 public final class ImageTransformations {
+
+    public static ImageData rotate(ImageData data, int times) {
+        ImageData result = data;
+        for (int i = 0; i < times; i++) {
+            result = ImageTransformations.rotate(result);
+        }
+        return result;
+    }
+
     public static ImageData rotate(ImageData data) {
         int pixelSize = Constants.RGB_NUM_BYTES;
         if (data.getLwjglPixelType() == GL11.GL_RGBA) {
