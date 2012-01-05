@@ -25,7 +25,7 @@ public final class ImageTransformations {
             }
         }
 
-        return new ImageData(newbuffer, width, height);
+        return new ImageData(newbuffer, height, width);
     }
 
     public static ImageData flip(ImageData data) {
