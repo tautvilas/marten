@@ -17,6 +17,7 @@ import marten.age.graphics.SceneGraphBranch;
 import marten.age.graphics.SceneGraphChild;
 import marten.age.graphics.flat.Flatland;
 import marten.age.graphics.flat.sprite.TextureSprite;
+import marten.age.graphics.image.ImageCache;
 import marten.age.graphics.layout.SimpleLayout;
 import marten.age.graphics.primitives.Dimension;
 import marten.age.graphics.primitives.Point;
@@ -186,8 +187,7 @@ public class MapEditor extends AgeScene implements MouseListener {
                 });
                 this.registerControllable(button);
             }
-            Button icon = new Button(new TextureSprite(TileImageFactory
-                    .getTile(layer.getType()), new Dimension(32, 32)));
+            Button icon = new Button(new TextureSprite(ImageCache.getImage(layer.getType()), new Dimension(32, 32)));
             iconPos = sidebar.getPosition().move(
                     new Point(50 + i % 3 * 50, 450 - i / 3 * 50));
             icon.setPosition(iconPos);
@@ -202,8 +202,7 @@ public class MapEditor extends AgeScene implements MouseListener {
             i++;
         }
         this.tabs.get("a").show();
-        Button eraser = new Button(new TextureSprite(TileImageFactory
-                .getTile("Void"), new Dimension(32, 32)));
+        Button eraser = new Button(new TextureSprite(ImageCache.getImage("Void"), new Dimension(32, 32)));
         iconPos = sidebar.getPosition().move(new Point(50, 550));
         eraser.setPosition(iconPos);
         this.layout.addChild(eraser);
