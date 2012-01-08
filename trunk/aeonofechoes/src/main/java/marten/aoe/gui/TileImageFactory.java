@@ -26,15 +26,15 @@ public class TileImageFactory {
         ImageCache.loadImage(imagePath, name);
     }
 
-    public static ImageData getTile(String layer) {
-        return TileImageFactory.getTile(new String[] { layer });
-    }
-
     public static String getTileGuiId(TileDTO tile) {
-        return TileImageFactory.getTileGuiId(tile.getLayers());
+        String tid = TileImageFactory.getLayersId(tile.getLayers());
+        if (!tile.getVisibility()) {
+            tid += "_fog";
+        }
+        return tid;
     }
 
-    public static String getTileGuiId(String[] layers) {
+    private static String getLayersId(String[] layers) {
         layers = TileImageFactory.sortLayers(layers);
         String name = "";
         for (int i = 0; i < layers.length; i++) {
@@ -64,8 +64,9 @@ public class TileImageFactory {
         return result;
     }
 
-    public static ImageData getTile(String[] layers) {
-        String name = TileImageFactory.getTileGuiId(layers);
+    public static ImageData getTile(TileDTO tileDto) {
+        String name = TileImageFactory.getTileGuiId(tileDto);
+        String[] layers = tileDto.getLayers();
         if (TileImageFactory.priorities.containsKey(name)) {
             return ImageCache.getImage(name);
         } else {
