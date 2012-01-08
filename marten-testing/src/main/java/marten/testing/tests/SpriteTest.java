@@ -59,14 +59,14 @@ public class SpriteTest extends AgeApp {
                 throw new RuntimeException(e);
             }
             PixelSprite sp = new PixelSprite(data);
-            sp.setPosition(new Point(100, 0));
+            sp.setPosition(new Point(0, 100));
             hud.addChild(sp);
 
             /* Texture sprite */
 
             Texture spriteTexture = TextureLoader.loadTexture(data);
             TextureSprite sprite = new TextureSprite(spriteTexture, new Point(
-                    0, 0));
+                    100, 100));
             hud.addChild(sprite);
 
             /* Not opengl friendly sprite (width/height != x^2) */
@@ -78,7 +78,24 @@ public class SpriteTest extends AgeApp {
                 e.printStackTrace();
             }
             spriteTexture = TextureLoader.loadTexture(data);
-            sprite = new TextureSprite(spriteTexture, new Point(200, 0));
+            sprite = new TextureSprite(spriteTexture, new Point(200, 100));
+            hud.addChild(sprite);
+
+            /* Test image blend with mask */
+
+            data = null;
+            ImageData top = null;
+            ImageData mask = null;
+            try {
+                data = new ImageData("data/textures/sprite-base.png");
+                top= new ImageData("data/textures/sprite-top.png");
+                mask= new ImageData("data/textures/sprite-mask.png");
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            data = ImageTransformations.blend(data, top, mask);
+            spriteTexture = TextureLoader.loadTexture(data);
+            sprite = new TextureSprite(spriteTexture, new Point(300, 100));
             hud.addChild(sprite);
 
             /* Select only part of image as texture */
@@ -96,6 +113,7 @@ public class SpriteTest extends AgeApp {
                     30, 26));
             sprite = new TextureSprite(spriteTexture, new Point(200, 200));
             hud.addChild(sprite);
+
 
             /* Rotate sprite */
             ImageData data2 = ImageTransformations.rotate(data);

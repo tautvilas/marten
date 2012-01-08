@@ -60,6 +60,10 @@ public final class ImageTransformations {
         return new ImageData(newbuffer, width, height);
     }
 
+    public static ImageData blend(ImageData base, ImageData top) {
+        return ImageTransformations.blend(base, top, null);
+    }
+
     public static ImageData blend(ImageData base, ImageData top, ImageData mask) {
         if (base.width != top.width || base.height != top.height) {
             throw new RuntimeException("Can not blend images, dimensions do not match");
