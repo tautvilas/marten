@@ -26,7 +26,7 @@ public class TileImageFactory {
         ImageCache.loadImage(imagePath, name);
     }
 
-    public static String getTileGuiId(TileDTO tile) {
+    public static String getTileGuiId(TileDTO tile, TileDTO[] surrounds) {
         String tid = TileImageFactory.getLayersId(tile.getLayers());
         if (!tile.getVisibility()) {
             tid += "_fog";
@@ -64,8 +64,8 @@ public class TileImageFactory {
         return result;
     }
 
-    public static ImageData getTile(TileDTO tileDto) {
-        String name = TileImageFactory.getTileGuiId(tileDto);
+    public static ImageData getTile(TileDTO tileDto, TileDTO[] surrounds) {
+        String name = TileImageFactory.getTileGuiId(tileDto, surrounds);
         String[] layers = tileDto.getLayers();
         if (TileImageFactory.priorities.containsKey(name)) {
             return ImageCache.getImage(name);

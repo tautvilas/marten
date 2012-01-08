@@ -8,6 +8,7 @@ import marten.age.graphics.appearance.Appearance;
 import marten.age.graphics.appearance.Color;
 import marten.age.graphics.geometry.Geometry;
 import marten.age.graphics.geometry.primitives.Rectangle;
+import marten.age.graphics.image.ImageData;
 import marten.age.graphics.model.SimpleModel;
 import marten.age.graphics.primitives.Dimension;
 import marten.age.graphics.primitives.Point;
@@ -27,18 +28,19 @@ public class TerrainDrawer {
     private final HashMap<String, SimpleModel> terrainCache = new HashMap<String, SimpleModel>();
 
     public void updateTile(TileDTO tile, TileDTO oldTile, Point displayCoords, TileDTO[] surrounds) {
-        String tileId = TileImageFactory.getTileGuiId(tile);
+        String tileId = TileImageFactory.getTileGuiId(tile, surrounds);
         if (!this.containsType(tileId)) {
+            ImageData tileImage = TileImageFactory.getTile(tile, surrounds);
             if (tile.getVisibility()) {
-                this.context.addChild(this.cteateVisbileType(tile));
+                this.context.addChild(this.cteateVisbileType(tileImage, tileId));
             } else {
-                this.context.addChild(this.createFogType(tile));
+                this.context.addChild(this.createFogType(tileImage, tileId));
             }
         }
         TextureCoords coords = this.terrainCache.get(tileId).getAppearance().getTexture().getCoords();
         Rectangle geometry = new Rectangle(displayCoords, new Dimension(84, 72), coords);
         if (oldTile != null) {
-            String oldTileId = TileImageFactory.getTileGuiId(oldTile);
+            String oldTileId = TileImageFactory.getTileGuiId(oldTile, surrounds);
             this.remove(oldTileId, oldTile.getVisibility(), geometry);
         }
         this.put(tileId, tile.getVisibility(), geometry);
@@ -56,20 +58,16 @@ public class TerrainDrawer {
         return terrainCache.containsKey(tileId);
     }
 
-    private SimpleModel cteateVisbileType(TileDTO tile) {
-        String tileId = TileImageFactory.getTileGuiId(tile);
-        Texture terrain = TextureLoader.loadTexture(TileImageFactory
-                .getTile(tile));
+    private SimpleModel cteateVisbileType(ImageData tile, String tileId) {
+        Texture terrain = TextureLoader.loadTexture(tile);
         SimpleModel sm = new SimpleModel(new Appearance(terrain));
         sm.setId(tileId);
         terrainCache.put(tileId, sm);
         return sm;
     }
 
-    private SimpleModel createFogType(TileDTO tile) {
-        String tileId = TileImageFactory.getTileGuiId(tile);
-        Texture terrain = TextureLoader.loadTexture(TileImageFactory
-                .getTile(tile));
+    private SimpleModel createFogType(ImageData tile, String tileId) {
+        Texture terrain = TextureLoader.loadTexture(tile);
         Appearance fog = new Appearance(terrain);
         fog.setColor(new Color(0.5, 0.4, 0.4));
         SimpleModel sm = new SimpleModel(fog);
