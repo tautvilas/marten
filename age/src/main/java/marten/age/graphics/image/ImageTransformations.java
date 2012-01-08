@@ -37,6 +37,29 @@ public final class ImageTransformations {
         return new ImageData(newbuffer, height, width);
     }
 
+    public static ImageData vflip(ImageData data) {
+        int pixelSize = Constants.RGB_NUM_BYTES;
+        if (data.getLwjglPixelType() == GL11.GL_RGBA) {
+            pixelSize = Constants.RGBA_NUM_BYTES;
+        }
+
+        int width = data.width;
+        int height = data.height;
+        byte[] buffer = data.getBuffer();
+        byte[] newbuffer = new byte[width * height * pixelSize];
+
+        for (int y = 0; y < height; y++) {
+            for (int x = 0; x < width; x++) {
+                for (int i = 0; i < pixelSize; i++) {
+                    newbuffer[(y * width + (width - x - 1)) * pixelSize + i] =
+                        buffer[(y * width + x) * pixelSize + i];
+                }
+            }
+        }
+
+        return new ImageData(newbuffer, width, height);
+    }
+
     public static ImageData flip(ImageData data) {
         int pixelSize = Constants.RGB_NUM_BYTES;
         if (data.getLwjglPixelType() == GL11.GL_RGBA) {

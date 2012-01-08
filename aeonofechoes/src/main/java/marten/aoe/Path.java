@@ -16,4 +16,5 @@ public class Path {
     public static final String GUI_PATH = Path.DATA_PATH + "gui/";
     public static final String SKIN_DATA_PATH = Path.GUI_PATH + "skin/";
     public static final String TILE_DATA_PATH = Path.GUI_PATH + "tiles";
+    public static final String MASKS_DATA_PATH = Path.GUI_PATH + "masks";
 }

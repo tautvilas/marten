@@ -108,7 +108,7 @@ public class MapWidget extends BasicSceneGraphBranch<SceneGraphChild> implements
                         new Color(0.0, 1.0, 0.0));
                 coords.setPosition(this.getTileDisplayCoordinates(tile
                         .getCoordinates()));
-//                 tg.addChild(coords);
+                // tg.addChild(coords);
             }
         }
     }
@@ -139,7 +139,8 @@ public class MapWidget extends BasicSceneGraphBranch<SceneGraphChild> implements
             tileX = mx / (TILE_WIDTH + TILE_WIDTH / 2) * 2;
             tileY = my / TILE_HEIGHT;
         } else {
-            tileX = (mx - TILE_WIDTH / 4) / (TILE_WIDTH + TILE_WIDTH / 2) * 2 + 1;
+            tileX = (mx - TILE_WIDTH / 4) / (TILE_WIDTH + TILE_WIDTH / 2) * 2
+                    + 1;
             tileY = (my - TILE_HEIGHT / 2) / TILE_HEIGHT;
         }
         position = new PointDTO(tileX, tileY);
@@ -221,8 +222,17 @@ public class MapWidget extends BasicSceneGraphBranch<SceneGraphChild> implements
         Point tileDisplayCoordinates = this.getTileDisplayCoordinates(tile
                 .getCoordinates());
         PointDTO tileCoordinates = tile.getCoordinates();
+        TileDTO surrounds[] = this.getSurrounds(tileCoordinates);
         this.terrainDrawer.updateTile(tile, tiles.get(tileCoordinates),
-                tileDisplayCoordinates, this.getSurrounds(tileCoordinates));
+                tileDisplayCoordinates, surrounds);
+        for (int i = 0; i < surrounds.length; i++) {
+            TileDTO next = surrounds[i];
+            if (next == null) continue;
+            PointDTO nextCoords = next.getCoordinates();
+            this.terrainDrawer.updateTile(surrounds[i], tiles.get(nextCoords),
+                    this.getTileDisplayCoordinates(nextCoords),
+                    this.getSurrounds(nextCoords));
+        }
         this.tiles.put(tileCoordinates, tile);
         this.unitDrawer.updateTile(tile, tileDisplayCoordinates);
     }

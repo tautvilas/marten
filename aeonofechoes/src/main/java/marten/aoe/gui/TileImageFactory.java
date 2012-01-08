@@ -22,12 +22,20 @@ public class TileImageFactory {
 
     public static void addLayer(String[] priorities, String name,
             String imagePath) {
-        TileImageFactory.priorities.put(name, new LayerPriorities(name, priorities));
+        TileImageFactory.priorities.put(name, new LayerPriorities(name,
+                priorities));
         ImageCache.loadImage(imagePath, name);
     }
 
     public static String getTileGuiId(TileDTO tile, TileDTO[] surrounds) {
         String tid = TileImageFactory.getLayersId(tile.getLayers());
+        for (int i = 0; i < surrounds.length; i++) {
+            String surround = "null";
+            if (surrounds[i] != null) {
+                surround = surrounds[i].getLayers()[0];
+            }
+            tid += "_" + surround;
+        }
         if (!tile.getVisibility()) {
             tid += "_fog";
         }
@@ -67,18 +75,50 @@ public class TileImageFactory {
     public static ImageData getTile(TileDTO tileDto, TileDTO[] surrounds) {
         String name = TileImageFactory.getTileGuiId(tileDto, surrounds);
         String[] layers = tileDto.getLayers();
-        if (TileImageFactory.priorities.containsKey(name)) {
-            return ImageCache.getImage(name);
-        } else {
-            layers = TileImageFactory.sortLayers(layers);
-            ImageData tile = ImageCache.getImage(layers[0]);
-            for (int i = 1; i < layers.length; i++) {
-                tile = ImageTransformations.blend(tile, ImageCache
-                        .getImage(layers[i]), null);
+        layers = TileImageFactory.sortLayers(layers);
+        ImageData tile = ImageCache.getImage(layers[0]);
+        // blend base layers with masks
+        for (int i = 0; i < surrounds.length; i++) {
+            if (surrounds[i] == null)
+                continue;
+            String s = TileImageFactory.sortLayers(surrounds[i].getLayers())[0];
+            LayerPriorities p1 = TileImageFactory.priorities.get(layers[0]);
+            LayerPriorities p2 = TileImageFactory.priorities.get(s);
+            if (p1.compareTo(p2) < 0) {
+                continue;
             }
-            ImageCache.addImage(name, tile);
-            return tile;
+            ImageData surround = ImageCache.getImage(s);
+            if (i == 0) {
+                ImageData image = ImageCache.getImage("mask-1-1");
+                tile = ImageTransformations.blend(tile, surround, image);
+            } else if (i == 1) {
+                ImageData image = ImageCache.getImage("mask-1-2");
+                tile = ImageTransformations.blend(tile, surround, image);
+            } else if (i == 2) {
+                ImageData image = ImageTransformations.flip(ImageCache
+                        .getImage("mask-1-2"));
+                tile = ImageTransformations.blend(tile, surround, image);
+            } else if (i == 3) {
+                ImageData image = ImageTransformations.flip(ImageCache
+                        .getImage("mask-1-1"));
+                tile = ImageTransformations.blend(tile, surround, image);
+            } else if (i == 4) {
+                ImageData image = ImageTransformations.rotate(ImageCache
+                        .getImage("mask-1-2"), 2);
+                tile = ImageTransformations.blend(tile, surround, image);
+            } else if (i == 5) {
+                ImageData image = ImageTransformations.vflip(ImageCache
+                        .getImage("mask-1-2"));
+                tile = ImageTransformations.blend(tile, surround, image);
+            }
         }
+        // append other layers
+        for (int i = 1; i < layers.length; i++) {
+            tile = ImageTransformations.blend(tile,
+                    ImageCache.getImage(layers[i]));
+        }
+        ImageCache.addImage(name, tile);
+        return tile;
     }
 
     /** Methods used by map editor **/
@@ -99,8 +139,8 @@ public class TileImageFactory {
         mergedLayers.add(layer);
         String[] array = new String[mergedLayers.size()];
         mergedLayers.toArray(array);
-        return new TileDTO(TileImageFactory.sortLayers(array), base
-                .getCoordinates(), base.getUnit());
+        return new TileDTO(TileImageFactory.sortLayers(array),
+                base.getCoordinates(), base.getUnit());
     }
 
     public static ArrayList<LayerPriorities> getSortedLayerTypes() {
