@@ -225,6 +225,7 @@ public class MapWidget extends BasicSceneGraphBranch<SceneGraphChild> implements
         TileDTO surrounds[] = this.getSurrounds(tileCoordinates);
         this.terrainDrawer.updateTile(tile, tiles.get(tileCoordinates),
                 tileDisplayCoordinates, surrounds);
+        this.tiles.put(tileCoordinates, tile);
         for (int i = 0; i < surrounds.length; i++) {
             TileDTO next = surrounds[i];
             if (next == null) continue;
@@ -233,7 +234,6 @@ public class MapWidget extends BasicSceneGraphBranch<SceneGraphChild> implements
                     this.getTileDisplayCoordinates(nextCoords),
                     this.getSurrounds(nextCoords));
         }
-        this.tiles.put(tileCoordinates, tile);
         this.unitDrawer.updateTile(tile, tileDisplayCoordinates);
     }
 

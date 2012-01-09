@@ -84,7 +84,7 @@ public class TileImageFactory {
             String s = TileImageFactory.sortLayers(surrounds[i].getLayers())[0];
             LayerPriorities p1 = TileImageFactory.priorities.get(layers[0]);
             LayerPriorities p2 = TileImageFactory.priorities.get(s);
-            if (p1.compareTo(p2) < 0) {
+            if (p1.compareTo(p2) >= 0) {
                 continue;
             }
             ImageData surround = ImageCache.getImage(s);
