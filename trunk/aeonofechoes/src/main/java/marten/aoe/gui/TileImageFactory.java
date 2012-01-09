@@ -88,29 +88,8 @@ public class TileImageFactory {
                 continue;
             }
             ImageData surround = ImageCache.getImage(s);
-            if (i == 0) {
-                ImageData image = ImageCache.getImage("mask-1-1");
-                tile = ImageTransformations.blend(tile, surround, image);
-            } else if (i == 1) {
-                ImageData image = ImageCache.getImage("mask-1-2");
-                tile = ImageTransformations.blend(tile, surround, image);
-            } else if (i == 2) {
-                ImageData image = ImageTransformations.flip(ImageCache
-                        .getImage("mask-1-2"));
-                tile = ImageTransformations.blend(tile, surround, image);
-            } else if (i == 3) {
-                ImageData image = ImageTransformations.flip(ImageCache
-                        .getImage("mask-1-1"));
-                tile = ImageTransformations.blend(tile, surround, image);
-            } else if (i == 4) {
-                ImageData image = ImageTransformations.rotate(ImageCache
-                        .getImage("mask-1-2"), 2);
-                tile = ImageTransformations.blend(tile, surround, image);
-            } else if (i == 5) {
-                ImageData image = ImageTransformations.vflip(ImageCache
-                        .getImage("mask-1-2"));
-                tile = ImageTransformations.blend(tile, surround, image);
-            }
+            ImageData image = ImageCache.getImage("msk-1-" + i);
+            tile = ImageTransformations.blend(tile, surround, image);
         }
         // append other layers
         for (int i = 1; i < layers.length; i++) {
