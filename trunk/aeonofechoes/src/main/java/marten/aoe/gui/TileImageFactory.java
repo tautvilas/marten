@@ -78,18 +78,52 @@ public class TileImageFactory {
         layers = TileImageFactory.sortLayers(layers);
         ImageData tile = ImageCache.getImage(layers[0]);
         // blend base layers with masks
-        for (int i = 0; i < surrounds.length; i++) {
-            if (surrounds[i] == null)
-                continue;
-            String s = TileImageFactory.sortLayers(surrounds[i].getLayers())[0];
-            LayerPriorities p1 = TileImageFactory.priorities.get(layers[0]);
-            LayerPriorities p2 = TileImageFactory.priorities.get(s);
-            if (p1.compareTo(p2) >= 0) {
+        Integer start = null;
+        int slen = surrounds.length;
+        String[] bases = new String[slen];
+        for (int i = 0; i < slen + 1; i++) {
+            if (surrounds[i % slen] == null) {
+                bases[i % slen] = null;
                 continue;
             }
-            ImageData surround = ImageCache.getImage(s);
-            ImageData image = ImageCache.getImage("msk-1-" + i);
-            tile = ImageTransformations.blend(tile, surround, image);
+            bases[i % slen] = TileImageFactory.sortLayers(surrounds[i % slen].getLayers())[0];
+            if ((i != 0 && (bases[i -1] == null || !bases[i - 1].equals(bases[i % slen])))) {
+                start = i % surrounds.length;
+            }
+        }
+        if (start != null) {
+            int blen = 1;
+            String pb = bases[start];
+            int pi = start;
+            for (int i = start + 1; i <= surrounds.length + start; i++) {
+                String s = bases[i % slen];
+                if (s != null && s.equals(pb)) {
+                    blen++;
+                } else {
+                    if (pb != null && blen < 4) {
+                        LayerPriorities p1 = TileImageFactory.priorities.get(layers[0]);
+                        LayerPriorities p2 = TileImageFactory.priorities.get(pb);
+                        if (p1.compareTo(p2) < 0) {
+                            ImageData surround = ImageCache.getImage(pb);
+                            ImageData image = ImageCache.getImage("msk-" + blen + "-" + pi);
+                            tile = ImageTransformations.blend(tile, surround, image);
+                        }
+                    }
+                    blen = 1;
+                }
+                pb = s;
+                pi = i % slen;
+            }
+        } else {
+            if (bases[0] != null) {
+                LayerPriorities p1 = TileImageFactory.priorities.get(layers[0]);
+                LayerPriorities p2 = TileImageFactory.priorities.get(bases[0]);
+                if (p1.compareTo(p2) < 0) {
+                    ImageData surround = ImageCache.getImage(bases[0]);
+                    ImageData image = ImageCache.getImage("msk-6");
+                    tile = ImageTransformations.blend(tile, surround, image);
+                }
+            }
         }
         // append other layers
         for (int i = 1; i < layers.length; i++) {
