@@ -100,7 +100,7 @@ public class TileImageFactory {
                 if (s != null && s.equals(pb)) {
                     blen++;
                 } else {
-                    if (pb != null && blen < 4) {
+                    if (pb != null && blen < 5) {
                         LayerPriorities p1 = TileImageFactory.priorities.get(layers[0]);
                         LayerPriorities p2 = TileImageFactory.priorities.get(pb);
                         if (p1.compareTo(p2) < 0) {
