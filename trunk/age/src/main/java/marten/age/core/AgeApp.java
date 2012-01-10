@@ -32,6 +32,7 @@ public abstract class AgeApp {
     private static final int DEFAULT_HEIGHT = 800;
 
     private String title = "";
+    private boolean showResolutionSelector = true;
     private AgeScene sceneChanged = null;
 
     // private static final int FRAMERATE = 60;
@@ -42,7 +43,8 @@ public abstract class AgeApp {
     public AgeApp() {
     }
 
-    public AgeApp(String title) {
+    public AgeApp(String title, boolean selectResolution) {
+        this.showResolutionSelector = selectResolution;
         this.title = title;
     }
 
@@ -144,7 +146,10 @@ public abstract class AgeApp {
     }
 
     private void initDisplay() throws Exception {
-        DisplayMode mode = selectMode();
+        DisplayMode mode = null;
+        if (this.showResolutionSelector) {
+            mode = selectMode();
+        }
         boolean fullscreen = true;
         if (mode == null) {
             fullscreen = false;
