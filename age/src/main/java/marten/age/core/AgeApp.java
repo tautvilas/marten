@@ -28,8 +28,8 @@ public abstract class AgeApp {
     // private Resource res = new FileSystemResource(Constants.UNIT_BEANS_PATH);
     // private BeanFactory factory = new XmlBeanFactory(res);
 
-    private static final int DEFAULT_WIDHT = 800;
-    private static final int DEFAULT_HEIGHT = 600;
+    private static final int DEFAULT_WIDHT = 1024;
+    private static final int DEFAULT_HEIGHT = 800;
 
     private String title = "";
     private AgeScene sceneChanged = null;
