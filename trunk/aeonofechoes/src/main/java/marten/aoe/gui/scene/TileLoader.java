@@ -65,6 +65,18 @@ public abstract class TileLoader extends AgeScene {
         ImageCache.addImage("msk-3-4", mask3_1);
         ImageCache.addImage("msk-3-5", ImageTransformations.vflip(mask3_2));
         ImageData mask6 = ImageCache.getImage("mask-6");
+        ImageData msk_2_0 = ImageCache.getImage("msk-2-0");
+        ImageData msk_2_1 = ImageCache.getImage("msk-2-1");
+        ImageData msk_2_2 = ImageCache.getImage("msk-2-2");
+        ImageData msk_2_3 = ImageCache.getImage("msk-2-3");
+        ImageData msk_2_4 = ImageCache.getImage("msk-2-4");
+        ImageData msk_2_5 = ImageCache.getImage("msk-2-5");
+        ImageCache.addImage("msk-4-0", ImageTransformations.blend(msk_2_0, msk_2_4));
+        ImageCache.addImage("msk-4-1", ImageTransformations.blend(msk_2_1, msk_2_5));
+        ImageCache.addImage("msk-4-2", ImageTransformations.blend(msk_2_2, msk_2_0));
+        ImageCache.addImage("msk-4-3", ImageTransformations.blend(msk_2_3, msk_2_1));
+        ImageCache.addImage("msk-4-4", ImageTransformations.blend(msk_2_4, msk_2_2));
+        ImageCache.addImage("msk-4-5", ImageTransformations.blend(msk_2_5, msk_2_3));
         ImageCache.addImage("msk-6", mask6);
     }
 }
