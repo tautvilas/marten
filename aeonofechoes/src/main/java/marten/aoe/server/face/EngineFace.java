@@ -15,9 +15,6 @@ public interface EngineFace extends Remote {
 
     public void moveUnit(PointDTO from, PointDTO to) throws RemoteException;
 
-    @Deprecated
-    public boolean createUnit(String name, PointDTO at) throws RemoteException;
-
     public EngineEvent listen() throws RemoteException;
 
     public void endTurn() throws RemoteException;
@@ -27,7 +24,4 @@ public interface EngineFace extends Remote {
     public LinkedList<TileDTO> popStream() throws RemoteException;
 
     public TileDTO popTile() throws RemoteException;
-
-    @Deprecated
-    public PointDTO getStartPosition() throws RemoteException;
 }

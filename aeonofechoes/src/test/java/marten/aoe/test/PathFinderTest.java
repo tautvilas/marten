@@ -30,7 +30,7 @@ public class PathFinderTest {
                     this.index++;
                 }
             }}, players[0]);
-        engine.spawnUnit(players[0], "Dwarf", new PointDTO(13, 6));
+        engine.getMap().spawnUnit(players[0], "Dwarf", new PointDTO(13, 6));
         engine.performAction(players[0], new PointDTO(13, 6), Action.FIRST, new PointDTO(13, 7));
     }
 }

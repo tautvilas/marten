@@ -10,6 +10,7 @@ import marten.aoe.dto.MapMetaDTO;
 import marten.aoe.dto.PlayerDTO;
 import marten.aoe.dto.PointDTO;
 import marten.aoe.dto.TileDTO;
+import marten.aoe.engine.loader.UnitLoader;
 
 public abstract class Map {
     private final Tile[][] map;
@@ -176,6 +177,15 @@ public abstract class Map {
                 }
             }
         }
+    }
+    /** Allows spawning units during the scenarios or their initialization.
+     * @return {@code true} if the unit was spawned successfully.
+     * @param player - the player who will control the unit after spawning.
+     * @param name - the class name of the unit to be created.
+     * @param at - the location where the unit will spawn.*/
+    public boolean spawnUnit (PlayerDTO player, String name, PointDTO at) {
+        UnitLoader.loadUnit(name, player, this.getTile(at));
+        return true;
     }
     public void selectUnit(PlayerDTO player, PointDTO location) {
         this.pathCache = new PathFinder(this, this.map[location.getX()][location.getY()]);

@@ -48,11 +48,9 @@ public class Game extends AgeScene implements MapWidgetListener {
     private MouseController mouseController = new MouseController();
     private NetworkListener listener;
     private BitmapString turnNotify = null;
-    private boolean unitCreated = false;
     private LinkedList<TileDTO> updatedTiles = new LinkedList<TileDTO>();
     private LinkedList<EngineEvent> events = new LinkedList<EngineEvent>();
 
-    @SuppressWarnings("deprecation")
     public Game(EngineFace engineFace, GameDetails details) {
         this.params = details;
         this.engine = engineFace;
@@ -121,11 +119,8 @@ public class Game extends AgeScene implements MapWidgetListener {
                     GameInfo.nickname)) {
                 this.turnNotify.setContent("Your turn");
                 this.turnNotify.setColor(new Color(0, 1, 0));
-                // log.info("##### " + this.engine.getStartPosition());
-                //this.engine.createUnit("Dwarf", this.engine.getStartPosition());
                 log.info("Game scene is initialized. Active player is '"
                         + this.engine.getActivePlayer().getName() + "'");
-                this.unitCreated = true;
             } else {
                 this.turnNotify.setContent("Not your turn");
                 this.turnNotify.setColor(new Color(1, 0, 0));
@@ -137,7 +132,6 @@ public class Game extends AgeScene implements MapWidgetListener {
         this.registerNetworkListener();
     }
 
-    @SuppressWarnings("deprecation")
     @Override
     public void compute() {
         // position map on the screen
@@ -160,11 +154,6 @@ public class Game extends AgeScene implements MapWidgetListener {
                     try {
                         if (engine.getActivePlayer().getName().equals(
                                 GameInfo.nickname)) {
-                            if (!unitCreated) {
-                                engine.createUnit("Elf", engine
-                                        .getStartPosition());
-                                unitCreated = true;
-                            }
                             turnNotify.setContent("Your turn");
                             turnNotify.setColor(new Color(0, 1, 0));
                         } else {
