@@ -1,4 +1,4 @@
-package marten.aoe.rules;
+package marten.aoe.engine.rules;
 
 import java.util.List;
 

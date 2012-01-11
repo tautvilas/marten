@@ -1,4 +1,4 @@
-package marten.aoe.rules;
+package marten.aoe.engine.rules;
 
 import marten.aoe.dto.PlayerDTO;
 import marten.aoe.engine.Map;
