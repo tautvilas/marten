@@ -109,13 +109,6 @@ public class EngineInterface extends UnicastRemoteObject implements EngineFace {
         this.engine.performAction(this.player, from, Action.FIRST, to);
     }
 
-    @Deprecated
-    @Override
-    public synchronized boolean createUnit(String name, PointDTO at)
-            throws RemoteException {
-        return this.engine.spawnUnit(this.player, name, at);
-    }
-
     @Override
     public EngineEvent listen() throws RemoteException {
         synchronized (this.events) {
@@ -162,19 +155,5 @@ public class EngineInterface extends UnicastRemoteObject implements EngineFace {
                 return null;
             }
         }
-    }
-
-    @Deprecated
-    @Override
-    public PointDTO getStartPosition() throws RemoteException {
-        PlayerDTO[] players = this.engine.getAllPlayers();
-        int position = 0;
-        for (int i = 0; i < players.length; i++) {
-            if (players[i].getName().equals(this.player.getName())) {
-                position = i;
-                break;
-            }
-        }
-        return new PointDTO(13, 8 - position * 2);
     }
 }

@@ -13,7 +13,6 @@ import marten.aoe.dto.TileDTO;
 import marten.aoe.dto.UnitDTO;
 import marten.aoe.engine.aspectj.EngineMonitor;
 import marten.aoe.engine.loader.MapLoader;
-import marten.aoe.engine.loader.UnitLoader;
 import marten.aoe.rules.MinimalRuleset;
 import marten.aoe.rules.Rules;
 
@@ -45,7 +44,7 @@ public final class Engine {
     }
 
     public void start() {
-        this.ruleset.gameStart(this, this.map, playerList);
+        this.ruleset.gameStart(this.map, playerList);
     }
 
     /** Switches the engine to another map with provided name, and with a new list of players.
@@ -136,20 +135,6 @@ public final class Engine {
         this.validateLocation(location);
         Unit unit = this.map.getTile(location).getUnit();
         return (unit != null ? unit.getFullDTO(player) : null);
-    }
-
-    /** Allows spawning units during the scenarios or their initialization.
-     * @return {@code true} if the unit was spawned successfully.
-     * @param player - the player who will control the unit after spawning.
-     * @param name - the class name of the unit to be created.
-     * @param at - the location where the unit will spawn.*/
-    // FIXME: this method should be transfered to Map class at the first available opportunity.
-    public synchronized boolean spawnUnit (PlayerDTO player, String name, PointDTO at) {
-        UnitLoader.loadUnit(name, player, this.map.getTile(at));
-        for (PlayerDTO visibilityPlayer : this.playerList) {
-            this.map.recalculateVisibility(visibilityPlayer);
-        }
-        return true;
     }
 
     /** Cause the end of turn sequence on the map and relinquish control to another player.
