@@ -18,7 +18,6 @@ public class SimpleRoot extends Root {
         pos.put(new float[] { 5.0f, 5.0f, 10.0f, 0.0f });
         pos.rewind();
         GL11.glLight(GL11.GL_LIGHT0, GL11.GL_POSITION, pos);
-        // XXX(zv): it is strange that org.lwjgl.opengl.glu.Sphere is drawn CW
         // GL11.glEnable(GL11.GL_CULL_FACE);
         // GL11.glCullFace(GL11.GL_FRONT);
         GL11.glEnable(GL11.GL_LIGHTING);
