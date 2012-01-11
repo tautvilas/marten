@@ -13,8 +13,8 @@ import marten.aoe.dto.TileDTO;
 import marten.aoe.dto.UnitDTO;
 import marten.aoe.engine.aspectj.EngineMonitor;
 import marten.aoe.engine.loader.MapLoader;
-import marten.aoe.rules.MinimalRuleset;
-import marten.aoe.rules.Rules;
+import marten.aoe.engine.rules.MinimalRuleset;
+import marten.aoe.engine.rules.Rules;
 
 /** The main access point to all functionality of the AoE engine.
  * Monitoring of internal changes in the engine is provided by {@link EngineMonitor}.
