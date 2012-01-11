@@ -110,6 +110,10 @@ public abstract class AgeApp {
         }
     }
 
+    protected void setMouseGrabbed(boolean grabbed) {
+        Mouse.setGrabbed(grabbed);
+    }
+
     protected void setCursor(String imagePath) {
         ImageData cursorImage = null;
         try {

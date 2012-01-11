@@ -14,12 +14,15 @@ import marten.aoe.dto.UnitDTO;
 import marten.aoe.engine.aspectj.EngineMonitor;
 import marten.aoe.engine.loader.MapLoader;
 import marten.aoe.engine.loader.UnitLoader;
+import marten.aoe.rules.MinimalRuleset;
+import marten.aoe.rules.Rules;
 
 /** The main access point to all functionality of the AoE engine.
  * Monitoring of internal changes in the engine is provided by {@link EngineMonitor}.
  * @author Petras Ražanskas*/
 public final class Engine {
     private Map map;
+    private Rules ruleset;
     private PlayerDTO[] playerList;
     private int currentPlayer = 0;
     private int turnCounter = 1;
@@ -38,6 +41,11 @@ public final class Engine {
         }
         this.playerList = playerList;
         this.validateNewMap();
+        this.ruleset = new MinimalRuleset();
+    }
+
+    public void start() {
+        this.ruleset.gameStart(this, this.map, playerList);
     }
 
     /** Switches the engine to another map with provided name, and with a new list of players.

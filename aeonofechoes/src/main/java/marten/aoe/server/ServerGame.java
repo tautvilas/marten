@@ -103,6 +103,7 @@ public class ServerGame {
             players[i] = new PlayerDTO(i, client.getUsername());
         }
         this.engine = new Engine(this.mapName, players);
+        this.engine.start();
         for (int i = 0; i < players.length; i++) {
             ServerClient client = this.players.get(i);
             String url = this.serverUrl + "/" + client.getUsername()

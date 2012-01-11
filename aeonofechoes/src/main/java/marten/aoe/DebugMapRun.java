@@ -18,5 +18,6 @@ public class DebugMapRun extends AgeApp {
         GameInfo.nickname = "zvitruolis";
         this.setActiveScene(new GameGate("2pDebug"));
         this.setCursor(Path.SKIN_DATA_PATH + "pointer.png");
+//        this.setMouseGrabbed(true);
     }
 }
