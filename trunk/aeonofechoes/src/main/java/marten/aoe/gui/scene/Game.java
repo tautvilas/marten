@@ -161,7 +161,6 @@ public class Game extends AgeScene implements MapWidgetListener {
                             turnNotify.setColor(new Color(1, 0, 0));
                         }
                     } catch (RemoteException e) {
-                        // TODO Auto-generated catch block
                         e.printStackTrace();
                     }
                 }
@@ -216,7 +215,6 @@ public class Game extends AgeScene implements MapWidgetListener {
         this.listener.quit();
     }
 
-    @SuppressWarnings("deprecation")
     @Override
     public void moveUnit(PointDTO from, PointDTO to) {
         try {
