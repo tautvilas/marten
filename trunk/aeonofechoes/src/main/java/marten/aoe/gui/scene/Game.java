@@ -122,7 +122,7 @@ public class Game extends AgeScene implements MapWidgetListener {
                 this.turnNotify.setContent("Your turn");
                 this.turnNotify.setColor(new Color(0, 1, 0));
                 // log.info("##### " + this.engine.getStartPosition());
-                this.engine.createUnit("Dwarf", this.engine.getStartPosition());
+                //this.engine.createUnit("Dwarf", this.engine.getStartPosition());
                 log.info("Game scene is initialized. Active player is '"
                         + this.engine.getActivePlayer().getName() + "'");
                 this.unitCreated = true;
