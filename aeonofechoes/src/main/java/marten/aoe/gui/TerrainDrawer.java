@@ -29,7 +29,7 @@ public class TerrainDrawer {
     private final HashMap<String, SimpleModel> terrainCache = new HashMap<String, SimpleModel>();
     private final HashMap<PointDTO, String> idCache = new HashMap<PointDTO, String>();
 
-    public void updateTile(TileDTO tile, TileDTO oldTile, Point displayCoords, TileDTO[] surrounds) {
+    public void updateTile(TileDTO tile, Point displayCoords, TileDTO[] surrounds) {
         String tileId = TileImageFactory.getTileGuiId(tile, surrounds);
         if (!this.containsType(tileId)) {
             ImageData tileImage = TileImageFactory.getTile(tile, surrounds);
@@ -41,9 +41,7 @@ public class TerrainDrawer {
         }
         TextureCoords coords = this.terrainCache.get(tileId).getAppearance().getTexture().getCoords();
         Rectangle geometry = new Rectangle(displayCoords, new Dimension(84, 72), coords);
-        if (oldTile != null) {
-            this.remove(tile.getCoordinates(), geometry);
-        }
+        this.remove(tile.getCoordinates(), geometry);
         this.put(tile.getCoordinates(), tileId, geometry);
     }
 
@@ -54,7 +52,9 @@ public class TerrainDrawer {
     }
 
     private void remove(PointDTO coords, Geometry geometry) {
-        terrainCache.get(idCache.get(coords)).removeGeometry(geometry);
+        if (idCache.containsKey(coords)) {
+            terrainCache.get(idCache.get(coords)).removeGeometry(geometry);
+        }
     }
 
     private boolean containsType(String tileId) {
