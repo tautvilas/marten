@@ -1,13 +1,19 @@
 package marten.aoe.engine;
 
+import java.io.IOException;
+
 import marten.aoe.dto.MapMetaDTO;
 import marten.aoe.dto.PointDTO;
 import marten.aoe.engine.loader.TileLoader;
 import marten.aoe.fileio.DataTree;
 
+import org.apache.log4j.Logger;
+
 /** A branching point for all the maps that have a static layout, which is defined in a DataTree structure in data folder of the game.
  * This, however, does not imply any simplicity in a way the map operates, just that the map is not generated dynamically.*/
 public abstract class LoadedMap extends Map {
+    private static org.apache.log4j.Logger log = Logger
+            .getLogger(LoadedMap.class);
     /** Creates an instance of a single map from defined file and with given dimensions.
      * These dimension have to agree with the data in the file perfectly for loading to complete successfully.
      * @param fileName the name of the file where the layout is recorded in DataTree format.
@@ -38,7 +44,7 @@ public abstract class LoadedMap extends Map {
                                             tile = overlay;
                                         }
                                         catch (RuntimeException e) {
-                                            System.err.println(subsubsubbranch.value() + " not found");
+                                            log.error(subsubsubbranch.value() + " not found");
                                         }
                                     }
                                 }
