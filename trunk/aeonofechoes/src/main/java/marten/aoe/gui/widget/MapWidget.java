@@ -52,6 +52,7 @@ public class MapWidget extends BasicSceneGraphBranch<SceneGraphChild> implements
 
     private TerrainDrawer terrainDrawer;
     private UnitDrawer unitDrawer = new UnitDrawer(this.tg);
+    private HashMap<PointDTO, TileDTO> updatedTiles = new HashMap<PointDTO, TileDTO>();
 
     private void init() {
         try {
@@ -219,22 +220,13 @@ public class MapWidget extends BasicSceneGraphBranch<SceneGraphChild> implements
     }
 
     public void updateTile(TileDTO tile) {
-        Point tileDisplayCoordinates = this.getTileDisplayCoordinates(tile
-                .getCoordinates());
-        PointDTO tileCoordinates = tile.getCoordinates();
-        TileDTO surrounds[] = this.getSurrounds(tileCoordinates);
-        this.terrainDrawer.updateTile(tile, tiles.get(tileCoordinates),
-                tileDisplayCoordinates, surrounds);
-        this.tiles.put(tileCoordinates, tile);
+        this.tiles.put(tile.getCoordinates(), tile);
+        TileDTO surrounds[] = this.getSurrounds(tile.getCoordinates());
+        this.updatedTiles.put(tile.getCoordinates(), tile);
         for (int i = 0; i < surrounds.length; i++) {
-            TileDTO next = surrounds[i];
-            if (next == null) continue;
-            PointDTO nextCoords = next.getCoordinates();
-            this.terrainDrawer.updateTile(surrounds[i], tiles.get(nextCoords),
-                    this.getTileDisplayCoordinates(nextCoords),
-                    this.getSurrounds(nextCoords));
+            if (surrounds[i] == null) continue;
+            this.updatedTiles.put(surrounds[i].getCoordinates(), surrounds[i]);
         }
-        this.unitDrawer.updateTile(tile, tileDisplayCoordinates);
     }
 
     private TileDTO[] getSurrounds(PointDTO coords) {
@@ -259,6 +251,13 @@ public class MapWidget extends BasicSceneGraphBranch<SceneGraphChild> implements
 
     @Override
     public void render() {
+        for (TileDTO tile : this.updatedTiles.values()) {
+            PointDTO coords = tile.getCoordinates();
+            Point displayCoords = this.getTileDisplayCoordinates(coords);
+            this.terrainDrawer.updateTile(tile, displayCoords, this.getSurrounds(coords));
+            this.unitDrawer.updateTile(tile, displayCoords);
+        }
+        this.updatedTiles.clear();
         super.render();
     }
 
