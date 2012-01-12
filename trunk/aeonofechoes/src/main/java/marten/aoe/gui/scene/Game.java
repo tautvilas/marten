@@ -186,6 +186,7 @@ public class Game extends AgeScene implements MapWidgetListener {
                 EngineEvent event;
                 try {
                     event = engine.listen();
+                    log.debug("Event caught: " + event);
                     if (event == EngineEvent.TILE_UPDATE) {
                         synchronized (updatedTiles) {
                             updatedTiles.add(engine.popTile());
