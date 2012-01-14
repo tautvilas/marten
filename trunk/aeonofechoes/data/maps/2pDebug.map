@@ -397,10 +397,10 @@ Map:
         Tile:
             Water
         Tile:
-            Water
+            Dirt
             Bridge
         Tile:
-            Swamp
+            Dirt
         Tile:
             Water
         Tile:
