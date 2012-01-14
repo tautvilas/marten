@@ -163,7 +163,7 @@ public final class Engine {
         this.validateLocation(from);
         Unit activeUnit = this.map.getTile(from).getUnit();
         if (player == this.getActivePlayer() && activeUnit != null) {
-            activeUnit.specialAction(to, action);
+            this.ruleset.performAction(this.map, player, from, to, action);
         }
     }
 

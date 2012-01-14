@@ -1,9 +1,7 @@
 package marten.aoe.engine;
 
-import marten.aoe.dto.Action;
 import marten.aoe.dto.DamageDTO;
 import marten.aoe.dto.PlayerDTO;
-import marten.aoe.dto.PointDTO;
 import marten.aoe.dto.UnitSize;
 import marten.aoe.dto.UnitType;
 
@@ -24,35 +22,13 @@ public abstract class Regiment extends Unit {
         this.meleeDamage = meleeDamage;
         this.rangedDamage = rangedDamage;
     }
-    /** Special actions for regiments.
-     * By default action {@code FIRST} is movement, action {@code SECOND} is melee attack, action {@code THIRD} is ranged attack.*/
-    @Override public final void specialAction(PointDTO target, Action action) {
-        Tile targetTile = this.getMap().getTile(target);
-        switch (action) {
-            case FIRST:
-                this.getMap().moveUnit(this.getOwner(), this.getLocation().getCoordinates(), target);
-                break;
-            case SECOND:
-                if (targetTile.distanceTo(this.getLocation()) != 1) {
-                    return;
-                }
-                targetTile.applyDamage(this.meleeDamage);
-                this.applyMovementCost(this.getMovementAllowance());
-                break;
-            case THIRD:
-                if (this.attackRange < 2) {
-                    return;
-                }
-                if (targetTile.distanceTo(this.getLocation()) < 2 && targetTile.distanceTo(this.getLocation()) > this.attackRange) {
-                    return;
-                }
-                targetTile.applyDamage(this.rangedDamage);
-                this.applyMovementCost(this.getMovementAllowance());
-                break;
-            default:
-                this.extendedSpecialAction(target, action);
-        }
-
+    public DamageDTO getMeleeDamage() {
+        return this.meleeDamage;
     }
-    public abstract void extendedSpecialAction(PointDTO target, Action action);
+    public DamageDTO getRangedDamage() {
+        return this.rangedDamage;
+    }
+    public int getAttackRange() {
+        return this.attackRange;
+    }
 }

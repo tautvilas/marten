@@ -4,13 +4,11 @@ import java.util.HashSet;
 import java.util.Random;
 import java.util.Set;
 
-import marten.aoe.dto.Action;
 import marten.aoe.dto.DamageDTO;
 import marten.aoe.dto.DamageResistanceDTO;
 import marten.aoe.dto.DamageType;
 import marten.aoe.dto.FullUnitDTO;
 import marten.aoe.dto.PlayerDTO;
-import marten.aoe.dto.PointDTO;
 import marten.aoe.dto.UnitDTO;
 import marten.aoe.dto.UnitSize;
 import marten.aoe.dto.UnitType;
@@ -177,8 +175,6 @@ public abstract class Unit {
     public abstract String[] getSpecialFeatures();
     /** @return a perfect copy of the unit in given location*/
     public abstract Unit clone(Tile location);
-    /***/
-    public abstract void specialAction(PointDTO target, Action action);
     /***/
     public abstract boolean isObserving();
     /***/
