@@ -329,7 +329,7 @@ public class MapWidget extends BasicSceneGraphBranch<SceneGraphChild> implements
             } else {
                 TileDTO oldTile = this.tiles.get(this.selectedTile);
                 if (oldTile.getUnit() != null) {
-                    this.listener.moveUnit(this.selectedTile,
+                    this.listener.performAction(this.selectedTile,
                             tile.getCoordinates());
                     this.selectedTile = null;
                     return;

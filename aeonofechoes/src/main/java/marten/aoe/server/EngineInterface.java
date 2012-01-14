@@ -104,9 +104,13 @@ public class EngineInterface extends UnicastRemoteObject implements EngineFace {
     }
 
     @Override
-    public synchronized void moveUnit(PointDTO from, PointDTO to)
+    public synchronized void performAction(PointDTO from, PointDTO to, int action)
             throws RemoteException {
-        this.engine.performAction(this.player, from, Action.FIRST, to);
+        if (action == 1) {
+            this.engine.performAction(this.player, from, Action.FIRST, to);
+        } else if (action == 2) {
+            this.engine.performAction(this.player, from, Action.SECOND, to);
+        }
     }
 
     @Override

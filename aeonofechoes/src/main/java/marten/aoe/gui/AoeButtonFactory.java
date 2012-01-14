@@ -21,6 +21,16 @@ public class AoeButtonFactory {
         return button;
     }
 
+    public static Button getActionButton(String label) {
+        Button button = new Button(ImageCache.getImage(Path.SKIN_DATA_PATH
+                + "action.png"));
+        BitmapFont buttonFont = FontCache.getFont(new Font("Arial", Font.PLAIN,
+                14));
+        button.setFont(buttonFont);
+        button.setLabel(label, new Color(0, 0, 0));
+        return button;
+    }
+
     public static Button getMenuButton(String label) {
         Button button = new Button(ImageCache.getImage(Path.SKIN_DATA_PATH
                 + "menu-button.png"));

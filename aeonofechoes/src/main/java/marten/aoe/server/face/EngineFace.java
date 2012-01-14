@@ -13,7 +13,7 @@ import marten.aoe.server.serializable.EngineEvent;
 public interface EngineFace extends Remote {
     public MapDTO getMap() throws RemoteException;
 
-    public void moveUnit(PointDTO from, PointDTO to) throws RemoteException;
+    public void performAction(PointDTO from, PointDTO to, int action) throws RemoteException;
 
     public EngineEvent listen() throws RemoteException;
 
