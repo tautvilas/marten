@@ -50,8 +50,10 @@ public class Game extends AgeScene implements MapWidgetListener {
     private BitmapString turnNotify = null;
     private LinkedList<TileDTO> updatedTiles = new LinkedList<TileDTO>();
     private LinkedList<EngineEvent> events = new LinkedList<EngineEvent>();
+    private int selectedAction = 1;
 
     public Game(EngineFace engineFace, GameDetails details) {
+        int appWidth = AppInfo.getDisplayWidth();
         this.params = details;
         this.engine = engineFace;
         try {
@@ -77,6 +79,22 @@ public class Game extends AgeScene implements MapWidgetListener {
         turnNotify.setPosition(new Point(AppInfo.getDisplayWidth() - 150,
                 AppInfo.getDisplayHeight() - 50));
         flatland.addChild(turnNotify);
+        for (int i = 0; i < 9; i++) {
+            Button action = AoeButtonFactory.getActionButton("" + (i + 1));
+            float width = action.getDimension().width;
+            float height = action.getDimension().height;
+            action.setPosition(new Point(appWidth - 7 - width * 3 + i % 3 * width,
+                                         300 - i / 3 * height));
+            final int act = i + 1;
+            action.setAction(new Action() {
+                @Override
+                public void perform() {
+                    Game.this.selectedAction = act;
+                }
+            });
+            this.registerControllable(action);
+            flatland.addChild(action);
+        }
         endTurnButton.setAction(new Action() {
             @Override
             public void perform() {
@@ -217,9 +235,9 @@ public class Game extends AgeScene implements MapWidgetListener {
     }
 
     @Override
-    public void moveUnit(PointDTO from, PointDTO to) {
+    public void performAction(PointDTO from, PointDTO to) {
         try {
-            this.engine.moveUnit(from, to);
+            this.engine.performAction(from, to, Game.this.selectedAction);
         } catch (RemoteException e) {
             e.printStackTrace();
         }
