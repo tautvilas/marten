@@ -1,11 +1,9 @@
 package marten.aoe.data.units;
 
-import marten.aoe.dto.Action;
 import marten.aoe.dto.DamageDTO;
 import marten.aoe.dto.DamageResistanceDTO;
 import marten.aoe.dto.DamageType;
 import marten.aoe.dto.PlayerDTO;
-import marten.aoe.dto.PointDTO;
 import marten.aoe.dto.UnitSize;
 import marten.aoe.dto.UnitType;
 import marten.aoe.engine.Regiment;
@@ -32,7 +30,6 @@ public final class Dwarf extends Regiment {
     @Override public void onTileEntry(Tile tile) {}
     @Override public void onTileExit(Tile tile) {}
     @Override public void onTurnOver() {}
-    @Override public void extendedSpecialAction(PointDTO target, Action action) {}
     @Override public boolean isCloaked() {
         return false;
     }
