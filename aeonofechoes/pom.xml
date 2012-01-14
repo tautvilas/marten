@@ -29,4 +29,24 @@
       <artifactId>age</artifactId>
     </dependency>
   </dependencies>
+  <build>
+    <plugins>
+        <plugin>
+            <!-- Execute the main class -->
+            <groupId>org.codehaus.mojo</groupId>
+            <artifactId>exec-maven-plugin</artifactId>
+            <version>1.1</version>
+            <executions>
+                <execution>
+                    <goals>
+                        <goal>exec</goal>
+                    </goals>
+                </execution>
+            </executions>
+            <configuration>
+                <mainClass>marten.aoe.DebugMapRun</mainClass>
+            </configuration>
+        </plugin>
+    </plugins>
+  </build>
 </project>
