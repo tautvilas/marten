@@ -44,8 +44,8 @@ public final aspect EngineMonitor {
     pointcut onUnitDamaged (Unit unit) :
         target(unit) && execution(* Unit.applyDamage(..));
     
-    pointcut onUnitActing (Unit unit) :
-        target(unit) && execution(* Unit.specialAction(..));
+    pointcut onUnitActing (Engine engine) :
+        target(engine) && execution(* Engine.performAction(..));
     
     pointcut onUnitEntry (TileBase tile) :
         target(tile) && (execution(* TileBase.pushUnit(..)) || execution(* TileBase.insertUnit(..)));
@@ -224,14 +224,13 @@ public final aspect EngineMonitor {
         }
     }
     
-    void around (Unit unit) : onUnitActing(unit) {
-        Engine engine = unit.getMap().getOwner();
+    void around (Engine engine) : onUnitActing(engine) {
         for (List<EngineListener> listeners : engine.listeners.values()) {
             for (EngineListener listener : listeners) {
                 listener.onGlobalEvent(GlobalEvent.STREAM_START);
             }
         }
-        proceed(unit);
+        proceed(engine);
         for (PlayerDTO player : engine.getAllPlayers()) {
             engine.getMap().recalculateVisibility(player);
         }
