@@ -4,7 +4,7 @@ import java.io.IOException;
 
 import marten.aoe.dto.MapMetaDTO;
 import marten.aoe.dto.PointDTO;
-import marten.aoe.engine.loader.TileLoader;
+import marten.aoe.dto.TileLayerDTO;
 import marten.aoe.fileio.DataTree;
 
 import org.apache.log4j.Logger;
@@ -12,6 +12,7 @@ import org.apache.log4j.Logger;
 /** A branching point for all the maps that have a static layout, which is defined in a DataTree structure in data folder of the game.
  * This, however, does not imply any simplicity in a way the map operates, just that the map is not generated dynamically.*/
 public abstract class LoadedMap extends Map {
+    @SuppressWarnings("unused")
     private static org.apache.log4j.Logger log = Logger
             .getLogger(LoadedMap.class);
     /** Creates an instance of a single map from defined file and with given dimensions.
@@ -32,21 +33,10 @@ public abstract class LoadedMap extends Map {
                         int x = 0;
                         for (DataTree subsubbranch : subbranch.branches()) {
                             if (subsubbranch.value().equals("Tile")) {
-                                Tile tile = null;
+                                Tile tile = new TileBase(this, new PointDTO(x, y));
                                 for (DataTree subsubsubbranch : subsubbranch.branches()) {
-                                    if (tile == null) {
-                                        tile = TileLoader.loadTile(subsubsubbranch.value(), this, new PointDTO(x, y));                                        
-                                    }
-                                    else {
-                                        try {
-                                            TileLayer overlay = TileLoader.loadLayer(subsubsubbranch.value(), tile);
-                                            tile.setOverlay(overlay);
-                                            tile = overlay;
-                                        }
-                                        catch (RuntimeException e) {
-                                            log.error(subsubsubbranch.value() + " not found");
-                                        }
-                                    }
+                                    TileLayerDTO layer = new TileLayerDTO(subsubsubbranch.value(), 1);
+                                    tile.addLayer(layer);
                                 }
                                 this.switchTile(tile);
                                 x++;

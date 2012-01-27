@@ -31,9 +31,6 @@ public final class Elf extends Regiment {
     @Override public void onTileExit(Tile tile) {}
     @Override public void onTurnOver() {}
     @Override public boolean isCloaked() {
-        if (this.getLocation().getName().matches(".*Forest.*")) {
-            return true;
-        }
         return false;
     }
     @Override

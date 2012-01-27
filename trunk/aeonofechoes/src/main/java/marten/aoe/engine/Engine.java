@@ -3,8 +3,6 @@ package marten.aoe.engine;
 import marten.aoe.aspectj.NoNullEntries;
 import marten.aoe.aspectj.NotNull;
 import marten.aoe.dto.Action;
-import marten.aoe.dto.FullMapDTO;
-import marten.aoe.dto.FullTileDTO;
 import marten.aoe.dto.FullUnitDTO;
 import marten.aoe.dto.MapDTO;
 import marten.aoe.dto.PlayerDTO;
@@ -92,13 +90,6 @@ public final class Engine {
         return this.map.getDTO(player);
     }
 
-    /** @return the verbose description of the map as seen from the perspective of the given player.
-     * @param player - the player who is requesting the data.*/
-    public synchronized FullMapDTO getFullMapDTO (@NotNull PlayerDTO player) {
-        this.validatePlayer(player);
-        return this.map.getFullDTO(player);
-    }
-
     /** @return the brief description of the tile at given coordinates as seen from the perspective of the given player.
      * @param player - the player who is requesting the data.
      * @param location - the coordinates at which the queried tile is located.*/
@@ -106,15 +97,6 @@ public final class Engine {
         this.validatePlayer(player);
         this.validateLocation(location);
         return this.map.getTile(location).getDTO(player);
-    }
-
-    /** @return the verbose description of the tile at given coordinates as seen from the perspective of the given player.
-     * @param player - the player who is requesting the data.
-     * @param location - the coordinates at which the queried tile is located.*/
-    public synchronized FullTileDTO getFullTileDTO (@NotNull PlayerDTO player, @NotNull PointDTO location) {
-        this.validatePlayer(player);
-        this.validateLocation(location);
-        return this.map.getTile(location).getFullDTO(player);
     }
 
     /** @return the brief description of the unit at given coordinates as seen from the perspective of the given player, or {@code null} if no unit exists there.
