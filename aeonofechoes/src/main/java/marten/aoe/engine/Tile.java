@@ -1,7 +1,9 @@
 package marten.aoe.engine;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import marten.aoe.dto.DamageDTO;
 import marten.aoe.dto.DefenseDTO;
@@ -14,8 +16,10 @@ import marten.aoe.dto.TileLayerDTO;
 import marten.aoe.dto.UnitSize;
 import marten.aoe.dto.UnitType;
 
-public abstract class Tile {
-
+public class Tile {
+    private Unit unit = null;
+    private final Set<PlayerDTO> exploredPlayers = new HashSet<PlayerDTO>();
+    private final Set<PlayerDTO> visiblePlayers = new HashSet<PlayerDTO>();
     private final Map map;
     private final PointDTO coordinates;
     private ArrayList<TileLayerDTO> layers = new ArrayList<TileLayerDTO>();
@@ -24,63 +28,67 @@ public abstract class Tile {
         this.map = map;
         this.coordinates = coordinates;
     }
+
     /** @return the owner of this tile. */
     public final Map getMap() {
         return this.map;
     }
+
     /** @return the coordinates of this tile. */
     public final PointDTO getCoordinates() {
         return this.coordinates;
     }
-    /** @return the unit in this tile or <code>null</code> if there is no unit. */
-    public abstract Unit getUnit();
-    /** @return <code>true</code> if there is a unit in this tile, <code>false</code> otherwise.*/
+
+    /**
+     * @return <code>true</code> if there is a unit in this tile,
+     *         <code>false</code> otherwise.
+     */
     public final boolean isOccupied() {
         return this.getUnit() != null;
     }
-    /** @param player - the player from whose perspective the data should be presented. Generally this means that data, invisible to this player, is concealed.
-     * @return a minimal Tile Data Transfer Object for this tile.
-     * @see marten.aoe.engine.Tile#getDTOConcealUnit(PlayerDTO)*/
-    public abstract TileDTO getDTO(PlayerDTO player);
-    /** Performs an action when a unit enters this tile.*/
-    public abstract void onUnitEntry();
-    /** Performs an action when a unit leaves this tile.*/
-    public abstract void onUnitExit();
-    /** Calculates all movement costs and returns it as a DTO.*/
-    public abstract MovementDTO getMovementCost();
-    /** Calculates the movement cost of entering this tile.
-     * @param size - the size of the unit.
-     * @param type - the type of the unit.
-     * @return the amount of movement points to be subtracted if the unit enters this tile. */
+
+    /**
+     * Calculates the movement cost of entering this tile.
+     * 
+     * @param size
+     *            - the size of the unit.
+     * @param type
+     *            - the type of the unit.
+     * @return the amount of movement points to be subtracted if the unit enters
+     *         this tile.
+     */
     public final int getMovementCost(UnitSize size, UnitType type) {
         return this.getMovementCost().getValue(size, type);
     }
-    /** Calculates all defense bonuses and returns it as a DTO.*/
-    public abstract DefenseDTO getDefenseBonus();
-    /** Calculates the defense value of being in this tile.
-     * @param size - the size of the unit.
-     * @param type - the type of the unit.
-     * @return the amount of points the maximum attacking force is reduced by when the unit is defending in this tile.*/
+
+    /**
+     * Calculates the defense value of being in this tile.
+     * 
+     * @param size
+     *            - the size of the unit.
+     * @param type
+     *            - the type of the unit.
+     * @return the amount of points the maximum attacking force is reduced by
+     *         when the unit is defending in this tile.
+     */
     public final int getDefenseBonus(UnitSize size, UnitType type) {
         return this.getDefenseBonus().getValue(size, type);
     }
-    /** Calculates the height at which this tile currently is. */
-    public abstract int getHeight();
-    /** Returns a description of the special features of this tile.*/
-    public abstract String[] getSpecialFeatures();
-    public final Tile adjacent (Direction direction) {
+
+    public final Tile adjacent(Direction direction) {
         return this.map.getTile(direction.adjust(this.coordinates));
     }
-    public final int distanceTo (Tile other) {
-        int minimumEstimate = other.coordinates.getX() - this.coordinates.getX();
+
+    public final int distanceTo(Tile other) {
+        int minimumEstimate = other.coordinates.getX()
+                - this.coordinates.getX();
         minimumEstimate *= (minimumEstimate < 0 ? -1 : 1);
         int minY = this.coordinates.getY() - minimumEstimate / 2;
         int maxY = this.coordinates.getY() + minimumEstimate / 2;
         if (minimumEstimate % 2 != 0) {
             if (this.coordinates.getX() % 2 == 0) {
                 --minY;
-            }
-            else {
+            } else {
                 ++maxY;
             }
         }
@@ -92,10 +100,13 @@ public abstract class Tile {
         }
         return minimumEstimate;
     }
-    public final List<Tile> neighbors (int distance) {
+
+    public final List<Tile> neighbors(int distance) {
         List<Tile> answer = new ArrayList<Tile>();
-        for (int x = this.coordinates.getX() - distance; x <= this.coordinates.getX() + distance; ++x) {
-            for (int y = this.coordinates.getY() - distance; y <= this.coordinates.getY() + distance; ++y) {
+        for (int x = this.coordinates.getX() - distance; x <= this.coordinates
+                .getX() + distance; ++x) {
+            for (int y = this.coordinates.getY() - distance; y <= this.coordinates
+                    .getY() + distance; ++y) {
                 Tile candidate = this.map.getTile(new PointDTO(x, y));
                 if (candidate != null && this.distanceTo(candidate) <= distance) {
                     answer.add(candidate);
@@ -104,25 +115,161 @@ public abstract class Tile {
         }
         return answer;
     }
+
     public ArrayList<TileLayerDTO> getLayers() {
         return this.layers;
     }
+
     public void addLayer(TileLayerDTO layer) {
         this.layers.add(layer);
     }
-    public abstract boolean isExplored(PlayerDTO player);
-    public abstract boolean isVisible(PlayerDTO player);
-    public abstract boolean isDetected(PlayerDTO player);
-    public abstract boolean hasAnythingCloaked(PlayerDTO player);
-    public abstract void setExplored(PlayerDTO player);
-    public abstract void setVisible(PlayerDTO player);
-    public abstract void setInvisible(PlayerDTO player);
-    public abstract void setDetected(PlayerDTO player);
-    public abstract void setUndetected(PlayerDTO player);
-    public abstract Unit popUnit(PlayerDTO player);
-    public abstract boolean pushUnit(PlayerDTO player, Unit unit);
-    public abstract Unit removeUnit(PlayerDTO player);
-    public abstract boolean insertUnit(PlayerDTO player, Unit unit);
-    public abstract void turnOver();
-    public abstract void applyDamage(DamageDTO damage);
+
+    public final TileDTO getDTO(PlayerDTO player) {
+        if (player != PlayerDTO.SYSTEM && !this.isExplored(player)) {
+            return new TileDTO("Shroud", this.getCoordinates(), null, false);
+        }
+        ArrayList<String> lnames = new ArrayList<String>();
+        for (int i = 0; i < this.getLayers().size(); i++) {
+            lnames.add(this.getLayers().get(i).getName());
+        }
+        String[] arr = new String[lnames.size()];
+        return new TileDTO(lnames.toArray(arr), this.getCoordinates(),
+                (this.getUnit() != null && this.isVisible(player) ? this
+                        .getUnit().getDTO(player) : null),
+                this.isVisible(player));
+    }
+
+    public final boolean isExplored(PlayerDTO player) {
+        return this.exploredPlayers.contains(player);
+    }
+
+    public final boolean isVisible(PlayerDTO player) {
+        return this.visiblePlayers.contains(player);
+    }
+
+    public final void setExplored(PlayerDTO player) {
+        this.exploredPlayers.add(player);
+    }
+
+    public final void setVisible(PlayerDTO player) {
+        this.visiblePlayers.add(player);
+    }
+
+    public final void setInvisible(PlayerDTO player) {
+        this.visiblePlayers.remove(player);
+    }
+
+    public final Unit getUnit() {
+        return this.unit;
+    }
+
+    public final Unit popUnit(PlayerDTO player) {
+        if (this.unit != null
+                && (player == this.unit.getOwner() || player == PlayerDTO.SYSTEM)) {
+            this.onUnitExit();
+            this.unit.onTileExit(this);
+            return this.removeUnit(player);
+        }
+        return null;
+    }
+
+    public final boolean pushUnit(PlayerDTO player, Unit unit) {
+        if (this.unit == null
+                && unit != null
+                && (player == unit.getOwner() || player == PlayerDTO.SYSTEM)
+                && (unit.applyMovementCost(this.getMovementCost(
+                        unit.getUnitSize(), unit.getUnitType())) > -1)) {
+            this.unit = unit;
+            this.unit.onTileEntry(this);
+            this.unit.setLocation(this);
+            this.onUnitEntry();
+            return true;
+        }
+        return false;
+    }
+
+    public final Unit removeUnit(PlayerDTO player) {
+        if (this.unit != null
+                && (player == this.unit.getOwner() || player == PlayerDTO.SYSTEM)) {
+            Unit answer = this.unit;
+            this.unit = null;
+            answer.setLocation(null);
+            return answer;
+        }
+        return null;
+    }
+
+    public final boolean insertUnit(PlayerDTO player, Unit unit) {
+        if (this.unit == null && unit != null
+                && (player == unit.getOwner() || player == PlayerDTO.SYSTEM)) {
+            this.unit = unit;
+            this.unit.setLocation(this);
+            return true;
+        }
+        return false;
+    }
+
+    public final void applyDamage(DamageDTO damage) {
+        if (this.unit != null) {
+            this.unit.applyDamage(damage);
+        }
+    }
+
+    public final void turnOver() {
+        if (this.unit != null) {
+            this.unit.turnOver();
+        }
+    }
+
+    public final boolean isDetected(PlayerDTO player) {
+        return (this.unit != null ? this.unit.isDetected(player) : true);
+    }
+
+    public final void setDetected(PlayerDTO player) {
+        if (this.unit != null) {
+            this.unit.setDetected(player);
+        }
+    }
+
+    public final void setUndetected(PlayerDTO player) {
+        if (this.unit != null) {
+            this.unit.setUndetected(player);
+        }
+    }
+
+    public final boolean hasAnythingCloaked(PlayerDTO player) {
+        if (this.unit == null) {
+            return false;
+        }
+        return this.unit.isCloaked();
+    }
+
+    public void onUnitEntry() {
+        // TODO Auto-generated method stub
+
+    }
+
+    public void onUnitExit() {
+        // TODO Auto-generated method stub
+
+    }
+
+    public MovementDTO getMovementCost() {
+        return new MovementDTO(this.getLayers().get(0).getGroundMovementCost());
+    }
+
+    public DefenseDTO getDefenseBonus() {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+    public int getHeight() {
+        // TODO Auto-generated method stub
+        return 0;
+    }
+
+    public String[] getSpecialFeatures() {
+        // TODO Auto-generated method stub
+        return null;
+    }
 }
