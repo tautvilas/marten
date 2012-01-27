@@ -3,7 +3,6 @@ package marten.aoe.engine;
 import marten.aoe.aspectj.NoNullEntries;
 import marten.aoe.aspectj.NotNull;
 import marten.aoe.dto.Action;
-import marten.aoe.dto.FullUnitDTO;
 import marten.aoe.dto.MapDTO;
 import marten.aoe.dto.PlayerDTO;
 import marten.aoe.dto.PointDTO;
@@ -107,16 +106,6 @@ public final class Engine {
         this.validateLocation(location);
         Unit unit = this.map.getTile(location).getUnit();
         return (unit != null ? unit.getDTO(player) : null);
-    }
-
-    /** @return the verbose description of the unit at given coordinates as seen from the perspective of the given player, or {@code null} if no unit exists there.
-     * @param player - the player who is requesting the data.
-     * @param location - the coordinates at which the queried unit is located.*/
-    public synchronized FullUnitDTO getFullUnitDTO (@NotNull PlayerDTO player, @NotNull PointDTO location) {
-        this.validatePlayer(player);
-        this.validateLocation(location);
-        Unit unit = this.map.getTile(location).getUnit();
-        return (unit != null ? unit.getFullDTO(player) : null);
     }
 
     /** Cause the end of turn sequence on the map and relinquish control to another player.
