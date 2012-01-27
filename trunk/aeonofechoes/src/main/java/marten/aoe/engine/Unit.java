@@ -7,7 +7,6 @@ import java.util.Set;
 import marten.aoe.dto.DamageDTO;
 import marten.aoe.dto.DamageResistanceDTO;
 import marten.aoe.dto.DamageType;
-import marten.aoe.dto.FullUnitDTO;
 import marten.aoe.dto.PlayerDTO;
 import marten.aoe.dto.UnitDTO;
 import marten.aoe.dto.UnitSize;
@@ -83,26 +82,6 @@ public abstract class Unit {
     /** @return the unmodified range, where the unit is capable of seeing enemy units.*/
     public final int getDetectionRange() {
         return this.detectionRange;
-    }
-    /** Create a standard Unit Data Transfer Object. */
-    public final FullUnitDTO getFullDTO(PlayerDTO player) {
-        if (player == PlayerDTO.SYSTEM || this.isDetected(player)) {
-            return new FullUnitDTO(
-                    this.name,
-                    this.unitSize,
-                    this.unitType,
-                    this.currentMovementAllowance,
-                    this.maxMovementAllowance,
-                    this.getDamageResistance(),
-                    this.currentHitPoints,
-                    this.maxHitPoints,
-                    this.detectionRange,
-                    this.getSpecialFeatures(),
-                    this.owner,
-                    this.isCloaked()
-            );
-        }
-        return null;
     }
     /** Invoke the actions applicable to the end of a turn. */
     public final void turnOver() {
