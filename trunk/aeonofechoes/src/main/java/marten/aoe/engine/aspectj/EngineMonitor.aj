@@ -16,7 +16,6 @@ import marten.aoe.engine.GlobalEvent;
 import marten.aoe.engine.LocalEvent;
 import marten.aoe.engine.Map;
 import marten.aoe.engine.Tile;
-import marten.aoe.engine.TileBase;
 import marten.aoe.engine.Unit;
 
 @SuppressAjWarnings("adviceDidNotMatch")
@@ -47,26 +46,26 @@ public final aspect EngineMonitor {
     pointcut onUnitActing (Engine engine) :
         target(engine) && execution(* Engine.performAction(..));
     
-    pointcut onUnitEntry (TileBase tile) :
-        target(tile) && (execution(* TileBase.pushUnit(..)) || execution(* TileBase.insertUnit(..)));
+    pointcut onUnitEntry (Tile tile) :
+        target(tile) && (execution(* Tile.pushUnit(..)) || execution(* Tile.insertUnit(..)));
     
-    pointcut onUnitExit (TileBase tile) :
-        target(tile) && execution(* TileBase.removeUnit(..));
+    pointcut onUnitExit (Tile tile) :
+        target(tile) && execution(* Tile.removeUnit(..));
     
-    pointcut onTileExplored (TileBase tile, PlayerDTO player) :
-        target(tile) && args(player) && execution(* TileBase.setExplored(..));
+    pointcut onTileExplored (Tile tile, PlayerDTO player) :
+        target(tile) && args(player) && execution(* Tile.setExplored(..));
     
-    pointcut onTileVisible (TileBase tile, PlayerDTO player) :
-        target(tile) && args(player) && execution(* TileBase.setVisible(..));
+    pointcut onTileVisible (Tile tile, PlayerDTO player) :
+        target(tile) && args(player) && execution(* Tile.setVisible(..));
     
-    pointcut onTileInvisible (TileBase tile, PlayerDTO player) :
-        target(tile) && args(player) && execution(* TileBase.setInvisible(..));
+    pointcut onTileInvisible (Tile tile, PlayerDTO player) :
+        target(tile) && args(player) && execution(* Tile.setInvisible(..));
     
-    pointcut onObjectDetected (TileBase tile, PlayerDTO player) :
-        target(tile) && args(player) && execution(* TileBase.setDetected(..));
+    pointcut onObjectDetected (Tile tile, PlayerDTO player) :
+        target(tile) && args(player) && execution(* Tile.setDetected(..));
     
-    pointcut onObjectHidden (TileBase tile, PlayerDTO player) :
-        target(tile) && args(player) && execution(* TileBase.setUndetected(..));
+    pointcut onObjectHidden (Tile tile, PlayerDTO player) :
+        target(tile) && args(player) && execution(* Tile.setUndetected(..));
     
     pointcut onUnitSpawned (Map map, PlayerDTO player, PointDTO location) :
         target(map) && args(player, *, location) && execution(* Map.spawnUnit(..));
