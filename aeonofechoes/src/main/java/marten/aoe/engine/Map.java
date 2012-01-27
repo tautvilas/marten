@@ -3,8 +3,6 @@ package marten.aoe.engine;
 import java.util.ArrayList;
 import java.util.List;
 
-import marten.aoe.dto.FullMapDTO;
-import marten.aoe.dto.FullTileDTO;
 import marten.aoe.dto.MapDTO;
 import marten.aoe.dto.MapMetaDTO;
 import marten.aoe.dto.PlayerDTO;
@@ -34,15 +32,6 @@ public abstract class Map {
     }
     public final Engine getOwner () {
         return this.owner;
-    }
-    public final FullMapDTO getFullDTO (PlayerDTO player) {
-        FullTileDTO[][] tiles = new FullTileDTO[this.meta.getWidth()][this.meta.getHeight()];
-        for (int x = 0; x < this.meta.getWidth(); x++) {
-            for (int y = 0; y < this.meta.getHeight(); y++) {
-                tiles[x][y] = (this.map[x][y] != null ? this.map[x][y].getFullDTO(player) : null);
-            }
-        }
-        return new FullMapDTO(tiles, this.meta.getWidth(), this.meta.getHeight(), this.meta.getName());
     }
     public final MapDTO getDTO (PlayerDTO player) {
         TileDTO[][] tiles = new TileDTO[this.meta.getWidth()][this.meta.getHeight()];

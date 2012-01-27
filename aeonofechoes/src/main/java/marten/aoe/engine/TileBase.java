@@ -1,36 +1,23 @@
 package marten.aoe.engine;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
 
 import marten.aoe.dto.DamageDTO;
 import marten.aoe.dto.DefenseDTO;
-import marten.aoe.dto.FullTileDTO;
 import marten.aoe.dto.MovementDTO;
 import marten.aoe.dto.PlayerDTO;
 import marten.aoe.dto.PointDTO;
 import marten.aoe.dto.TileDTO;
 
-public abstract class TileBase extends Tile {
+public class TileBase extends Tile {
     private Unit unit = null;
     private final Set<PlayerDTO> exploredPlayers = new HashSet<PlayerDTO>();
     private final Set<PlayerDTO> visiblePlayers = new HashSet<PlayerDTO>();
 
-    public TileBase(String name, Map owner, PointDTO coordinates) {
-        super(name, owner, coordinates);
-    }
-    @Override
-    public final FullTileDTO getFullDTO(PlayerDTO player) {
-        if (player != PlayerDTO.SYSTEM && !this.isExplored(player)) {
-            return new FullTileDTO("Shroud", this.getCoordinates(), 0,
-                    new MovementDTO(null), new DefenseDTO(null), null,
-                    new String[] { "Unexplored" }, false);
-        }
-        return new FullTileDTO(this.getName(), this.getCoordinates(), this
-                .getHeight(), this.getMovementCost(), this.getDefenseBonus(),
-                (this.getUnit() != null && this.isVisible(player) ? this
-                        .getUnit().getFullDTO(player) : null), this
-                        .getSpecialFeatures(), this.isVisible(player));
+    public TileBase(Map owner, PointDTO coordinates) {
+        super(owner, coordinates);
     }
 
     @Override
@@ -38,7 +25,12 @@ public abstract class TileBase extends Tile {
         if (player != PlayerDTO.SYSTEM && !this.isExplored(player)) {
             return new TileDTO("Shroud", this.getCoordinates(), null, false);
         }
-        return new TileDTO(this.getName(), this.getCoordinates(),
+        ArrayList<String> lnames = new ArrayList<String>();
+        for (int i = 0; i < this.getLayers().size(); i++) {
+            lnames.add(this.getLayers().get(i).getName());
+        }
+        String[] arr = new String[lnames.size()];
+        return new TileDTO(lnames.toArray(arr), this.getCoordinates(),
                 (this.getUnit() != null && this.isVisible(player) ? this
                         .getUnit().getDTO(player) : null), this
                         .isVisible(player));
@@ -136,10 +128,7 @@ public abstract class TileBase extends Tile {
         if (this.unit != null) {
             this.unit.turnOver();
         }
-        this.onTurnOver();
     }
-
-    public abstract void onTurnOver();
 
     @Override
     public final boolean isDetected(PlayerDTO player) {
@@ -169,7 +158,32 @@ public abstract class TileBase extends Tile {
     }
     
     @Override
-    public final String[] getLayers(PlayerDTO player) {
-        return new String[] {this.getName()};
+    public void onUnitEntry() {
+        // TODO Auto-generated method stub
+        
+    }
+    @Override
+    public void onUnitExit() {
+        // TODO Auto-generated method stub
+        
+    }
+    @Override
+    public MovementDTO getMovementCost() {
+        return new MovementDTO(this.getLayers().get(0).getGroundMovementCost());
+    }
+    @Override
+    public DefenseDTO getDefenseBonus() {
+        // TODO Auto-generated method stub
+        return null;
+    }
+    @Override
+    public int getHeight() {
+        // TODO Auto-generated method stub
+        return 0;
+    }
+    @Override
+    public String[] getSpecialFeatures() {
+        // TODO Auto-generated method stub
+        return null;
     }
 }

@@ -6,11 +6,11 @@ import java.util.List;
 import marten.aoe.dto.DamageDTO;
 import marten.aoe.dto.DefenseDTO;
 import marten.aoe.dto.Direction;
-import marten.aoe.dto.FullTileDTO;
 import marten.aoe.dto.MovementDTO;
 import marten.aoe.dto.PlayerDTO;
 import marten.aoe.dto.PointDTO;
 import marten.aoe.dto.TileDTO;
+import marten.aoe.dto.TileLayerDTO;
 import marten.aoe.dto.UnitSize;
 import marten.aoe.dto.UnitType;
 
@@ -18,16 +18,11 @@ public abstract class Tile {
 
     private final Map map;
     private final PointDTO coordinates;
-    private final String name;
-    private TileLayer overlay;
+    private ArrayList<TileLayerDTO> layers = new ArrayList<TileLayerDTO>();
 
-    public Tile(String name, Map map, PointDTO coordinates) {
-        this.name = name;
+    public Tile(Map map, PointDTO coordinates) {
         this.map = map;
         this.coordinates = coordinates;
-    }
-    public String getName() {
-        return this.name;
     }
     /** @return the owner of this tile. */
     public final Map getMap() {
@@ -43,9 +38,6 @@ public abstract class Tile {
     public final boolean isOccupied() {
         return this.getUnit() != null;
     }
-    /** @param player - the player from whose perspective the data should be presented. Generally this means that data, invisible to this player, is concealed.
-     * @return a standard Tile Data Transfer Object for this tile.*/
-    public abstract FullTileDTO getFullDTO(PlayerDTO player);
     /** @param player - the player from whose perspective the data should be presented. Generally this means that data, invisible to this player, is concealed.
      * @return a minimal Tile Data Transfer Object for this tile.
      * @see marten.aoe.engine.Tile#getDTOConcealUnit(PlayerDTO)*/
@@ -76,12 +68,6 @@ public abstract class Tile {
     public abstract int getHeight();
     /** Returns a description of the special features of this tile.*/
     public abstract String[] getSpecialFeatures();
-    public final TileLayer getOverlay() {
-        return this.overlay;
-    }
-    public final void setOverlay(TileLayer overlay) {
-        this.overlay = overlay;
-    }
     public final Tile adjacent (Direction direction) {
         return this.map.getTile(direction.adjust(this.coordinates));
     }
@@ -118,7 +104,12 @@ public abstract class Tile {
         }
         return answer;
     }
-    public abstract String[] getLayers(PlayerDTO player);
+    public ArrayList<TileLayerDTO> getLayers() {
+        return this.layers;
+    }
+    public void addLayer(TileLayerDTO layer) {
+        this.layers.add(layer);
+    }
     public abstract boolean isExplored(PlayerDTO player);
     public abstract boolean isVisible(PlayerDTO player);
     public abstract boolean isDetected(PlayerDTO player);
