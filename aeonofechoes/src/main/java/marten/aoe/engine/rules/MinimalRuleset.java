@@ -14,6 +14,7 @@ import marten.aoe.engine.core.Unit;
 
 public class MinimalRuleset implements Rules {
 
+    @Override
     public void gameStart(Map map, Player[] playerList) {
         MapMetaDTO meta = map.getMeta();
         List<PointDTO> positions = meta.getStartingPositions();
@@ -42,16 +43,21 @@ public class MinimalRuleset implements Rules {
         Unit unit = map.getTile(from).getUnit();
         Tile targetTile = map.getTile(to);
         Tile sourceTile = map.getTile(from);
-        switch (action) {
-        case FIRST:
-            if (unit.getName().equals(Units.BASE)
-                    && player.getMoney() >= 25
-                    && targetTile.distanceTo(sourceTile) == 1
-                    && !targetTile.isOccupied()) {
+        if (unit.getName().equals(Units.BASE)
+                && targetTile.distanceTo(sourceTile) == 1
+                && !targetTile.isOccupied()) {
+            switch (action) {
+            case FIRST:
+                if (player.getMoney() < 20) break;
+                player.setMoney(player.getMoney() - 20);
+                map.spawnUnit(player, "Worker", to);
+                break;
+            case SECOND:
+                if (player.getMoney() < 25) break;
                 player.setMoney(player.getMoney() - 25);
                 map.spawnUnit(player, Units.DWARF, to);
-            }
-            break;
+                break;
+        }
         }
     }
 
