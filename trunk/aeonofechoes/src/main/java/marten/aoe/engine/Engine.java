@@ -125,6 +125,7 @@ public final class Engine {
             this.turnCounter++;
         }
         this.map.endTurn();
+        this.ruleset.turnEnd(this.map, this.playerList);
     }
 
     /** Cause a unit in the "from" location to perform the given action on the "to" location.

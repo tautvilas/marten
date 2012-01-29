@@ -9,4 +9,6 @@ public interface Rules {
     public void gameStart(Map map, Player[] playerList);
 
     public void performAction(Map map, Player player, PointDTO from, PointDTO to, Action action);
+
+    public void turnEnd(Map map, Player[] playerList);
 }

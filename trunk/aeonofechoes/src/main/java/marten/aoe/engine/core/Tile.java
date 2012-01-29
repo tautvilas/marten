@@ -245,4 +245,13 @@ public class Tile {
         // TODO Auto-generated method stub
         return null;
     }
+
+    public boolean hasLayer(String id) {
+        for (TileLayerDTO layer : this.layers) {
+            if (layer.getName().equals(id)) {
+                return true;
+            }
+        }
+        return false;
+    }
 }
