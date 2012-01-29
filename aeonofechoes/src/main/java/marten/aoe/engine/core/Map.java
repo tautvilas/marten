@@ -5,7 +5,6 @@ import java.util.List;
 
 import marten.aoe.dto.MapDTO;
 import marten.aoe.dto.MapMetaDTO;
-import marten.aoe.dto.PlayerDTO;
 import marten.aoe.dto.PointDTO;
 import marten.aoe.dto.TileDTO;
 import marten.aoe.engine.Engine;

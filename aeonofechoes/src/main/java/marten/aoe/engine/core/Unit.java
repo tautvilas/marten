@@ -7,7 +7,6 @@ import java.util.Set;
 import marten.aoe.data.type.DamageType;
 import marten.aoe.data.type.UnitSize;
 import marten.aoe.data.type.UnitType;
-import marten.aoe.dto.PlayerDTO;
 import marten.aoe.dto.UnitDTO;
 import marten.aoe.dto.depreciated.DamageDTO;
 import marten.aoe.dto.depreciated.DamageResistanceDTO;

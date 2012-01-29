@@ -6,10 +6,10 @@ import java.io.ObjectOutputStream;
 import java.io.Serializable;
 
 import marten.aoe.data.type.UnitType;
-import marten.aoe.dto.PlayerDTO;
 import marten.aoe.dto.PointDTO;
 import marten.aoe.dto.TileDTO;
 import marten.aoe.dto.UnitDTO;
+import marten.aoe.engine.core.PlayerDTO;
 import marten.testing.ConsoleTest;
 
 public class DtoSizeTest implements ConsoleTest {

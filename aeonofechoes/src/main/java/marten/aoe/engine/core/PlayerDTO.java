@@ -1,4 +1,4 @@
-package marten.aoe.dto;
+package marten.aoe.engine.core;
 
 import java.io.Serializable;
 

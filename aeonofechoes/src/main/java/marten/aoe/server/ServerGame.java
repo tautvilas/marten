@@ -8,8 +8,8 @@ import java.rmi.RemoteException;
 import java.security.SecureRandom;
 import java.util.ArrayList;
 
-import marten.aoe.dto.PlayerDTO;
 import marten.aoe.engine.Engine;
+import marten.aoe.engine.core.PlayerDTO;
 import marten.aoe.server.serializable.GameDetails;
 import marten.aoe.server.serializable.ServerNotification;
 
