@@ -90,7 +90,7 @@ public abstract class Unit {
     /** Create a minimal Unit Data Transfer Object. */
     public final UnitDTO getDTO(Player player) {
         if (player == Player.SYSTEM || this.isDetected(player)) {
-            return new UnitDTO(this.name, this.owner, this.currentHitPoints, this.maxHitPoints, this.currentMovementAllowance, this.maxMovementAllowance, this.isCloaked(), this.getUnitType());
+            return new UnitDTO(this.name, this.owner.getDTO(), this.currentHitPoints, this.maxHitPoints, this.currentMovementAllowance, this.maxMovementAllowance, this.isCloaked(), this.getUnitType());
         }
         return null;
     }
