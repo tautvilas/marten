@@ -16,8 +16,10 @@ public class MinimalRuleset implements Rules {
         MapMetaDTO meta = map.getMeta();
         List<PointDTO> positions = meta.getStartingPositions();
         for (int i = 0; i < playerList.length; i++) {
+            Player player = playerList[i];
+            player.setMoney(100);
             PointDTO position = positions.get(i);
-            map.spawnUnit(playerList[i], "Dwarf", position);
+            map.spawnUnit(player, "Dwarf", position);
         }
     }
 
