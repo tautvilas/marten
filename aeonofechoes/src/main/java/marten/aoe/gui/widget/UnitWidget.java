@@ -30,7 +30,7 @@ public class UnitWidget extends TranslationGroup implements Widget, BoxedObject 
     public UnitWidget(UnitDTO unit) {
         // this.unit = unit;
         this.representation = new BitmapString(font, unit.getName().charAt(0)
-                + "", new Color(0.0, 1.0, 0.0));
+                + "", new Color(0.0, 1.0, unit.getOwner().getTeam()));
         this.movePoints = new BitmapString(smallThinFont, unit
                 .getCurrentMovementPoints() + "");
         this.hp = new BitmapString(smallFont, unit
