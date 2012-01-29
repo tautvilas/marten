@@ -103,7 +103,6 @@ public class ServerGame {
             players[i] = new Player(i, client.getUsername());
         }
         this.engine = new Engine(this.mapName, players);
-        this.engine.start();
         for (int i = 0; i < players.length; i++) {
             ServerClient client = this.players.get(i);
             String url = this.serverUrl + "/" + client.getUsername()
@@ -116,6 +115,7 @@ public class ServerGame {
                 e.printStackTrace();
             }
         }
+        this.engine.start();
         this.notify(ServerNotification.GAME_STARTED);
     }
 

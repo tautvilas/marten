@@ -69,7 +69,9 @@ public final aspect EngineMonitor {
     
     pointcut onUnitSpawned (Map map, Player player, PointDTO location) :
         target(map) && args(player, *, location) && execution(* Map.spawnUnit(..));
-        
+
+    pointcut onEngineStart (Engine engine) :
+        target(engine) && args() && execution(* Engine.start());
 
     // PUBLIC METHODS
     public void addListener (@NotNull Engine engine, @NotNull Player player, @NotNull EngineListener listener) {
@@ -283,21 +285,27 @@ public final aspect EngineMonitor {
             }
         }
     }    
-    
-    before (Map map, Player player, PointDTO location) : onUnitSpawned(map, player, location) {
-        for (EngineListener listener : map.getOwner().listeners.get(player)) {
-            listener.onGlobalEvent(GlobalEvent.STREAM_START);
+    before (Engine engine) : onEngineStart(engine) {
+        for (Player p : engine.getAllPlayers()) {
+            for (EngineListener listener : engine.listeners.get(p)) {
+                listener.onGlobalEvent(GlobalEvent.STREAM_START);
+            }
         }
     }
-    
+    after (Engine engine) : onEngineStart(engine) {
+        for (Player p : engine.getAllPlayers()) {
+            for (EngineListener listener : engine.listeners.get(p)) {
+                listener.onGlobalEvent(GlobalEvent.STREAM_END);
+            }
+        }
+    }
     after (Map map, Player player, PointDTO location) : onUnitSpawned(map, player, location) {
         TileDTO tileData = map.getTile(location).getDTO(player);
-        for (Player p : map.getOwner().getAllPlayers()) {
-            map.recalculateVisibility(p);
-        }
         for (EngineListener listener : map.getOwner().listeners.get(player)) {
             listener.onLocalEvent(LocalEvent.UNIT_ENTRY, tileData);
-            listener.onGlobalEvent(GlobalEvent.STREAM_END);
+        }
+        for (Player p : map.getOwner().getAllPlayers()) {
+            map.recalculateVisibility(p);
         }
     }
 }
