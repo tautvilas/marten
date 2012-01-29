@@ -1,10 +1,9 @@
 package marten.aoe.engine.core;
 
-import java.io.Serializable;
+import marten.aoe.dto.PlayerDTO;
 
 
-public final class Player implements Serializable {
-    private static final long serialVersionUID = -8204054815501910153L;
+public final class Player {
     public static final Player SYSTEM = new Player(0, "System");
     private final int team;
     private final String name;
@@ -17,5 +16,8 @@ public final class Player implements Serializable {
     }
     public final String getName() {
         return this.name;
+    }
+    public PlayerDTO getDTO() {
+        return new PlayerDTO(team, name);
     }
 }

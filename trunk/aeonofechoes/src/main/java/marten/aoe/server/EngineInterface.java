@@ -5,6 +5,7 @@ import java.rmi.server.UnicastRemoteObject;
 import java.util.LinkedList;
 
 import marten.aoe.dto.MapDTO;
+import marten.aoe.dto.PlayerDTO;
 import marten.aoe.dto.PointDTO;
 import marten.aoe.dto.TileDTO;
 import marten.aoe.engine.Action;
@@ -133,8 +134,8 @@ public class EngineInterface extends UnicastRemoteObject implements EngineFace {
     }
 
     @Override
-    public Player getActivePlayer() throws RemoteException {
-        return this.engine.getActivePlayer();
+    public PlayerDTO getActivePlayer() throws RemoteException {
+        return this.engine.getActivePlayer().getDTO();
     }
 
     @Override
