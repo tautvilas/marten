@@ -13,43 +13,24 @@ import marten.aoe.dto.depreciated.DamageDTO;
 import marten.aoe.dto.depreciated.DamageResistanceDTO;
 
 public class Unit {
-    private final UnitSize unitSize = UnitSize.MEDIUM;
-    private final UnitType unitType = UnitType.GROUND;
     private Tile location = null;
     private final Player owner;
-    private final String name;
-    private final int maxMovementAllowance = 10;
-    private int currentMovementAllowance = 10;
-    private final int maxHitPoints = 10;
-    private int currentHitPoints = 10;
-    private final int detectionRange= 5;
     private final Set<Player> playerDetection = new HashSet<Player>();
-
-    private DamageDTO meleeDamage;
-    private DamageDTO rangedDamage;
-    private int attackRange;
+    private UnitDetails details;
+    private int currentMovementAllowance = 10;
+    private int currentHitPoints = 10;
 
     public Unit(UnitDetails details, Tile location, Player owner) {
         this.owner = owner;
         this.location = location;
-        this.name = details.getId();
+        this.details = details;
         if (location != null) {
             location.insertUnit(this.owner, this);
         }
     }
 
-    public DamageDTO getMeleeDamage() {
-        return this.meleeDamage;
-    }
-    public DamageDTO getRangedDamage() {
-        return this.rangedDamage;
-    }
-    public int getAttackRange() {
-        return this.attackRange;
-    }
-    /** @return the name of this unit */
     public final String getName() {
-        return this.name;
+        return this.details.getId();
     }
     /** @return the map, where this unit is located.*/
     public final Map getMap() {
@@ -61,11 +42,11 @@ public class Unit {
     }
     /** @return the size of this unit.*/
     public final UnitSize getUnitSize() {
-        return this.unitSize;
+        return this.details.getUnitSize();
     }
     /** @return the type of this unit.*/
     public final UnitType getUnitType() {
-        return this.unitType;
+        return this.details.getUnitType();
     }
     /** Set the current location of the unit. Use <code>null</code> to show it is not on the map.*/
     public final void setLocation(Tile location) {
@@ -77,17 +58,17 @@ public class Unit {
     }
     /** @return the unmodified range, where the unit is capable of seeing enemy units.*/
     public final int getDetectionRange() {
-        return this.detectionRange;
+        return this.details.getDetectionRange();
     }
     /** Invoke the actions applicable to the end of a turn. */
     public final void turnOver() {
-        this.currentMovementAllowance = this.maxMovementAllowance;
+        this.currentMovementAllowance = this.details.getMaxMovementAllowance();
         this.onTurnOver();
     }
     /** Create a minimal Unit Data Transfer Object. */
     public final UnitDTO getDTO(Player player) {
         if (player == Player.SYSTEM || this.isDetected(player)) {
-            return new UnitDTO(this.name, this.owner.getDTO(), this.currentHitPoints, this.maxHitPoints, this.currentMovementAllowance, this.maxMovementAllowance, this.isCloaked(), this.getUnitType());
+            return new UnitDTO(this.details.getId(), this.owner.getDTO(), this.currentHitPoints, this.details.getMaxHitPoints(), this.currentMovementAllowance, this.details.getMaxMovementAllowance(), this.isCloaked(), this.getUnitType());
         }
         return null;
     }
@@ -97,7 +78,7 @@ public class Unit {
     }
     /** Find out the maximum possible movement capacity of the unit*/
     public final int getMaximumMovementAllowance () {
-        return this.maxMovementAllowance;
+        return this.details.getMaxMovementAllowance();
     }
     /** Find out the remaining hit points of the unit*/
     public final int getHitPoints () {
@@ -105,7 +86,7 @@ public class Unit {
     }
     /** Find out the maximum possible hit points of the unit*/
     public final int getMaximumHitPoints () {
-        return this.maxHitPoints;
+        return this.details.getMaxHitPoints();
     }
     /** Apply the movement cost of entering a tile.
      * @param cost - the integer cost of entering a tile.
@@ -135,7 +116,7 @@ public class Unit {
     public final void applyDamage(DamageDTO damage) {
         Random random = new Random();
         int rolledDamage = random.nextInt(damage.getMaxDamage()) + 1;
-        rolledDamage = rolledDamage + this.getDamageResistance(damage.getDamageType()) + this.getLocation().getDefenseBonus(this.unitSize, this.unitType);
+        rolledDamage = rolledDamage + this.getDamageResistance(damage.getDamageType()) + this.getLocation().getDefenseBonus(this.details.getUnitSize(), this.details.getUnitType());
         if (rolledDamage > 0) {
             this.currentHitPoints -= rolledDamage;
         }
