@@ -6,11 +6,10 @@ import marten.aoe.data.type.UnitType;
 import marten.aoe.dto.depreciated.DamageDTO;
 import marten.aoe.dto.depreciated.DamageResistanceDTO;
 import marten.aoe.engine.core.Player;
-import marten.aoe.engine.core.Regiment;
 import marten.aoe.engine.core.Tile;
 import marten.aoe.engine.core.Unit;
 
-public final class Dwarf extends Regiment {
+public final class Dwarf extends Unit {
     public Dwarf(Dwarf other, Tile location) {
         super (other, location);
     }

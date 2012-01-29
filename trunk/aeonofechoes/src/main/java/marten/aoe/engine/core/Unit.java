@@ -24,7 +24,22 @@ public abstract class Unit {
     private final int detectionRange;
     private final Set<Player> playerDetection = new HashSet<Player>();
 
+    private DamageDTO meleeDamage;
+    private DamageDTO rangedDamage;
+    private int attackRange;
+
+    public Unit(String name, Tile location, Player owner, UnitSize unitSize, UnitType unitType, int movementAllowance, int hitPoints, int detectionRange, int detectionModifier, DamageDTO meleeDamage, DamageDTO rangedDamage, int attackRange) {
+        this(name, location, owner, unitSize, unitType, movementAllowance, hitPoints,
+                detectionRange, detectionModifier);
+        this.attackRange = attackRange;
+        this.meleeDamage = meleeDamage;
+        this.rangedDamage = rangedDamage;
+    }
+
     public Unit (Unit other, Tile location) {
+        this.attackRange = other.attackRange;
+        this.meleeDamage = other.meleeDamage;
+        this.rangedDamage = other.rangedDamage;
         this.name = other.name;
         this.location = location;
         this.unitSize = other.unitSize;
@@ -49,6 +64,16 @@ public abstract class Unit {
         if (location != null) {
             location.insertUnit(this.owner, this);
         }
+    }
+
+    public DamageDTO getMeleeDamage() {
+        return this.meleeDamage;
+    }
+    public DamageDTO getRangedDamage() {
+        return this.rangedDamage;
+    }
+    public int getAttackRange() {
+        return this.attackRange;
     }
     /** @return the name of this unit */
     public final String getName() {
