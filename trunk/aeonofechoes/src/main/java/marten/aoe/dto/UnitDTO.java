@@ -2,6 +2,8 @@ package marten.aoe.dto;
 
 import java.io.Serializable;
 
+import marten.aoe.data.type.UnitType;
+
 public final class UnitDTO implements Serializable {
     private static final long serialVersionUID = 8927124760274010740L;
     private final String name;

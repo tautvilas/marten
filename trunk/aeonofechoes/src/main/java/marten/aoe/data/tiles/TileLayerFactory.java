@@ -1,8 +1,7 @@
-package marten.aoe.engine;
+package marten.aoe.data.tiles;
 
-import marten.aoe.data.tiles.TileLayers;
+import marten.aoe.data.type.TileType;
 import marten.aoe.dto.TileLayerDTO;
-import marten.aoe.dto.TileType;
 
 import org.apache.log4j.Logger;
 

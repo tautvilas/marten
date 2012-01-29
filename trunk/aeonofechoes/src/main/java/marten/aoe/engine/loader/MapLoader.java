@@ -9,8 +9,8 @@ import marten.aoe.Path;
 import marten.aoe.dto.MapMetaDTO;
 import marten.aoe.dto.PointDTO;
 import marten.aoe.engine.Engine;
-import marten.aoe.engine.Map;
-import marten.aoe.engine.SimpleMap;
+import marten.aoe.engine.core.Map;
+import marten.aoe.engine.core.SimpleMap;
 import marten.aoe.fileio.DataFileHandler;
 import marten.aoe.fileio.DataTree;
 

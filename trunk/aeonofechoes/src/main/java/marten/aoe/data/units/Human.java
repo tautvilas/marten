@@ -1,14 +1,14 @@
 package marten.aoe.data.units;
 
-import marten.aoe.dto.DamageDTO;
-import marten.aoe.dto.DamageResistanceDTO;
-import marten.aoe.dto.DamageType;
+import marten.aoe.data.type.DamageType;
+import marten.aoe.data.type.UnitSize;
+import marten.aoe.data.type.UnitType;
 import marten.aoe.dto.PlayerDTO;
-import marten.aoe.dto.UnitSize;
-import marten.aoe.dto.UnitType;
-import marten.aoe.engine.Regiment;
-import marten.aoe.engine.Tile;
-import marten.aoe.engine.Unit;
+import marten.aoe.dto.depreciated.DamageDTO;
+import marten.aoe.dto.depreciated.DamageResistanceDTO;
+import marten.aoe.engine.core.Regiment;
+import marten.aoe.engine.core.Tile;
+import marten.aoe.engine.core.Unit;
 
 public final class Human extends Regiment {
     public Human(Human other, Tile location) {

@@ -1,4 +1,4 @@
-package marten.aoe.dto;
+package marten.aoe.data.type;
 
 public enum UnitType {
     GROUND,

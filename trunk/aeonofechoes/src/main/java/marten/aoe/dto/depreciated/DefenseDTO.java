@@ -1,7 +1,10 @@
-package marten.aoe.dto;
+package marten.aoe.dto.depreciated;
 
 import java.io.Serializable;
 import java.util.EnumMap;
+
+import marten.aoe.data.type.UnitSize;
+import marten.aoe.data.type.UnitType;
 
 public final class DefenseDTO implements Serializable {
     private static final long serialVersionUID = -4521243019926967774L;

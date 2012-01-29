@@ -1,16 +1,16 @@
-package marten.aoe.engine;
+package marten.aoe.engine.core;
 
 import java.util.HashSet;
 import java.util.Random;
 import java.util.Set;
 
-import marten.aoe.dto.DamageDTO;
-import marten.aoe.dto.DamageResistanceDTO;
-import marten.aoe.dto.DamageType;
+import marten.aoe.data.type.DamageType;
+import marten.aoe.data.type.UnitSize;
+import marten.aoe.data.type.UnitType;
 import marten.aoe.dto.PlayerDTO;
 import marten.aoe.dto.UnitDTO;
-import marten.aoe.dto.UnitSize;
-import marten.aoe.dto.UnitType;
+import marten.aoe.dto.depreciated.DamageDTO;
+import marten.aoe.dto.depreciated.DamageResistanceDTO;
 
 public abstract class Unit {
     private final UnitSize unitSize;

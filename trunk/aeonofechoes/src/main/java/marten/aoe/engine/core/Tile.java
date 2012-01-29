@@ -1,4 +1,4 @@
-package marten.aoe.engine;
+package marten.aoe.engine.core;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -7,15 +7,14 @@ import java.util.Set;
 
 import marten.aoe.GameInfo;
 import marten.aoe.data.tiles.TileLayers;
-import marten.aoe.dto.DamageDTO;
-import marten.aoe.dto.DefenseDTO;
-import marten.aoe.dto.Direction;
+import marten.aoe.data.type.UnitSize;
+import marten.aoe.data.type.UnitType;
 import marten.aoe.dto.PlayerDTO;
 import marten.aoe.dto.PointDTO;
 import marten.aoe.dto.TileDTO;
 import marten.aoe.dto.TileLayerDTO;
-import marten.aoe.dto.UnitSize;
-import marten.aoe.dto.UnitType;
+import marten.aoe.dto.depreciated.DamageDTO;
+import marten.aoe.dto.depreciated.DefenseDTO;
 
 public class Tile {
     private Unit unit = null;
@@ -60,10 +59,6 @@ public class Tile {
      */
     public final int getDefenseBonus(UnitSize size, UnitType type) {
         return this.getDefenseBonus().getValue(size, type);
-    }
-
-    public final Tile adjacent(Direction direction) {
-        return this.map.getTile(direction.adjust(this.coordinates));
     }
 
     public final int distanceTo(Tile other) {
