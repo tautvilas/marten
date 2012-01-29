@@ -16,15 +16,7 @@ import marten.aoe.fileio.DataTree;
 
 public final class MapLoader {
     public static final List<String> getAvailableMaps () {
-        File mapDirectory = new File(Path.MAP_PATH);
-        String[] mapList = mapDirectory.list();
-        List<String> mapNameList = new ArrayList<String>();
-        for (String mapName : mapList) {
-            if (mapName.matches(".*\\.class")) {
-                mapNameList.add(mapName.split("\\.")[0]);
-            }
-        }
-        return mapNameList;
+        return new ArrayList<String>();
     }
     public static final List<String> getAvailableSimpleMaps () {
         File mapDirectory = new File(Path.MAP_DATA_PATH);
