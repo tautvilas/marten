@@ -1,5 +1,6 @@
 package marten.aoe.data.units;
 
+import marten.aoe.data.type.DamageType;
 import marten.aoe.data.type.UnitSize;
 import marten.aoe.data.type.UnitType;
 import marten.aoe.dto.depreciated.DamageDTO;
@@ -8,12 +9,22 @@ public class UnitDetails {
 
     private UnitSize unitSize = UnitSize.MEDIUM;
     private UnitType unitType = UnitType.GROUND;
-    private int maxMovementAllowance = 10;
+    private int maxMovementAllowance = 4;
     private int maxHitPoints = 10;
-    private DamageDTO meleeDamage;
+    private DamageDTO meleeDamage = new DamageDTO(5, DamageType.MECHANICAL);
     private DamageDTO rangedDamage;
     private int attackRange;
-    private int detectionRange= 5;
+    private int detectionRange= 4;
+    private int defence = 1;
+    public int getDefence() {
+        return defence;
+    }
+
+
+    public void setDefence(int defence) {
+        this.defence = defence;
+    }
+
     private String id;
 
 

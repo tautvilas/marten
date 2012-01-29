@@ -39,10 +39,7 @@ public final aspect EngineMonitor {
     
     pointcut onTileSwitch (Map map, Tile tile) :
         target(map) && args(tile) && execution(* Map.switchTile(Tile));
-    
-    pointcut onUnitDamaged (Unit unit) :
-        target(unit) && execution(* Unit.applyDamage(..));
-    
+
     pointcut onUnitActing (Engine engine) :
         target(engine) && execution(* Engine.performAction(..));
     
@@ -75,6 +72,9 @@ public final aspect EngineMonitor {
 
     pointcut onSetMoney (Player player) :
         target(player) && args(*) && execution(* Player.setMoney(..));
+
+    pointcut onApplyDamage (Unit unit) :
+        target(unit) && args(*) && execution(* Unit.applyDamage(..));
 
     // PUBLIC METHODS
     public void addListener (@NotNull Engine engine, @NotNull Player player, @NotNull EngineListener listener) {
@@ -171,34 +171,7 @@ public final aspect EngineMonitor {
             }
         }
     }
-    
-    void around (Unit unit) : onUnitDamaged(unit) {
-        Engine engine = unit.getMap().getOwner();
-        Tile tile = unit.getLocation();
-        int health = unit.getHitPoints();
-        proceed(unit);
-        if (unit.getHitPoints() < 0) {
-            for (Player player : engine.listeners.keySet()) {
-                if (tile.isVisible(player)) {
-                    TileDTO tileData = unit.getMap().getTile(tile.getCoordinates()).getDTO(player);
-                    for (EngineListener listener : engine.listeners.get(player)) {
-                        listener.onLocalEvent(LocalEvent.UNIT_DEAD, tileData);
-                    }
-                }
-            }
-        }
-        else if (unit.getHitPoints() < health) {
-            for (Player player : engine.listeners.keySet()) {
-                if (tile.isVisible(player)) {
-                    TileDTO tileData = unit.getMap().getTile(tile.getCoordinates()).getDTO(player);
-                    for (EngineListener listener : engine.listeners.get(player)) {
-                        listener.onLocalEvent(LocalEvent.UNIT_HURT, tileData);
-                    }
-                }
-            }
-        }
-    }
-    
+
     after (Tile tile) returning (boolean success) : onUnitEntry(tile) {
         Engine engine = tile.getMap().getOwner();
         if (success) {
@@ -314,6 +287,13 @@ public final aspect EngineMonitor {
     after (Player player) : onSetMoney(player) {
         for (EngineListener listener : player.getOwner().listeners.get(player)) {
             listener.onGlobalEvent(GlobalEvent.PLAYER_REFRESH);
+        }
+    }
+    after (Unit unit) : onApplyDamage(unit) {
+        if (unit.getLocation() != null) {
+            for (EngineListener listener : unit.getOwner().getOwner().listeners.get(unit.getOwner())) {
+                listener.onLocalEvent(LocalEvent.UNIT_HURT, unit.getLocation().getDTO(unit.getOwner()));
+            }
         }
     }
 }

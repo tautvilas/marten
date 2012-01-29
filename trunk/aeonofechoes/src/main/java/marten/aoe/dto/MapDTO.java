@@ -6,6 +6,7 @@ import java.util.Collection;
 import java.util.List;
 
 import marten.aoe.Path;
+import marten.aoe.data.tiles.TileLayerDTO;
 import marten.aoe.engine.loader.MapLoader;
 import marten.aoe.fileio.DataFileHandler;
 import marten.aoe.fileio.DataTree;
