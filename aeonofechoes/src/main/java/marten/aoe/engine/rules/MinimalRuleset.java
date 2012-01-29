@@ -2,11 +2,14 @@ package marten.aoe.engine.rules;
 
 import java.util.List;
 
+import marten.aoe.GameInfo;
 import marten.aoe.data.tiles.TileLayers;
+import marten.aoe.data.type.DamageType;
 import marten.aoe.data.type.UnitType;
 import marten.aoe.data.units.Units;
 import marten.aoe.dto.MapMetaDTO;
 import marten.aoe.dto.PointDTO;
+import marten.aoe.dto.depreciated.DamageDTO;
 import marten.aoe.engine.Action;
 import marten.aoe.engine.core.Map;
 import marten.aoe.engine.core.Player;
@@ -30,6 +33,9 @@ public class MinimalRuleset implements Rules {
     @Override
     public void performAction(Map map, Player player, PointDTO from,
             PointDTO to, Action action) {
+        if (from.equals(to)) {
+            return;
+        }
         Tile sourceTile = map.getTile(from);
         Unit unit = sourceTile.getUnit();
         if (unit.getUnitType() == UnitType.GROUND) {
@@ -64,12 +70,22 @@ public class MinimalRuleset implements Rules {
 
     private void performRegimentAction(Map map, Player player, PointDTO from,
             PointDTO to, Action action) {
-//        Tile targetTile = map.getTile(to);
-//        Tile sourceTile = map.getTile(from);
-//        Unit unit = sourceTile.getUnit();
+        Tile targetTile = map.getTile(to);
+        Tile sourceTile = map.getTile(from);
         switch (action) {
             case FIRST:
                 map.moveUnit(player, from, to);
+                break;
+            case SECOND:
+                Unit unit = sourceTile.getUnit();
+                if (!targetTile.isOccupied()) break;
+                Unit unit2 = targetTile.getUnit();
+                int d1 = GameInfo.calculator.getDefence(sourceTile.getDTO(player), unit.getDetails());
+                int d2 = GameInfo.calculator.getDefence(targetTile.getDTO(player), unit2.getDetails());
+                int a1 = GameInfo.calculator.getAttack(sourceTile.getDTO(player), unit.getDetails());
+                int a2 = GameInfo.calculator.getAttack(targetTile.getDTO(player), unit2.getDetails());
+                int result = GameInfo.calculator.attack(d1, d2, a1, a2);
+                unit2.applyDamage(new DamageDTO(result, DamageType.MECHANICAL));
                 break;
         }
     }

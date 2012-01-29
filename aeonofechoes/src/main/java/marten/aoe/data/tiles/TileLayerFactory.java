@@ -1,7 +1,6 @@
 package marten.aoe.data.tiles;
 
 import marten.aoe.data.type.TileType;
-import marten.aoe.dto.TileLayerDTO;
 
 import org.apache.log4j.Logger;
 
@@ -13,6 +12,7 @@ public class TileLayerFactory {
         TileLayerDTO layer = null;
         if (id.equals(TileLayers.WATER)) {
             layer = new TileLayerDTO(id, 1, TileType.WATER);
+            layer.setDefence(0);
         } else {
             layer = new TileLayerDTO(id);
             log.error("Layer " + id + " not defined");

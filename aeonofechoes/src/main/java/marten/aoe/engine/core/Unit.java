@@ -1,7 +1,6 @@
 package marten.aoe.engine.core;
 
 import java.util.HashSet;
-import java.util.Random;
 import java.util.Set;
 
 import marten.aoe.data.type.DamageType;
@@ -17,16 +16,22 @@ public class Unit {
     private final Player owner;
     private final Set<Player> playerDetection = new HashSet<Player>();
     private UnitDetails details;
-    private int currentMovementAllowance = 10;
-    private int currentHitPoints = 10;
+    private int currentMovementAllowance;
+    private int currentHitPoints;
 
     public Unit(UnitDetails details, Tile location, Player owner) {
         this.owner = owner;
         this.location = location;
         this.details = details;
+        this.currentHitPoints = details.getMaxHitPoints();
+        this.currentMovementAllowance = details.getMaxMovementAllowance();
         if (location != null) {
             location.insertUnit(this.owner, this);
         }
+    }
+
+    public UnitDetails getDetails() {
+        return this.details;
     }
 
     public final String getName() {
@@ -114,9 +119,7 @@ public class Unit {
     }
     /** Applies damage to the unit.*/
     public final void applyDamage(DamageDTO damage) {
-        Random random = new Random();
-        int rolledDamage = random.nextInt(damage.getMaxDamage()) + 1;
-        rolledDamage = rolledDamage + this.getDamageResistance(damage.getDamageType()) + this.getLocation().getDefenseBonus(this.details.getUnitSize(), this.details.getUnitType());
+        int rolledDamage = damage.getMaxDamage();
         if (rolledDamage > 0) {
             this.currentHitPoints -= rolledDamage;
         }

@@ -6,12 +6,12 @@ import java.util.List;
 import java.util.Set;
 
 import marten.aoe.GameInfo;
+import marten.aoe.data.tiles.TileLayerDTO;
 import marten.aoe.data.tiles.TileLayers;
 import marten.aoe.data.type.UnitSize;
 import marten.aoe.data.type.UnitType;
 import marten.aoe.dto.PointDTO;
 import marten.aoe.dto.TileDTO;
-import marten.aoe.dto.TileLayerDTO;
 import marten.aoe.dto.depreciated.DamageDTO;
 import marten.aoe.dto.depreciated.DefenseDTO;
 

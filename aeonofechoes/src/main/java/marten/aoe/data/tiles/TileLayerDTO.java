@@ -1,4 +1,4 @@
-package marten.aoe.dto;
+package marten.aoe.data.tiles;
 
 import java.io.Serializable;
 
@@ -9,6 +9,15 @@ public class TileLayerDTO implements Serializable {
 
     private TileType type;
     private int groundMovementCost;
+    private int defence = 2;
+    public int getDefence() {
+        return defence;
+    }
+
+    protected void setDefence(int defence) {
+        this.defence = defence;
+    }
+
     private String name;
 
     public TileLayerDTO(String name) {

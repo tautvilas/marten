@@ -4,6 +4,8 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+import marten.aoe.data.tiles.TileLayerDTO;
+
 public final class TileDTO implements Serializable {
     private static final long serialVersionUID = -1944860101763926870L;
     private final UnitDTO unit;
