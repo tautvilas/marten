@@ -2,6 +2,7 @@ package marten.aoe.engine.rules;
 
 import java.util.List;
 
+import marten.aoe.data.tiles.TileLayers;
 import marten.aoe.data.type.UnitType;
 import marten.aoe.data.units.Units;
 import marten.aoe.dto.MapMetaDTO;
@@ -20,7 +21,7 @@ public class MinimalRuleset implements Rules {
         List<PointDTO> positions = meta.getStartingPositions();
         for (int i = 0; i < playerList.length; i++) {
             Player player = playerList[i];
-            player.setMoney(100);
+            player.setMoney(50);
             PointDTO position = positions.get(i);
             map.spawnUnit(player, Units.BASE, position);
         }
@@ -73,4 +74,17 @@ public class MinimalRuleset implements Rules {
         }
     }
 
+    @Override
+    public void turnEnd(Map map, Player[] playerList) {
+        for (Player player : playerList) {
+            List<Unit> units = map.getAllUnits(player);
+            for (Unit unit : units) {
+                if (unit.getLocation().hasLayer(TileLayers.CITY)) {
+                    player.setMoney(player.getMoney() + 5);
+                } else if (unit.getLocation().hasLayer(TileLayers.VILLAGE)) {
+                    player.setMoney(player.getMoney() + 2);
+                }
+            }
+        }
+    }
 }
