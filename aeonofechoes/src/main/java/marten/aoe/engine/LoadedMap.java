@@ -35,7 +35,7 @@ public abstract class LoadedMap extends Map {
                             if (subsubbranch.value().equals("Tile")) {
                                 Tile tile = new Tile(this, new PointDTO(x, y));
                                 for (DataTree subsubsubbranch : subsubbranch.branches()) {
-                                    TileLayerDTO layer = new TileLayerDTO(subsubsubbranch.value(), 1);
+                                    TileLayerDTO layer = TileLayerFactory.getTileLayer(subsubsubbranch.value());
                                     tile.addLayer(layer);
                                 }
                                 this.switchTile(tile);
