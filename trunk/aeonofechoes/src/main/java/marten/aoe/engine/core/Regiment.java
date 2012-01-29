@@ -14,7 +14,7 @@ public abstract class Regiment extends Unit {
         this.meleeDamage = other.meleeDamage;
         this.rangedDamage = other.rangedDamage;
     }
-    public Regiment(String name, Tile location, PlayerDTO owner, UnitSize unitSize, UnitType unitType, int movementAllowance, int hitPoints, int detectionRange, int detectionModifier, DamageDTO meleeDamage, DamageDTO rangedDamage, int attackRange) {
+    public Regiment(String name, Tile location, Player owner, UnitSize unitSize, UnitType unitType, int movementAllowance, int hitPoints, int detectionRange, int detectionModifier, DamageDTO meleeDamage, DamageDTO rangedDamage, int attackRange) {
         super(name, location, owner, unitSize, unitType, movementAllowance, hitPoints,
                 detectionRange, detectionModifier);
         this.attackRange = attackRange;

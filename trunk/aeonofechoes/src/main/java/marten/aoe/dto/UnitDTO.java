@@ -3,19 +3,19 @@ package marten.aoe.dto;
 import java.io.Serializable;
 
 import marten.aoe.data.type.UnitType;
-import marten.aoe.engine.core.PlayerDTO;
+import marten.aoe.engine.core.Player;
 
 public final class UnitDTO implements Serializable {
     private static final long serialVersionUID = 8927124760274010740L;
     private final String name;
-    private final PlayerDTO player;
+    private final Player player;
     private final int hitPoints;
     private final int maxHitPoints;
     private final int movePoints;
     private final int maxMovePoints;
     private final boolean cloaked;
     private UnitType type;
-    public UnitDTO (String name, PlayerDTO player, int hitPoints, int maxHitPoints, int movePoints, int maxMovePoints, boolean cloaked, UnitType type) {
+    public UnitDTO (String name, Player player, int hitPoints, int maxHitPoints, int movePoints, int maxMovePoints, boolean cloaked, UnitType type) {
         this.name = name;
         this.player = player;
         this.hitPoints = hitPoints;
@@ -28,7 +28,7 @@ public final class UnitDTO implements Serializable {
     public final String getName () {
         return this.name;
     }
-    public final PlayerDTO getOwner () {
+    public final Player getOwner () {
         return this.player;
     }
     public final int getCurrentHitPoints () {

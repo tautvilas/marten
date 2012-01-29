@@ -9,7 +9,7 @@ import marten.aoe.data.type.UnitType;
 import marten.aoe.dto.PointDTO;
 import marten.aoe.dto.TileDTO;
 import marten.aoe.dto.UnitDTO;
-import marten.aoe.engine.core.PlayerDTO;
+import marten.aoe.engine.core.Player;
 import marten.testing.ConsoleTest;
 
 public class DtoSizeTest implements ConsoleTest {
@@ -17,7 +17,7 @@ public class DtoSizeTest implements ConsoleTest {
     @Override
     public void run() {
         PointDTO point = new PointDTO(100, 100);
-        PlayerDTO player = new PlayerDTO(0, "bastard");
+        Player player = new Player(0, "bastard");
         UnitDTO unit = new UnitDTO("dwarf", player, 40, 50, 5, 10, false, UnitType.GROUND);
         @SuppressWarnings("deprecation")
         TileDTO tile = new TileDTO("River", point, unit);

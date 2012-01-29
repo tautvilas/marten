@@ -12,7 +12,7 @@ import marten.aoe.engine.EngineListener;
 import marten.aoe.engine.GlobalEvent;
 import marten.aoe.engine.LocalEvent;
 import marten.aoe.engine.core.Map;
-import marten.aoe.engine.core.PlayerDTO;
+import marten.aoe.engine.core.Player;
 import marten.aoe.engine.core.Tile;
 import marten.aoe.engine.core.Unit;
 
@@ -22,7 +22,7 @@ import org.aspectj.lang.annotation.SuppressAjWarnings;
 public final aspect EngineMonitor {
     
     // INJECTED FIELDS
-    private final java.util.Map<PlayerDTO, List<EngineListener>> Engine.listeners = new HashMap<PlayerDTO, List<EngineListener>>();
+    private final java.util.Map<Player, List<EngineListener>> Engine.listeners = new HashMap<Player, List<EngineListener>>();
     
     // POINTCUTS
     pointcut onMapReloaded (Engine engine) :
@@ -52,27 +52,27 @@ public final aspect EngineMonitor {
     pointcut onUnitExit (Tile tile) :
         target(tile) && execution(* Tile.removeUnit(..));
     
-    pointcut onTileExplored (Tile tile, PlayerDTO player) :
+    pointcut onTileExplored (Tile tile, Player player) :
         target(tile) && args(player) && execution(* Tile.setExplored(..));
     
-    pointcut onTileVisible (Tile tile, PlayerDTO player) :
+    pointcut onTileVisible (Tile tile, Player player) :
         target(tile) && args(player) && execution(* Tile.setVisible(..));
     
-    pointcut onTileInvisible (Tile tile, PlayerDTO player) :
+    pointcut onTileInvisible (Tile tile, Player player) :
         target(tile) && args(player) && execution(* Tile.setInvisible(..));
     
-    pointcut onObjectDetected (Tile tile, PlayerDTO player) :
+    pointcut onObjectDetected (Tile tile, Player player) :
         target(tile) && args(player) && execution(* Tile.setDetected(..));
     
-    pointcut onObjectHidden (Tile tile, PlayerDTO player) :
+    pointcut onObjectHidden (Tile tile, Player player) :
         target(tile) && args(player) && execution(* Tile.setUndetected(..));
     
-    pointcut onUnitSpawned (Map map, PlayerDTO player, PointDTO location) :
+    pointcut onUnitSpawned (Map map, Player player, PointDTO location) :
         target(map) && args(player, *, location) && execution(* Map.spawnUnit(..));
         
 
     // PUBLIC METHODS
-    public void addListener (@NotNull Engine engine, @NotNull PlayerDTO player, @NotNull EngineListener listener) {
+    public void addListener (@NotNull Engine engine, @NotNull Player player, @NotNull EngineListener listener) {
         if (!engine.listeners.containsKey(player)) {
             throw new IllegalArgumentException("This player is not registered on this engine.");
         }
@@ -80,7 +80,7 @@ public final aspect EngineMonitor {
         listener.onGlobalEvent(GlobalEvent.MAP_INITIATED);
     }
     
-    public void removeListener (@NotNull Engine engine, @NotNull PlayerDTO player, @NotNull EngineListener listener) {
+    public void removeListener (@NotNull Engine engine, @NotNull Player player, @NotNull EngineListener listener) {
         if (!engine.listeners.containsKey(player)) {
             throw new IllegalArgumentException("This player is not registered on this engine.");
         }
@@ -90,20 +90,20 @@ public final aspect EngineMonitor {
     
     // ADVICE
     after (Engine engine) returning() : onEngineInitiated(engine) {
-        for (PlayerDTO player : engine.getAllPlayers()) {
+        for (Player player : engine.getAllPlayers()) {
             engine.listeners.put(player, new ArrayList<EngineListener>());
         }
     }
     
     after (Engine engine) : onMapReloaded(engine) {
-        for (PlayerDTO player : engine.getAllPlayers()) {
+        for (Player player : engine.getAllPlayers()) {
             if (!engine.listeners.containsKey(player)) {
                 engine.listeners.put(player, new ArrayList<EngineListener>());
             }
         }
-        for (PlayerDTO listeningPlayer : engine.listeners.keySet()) {
+        for (Player listeningPlayer : engine.listeners.keySet()) {
             boolean contains = false;
-            for (PlayerDTO player : engine.getAllPlayers()) {
+            for (Player player : engine.getAllPlayers()) {
                 contains |= (player == listeningPlayer);
             }
             if (contains) {
@@ -121,7 +121,7 @@ public final aspect EngineMonitor {
     }
     
     void around (Engine engine) : onTurnEnd(engine) {
-        PlayerDTO activePlayer = engine.getActivePlayer();
+        Player activePlayer = engine.getActivePlayer();
         int currentTurn = engine.getCurrentTurn();
         for (List<EngineListener> listeners : engine.listeners.values()) {
             for (EngineListener listener : listeners) {
@@ -145,7 +145,7 @@ public final aspect EngineMonitor {
     
     after(Unit unit) : onUnitTurnEnd(unit) {
         Engine engine = unit.getMap().getOwner();
-        for (PlayerDTO player : engine.listeners.keySet()) {
+        for (Player player : engine.listeners.keySet()) {
             if (unit.getLocation().isVisible(player)) {
                 TileDTO tileData = unit.getMap().getTile(unit.getLocation().getCoordinates()).getDTO(player);
                 for (EngineListener listener : engine.listeners.get(player)) {
@@ -157,7 +157,7 @@ public final aspect EngineMonitor {
     
     after(Map map, Tile tile) : onTileSwitch(map, tile) {
         Engine engine = map.getOwner();
-        for (PlayerDTO player : engine.listeners.keySet()) {
+        for (Player player : engine.listeners.keySet()) {
             if (tile.isVisible(player)) {
                 TileDTO tileData = map.getTile(tile.getCoordinates()).getDTO(player);
                 for (EngineListener listener : engine.listeners.get(player)) {
@@ -173,7 +173,7 @@ public final aspect EngineMonitor {
         int health = unit.getHitPoints();
         proceed(unit);
         if (unit.getHitPoints() < 0) {
-            for (PlayerDTO player : engine.listeners.keySet()) {
+            for (Player player : engine.listeners.keySet()) {
                 if (tile.isVisible(player)) {
                     TileDTO tileData = unit.getMap().getTile(tile.getCoordinates()).getDTO(player);
                     for (EngineListener listener : engine.listeners.get(player)) {
@@ -183,7 +183,7 @@ public final aspect EngineMonitor {
             }
         }
         else if (unit.getHitPoints() < health) {
-            for (PlayerDTO player : engine.listeners.keySet()) {
+            for (Player player : engine.listeners.keySet()) {
                 if (tile.isVisible(player)) {
                     TileDTO tileData = unit.getMap().getTile(tile.getCoordinates()).getDTO(player);
                     for (EngineListener listener : engine.listeners.get(player)) {
@@ -198,7 +198,7 @@ public final aspect EngineMonitor {
         Engine engine = tile.getMap().getOwner();
         if (success) {
             Unit unit = tile.getUnit();
-            for (PlayerDTO player : engine.listeners.keySet()) {
+            for (Player player : engine.listeners.keySet()) {
                 if (unit.isDetected(player)) {
                     TileDTO tileData = tile.getMap().getTile(tile.getCoordinates()).getDTO(player);                    
                     for (EngineListener listener : engine.listeners.get(player)) {
@@ -212,7 +212,7 @@ public final aspect EngineMonitor {
     after (Tile tile) returning (Unit unit) : onUnitExit(tile) {
         Engine engine = tile.getMap().getOwner();
         if (unit != null) {
-            for (PlayerDTO player : engine.listeners.keySet()) {
+            for (Player player : engine.listeners.keySet()) {
                 if (unit.isDetected(player)) {
                     TileDTO tileData = tile.getMap().getTile(tile.getCoordinates()).getDTO(player);                    
                     for (EngineListener listener : engine.listeners.get(player)) {
@@ -230,7 +230,7 @@ public final aspect EngineMonitor {
             }
         }
         proceed(engine);
-        for (PlayerDTO player : engine.getAllPlayers()) {
+        for (Player player : engine.getAllPlayers()) {
             engine.getMap().recalculateVisibility(player);
         }
         for (List<EngineListener> listeners : engine.listeners.values()) {
@@ -240,7 +240,7 @@ public final aspect EngineMonitor {
         }        
     }
     
-    after (Tile tile, PlayerDTO player) : onTileExplored(tile, player) {
+    after (Tile tile, Player player) : onTileExplored(tile, player) {
         Engine engine = tile.getMap().getOwner();
         TileDTO tileData = tile.getMap().getTile(tile.getCoordinates()).getDTO(player);        
         for (EngineListener listener : engine.listeners.get(player)) {
@@ -248,7 +248,7 @@ public final aspect EngineMonitor {
         }
     }
     
-    after (Tile tile, PlayerDTO player) : onTileVisible(tile, player) {
+    after (Tile tile, Player player) : onTileVisible(tile, player) {
         Engine engine = tile.getMap().getOwner();
         TileDTO tileData = tile.getMap().getTile(tile.getCoordinates()).getDTO(player);        
         for (EngineListener listener : engine.listeners.get(player)) {
@@ -256,7 +256,7 @@ public final aspect EngineMonitor {
         }
     }
     
-    after (Tile tile, PlayerDTO player) : onTileInvisible(tile, player) {
+    after (Tile tile, Player player) : onTileInvisible(tile, player) {
         Engine engine = tile.getMap().getOwner();
         TileDTO tileData = tile.getMap().getTile(tile.getCoordinates()).getDTO(player);        
         for (EngineListener listener : engine.listeners.get(player)) {
@@ -264,7 +264,7 @@ public final aspect EngineMonitor {
         }
     }
     
-    after (Tile tile, PlayerDTO player) : onObjectDetected(tile, player) {
+    after (Tile tile, Player player) : onObjectDetected(tile, player) {
         if (tile.isVisible(player)) {
             Engine engine = tile.getMap().getOwner();
             TileDTO tileData = tile.getMap().getTile(tile.getCoordinates()).getDTO(player);        
@@ -274,7 +274,7 @@ public final aspect EngineMonitor {
         }
     }
     
-    after (Tile tile, PlayerDTO player) : onObjectHidden(tile, player) {
+    after (Tile tile, Player player) : onObjectHidden(tile, player) {
         if (tile.isVisible(player)) {
             Engine engine = tile.getMap().getOwner();
             TileDTO tileData = tile.getMap().getTile(tile.getCoordinates()).getDTO(player);        
@@ -284,15 +284,15 @@ public final aspect EngineMonitor {
         }
     }    
     
-    before (Map map, PlayerDTO player, PointDTO location) : onUnitSpawned(map, player, location) {
+    before (Map map, Player player, PointDTO location) : onUnitSpawned(map, player, location) {
         for (EngineListener listener : map.getOwner().listeners.get(player)) {
             listener.onGlobalEvent(GlobalEvent.STREAM_START);
         }
     }
     
-    after (Map map, PlayerDTO player, PointDTO location) : onUnitSpawned(map, player, location) {
+    after (Map map, Player player, PointDTO location) : onUnitSpawned(map, player, location) {
         TileDTO tileData = map.getTile(location).getDTO(player);
-        for (PlayerDTO p : map.getOwner().getAllPlayers()) {
+        for (Player p : map.getOwner().getAllPlayers()) {
             map.recalculateVisibility(p);
         }
         for (EngineListener listener : map.getOwner().listeners.get(player)) {

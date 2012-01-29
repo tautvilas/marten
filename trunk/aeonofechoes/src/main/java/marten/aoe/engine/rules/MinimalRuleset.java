@@ -6,13 +6,13 @@ import marten.aoe.dto.MapMetaDTO;
 import marten.aoe.dto.PointDTO;
 import marten.aoe.engine.Action;
 import marten.aoe.engine.core.Map;
-import marten.aoe.engine.core.PlayerDTO;
+import marten.aoe.engine.core.Player;
 import marten.aoe.engine.core.Regiment;
 import marten.aoe.engine.core.Tile;
 
 public class MinimalRuleset implements Rules {
 
-    public void gameStart(Map map, PlayerDTO[] playerList) {
+    public void gameStart(Map map, Player[] playerList) {
         MapMetaDTO meta = map.getMeta();
         List<PointDTO> positions = meta.getStartingPositions();
         for (int i = 0; i < playerList.length; i++) {
@@ -22,7 +22,7 @@ public class MinimalRuleset implements Rules {
     }
 
     @Override
-    public void performAction(Map map, PlayerDTO player, PointDTO from,
+    public void performAction(Map map, Player player, PointDTO from,
             PointDTO to, Action action) {
         Tile targetTile = map.getTile(to);
         Tile sourceTile = map.getTile(from);

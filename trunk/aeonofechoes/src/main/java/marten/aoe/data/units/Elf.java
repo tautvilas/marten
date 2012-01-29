@@ -5,7 +5,7 @@ import marten.aoe.data.type.UnitSize;
 import marten.aoe.data.type.UnitType;
 import marten.aoe.dto.depreciated.DamageDTO;
 import marten.aoe.dto.depreciated.DamageResistanceDTO;
-import marten.aoe.engine.core.PlayerDTO;
+import marten.aoe.engine.core.Player;
 import marten.aoe.engine.core.Regiment;
 import marten.aoe.engine.core.Tile;
 import marten.aoe.engine.core.Unit;
@@ -14,7 +14,7 @@ public final class Elf extends Regiment {
     public Elf(Elf other, Tile location) {
         super (other, location);
     }
-    public Elf(PlayerDTO owner, Tile location) {
+    public Elf(Player owner, Tile location) {
         super("Elf", location, owner, UnitSize.SMALL, UnitType.GROUND, 7, 5, 7, 0, new DamageDTO(6, DamageType.MECHANICAL), new DamageDTO(6, DamageType.MECHANICAL), 3);
     }
     @Override public Unit clone(Tile location) {

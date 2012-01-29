@@ -9,7 +9,7 @@ import java.security.SecureRandom;
 import java.util.ArrayList;
 
 import marten.aoe.engine.Engine;
-import marten.aoe.engine.core.PlayerDTO;
+import marten.aoe.engine.core.Player;
 import marten.aoe.server.serializable.GameDetails;
 import marten.aoe.server.serializable.ServerNotification;
 
@@ -97,10 +97,10 @@ public class ServerGame {
 
     public void start() throws RemoteException {
         this.open = false;
-        PlayerDTO[] players = new PlayerDTO[this.players.size()];
+        Player[] players = new Player[this.players.size()];
         for (int i = 0; i < players.length; i++) {
             ServerClient client = this.players.get(i);
-            players[i] = new PlayerDTO(i, client.getUsername());
+            players[i] = new Player(i, client.getUsername());
         }
         this.engine = new Engine(this.mapName, players);
         this.engine.start();
