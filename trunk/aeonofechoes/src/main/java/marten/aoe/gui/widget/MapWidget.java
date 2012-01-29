@@ -73,6 +73,7 @@ public class MapWidget extends BasicSceneGraphBranch<SceneGraphChild> implements
         this.setPosition(this.getPosition().move(new Point(0, 0)));
     }
 
+    @SuppressWarnings("deprecation")
     public MapWidget(int size, Dimension dimension) {
         this.dimension = dimension;
         this.size = new Dimension(size, size);
@@ -80,7 +81,7 @@ public class MapWidget extends BasicSceneGraphBranch<SceneGraphChild> implements
         for (int i = 0; i < size; i++) {
             for (int j = 0; j < size; j++) {
                 this.updateTile(new TileDTO("Grassland", new PointDTO(i, j),
-                        null, true));
+                        null));
             }
         }
     }

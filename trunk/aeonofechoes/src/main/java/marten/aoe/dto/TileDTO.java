@@ -1,42 +1,64 @@
 package marten.aoe.dto;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 public final class TileDTO implements Serializable {
     private static final long serialVersionUID = -1944860101763926870L;
     private final UnitDTO unit;
-    private final String[] layers;
+    private final List<TileLayerDTO> layers;
     private final PointDTO point;
     private final boolean visible;
 
-    public TileDTO(String[] layers, PointDTO point, UnitDTO unit) {
+    public TileDTO(List<TileLayerDTO> layers, PointDTO point, UnitDTO unit) {
         this(layers, point, unit, true);
     }
 
-    public TileDTO(String name, PointDTO point, UnitDTO unit) {
-        this(new String[] {name}, point, unit, true);
+    @Deprecated
+    public TileDTO(String lid, PointDTO point, UnitDTO unit) {
+        this.layers = new ArrayList<TileLayerDTO>();
+        this.layers.add(new TileLayerDTO(lid));
+        this.unit = unit;
+        this.point = point;
+        this.visible = true;
     }
 
-    public TileDTO(String name, PointDTO point, UnitDTO unit, boolean visible) {
-        this(new String[] {name}, point, unit, visible);
+    @Deprecated
+    public TileDTO(String[] lids, PointDTO point, UnitDTO unit) {
+        this.layers = new ArrayList<TileLayerDTO>();
+        for (String lid : lids) {
+            this.layers.add(new TileLayerDTO(lid));
+        }
+        this.unit = unit;
+        this.point = point;
+        this.visible = true;
     }
 
-    public TileDTO(String[] layers, PointDTO point, UnitDTO unit, boolean visible) {
-        if (layers.length == 0) {
+    public TileDTO(List<TileLayerDTO> layers, PointDTO point, UnitDTO unit, boolean visible) {
+        if (layers.size() == 0) {
             throw new RuntimeException("Tile must have at least one layer");
         }
         this.layers = layers;
         this.unit = unit;
         this.point = point;
-        this.visible = visible;        
+        this.visible = visible;
     }
 
     public String getName() {
-        return this.layers[0];
+        return this.layers.get(0).getName();
     }
 
-    public String[] getLayers() {
+    public List<TileLayerDTO> getLayers() {
         return this.layers;
+    }
+
+    public String[] getLayerIds() {
+        String[] ids = new String[this.layers.size()];
+        for (int i = 0; i < this.layers.size(); i++) {
+            ids[i] = this.layers.get(i).getName();
+        }
+        return ids;
     }
 
     public UnitDTO getUnit() {

@@ -115,6 +115,7 @@ public class MapEditor extends AgeScene implements MouseListener {
                 windowHeight - buttonHeight));
         this.flatland.addChild(saveButton);
         this.saveMapDialog = new LoadMapDialog(this, new Action() {
+            @SuppressWarnings("unchecked")
             @Override
             public void perform() {
                 List<PointDTO> startPositions = new ArrayList<PointDTO>();
@@ -216,6 +217,7 @@ public class MapEditor extends AgeScene implements MouseListener {
         this.registerControllable(this);
     }
 
+    @SuppressWarnings("deprecation")
     private void draw(Point coords) {
         if (this.map == null)
             return;
