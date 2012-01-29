@@ -59,7 +59,7 @@ public class EngineInterface extends UnicastRemoteObject implements EngineFace {
                             EngineInterface.this.events.notifyAll();
                         }
                     }
-                } else {
+                }else {
                     EngineInterface.log.info(EngineInterface.this.player
                             .getName()
                             + " " + event);
@@ -91,6 +91,12 @@ public class EngineInterface extends UnicastRemoteObject implements EngineFace {
                         }
                     }
                     EngineInterface.this.streaming = false;
+                } else if (event == GlobalEvent.PLAYER_REFRESH) {
+                    synchronized (EngineInterface.this.events) {
+                        EngineInterface.this.events
+                                .add(EngineEvent.STATS_UPDATE);
+                        EngineInterface.this.events.notifyAll();
+                    }
                 } else {
                     EngineInterface.log.info(EngineInterface.this.player
                             .getName()
@@ -161,5 +167,10 @@ public class EngineInterface extends UnicastRemoteObject implements EngineFace {
                 return null;
             }
         }
+    }
+
+    @Override
+    public PlayerDTO getPlayer() throws RemoteException {
+        return this.player.getDTO();
     }
 }

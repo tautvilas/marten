@@ -29,6 +29,9 @@ public final class Engine {
      * @param mapname - the name of the class (subclass of {@link Map}) to be loaded.
      * @param playerList - an array of players that will be allowed access to this engine.*/
     public Engine (@NotNull String mapName, @NoNullEntries Player[] playerList) {
+        for (Player p : playerList) {
+            p.setOwner(this);
+        }
         if (MapLoader.getAvailableMaps().contains(mapName)) {
             this.map = MapLoader.loadMap(this, mapName);            
         } else if (MapLoader.getAvailableSimpleMaps().contains(mapName)) {

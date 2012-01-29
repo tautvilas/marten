@@ -19,6 +19,7 @@ import marten.age.widget.Action;
 import marten.age.widget.Button;
 import marten.age.widget.obsolete.FpsCounter;
 import marten.aoe.GameInfo;
+import marten.aoe.dto.PlayerDTO;
 import marten.aoe.dto.PointDTO;
 import marten.aoe.dto.TileDTO;
 import marten.aoe.fileio.IoUtil;
@@ -48,6 +49,7 @@ public class Game extends AgeScene implements MapWidgetListener {
     private MouseController mouseController = new MouseController();
     private NetworkListener listener;
     private BitmapString turnNotify = null;
+    private BitmapString moneyString = null;
     private LinkedList<TileDTO> updatedTiles = new LinkedList<TileDTO>();
     private LinkedList<EngineEvent> events = new LinkedList<EngineEvent>();
     private int selectedAction = 1;
@@ -79,6 +81,11 @@ public class Game extends AgeScene implements MapWidgetListener {
         turnNotify.setPosition(new Point(AppInfo.getDisplayWidth() - 150,
                 AppInfo.getDisplayHeight() - 50));
         flatland.addChild(turnNotify);
+        moneyString = new BitmapString(FontCache.getFont(new Font("Arial",
+                Font.BOLD, 12)));
+        moneyString.setPosition(new Point(AppInfo.getDisplayWidth() - 150,
+                AppInfo.getDisplayHeight() - 100));
+        flatland.addChild(moneyString);
         for (int i = 0; i < 9; i++) {
             Button action = AoeButtonFactory.getActionButton("" + (i + 1));
             float width = action.getDimension().width;
@@ -143,6 +150,8 @@ public class Game extends AgeScene implements MapWidgetListener {
                 this.turnNotify.setContent("Not your turn");
                 this.turnNotify.setColor(new Color(1, 0, 0));
             }
+            PlayerDTO player = this.engine.getActivePlayer();
+            this.moneyString.setContent(player.getMoney() + "");
         } catch (RemoteException e) {
             throw new RuntimeException(e);
         }
@@ -178,6 +187,13 @@ public class Game extends AgeScene implements MapWidgetListener {
                             turnNotify.setContent("Not your turn");
                             turnNotify.setColor(new Color(1, 0, 0));
                         }
+                    } catch (RemoteException e) {
+                        e.printStackTrace();
+                    }
+                } else if (event == EngineEvent.STATS_UPDATE) {
+                    try {
+                        PlayerDTO player = engine.getActivePlayer();
+                        moneyString.setContent(player.getMoney() + "");
                     } catch (RemoteException e) {
                         e.printStackTrace();
                     }

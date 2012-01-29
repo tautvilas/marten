@@ -21,6 +21,8 @@ public interface EngineFace extends Remote {
 
     public PlayerDTO getActivePlayer() throws RemoteException;
 
+    public PlayerDTO getPlayer() throws RemoteException;
+
     public LinkedList<TileDTO> popStream() throws RemoteException;
 
     public TileDTO popTile() throws RemoteException;
