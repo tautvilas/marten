@@ -28,11 +28,11 @@ public class TileImageFactory {
     }
 
     public static String getTileGuiId(TileDTO tile, TileDTO[] surrounds) {
-        String tid = TileImageFactory.getLayersId(tile.getLayers());
+        String tid = TileImageFactory.getLayersId(tile.getLayerIds());
         for (int i = 0; i < surrounds.length; i++) {
             String surround = "null";
             if (surrounds[i] != null) {
-                surround = surrounds[i].getLayers()[0];
+                surround = surrounds[i].getLayerIds()[0];
             }
             tid += "_" + surround;
         }
@@ -74,7 +74,7 @@ public class TileImageFactory {
 
     public static ImageData getTile(TileDTO tileDto, TileDTO[] surrounds) {
         String name = TileImageFactory.getTileGuiId(tileDto, surrounds);
-        String[] layers = tileDto.getLayers();
+        String[] layers = tileDto.getLayerIds();
         layers = TileImageFactory.sortLayers(layers);
         ImageData tile = ImageCache.getImage(layers[0]);
         // blend base layers with masks
@@ -86,7 +86,7 @@ public class TileImageFactory {
                 bases[i % slen] = null;
                 continue;
             }
-            bases[i % slen] = TileImageFactory.sortLayers(surrounds[i % slen].getLayers())[0];
+            bases[i % slen] = TileImageFactory.sortLayers(surrounds[i % slen].getLayerIds())[0];
             if ((i != 0 && (bases[i -1] == null || !bases[i - 1].equals(bases[i % slen])))) {
                 start = i % surrounds.length;
             }
@@ -136,8 +136,9 @@ public class TileImageFactory {
 
     /** Methods used by map editor **/
 
+    @SuppressWarnings("deprecation")
     public static TileDTO blendTile(TileDTO base, String layer) {
-        List<String> layers = Arrays.asList(base.getLayers());
+        List<String> layers = Arrays.asList(base.getLayerIds());
         List<String> mergedLayers = new ArrayList<String>();
         for (String baseLayer : layers) {
             String p1 = TileImageFactory.priorities.get(baseLayer)

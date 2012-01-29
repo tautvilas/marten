@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Set;
 
 import marten.aoe.GameInfo;
+import marten.aoe.data.tiles.TileLayers;
 import marten.aoe.dto.DamageDTO;
 import marten.aoe.dto.DefenseDTO;
 import marten.aoe.dto.Direction;
@@ -112,14 +113,11 @@ public class Tile {
 
     public final TileDTO getDTO(PlayerDTO player) {
         if (player != PlayerDTO.SYSTEM && !this.isExplored(player)) {
-            return new TileDTO("Shroud", this.getCoordinates(), null, false);
+            ArrayList<TileLayerDTO> l = new ArrayList<TileLayerDTO>();
+            l.add(new TileLayerDTO(TileLayers.SHROUD));
+            return new TileDTO(l, this.getCoordinates(), null, false);
         }
-        ArrayList<String> lnames = new ArrayList<String>();
-        for (int i = 0; i < this.getLayers().size(); i++) {
-            lnames.add(this.getLayers().get(i).getName());
-        }
-        String[] arr = new String[lnames.size()];
-        return new TileDTO(lnames.toArray(arr), this.getCoordinates(),
+        return new TileDTO(this.layers, this.getCoordinates(),
                 (this.getUnit() != null && this.isVisible(player) ? this
                         .getUnit().getDTO(player) : null),
                 this.isVisible(player));

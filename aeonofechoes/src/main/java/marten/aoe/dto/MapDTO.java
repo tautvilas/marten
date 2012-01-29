@@ -60,11 +60,11 @@ public final class MapDTO implements Serializable {
                         int x = 0;
                         for (DataTree subsubbranch : subbranch.branches()) {
                             if (subsubbranch.value().equals("Tile")) {
-                                List<String> layers = new ArrayList<String>();
+                                List<TileLayerDTO> layers = new ArrayList<TileLayerDTO>();
                                 for (DataTree subsubsubbranch : subsubbranch.branches()) {
-                                    layers.add(subsubsubbranch.value());                                    
+                                    layers.add(new TileLayerDTO(subsubsubbranch.value()));
                                 }
-                                map[x][y] = new TileDTO(layers.toArray(new String[] {}), new PointDTO(x,y), null);
+                                map[x][y] = new TileDTO(layers, new PointDTO(x,y), null);
                                 x++;
                             }
                         }
@@ -107,9 +107,9 @@ public final class MapDTO implements Serializable {
             DataTree row = new DataTree("Row");
             for (int x = 0; x < meta.getWidth(); x++) {
                 DataTree tile = new DataTree("Tile");
-                String[] layers = tiles[x][y].getLayers();
-                for (String layer : layers) {
-                    tile.addBranch(layer);
+                List<TileLayerDTO> layers = tiles[x][y].getLayers();
+                for (TileLayerDTO layer : layers) {
+                    tile.addBranch(layer.getName());
                 }
                 row.addBranch(tile);
             }
