@@ -2,6 +2,8 @@ package marten.aoe.dto;
 
 import java.io.Serializable;
 
+import marten.aoe.data.type.TileType;
+
 public class TileLayerDTO implements Serializable {
     private static final long serialVersionUID = 1L;
 

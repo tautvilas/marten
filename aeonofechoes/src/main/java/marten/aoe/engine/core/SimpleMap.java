@@ -1,6 +1,7 @@
-package marten.aoe.engine;
+package marten.aoe.engine.core;
 
 import marten.aoe.dto.MapMetaDTO;
+import marten.aoe.engine.Engine;
 import marten.aoe.fileio.DataTree;
 
 public final class SimpleMap extends LoadedMap {

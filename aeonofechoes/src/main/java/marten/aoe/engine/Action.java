@@ -1,4 +1,4 @@
-package marten.aoe.dto;
+package marten.aoe.engine;
 
 public enum Action {
     FIRST,

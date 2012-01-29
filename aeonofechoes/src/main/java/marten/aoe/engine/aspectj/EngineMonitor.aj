@@ -14,9 +14,9 @@ import marten.aoe.engine.Engine;
 import marten.aoe.engine.EngineListener;
 import marten.aoe.engine.GlobalEvent;
 import marten.aoe.engine.LocalEvent;
-import marten.aoe.engine.Map;
-import marten.aoe.engine.Tile;
-import marten.aoe.engine.Unit;
+import marten.aoe.engine.core.Map;
+import marten.aoe.engine.core.Tile;
+import marten.aoe.engine.core.Unit;
 
 @SuppressAjWarnings("adviceDidNotMatch")
 public final aspect EngineMonitor {

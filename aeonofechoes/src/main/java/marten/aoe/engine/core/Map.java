@@ -1,4 +1,4 @@
-package marten.aoe.engine;
+package marten.aoe.engine.core;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -8,6 +8,8 @@ import marten.aoe.dto.MapMetaDTO;
 import marten.aoe.dto.PlayerDTO;
 import marten.aoe.dto.PointDTO;
 import marten.aoe.dto.TileDTO;
+import marten.aoe.engine.Engine;
+import marten.aoe.engine.PathFinder;
 import marten.aoe.engine.loader.UnitLoader;
 
 public abstract class Map {

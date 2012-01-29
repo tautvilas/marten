@@ -2,13 +2,14 @@ package marten.aoe.engine;
 
 import marten.aoe.aspectj.NoNullEntries;
 import marten.aoe.aspectj.NotNull;
-import marten.aoe.dto.Action;
 import marten.aoe.dto.MapDTO;
 import marten.aoe.dto.PlayerDTO;
 import marten.aoe.dto.PointDTO;
 import marten.aoe.dto.TileDTO;
 import marten.aoe.dto.UnitDTO;
 import marten.aoe.engine.aspectj.EngineMonitor;
+import marten.aoe.engine.core.Map;
+import marten.aoe.engine.core.Unit;
 import marten.aoe.engine.loader.MapLoader;
 import marten.aoe.engine.rules.MinimalRuleset;
 import marten.aoe.engine.rules.Rules;

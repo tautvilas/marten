@@ -3,6 +3,8 @@ package marten.aoe.engine;
 import java.util.ArrayList;
 import java.util.List;
 
+import marten.aoe.engine.core.Tile;
+
 public final class Path {
     private final List<Tile> path;
     private final int length;

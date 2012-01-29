@@ -6,8 +6,8 @@ import java.util.List;
 
 import marten.aoe.Path;
 import marten.aoe.dto.PlayerDTO;
-import marten.aoe.engine.Tile;
-import marten.aoe.engine.Unit;
+import marten.aoe.engine.core.Tile;
+import marten.aoe.engine.core.Unit;
 
 import org.apache.log4j.Logger;
 

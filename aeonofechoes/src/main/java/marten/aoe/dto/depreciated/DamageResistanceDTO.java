@@ -1,6 +1,8 @@
-package marten.aoe.dto;
+package marten.aoe.dto.depreciated;
 
 import java.util.EnumMap;
+
+import marten.aoe.data.type.DamageType;
 
 public final class DamageResistanceDTO {
     private final EnumMap<DamageType, Integer> damageResistance;

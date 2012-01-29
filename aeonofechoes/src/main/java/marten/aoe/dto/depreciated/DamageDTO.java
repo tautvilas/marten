@@ -1,4 +1,6 @@
-package marten.aoe.dto;
+package marten.aoe.dto.depreciated;
+
+import marten.aoe.data.type.DamageType;
 
 public final class DamageDTO {
     private final int maxDamage;

@@ -1,9 +1,9 @@
 package marten.aoe.engine.rules;
 
+import marten.aoe.data.type.TileType;
+import marten.aoe.data.type.UnitType;
 import marten.aoe.dto.TileLayerDTO;
-import marten.aoe.dto.TileType;
 import marten.aoe.dto.UnitDTO;
-import marten.aoe.dto.UnitType;
 
 import marten.aoe.dto.TileDTO;
 

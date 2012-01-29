@@ -6,6 +6,9 @@ import java.util.List;
 import marten.aoe.GameInfo;
 import marten.aoe.dto.PlayerDTO;
 import marten.aoe.dto.PointDTO;
+import marten.aoe.engine.core.Map;
+import marten.aoe.engine.core.Tile;
+import marten.aoe.engine.core.Unit;
 
 public final class PathFinder {
     private final Map map;

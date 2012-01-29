@@ -1,10 +1,12 @@
-package marten.aoe.engine;
+package marten.aoe.engine.core;
 
 import java.io.IOException;
 
+import marten.aoe.data.tiles.TileLayerFactory;
 import marten.aoe.dto.MapMetaDTO;
 import marten.aoe.dto.PointDTO;
 import marten.aoe.dto.TileLayerDTO;
+import marten.aoe.engine.Engine;
 import marten.aoe.fileio.DataTree;
 
 import org.apache.log4j.Logger;

@@ -2,13 +2,13 @@ package marten.aoe.engine.rules;
 
 import java.util.List;
 
-import marten.aoe.dto.Action;
 import marten.aoe.dto.MapMetaDTO;
 import marten.aoe.dto.PlayerDTO;
 import marten.aoe.dto.PointDTO;
-import marten.aoe.engine.Map;
-import marten.aoe.engine.Regiment;
-import marten.aoe.engine.Tile;
+import marten.aoe.engine.Action;
+import marten.aoe.engine.core.Map;
+import marten.aoe.engine.core.Regiment;
+import marten.aoe.engine.core.Tile;
 
 public class MinimalRuleset implements Rules {
 
