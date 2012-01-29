@@ -1,5 +1,7 @@
 package marten.aoe.data.units;
 
+import marten.aoe.data.type.UnitType;
+
 import org.apache.log4j.Logger;
 
 public class UnitFactory {
@@ -7,8 +9,13 @@ public class UnitFactory {
             .getLogger(UnitFactory.class);
 
     public static UnitDetails getUnit(String id) {
-        UnitDetails unit = new UnitDetails(id);
-        log.error("Unit " + id + " not defined");
+        UnitDetails unit = null;
+        if (id.equals(Units.BASE)) {
+            unit = new UnitDetails(id, UnitType.BUILDING);
+        } else {
+            log.error("Unit " + id + " not defined");
+            unit = new UnitDetails(id);
+        }
         return unit;
     }
 }

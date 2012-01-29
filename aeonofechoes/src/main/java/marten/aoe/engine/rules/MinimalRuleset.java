@@ -21,7 +21,7 @@ public class MinimalRuleset implements Rules {
             Player player = playerList[i];
             player.setMoney(100);
             PointDTO position = positions.get(i);
-            map.spawnUnit(player, Units.DWARF, position);
+            map.spawnUnit(player, Units.BASE, position);
         }
     }
 
@@ -39,6 +39,20 @@ public class MinimalRuleset implements Rules {
 
     private void performBuildingAction(Map map, Player player, PointDTO from,
             PointDTO to, Action action) {
+        Unit unit = map.getTile(from).getUnit();
+        Tile targetTile = map.getTile(to);
+        Tile sourceTile = map.getTile(from);
+        switch (action) {
+        case FIRST:
+            if (unit.getName().equals(Units.BASE)
+                    && player.getMoney() >= 25
+                    && targetTile.distanceTo(sourceTile) == 1
+                    && !targetTile.isOccupied()) {
+                player.setMoney(player.getMoney() - 25);
+                map.spawnUnit(player, Units.DWARF, to);
+            }
+            break;
+        }
     }
 
     private void performRegimentAction(Map map, Player player, PointDTO from,
