@@ -7,60 +7,32 @@ import java.util.Set;
 import marten.aoe.data.type.DamageType;
 import marten.aoe.data.type.UnitSize;
 import marten.aoe.data.type.UnitType;
+import marten.aoe.data.units.UnitDetails;
 import marten.aoe.dto.UnitDTO;
 import marten.aoe.dto.depreciated.DamageDTO;
 import marten.aoe.dto.depreciated.DamageResistanceDTO;
 
-public abstract class Unit {
-    private final UnitSize unitSize;
-    private final UnitType unitType;
+public class Unit {
+    private final UnitSize unitSize = UnitSize.MEDIUM;
+    private final UnitType unitType = UnitType.GROUND;
     private Tile location = null;
     private final Player owner;
     private final String name;
-    private final int maxMovementAllowance;
-    private int currentMovementAllowance;
-    private final int maxHitPoints;
-    private int currentHitPoints;
-    private final int detectionRange;
+    private final int maxMovementAllowance = 10;
+    private int currentMovementAllowance = 10;
+    private final int maxHitPoints = 10;
+    private int currentHitPoints = 10;
+    private final int detectionRange= 5;
     private final Set<Player> playerDetection = new HashSet<Player>();
 
     private DamageDTO meleeDamage;
     private DamageDTO rangedDamage;
     private int attackRange;
 
-    public Unit(String name, Tile location, Player owner, UnitSize unitSize, UnitType unitType, int movementAllowance, int hitPoints, int detectionRange, int detectionModifier, DamageDTO meleeDamage, DamageDTO rangedDamage, int attackRange) {
-        this(name, location, owner, unitSize, unitType, movementAllowance, hitPoints,
-                detectionRange, detectionModifier);
-        this.attackRange = attackRange;
-        this.meleeDamage = meleeDamage;
-        this.rangedDamage = rangedDamage;
-    }
-
-    public Unit (Unit other, Tile location) {
-        this.attackRange = other.attackRange;
-        this.meleeDamage = other.meleeDamage;
-        this.rangedDamage = other.rangedDamage;
-        this.name = other.name;
-        this.location = location;
-        this.unitSize = other.unitSize;
-        this.unitType = other.unitType;
-        this.owner = other.owner;
-        this.maxMovementAllowance = this.currentMovementAllowance = other.maxMovementAllowance;
-        this.maxHitPoints = this.currentHitPoints = other.maxHitPoints;
-        this.detectionRange = other.detectionRange;
-        if (location != null) {
-            location.insertUnit(this.owner, this);
-        }
-    }
-    public Unit(String name, Tile location, Player owner, UnitSize unitSize, UnitType unitType, int movementAllowance, int hitPoints, int detectionRange, int detectionModifier) {
-        this.name = name;
-        this.location = location;
-        this.unitSize = unitSize;
-        this.unitType = unitType;
+    public Unit(UnitDetails details, Tile location, Player owner) {
         this.owner = owner;
-        this.maxMovementAllowance = this.currentMovementAllowance = movementAllowance;
-        this.maxHitPoints = this.currentHitPoints = hitPoints;
-        this.detectionRange = detectionRange;
+        this.location = location;
+        this.name = details.getId();
         if (location != null) {
             location.insertUnit(this.owner, this);
         }
@@ -147,14 +119,14 @@ public abstract class Unit {
     }
     /** Performs an action when this unit enters a tile.
      * @param tile - the tile that was entered.*/
-    public abstract void onTileEntry(Tile tile);
+    public void onTileEntry(Tile tile) {};
     /** Performs an action when this unit exits a tile.
      * @param tile - the tile that was exited.*/
-    public abstract void onTileExit(Tile tile);
+    public void onTileExit(Tile tile) {};
     /** Performs an action at the end of every turn.*/
-    public abstract void onTurnOver();
+    public void onTurnOver() {};
     /** @return all multipliers for post-armor damage.*/
-    public abstract DamageResistanceDTO getDamageResistance();
+    public DamageResistanceDTO getDamageResistance() {return null;};
     /** @return a multiplier for post-armor damage of a certain type.*/
     public final int getDamageResistance(DamageType damageType) {
         return this.getDamageResistance().getDamageResistance(damageType);
@@ -173,15 +145,13 @@ public abstract class Unit {
         }
     }
     /** It is invoked whenever the health of the unit reaches 0 or below*/
-    public abstract void onDeath();
+    public void onDeath() {};
     /** @return brief descriptions of special features of the unit*/
-    public abstract String[] getSpecialFeatures();
-    /** @return a perfect copy of the unit in given location*/
-    public abstract Unit clone(Tile location);
+    public String[] getSpecialFeatures() {return new String[0];};
     /***/
-    public abstract boolean isObserving();
+    public  boolean isObserving() {return false;};
     /***/
-    public abstract boolean isCloaked();
+    public  boolean isCloaked() {return false;};
     public final void setDetected(Player player) {
         this.playerDetection.add(player);
     }

@@ -3,13 +3,13 @@ package marten.aoe.engine.core;
 import java.util.ArrayList;
 import java.util.List;
 
+import marten.aoe.data.units.UnitFactory;
 import marten.aoe.dto.MapDTO;
 import marten.aoe.dto.MapMetaDTO;
 import marten.aoe.dto.PointDTO;
 import marten.aoe.dto.TileDTO;
 import marten.aoe.engine.Engine;
 import marten.aoe.engine.PathFinder;
-import marten.aoe.engine.loader.UnitLoader;
 
 public abstract class Map {
     private final Tile[][] map;
@@ -174,7 +174,7 @@ public abstract class Map {
      * @param name - the class name of the unit to be created.
      * @param at - the location where the unit will spawn.*/
     public boolean spawnUnit (Player player, String name, PointDTO at) {
-        UnitLoader.loadUnit(name, player, this.getTile(at));
+        new Unit(UnitFactory.getUnit(name), this.getTile(at), player);
         return true;
     }
     public void selectUnit(Player player, PointDTO location) {
