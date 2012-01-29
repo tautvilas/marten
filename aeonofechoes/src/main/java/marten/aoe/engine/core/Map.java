@@ -34,7 +34,7 @@ public abstract class Map {
     public final Engine getOwner () {
         return this.owner;
     }
-    public final MapDTO getDTO (PlayerDTO player) {
+    public final MapDTO getDTO (Player player) {
         TileDTO[][] tiles = new TileDTO[this.meta.getWidth()][this.meta.getHeight()];
         for (int x = 0; x < this.meta.getWidth(); x++) {
             for (int y = 0; y < this.meta.getHeight(); y++) {
@@ -54,8 +54,8 @@ public abstract class Map {
         if (point.getX() >= 0 && point.getX() < this.meta.getWidth() && point.getY() >= 0 && point.getY() < this.meta.getHeight()) {
             Tile oldTile = this.map[point.getX()][point.getY()];
             if (oldTile != null) {
-                Unit unit = oldTile.popUnit(PlayerDTO.SYSTEM);
-                tile.pushUnit(PlayerDTO.SYSTEM, unit);
+                Unit unit = oldTile.popUnit(Player.SYSTEM);
+                tile.pushUnit(Player.SYSTEM, unit);
             }
             this.map[point.getX()][point.getY()] = tile;
             return oldTile;
@@ -73,7 +73,7 @@ public abstract class Map {
         this.pathCache = null;
         this.onTurnOver();
     }
-    public final boolean moveUnit (PlayerDTO player, PointDTO from, PointDTO to) {
+    public final boolean moveUnit (Player player, PointDTO from, PointDTO to) {
         if (from.getX() < 0 || from.getX() >= this.meta.getWidth() || from.getY() < 0 || from.getY() >= this.meta.getHeight() || to.getX() < 0 || to.getX() >= this.meta.getWidth() || to.getY() < 0 || to.getY() >= this.meta.getHeight()) {
             throw new IllegalArgumentException("Requested coordinates are out of bounds of the map.");
         }
@@ -108,7 +108,7 @@ public abstract class Map {
     }
     public abstract void onTurnOver ();
     /** @return all <code>Unit</code>s that belong to the given player.*/
-    public final List<Unit> getAllUnits(PlayerDTO player) {
+    public final List<Unit> getAllUnits(Player player) {
         List<Unit> answer = new ArrayList<Unit>();
         for (int x = 0; x < this.meta.getWidth(); x++) {
             for (int y = 0; y < this.meta.getHeight(); y++) {
@@ -120,7 +120,7 @@ public abstract class Map {
         }
         return answer;
     }
-    public void recalculateVisibility(PlayerDTO player) {
+    public void recalculateVisibility(Player player) {
         boolean[][] currentVisibilityMatrix = new boolean[this.meta.getWidth()][this.meta.getHeight()];
         boolean[][] currentExplorationMatrix = new boolean[this.meta.getWidth()][this.meta.getHeight()];
         boolean[][] currentDetectionMatrix = new boolean[this.meta.getWidth()][this.meta.getHeight()];
@@ -173,11 +173,11 @@ public abstract class Map {
      * @param player - the player who will control the unit after spawning.
      * @param name - the class name of the unit to be created.
      * @param at - the location where the unit will spawn.*/
-    public boolean spawnUnit (PlayerDTO player, String name, PointDTO at) {
+    public boolean spawnUnit (Player player, String name, PointDTO at) {
         UnitLoader.loadUnit(name, player, this.getTile(at));
         return true;
     }
-    public void selectUnit(PlayerDTO player, PointDTO location) {
+    public void selectUnit(Player player, PointDTO location) {
         this.pathCache = new PathFinder(this, this.map[location.getX()][location.getY()]);
     }
 }

@@ -15,14 +15,14 @@ public abstract class Unit {
     private final UnitSize unitSize;
     private final UnitType unitType;
     private Tile location = null;
-    private final PlayerDTO owner;
+    private final Player owner;
     private final String name;
     private final int maxMovementAllowance;
     private int currentMovementAllowance;
     private final int maxHitPoints;
     private int currentHitPoints;
     private final int detectionRange;
-    private final Set<PlayerDTO> playerDetection = new HashSet<PlayerDTO>();
+    private final Set<Player> playerDetection = new HashSet<Player>();
 
     public Unit (Unit other, Tile location) {
         this.name = other.name;
@@ -37,7 +37,7 @@ public abstract class Unit {
             location.insertUnit(this.owner, this);
         }
     }
-    public Unit(String name, Tile location, PlayerDTO owner, UnitSize unitSize, UnitType unitType, int movementAllowance, int hitPoints, int detectionRange, int detectionModifier) {
+    public Unit(String name, Tile location, Player owner, UnitSize unitSize, UnitType unitType, int movementAllowance, int hitPoints, int detectionRange, int detectionModifier) {
         this.name = name;
         this.location = location;
         this.unitSize = unitSize;
@@ -59,7 +59,7 @@ public abstract class Unit {
         return this.location.getMap();
     }
     /** @return the owner of this unit.*/
-    public final PlayerDTO getOwner() {
+    public final Player getOwner() {
         return this.owner;
     }
     /** @return the size of this unit.*/
@@ -88,8 +88,8 @@ public abstract class Unit {
         this.onTurnOver();
     }
     /** Create a minimal Unit Data Transfer Object. */
-    public final UnitDTO getDTO(PlayerDTO player) {
-        if (player == PlayerDTO.SYSTEM || this.isDetected(player)) {
+    public final UnitDTO getDTO(Player player) {
+        if (player == Player.SYSTEM || this.isDetected(player)) {
             return new UnitDTO(this.name, this.owner, this.currentHitPoints, this.maxHitPoints, this.currentMovementAllowance, this.maxMovementAllowance, this.isCloaked(), this.getUnitType());
         }
         return null;
@@ -143,7 +143,7 @@ public abstract class Unit {
             this.currentHitPoints -= rolledDamage;
         }
         if (this.currentHitPoints <= 0) {
-            this.getLocation().removeUnit(PlayerDTO.SYSTEM);
+            this.getLocation().removeUnit(Player.SYSTEM);
             this.onDeath();
         }
     }
@@ -157,13 +157,13 @@ public abstract class Unit {
     public abstract boolean isObserving();
     /***/
     public abstract boolean isCloaked();
-    public final void setDetected(PlayerDTO player) {
+    public final void setDetected(Player player) {
         this.playerDetection.add(player);
     }
-    public final void setUndetected(PlayerDTO player) {
+    public final void setUndetected(Player player) {
         this.playerDetection.remove(player);
     }
-    public final boolean isDetected(PlayerDTO player) {
+    public final boolean isDetected(Player player) {
         return this.playerDetection.contains(player);
     }
 }

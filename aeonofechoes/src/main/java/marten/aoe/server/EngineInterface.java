@@ -12,7 +12,7 @@ import marten.aoe.engine.Engine;
 import marten.aoe.engine.EngineListener;
 import marten.aoe.engine.GlobalEvent;
 import marten.aoe.engine.LocalEvent;
-import marten.aoe.engine.core.PlayerDTO;
+import marten.aoe.engine.core.Player;
 import marten.aoe.server.face.EngineFace;
 import marten.aoe.server.serializable.EngineEvent;
 
@@ -23,14 +23,14 @@ public class EngineInterface extends UnicastRemoteObject implements EngineFace {
             .getLogger(EngineFace.class);
 
     private final Engine engine;
-    private final PlayerDTO player;
+    private final Player player;
     private final LinkedList<EngineEvent> events = new LinkedList<EngineEvent>();
     private final LinkedList<LinkedList<TileDTO>> streams = new LinkedList<LinkedList<TileDTO>>();
     private final LinkedList<TileDTO> tiles = new LinkedList<TileDTO>();
     private boolean streaming = false;
     private static final long serialVersionUID = 1L;
 
-    public EngineInterface(Engine engine, PlayerDTO player)
+    public EngineInterface(Engine engine, Player player)
             throws RemoteException {
         super();
         this.engine = engine;
@@ -133,7 +133,7 @@ public class EngineInterface extends UnicastRemoteObject implements EngineFace {
     }
 
     @Override
-    public PlayerDTO getActivePlayer() throws RemoteException {
+    public Player getActivePlayer() throws RemoteException {
         return this.engine.getActivePlayer();
     }
 

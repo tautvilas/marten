@@ -17,8 +17,8 @@ import marten.aoe.dto.depreciated.DefenseDTO;
 
 public class Tile {
     private Unit unit = null;
-    private final Set<PlayerDTO> exploredPlayers = new HashSet<PlayerDTO>();
-    private final Set<PlayerDTO> visiblePlayers = new HashSet<PlayerDTO>();
+    private final Set<Player> exploredPlayers = new HashSet<Player>();
+    private final Set<Player> visiblePlayers = new HashSet<Player>();
     private final Map map;
     private final PointDTO coordinates;
     private ArrayList<TileLayerDTO> layers = new ArrayList<TileLayerDTO>();
@@ -105,8 +105,8 @@ public class Tile {
         this.layers.add(layer);
     }
 
-    public final TileDTO getDTO(PlayerDTO player) {
-        if (player != PlayerDTO.SYSTEM && !this.isExplored(player)) {
+    public final TileDTO getDTO(Player player) {
+        if (player != Player.SYSTEM && !this.isExplored(player)) {
             ArrayList<TileLayerDTO> l = new ArrayList<TileLayerDTO>();
             l.add(new TileLayerDTO(TileLayers.SHROUD));
             return new TileDTO(l, this.getCoordinates(), null, false);
@@ -117,23 +117,23 @@ public class Tile {
                 this.isVisible(player));
     }
 
-    public final boolean isExplored(PlayerDTO player) {
+    public final boolean isExplored(Player player) {
         return this.exploredPlayers.contains(player);
     }
 
-    public final boolean isVisible(PlayerDTO player) {
+    public final boolean isVisible(Player player) {
         return this.visiblePlayers.contains(player);
     }
 
-    public final void setExplored(PlayerDTO player) {
+    public final void setExplored(Player player) {
         this.exploredPlayers.add(player);
     }
 
-    public final void setVisible(PlayerDTO player) {
+    public final void setVisible(Player player) {
         this.visiblePlayers.add(player);
     }
 
-    public final void setInvisible(PlayerDTO player) {
+    public final void setInvisible(Player player) {
         this.visiblePlayers.remove(player);
     }
 
@@ -141,9 +141,9 @@ public class Tile {
         return this.unit;
     }
 
-    public final Unit popUnit(PlayerDTO player) {
+    public final Unit popUnit(Player player) {
         if (this.unit != null
-                && (player == this.unit.getOwner() || player == PlayerDTO.SYSTEM)) {
+                && (player == this.unit.getOwner() || player == Player.SYSTEM)) {
             this.onUnitExit();
             this.unit.onTileExit(this);
             return this.removeUnit(player);
@@ -151,10 +151,10 @@ public class Tile {
         return null;
     }
 
-    public final boolean pushUnit(PlayerDTO player, Unit unit) {
+    public final boolean pushUnit(Player player, Unit unit) {
         if (this.unit == null
                 && unit != null
-                && (player == unit.getOwner() || player == PlayerDTO.SYSTEM)
+                && (player == unit.getOwner() || player == Player.SYSTEM)
                 && (unit.applyMovementCost(GameInfo.calculator.getMovementCost(this.getDTO(player), unit.getDTO(player))) > -1)) {
             this.unit = unit;
             this.unit.onTileEntry(this);
@@ -165,9 +165,9 @@ public class Tile {
         return false;
     }
 
-    public final Unit removeUnit(PlayerDTO player) {
+    public final Unit removeUnit(Player player) {
         if (this.unit != null
-                && (player == this.unit.getOwner() || player == PlayerDTO.SYSTEM)) {
+                && (player == this.unit.getOwner() || player == Player.SYSTEM)) {
             Unit answer = this.unit;
             this.unit = null;
             answer.setLocation(null);
@@ -176,9 +176,9 @@ public class Tile {
         return null;
     }
 
-    public final boolean insertUnit(PlayerDTO player, Unit unit) {
+    public final boolean insertUnit(Player player, Unit unit) {
         if (this.unit == null && unit != null
-                && (player == unit.getOwner() || player == PlayerDTO.SYSTEM)) {
+                && (player == unit.getOwner() || player == Player.SYSTEM)) {
             this.unit = unit;
             this.unit.setLocation(this);
             return true;
@@ -198,23 +198,23 @@ public class Tile {
         }
     }
 
-    public final boolean isDetected(PlayerDTO player) {
+    public final boolean isDetected(Player player) {
         return (this.unit != null ? this.unit.isDetected(player) : true);
     }
 
-    public final void setDetected(PlayerDTO player) {
+    public final void setDetected(Player player) {
         if (this.unit != null) {
             this.unit.setDetected(player);
         }
     }
 
-    public final void setUndetected(PlayerDTO player) {
+    public final void setUndetected(Player player) {
         if (this.unit != null) {
             this.unit.setUndetected(player);
         }
     }
 
-    public final boolean hasAnythingCloaked(PlayerDTO player) {
+    public final boolean hasAnythingCloaked(Player player) {
         if (this.unit == null) {
             return false;
         }

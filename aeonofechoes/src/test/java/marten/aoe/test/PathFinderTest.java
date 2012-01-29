@@ -8,14 +8,14 @@ import marten.aoe.engine.Engine;
 import marten.aoe.engine.EngineListener;
 import marten.aoe.engine.GlobalEvent;
 import marten.aoe.engine.LocalEvent;
-import marten.aoe.engine.core.PlayerDTO;
+import marten.aoe.engine.core.Player;
 
 import org.junit.Test;
 
 public class PathFinderTest {
     @Test
     public void adjacentTileTest() {
-        PlayerDTO[] players = {new PlayerDTO(0, "player")};
+        Player[] players = {new Player(0, "player")};
         Engine engine = new Engine("Freelands", players);
         engine.addListener(new EngineListener() {
             private int index = 0;
