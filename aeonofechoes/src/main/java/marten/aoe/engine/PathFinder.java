@@ -3,6 +3,8 @@ package marten.aoe.engine;
 import java.util.HashMap;
 import java.util.List;
 
+import marten.aoe.GameInfo;
+import marten.aoe.dto.PlayerDTO;
 import marten.aoe.dto.PointDTO;
 
 public final class PathFinder {
@@ -31,7 +33,7 @@ public final class PathFinder {
         this.paths.put(lastLocation, seed);
         List<Tile> extensions = lastTile.neighbors(1);
         for (Tile extension : extensions) {
-            int movementCost = extension.getMovementCost(unit.getUnitSize(), unit.getUnitType());
+            int movementCost = GameInfo.calculator.getMovementCost(extension.getDTO(PlayerDTO.SYSTEM), unit.getDTO(PlayerDTO.SYSTEM));
             if (movementCost > 0) {
                 this.buildPath(seed.extend(extension, movementCost), unit);
             }

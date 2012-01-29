@@ -5,10 +5,10 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import marten.aoe.GameInfo;
 import marten.aoe.dto.DamageDTO;
 import marten.aoe.dto.DefenseDTO;
 import marten.aoe.dto.Direction;
-import marten.aoe.dto.MovementDTO;
 import marten.aoe.dto.PlayerDTO;
 import marten.aoe.dto.PointDTO;
 import marten.aoe.dto.TileDTO;
@@ -45,20 +45,6 @@ public class Tile {
      */
     public final boolean isOccupied() {
         return this.getUnit() != null;
-    }
-
-    /**
-     * Calculates the movement cost of entering this tile.
-     * 
-     * @param size
-     *            - the size of the unit.
-     * @param type
-     *            - the type of the unit.
-     * @return the amount of movement points to be subtracted if the unit enters
-     *         this tile.
-     */
-    public final int getMovementCost(UnitSize size, UnitType type) {
-        return this.getMovementCost().getValue(size, type);
     }
 
     /**
@@ -177,8 +163,7 @@ public class Tile {
         if (this.unit == null
                 && unit != null
                 && (player == unit.getOwner() || player == PlayerDTO.SYSTEM)
-                && (unit.applyMovementCost(this.getMovementCost(
-                        unit.getUnitSize(), unit.getUnitType())) > -1)) {
+                && (unit.applyMovementCost(GameInfo.calculator.getMovementCost(this.getDTO(player), unit.getDTO(player))) > -1)) {
             this.unit = unit;
             this.unit.onTileEntry(this);
             this.unit.setLocation(this);
@@ -252,10 +237,6 @@ public class Tile {
     public void onUnitExit() {
         // TODO Auto-generated method stub
 
-    }
-
-    public MovementDTO getMovementCost() {
-        return new MovementDTO(this.getLayers().get(0).getGroundMovementCost());
     }
 
     public DefenseDTO getDefenseBonus() {
