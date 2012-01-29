@@ -16,6 +16,17 @@ public class UnitDetails {
     private int detectionRange= 5;
     private String id;
 
+
+    public UnitDetails(String id) {
+        this.id = id;
+    }
+
+
+    public UnitDetails(String id, UnitType type) {
+        this(id);
+        this.unitType = type;
+    }
+
     public UnitSize getUnitSize() {
         return unitSize;
     }
@@ -81,10 +92,6 @@ public class UnitDetails {
     }
 
     public void setId(String id) {
-        this.id = id;
-    }
-
-    public UnitDetails(String id) {
         this.id = id;
     }
 
