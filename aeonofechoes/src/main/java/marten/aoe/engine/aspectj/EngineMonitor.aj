@@ -73,6 +73,9 @@ public final aspect EngineMonitor {
     pointcut onEngineStart (Engine engine) :
         target(engine) && args() && execution(* Engine.start());
 
+    pointcut onSetMoney (Player player) :
+        target(player) && args(*) && execution(* Player.setMoney(..));
+
     // PUBLIC METHODS
     public void addListener (@NotNull Engine engine, @NotNull Player player, @NotNull EngineListener listener) {
         if (!engine.listeners.containsKey(player)) {
@@ -306,6 +309,11 @@ public final aspect EngineMonitor {
         }
         for (Player p : map.getOwner().getAllPlayers()) {
             map.recalculateVisibility(p);
+        }
+    }
+    after (Player player) : onSetMoney(player) {
+        for (EngineListener listener : player.getOwner().listeners.get(player)) {
+            listener.onGlobalEvent(GlobalEvent.PLAYER_REFRESH);
         }
     }
 }
