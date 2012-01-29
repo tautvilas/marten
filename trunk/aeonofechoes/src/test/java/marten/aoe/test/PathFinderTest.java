@@ -1,7 +1,6 @@
 package marten.aoe.test;
 
 import junit.framework.Assert;
-import marten.aoe.dto.PlayerDTO;
 import marten.aoe.dto.PointDTO;
 import marten.aoe.dto.TileDTO;
 import marten.aoe.engine.Action;
@@ -9,6 +8,7 @@ import marten.aoe.engine.Engine;
 import marten.aoe.engine.EngineListener;
 import marten.aoe.engine.GlobalEvent;
 import marten.aoe.engine.LocalEvent;
+import marten.aoe.engine.core.PlayerDTO;
 
 import org.junit.Test;
 

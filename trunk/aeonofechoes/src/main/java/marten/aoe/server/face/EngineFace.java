@@ -5,9 +5,9 @@ import java.rmi.RemoteException;
 import java.util.LinkedList;
 
 import marten.aoe.dto.MapDTO;
-import marten.aoe.dto.PlayerDTO;
 import marten.aoe.dto.PointDTO;
 import marten.aoe.dto.TileDTO;
+import marten.aoe.engine.core.PlayerDTO;
 import marten.aoe.server.serializable.EngineEvent;
 
 public interface EngineFace extends Remote {

@@ -3,10 +3,10 @@ package marten.aoe.engine.rules;
 import java.util.List;
 
 import marten.aoe.dto.MapMetaDTO;
-import marten.aoe.dto.PlayerDTO;
 import marten.aoe.dto.PointDTO;
 import marten.aoe.engine.Action;
 import marten.aoe.engine.core.Map;
+import marten.aoe.engine.core.PlayerDTO;
 import marten.aoe.engine.core.Regiment;
 import marten.aoe.engine.core.Tile;
 

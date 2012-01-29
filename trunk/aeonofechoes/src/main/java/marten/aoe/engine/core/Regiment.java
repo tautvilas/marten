@@ -2,7 +2,6 @@ package marten.aoe.engine.core;
 
 import marten.aoe.data.type.UnitSize;
 import marten.aoe.data.type.UnitType;
-import marten.aoe.dto.PlayerDTO;
 import marten.aoe.dto.depreciated.DamageDTO;
 
 public abstract class Regiment extends Unit {

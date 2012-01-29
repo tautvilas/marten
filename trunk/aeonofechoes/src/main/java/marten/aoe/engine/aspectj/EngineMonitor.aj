@@ -4,10 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-import org.aspectj.lang.annotation.SuppressAjWarnings;
-
 import marten.aoe.aspectj.NotNull;
-import marten.aoe.dto.PlayerDTO;
 import marten.aoe.dto.PointDTO;
 import marten.aoe.dto.TileDTO;
 import marten.aoe.engine.Engine;
@@ -15,8 +12,11 @@ import marten.aoe.engine.EngineListener;
 import marten.aoe.engine.GlobalEvent;
 import marten.aoe.engine.LocalEvent;
 import marten.aoe.engine.core.Map;
+import marten.aoe.engine.core.PlayerDTO;
 import marten.aoe.engine.core.Tile;
 import marten.aoe.engine.core.Unit;
+
+import org.aspectj.lang.annotation.SuppressAjWarnings;
 
 @SuppressAjWarnings("adviceDidNotMatch")
 public final aspect EngineMonitor {

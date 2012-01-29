@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import marten.aoe.Path;
-import marten.aoe.dto.PlayerDTO;
+import marten.aoe.engine.core.PlayerDTO;
 import marten.aoe.engine.core.Tile;
 import marten.aoe.engine.core.Unit;
 

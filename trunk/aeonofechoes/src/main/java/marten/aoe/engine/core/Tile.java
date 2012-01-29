@@ -9,7 +9,6 @@ import marten.aoe.GameInfo;
 import marten.aoe.data.tiles.TileLayers;
 import marten.aoe.data.type.UnitSize;
 import marten.aoe.data.type.UnitType;
-import marten.aoe.dto.PlayerDTO;
 import marten.aoe.dto.PointDTO;
 import marten.aoe.dto.TileDTO;
 import marten.aoe.dto.TileLayerDTO;
