@@ -103,4 +103,9 @@ public class MinimalRuleset implements Rules {
             }
         }
     }
+
+    @Override
+    public boolean checkVictory(Map map, Player player) {
+        return false;
+    }
 }

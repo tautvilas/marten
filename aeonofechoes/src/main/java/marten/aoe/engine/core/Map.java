@@ -15,6 +15,7 @@ public abstract class Map {
     private final Tile[][] map;
     private final MapMetaDTO meta;
     private final Engine owner;
+    private int unitId = 0;
     // Since pathfinding for a unit is a costly procedure, we will do some caching
     private PathFinder pathCache = null;
 
@@ -174,7 +175,7 @@ public abstract class Map {
      * @param name - the class name of the unit to be created.
      * @param at - the location where the unit will spawn.*/
     public boolean spawnUnit (Player player, String name, PointDTO at) {
-        new Unit(UnitFactory.getUnit(name), this.getTile(at), player);
+        new Unit(this.unitId++, UnitFactory.getUnit(name), this.getTile(at), player);
         return true;
     }
     public void selectUnit(Player player, PointDTO location) {

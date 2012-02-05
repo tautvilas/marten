@@ -18,7 +18,7 @@ public class DtoSizeTest implements ConsoleTest {
     public void run() {
         PointDTO point = new PointDTO(100, 100);
         PlayerDTO player = new PlayerDTO(0, "bastard", 5);
-        UnitDTO unit = new UnitDTO("dwarf", player, 40, 50, 5, 10, false, UnitType.GROUND);
+        UnitDTO unit = new UnitDTO(0, "dwarf", player, 40, 50, 5, 10, false, UnitType.GROUND);
         @SuppressWarnings("deprecation")
         TileDTO tile = new TileDTO("River", point, unit);
         @SuppressWarnings("deprecation")

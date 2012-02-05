@@ -18,8 +18,10 @@ public class Unit {
     private UnitDetails details;
     private int currentMovementAllowance;
     private int currentHitPoints;
+    private int id;
 
-    public Unit(UnitDetails details, Tile location, Player owner) {
+    public Unit(int uid, UnitDetails details, Tile location, Player owner) {
+        this.id = uid;
         this.owner = owner;
         this.location = location;
         this.details = details;
@@ -28,6 +30,10 @@ public class Unit {
         if (location != null) {
             location.insertUnit(this.owner, this);
         }
+    }
+
+    public int getId() {
+        return this.id;
     }
 
     public UnitDetails getDetails() {
@@ -73,7 +79,15 @@ public class Unit {
     /** Create a minimal Unit Data Transfer Object. */
     public final UnitDTO getDTO(Player player) {
         if (player == Player.SYSTEM || this.isDetected(player)) {
-            return new UnitDTO(this.details.getId(), this.owner.getDTO(), this.currentHitPoints, this.details.getMaxHitPoints(), this.currentMovementAllowance, this.details.getMaxMovementAllowance(), this.isCloaked(), this.getUnitType());
+            return new UnitDTO(this.getId(),
+                               this.details.getId(),
+                               this.owner.getDTO(),
+                               this.currentHitPoints,
+                               this.details.getMaxHitPoints(),
+                               this.currentMovementAllowance,
+                               this.details.getMaxMovementAllowance(),
+                               this.isCloaked(),
+                               this.getUnitType());
         }
         return null;
     }
