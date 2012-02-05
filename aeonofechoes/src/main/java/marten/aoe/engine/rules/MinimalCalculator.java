@@ -28,7 +28,6 @@ public class MinimalCalculator {
     }
 
     public int attack(int d1, int d2, int a1, int a2) {
-        System.out.println("Attack:" + a1 + "Defence" + d2);
         return a1 - d2;
     }
 }

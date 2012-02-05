@@ -43,9 +43,8 @@ public class UnitDrawer {
                         tileDisplayCoordinates.y + 64 / 2
                                 - unit.getDimension().height / 2));
                 this.context.addChild(unit);
-                this.units.put(tile.getUnit().getId(), new UnitData(unit,
-                        coords));
-                log.info("Unit " + id + " entered " + coords);
+                this.units.put(tile.getUnit().getId(), new UnitData(unit));
+                log.debug("Unit " + id + " entered " + coords);
             } else {
                 UnitData unit = this.units.get(id);
                 unit.path.add(new Point(tileDisplayCoordinates.x + 64 / 2
@@ -53,8 +52,8 @@ public class UnitDrawer {
                         tileDisplayCoordinates.y + 64 / 2
                                 - unit.widget.getDimension().height / 2));
                 unit.widget.update(unitDTO);
-                unit.position = coords;
-                log.info("Unit " + id + " moved to " + coords);
+//                unit.position = coords;
+                log.debug("Unit " + id + " moved to " + coords);
             }
         }/* else if (oldUnit != null) {
             log.info("Deleting unit");
@@ -87,11 +86,11 @@ public class UnitDrawer {
     private class UnitData {
         public UnitWidget widget;
         public List<Point> path = new ArrayList<Point>();
-        public PointDTO position;
+//        public PointDTO position;
 
-        public UnitData(UnitWidget widget, PointDTO position) {
+        public UnitData(UnitWidget widget) {
             this.widget = widget;
-            this.position = position;
+//            this.position = position;
         }
     }
 }
