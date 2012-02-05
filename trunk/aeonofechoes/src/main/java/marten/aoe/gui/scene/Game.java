@@ -161,6 +161,7 @@ public class Game extends AgeScene implements MapWidgetListener {
 
     @Override
     public void compute() {
+        long ctype = System.currentTimeMillis();
         // position map on the screen
         Point coords = mouseController.getMouseCoordinates();
         if (coords.x < 5) {
@@ -207,11 +208,20 @@ public class Game extends AgeScene implements MapWidgetListener {
             }
         }
         map.animate(10);
+        long delta = System.currentTimeMillis() - ctype;
+        if (delta > 1) {
+            System.err.println("Long computation:" + (delta));
+        }
     }
 
     @Override
     public void render() {
+        long ctype = System.currentTimeMillis();
         flatland.render();
+        long delta = System.currentTimeMillis() - ctype;
+        if (delta > 10) {
+            System.err.println("Long render:" + (delta));
+        }
     }
 
     private void registerNetworkListener() {
