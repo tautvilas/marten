@@ -9,13 +9,13 @@ import marten.age.graphics.SceneGraphChild;
 import marten.age.graphics.primitives.Point;
 import marten.aoe.dto.PointDTO;
 import marten.aoe.dto.TileDTO;
+import marten.aoe.dto.UnitDTO;
 import marten.aoe.gui.widget.UnitWidget;
 
 import org.apache.log4j.Logger;
 
 public class UnitDrawer {
-    private HashMap<PointDTO, UnitWidget> units = new HashMap<PointDTO, UnitWidget>();
-    private HashMap<Integer, UnitData> unitsDatas = new HashMap<Integer, UnitDrawer.UnitData>();
+    private HashMap<Integer, UnitData> units = new HashMap<Integer, UnitDrawer.UnitData>();
 
     private SceneGraphBranch<SceneGraphChild> context;
 
@@ -26,25 +26,37 @@ public class UnitDrawer {
         this.context = context;
     }
 
-    public void updateTile(TileDTO tile, Point tileDisplayCoordinates) {
-        if (this.units.containsKey(tile.getCoordinates())) {
-            UnitWidget unit = this.units.get(tile.getCoordinates());
-            this.context.removeChild(unit);
-            this.units.remove(tile.getCoordinates());
+    public void updateTile(TileDTO oldTile, TileDTO tile, Point tileDisplayCoordinates) {
+        UnitDTO unitDTO = tile.getUnit();
+        UnitDTO oldUnit = null;
+        if (oldTile != null) {
+            oldUnit = oldTile.getUnit();
         }
-        if (tile.getUnit() != null) {
-            UnitWidget unit = new UnitWidget(tile.getUnit());
-            unit.setPosition(new Point(tileDisplayCoordinates.x + 64 / 2
-                    - unit.getDimension().width / 2, tileDisplayCoordinates.y
-                    + 64 / 2 - unit.getDimension().height / 2));
-            this.context.addChild(unit);
-            units.put(tile.getCoordinates(), unit);
-            int id = tile.getUnit().getId();
-            if (!this.unitsDatas.containsKey(tile.getUnit().getId())) {
-                this.unitsDatas.put(tile.getUnit().getId(), new UnitData());
-                log.info("Unit " + id + " entered " + tile.getCoordinates());
+        PointDTO coords = tile.getCoordinates();
+        if (unitDTO != null) {
+            int id = unitDTO.getId();
+            if (!this.units.containsKey(id)) {
+                UnitWidget unit = new UnitWidget(tile.getUnit());
+                unit.setPosition(new Point(tileDisplayCoordinates.x + 64 / 2
+                        - unit.getDimension().width / 2, tileDisplayCoordinates.y
+                        + 64 / 2 - unit.getDimension().height / 2));
+                this.context.addChild(unit);
+                this.units.put(tile.getUnit().getId(), new UnitData(unit, coords));
+                log.info("Unit " + id + " entered " + coords);
             } else {
-                log.info("Unit " + id + " moved to " + tile.getCoordinates());
+                UnitData unit = this.units.get(id);
+                unit.widget.setPosition(new Point(tileDisplayCoordinates.x + 64 / 2
+                        - unit.widget.getDimension().width / 2, tileDisplayCoordinates.y
+                        + 64 / 2 - unit.widget.getDimension().height / 2));
+                unit.widget.update(unitDTO);
+                unit.path.add(coords);
+                log.info("Unit " + id + " moved to " + coords);
+            }
+        } else if (oldUnit != null){
+            UnitData unit = this.units.get(oldUnit.getId());
+            if (unit.path.get(unit.path.size() - 1).equals(coords)) {
+                this.context.removeChild(unit.widget);
+                this.units.remove(oldUnit.getId());
             }
         }
     }
@@ -52,5 +64,9 @@ public class UnitDrawer {
     private class UnitData {
         public UnitWidget widget;
         public List<PointDTO> path = new ArrayList<PointDTO>();
+        public UnitData(UnitWidget widget, PointDTO coords) {
+            path.add(coords);
+            this.widget = widget;
+        }
     }
 }
