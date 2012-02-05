@@ -12,11 +12,13 @@ public final class UnitDTO implements Serializable {
     private final int maxHitPoints;
     private final int movePoints;
     private final int maxMovePoints;
+    private final int id;
     private final boolean cloaked;
     private UnitType type;
 
-    public UnitDTO (String name, PlayerDTO player, int hitPoints, int maxHitPoints, int movePoints, int maxMovePoints, boolean cloaked, UnitType type) {
+    public UnitDTO (int id, String name, PlayerDTO player, int hitPoints, int maxHitPoints, int movePoints, int maxMovePoints, boolean cloaked, UnitType type) {
         this.name = name;
+        this.id = id;
         this.player = player;
         this.hitPoints = hitPoints;
         this.maxHitPoints = maxHitPoints;
@@ -24,6 +26,9 @@ public final class UnitDTO implements Serializable {
         this.maxMovePoints = maxMovePoints;
         this.cloaked = cloaked;
         this.type = type;
+    }
+    public int getId() {
+        return this.id;
     }
     public final String getName () {
         return this.name;

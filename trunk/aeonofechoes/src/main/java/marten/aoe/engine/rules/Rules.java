@@ -11,4 +11,6 @@ public interface Rules {
     public void performAction(Map map, Player player, PointDTO from, PointDTO to, Action action);
 
     public void turnEnd(Map map, Player[] playerList);
+
+    public boolean checkVictory(Map map, Player player);
 }
