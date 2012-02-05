@@ -206,6 +206,7 @@ public class Game extends AgeScene implements MapWidgetListener {
                 map.updateTile(this.updatedTiles.pop());
             }
         }
+        map.animate(10);
     }
 
     @Override

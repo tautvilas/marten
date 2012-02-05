@@ -346,4 +346,8 @@ public class MapWidget extends BasicSceneGraphBranch<SceneGraphChild> implements
     @Override
     public void mouseWheelRoll(int delta, Point coords) {
     }
+
+    public void animate(int speed) {
+        this.unitDrawer.animate(speed);
+    }
 }
