@@ -221,10 +221,13 @@ public class MapWidget extends BasicSceneGraphBranch<SceneGraphChild> implements
     }
 
     public void updateTile(TileDTO tile) {
-        this.tiles.put(tile.getCoordinates(), tile);
-        TileDTO surrounds[] = this.getSurrounds(tile.getCoordinates());
-        this.updatedTiles.put(tile.getCoordinates(), tile);
-        this.unitDrawer.updateTile(tile, this.getTileDisplayCoordinates(tile.getCoordinates()));
+        PointDTO coords = tile.getCoordinates();
+        TileDTO oldTile = this.tiles.get(coords);
+        Point displayCoords = this.getTileDisplayCoordinates(coords);
+        this.unitDrawer.updateTile(oldTile, tile, displayCoords);
+        this.tiles.put(coords, tile);
+        TileDTO surrounds[] = this.getSurrounds(coords);
+        this.updatedTiles.put(coords, tile);
         for (int i = 0; i < surrounds.length; i++) {
             if (surrounds[i] == null) continue;
             this.updatedTiles.put(surrounds[i].getCoordinates(), surrounds[i]);

@@ -27,6 +27,33 @@ public class UnitWidget extends TranslationGroup implements Widget, BoxedObject 
     private final BitmapFont smallThinFont = FontCache.getFont(new Font(
             "Courier New", Font.PLAIN, 14));
 
+    public void update(UnitDTO dto) {
+        this.updateMovePoints(dto);
+        this.updateHealthPoints(dto);
+    }
+
+    private void updateMovePoints(UnitDTO dto) {
+        float cp = dto.getCurrentMovementPoints();
+        float mp = dto.getMaximumMovementPoints();
+        if (cp == 0) {
+            this.movePoints.setColor(new Color(1, 0, 0));
+        } else {
+            this.movePoints.setColor(new Color(1 - cp / mp, cp / mp, 0));
+        }
+        this.movePoints.setContent(Integer.toString(dto.getCurrentMovementPoints()));
+    }
+
+    private void updateHealthPoints(UnitDTO dto) {
+        float chp = dto.getCurrentHitPoints();
+        float mhp = dto.getMaximumHitPoints();
+        if (chp == 0) {
+            this.hp.setColor(new Color(1, 0, 0));
+        } else {
+            this.hp.setColor(new Color(1 - chp / mhp, chp / mhp, 0));
+        }
+        this.hp.setContent(Integer.toString(dto.getCurrentHitPoints()));
+    }
+
     public UnitWidget(UnitDTO unit) {
         // this.unit = unit;
         this.representation = new BitmapString(font, unit.getName().charAt(0)
@@ -35,20 +62,6 @@ public class UnitWidget extends TranslationGroup implements Widget, BoxedObject 
                 .getCurrentMovementPoints() + "");
         this.hp = new BitmapString(smallFont, unit
                 .getCurrentHitPoints() + "");
-        float cp = unit.getCurrentMovementPoints();
-        float mp = unit.getMaximumMovementPoints();
-        if (cp == 0) {
-            this.movePoints.setColor(new Color(1, 0, 0));
-        } else {
-            this.movePoints.setColor(new Color(1 - cp / mp, cp / mp, 0));
-        }
-        float chp = unit.getCurrentHitPoints();
-        float mhp = unit.getMaximumHitPoints();
-        if (chp == 0) {
-            this.hp.setColor(new Color(1, 0, 0));
-        } else {
-            this.hp.setColor(new Color(1 - chp / mhp, chp / mhp, 0));
-        }
         this.movePoints.setPosition(new Point(-10, 10));
         this.hp.setPosition(new Point(-10, -10));
         this.addChild(representation);
@@ -56,6 +69,8 @@ public class UnitWidget extends TranslationGroup implements Widget, BoxedObject 
             this.addChild(movePoints);
         }
         this.addChild(hp);
+        this.updateHealthPoints(unit);
+        this.updateMovePoints(unit);
     }
 
     @Override
