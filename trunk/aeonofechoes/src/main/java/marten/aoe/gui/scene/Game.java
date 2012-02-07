@@ -164,9 +164,9 @@ public class Game extends AgeScene implements MapWidgetListener {
     }
 
     private void updateMinimap() {
-        TextureSprite minimap = this.map.getMinimap(new Dimension(200, 300));
+        TextureSprite minimap = this.map.getMinimap(new Dimension(150, 200));
         minimap.setId("minimap");
-        minimap.setPosition(new Point(AppInfo.getDisplayWidth() - 200, AppInfo.getDisplayHeight() - 350));
+        minimap.setPosition(new Point(AppInfo.getDisplayWidth() - 160, AppInfo.getDisplayHeight() - 225));
         this.flatland.updateChild(minimap, -1);
     }
 
