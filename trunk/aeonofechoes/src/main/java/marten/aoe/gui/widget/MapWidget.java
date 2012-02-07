@@ -19,6 +19,8 @@ import marten.age.graphics.primitives.Point;
 import marten.age.graphics.text.BitmapFont;
 import marten.age.graphics.text.BitmapString;
 import marten.age.graphics.text.FontCache;
+import marten.age.graphics.texture.Texture;
+import marten.age.graphics.texture.TextureLoader;
 import marten.age.graphics.transform.TranslationGroup;
 import marten.aoe.dto.MapDTO;
 import marten.aoe.dto.PointDTO;
@@ -341,6 +343,11 @@ public class MapWidget extends BasicSceneGraphBranch<SceneGraphChild> implements
             }
             this.selectedTile = tile.getCoordinates();
         }
+    }
+
+    public TextureSprite getMinimap(Dimension dimension) {
+        Texture texture = TextureLoader.loadTexture(this.tg, dimension);
+        return new TextureSprite(texture);
     }
 
     @Override

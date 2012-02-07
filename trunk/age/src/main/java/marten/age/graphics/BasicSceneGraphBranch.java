@@ -29,7 +29,11 @@ public class BasicSceneGraphBranch<T extends SceneGraphChild> extends
         if (this.lookup.containsKey(id)) {
             this.removeChild(lookup.get(id));
         }
-        this.addChild(newBranch, index);
+        if (index != -1) {
+            this.addChild(newBranch, index);
+        } else {
+            this.addChild(newBranch);
+        }
         this.lookup.put(id, newBranch);
     }
 

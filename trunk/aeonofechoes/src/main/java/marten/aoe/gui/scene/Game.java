@@ -11,6 +11,7 @@ import marten.age.core.AgeScene;
 import marten.age.core.AppInfo;
 import marten.age.graphics.appearance.Color;
 import marten.age.graphics.flat.Flatland;
+import marten.age.graphics.flat.sprite.TextureSprite;
 import marten.age.graphics.primitives.Dimension;
 import marten.age.graphics.primitives.Point;
 import marten.age.graphics.text.BitmapString;
@@ -56,6 +57,7 @@ public class Game extends AgeScene implements MapWidgetListener {
 
     public Game(EngineFace engineFace, GameDetails details) {
         int appWidth = AppInfo.getDisplayWidth();
+        //int appHeight = AppInfo.getDisplayHeight();
         this.params = details;
         this.engine = engineFace;
         try {
@@ -113,6 +115,7 @@ public class Game extends AgeScene implements MapWidgetListener {
             }
         });
         flatland.addChild(new FpsCounter());
+        this.updateMinimap();
 
         KeyboardController keyboardController = new KeyboardController();
         keyboardController.addListener(new KeyboardListener() {
@@ -156,7 +159,15 @@ public class Game extends AgeScene implements MapWidgetListener {
             throw new RuntimeException(e);
         }
 
+        this.updateMinimap();
         this.registerNetworkListener();
+    }
+
+    private void updateMinimap() {
+        TextureSprite minimap = this.map.getMinimap(new Dimension(200, 300));
+        minimap.setId("minimap");
+        minimap.setPosition(new Point(AppInfo.getDisplayWidth() - 200, AppInfo.getDisplayHeight() - 350));
+        this.flatland.updateChild(minimap, -1);
     }
 
     @Override
@@ -263,6 +274,7 @@ public class Game extends AgeScene implements MapWidgetListener {
 
     @Override
     public void performAction(PointDTO from, PointDTO to) {
+        this.updateMinimap();
         try {
             this.engine.performAction(from, to, Game.this.selectedAction);
         } catch (RemoteException e) {
