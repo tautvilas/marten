@@ -16,6 +16,8 @@ import marten.age.graphics.primitives.Dimension;
 import marten.age.graphics.primitives.Point;
 import marten.age.graphics.text.BitmapString;
 import marten.age.graphics.text.FontCache;
+import marten.age.graphics.transform.SymetricScaleGroup;
+import marten.age.graphics.transform.TranslationGroup;
 import marten.age.widget.Action;
 import marten.age.widget.Button;
 import marten.age.widget.obsolete.FpsCounter;
@@ -164,10 +166,15 @@ public class Game extends AgeScene implements MapWidgetListener {
     }
 
     private void updateMinimap() {
-        TextureSprite minimap = this.map.getMinimap(new Dimension(150, 200));
+        TextureSprite minimap = this.map.getMinimap(new Dimension(AppInfo.getDisplayWidth(), AppInfo.getDisplayHeight()));
+        SymetricScaleGroup g = new SymetricScaleGroup(0.125);
+        TranslationGroup tg = new TranslationGroup();
+        tg.addChild(g);
+        tg.setId("minimap");
+        g.addChild(minimap);
         minimap.setId("minimap");
-        minimap.setPosition(new Point(AppInfo.getDisplayWidth() - 160, AppInfo.getDisplayHeight() - 225));
-        this.flatland.updateChild(minimap, -1);
+        tg.setPosition(new Point(AppInfo.getDisplayWidth() - 150, AppInfo.getDisplayHeight() - 300));
+        this.flatland.updateChild(tg, -1);
     }
 
     @Override
