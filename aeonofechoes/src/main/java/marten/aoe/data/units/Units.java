@@ -1,6 +1,15 @@
 package marten.aoe.data.units;
 
-public class Units {
-    public static final String DWARF = "Dwarf";
-    public static final String BASE = "Base";
+public enum Units {
+    Worker("Worker"), BASE("Base");
+
+    private String title;
+
+    private Units(String title) {
+        this.title = title;
+    }
+
+    public String getTitle() {
+        return this.title;
+    }
 }

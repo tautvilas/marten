@@ -57,12 +57,7 @@ public class AoeRuleset implements Rules {
             case FIRST:
                 if (player.getMoney() < 20) break;
                 player.setMoney(player.getMoney() - 20);
-                map.spawnUnit(player, "Worker", to);
-                break;
-            case SECOND:
-                if (player.getMoney() < 25) break;
-                player.setMoney(player.getMoney() - 25);
-                map.spawnUnit(player, Units.DWARF, to);
+                map.spawnUnit(player, Units.Worker, to);
                 break;
         }
         }

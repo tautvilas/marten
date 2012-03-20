@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import marten.aoe.data.units.UnitFactory;
+import marten.aoe.data.units.Units;
 import marten.aoe.dto.MapDTO;
 import marten.aoe.dto.MapMetaDTO;
 import marten.aoe.dto.PointDTO;
@@ -122,14 +123,16 @@ public abstract class Map {
         return answer;
     }
     public void recalculateVisibility(Player player) {
-        boolean[][] currentVisibilityMatrix = new boolean[this.meta.getWidth()][this.meta.getHeight()];
-        boolean[][] currentExplorationMatrix = new boolean[this.meta.getWidth()][this.meta.getHeight()];
-        boolean[][] currentDetectionMatrix = new boolean[this.meta.getWidth()][this.meta.getHeight()];
-        boolean[][] newVisibilityMatrix = new boolean[this.meta.getWidth()][this.meta.getHeight()];
-        boolean[][] newExplorationMatrix = new boolean[this.meta.getWidth()][this.meta.getHeight()];
-        boolean[][] newDetectionMatrix = new boolean[this.meta.getWidth()][this.meta.getHeight()];
-        for (int x = 0; x < this.meta.getWidth(); x++) {
-            for (int y = 0; y < this.meta.getHeight(); y++) {
+        int width = this.meta.getWidth();
+        int height = this.meta.getHeight();
+        boolean[][] currentVisibilityMatrix = new boolean[width][height];
+        boolean[][] currentExplorationMatrix = new boolean[width][height];
+        boolean[][] currentDetectionMatrix = new boolean[width][height];
+        boolean[][] newVisibilityMatrix = new boolean[width][height];
+        boolean[][] newExplorationMatrix = new boolean[width][height];
+        boolean[][] newDetectionMatrix = new boolean[width][height];
+        for (int x = 0; x < width; x++) {
+            for (int y = 0; y < height; y++) {
                 currentDetectionMatrix[x][y] = this.map[x][y].isDetected(player);
                 currentVisibilityMatrix[x][y] = this.map[x][y].isVisible(player);
                 newDetectionMatrix[x][y] = newVisibilityMatrix[x][y] = false;
@@ -149,8 +152,8 @@ public abstract class Map {
                 newExplorationMatrix[coordinates.getX()][coordinates.getY()] = newVisibilityMatrix[coordinates.getX()][coordinates.getY()] = true;
             }
         }
-        for (int x = 0; x < this.meta.getWidth(); x++) {
-            for (int y = 0; y < this.meta.getHeight(); y++) {
+        for (int x = 0; x < width; x++) {
+            for (int y = 0; y < height; y++) {
                 if (!currentVisibilityMatrix[x][y] && newVisibilityMatrix[x][y]) {
                     this.map[x][y].setVisible(player);
                 }
@@ -174,7 +177,7 @@ public abstract class Map {
      * @param player - the player who will control the unit after spawning.
      * @param name - the class name of the unit to be created.
      * @param at - the location where the unit will spawn.*/
-    public boolean spawnUnit (Player player, String name, PointDTO at) {
+    public boolean spawnUnit (Player player, Units name, PointDTO at) {
         new Unit(this.unitId++, UnitFactory.getUnit(name), this.getTile(at), player);
         return true;
     }

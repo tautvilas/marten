@@ -15,6 +15,7 @@ public class UnitDetails {
     private DamageDTO rangedDamage;
     private int attackRange;
     private int detectionRange= 4;
+    private int powerupRange = 0;
     private int defence = 1;
     public int getDefence() {
         return defence;
@@ -25,15 +26,15 @@ public class UnitDetails {
         this.defence = defence;
     }
 
-    private String id;
+    private Units id;
 
 
-    public UnitDetails(String id) {
+    public UnitDetails(Units id) {
         this.id = id;
     }
 
 
-    public UnitDetails(String id, UnitType type) {
+    public UnitDetails(Units id, UnitType type) {
         this(id);
         this.unitType = type;
     }
@@ -102,11 +103,19 @@ public class UnitDetails {
         this.detectionRange = detectionRange;
     }
 
-    public void setId(String id) {
+    public void setId(Units id) {
         this.id = id;
     }
 
-    public String getId() {
+    public Units getId() {
         return this.id;
+    }
+
+    public void setPowerupRange(int range) {
+        this.powerupRange = range;
+    }
+
+    public int getPowerupRange() {
+        return this.powerupRange;
     }
 }

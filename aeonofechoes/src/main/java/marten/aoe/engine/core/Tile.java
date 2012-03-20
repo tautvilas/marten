@@ -19,6 +19,7 @@ public class Tile {
     private Unit unit = null;
     private final Set<Player> exploredPlayers = new HashSet<Player>();
     private final Set<Player> visiblePlayers = new HashSet<Player>();
+    private final Set<Player> poweredPlayers = new HashSet<Player>();
     private final Map map;
     private final PointDTO coordinates;
     private ArrayList<TileLayerDTO> layers = new ArrayList<TileLayerDTO>();
@@ -125,6 +126,10 @@ public class Tile {
         return this.visiblePlayers.contains(player);
     }
 
+    public boolean isPowered(Player player) {
+        return this.poweredPlayers.contains(player);
+    }
+
     public final void setExplored(Player player) {
         this.exploredPlayers.add(player);
     }
@@ -135,6 +140,14 @@ public class Tile {
 
     public final void setInvisible(Player player) {
         this.visiblePlayers.remove(player);
+    }
+
+    public void setPowered(Player player) {
+        this.poweredPlayers.add(player);
+    }
+
+    public void setUnpowered(Player player) {
+        this.poweredPlayers.remove(player);
     }
 
     public final Unit getUnit() {

@@ -1,6 +1,7 @@
 package marten.aoe.test;
 
 import junit.framework.Assert;
+import marten.aoe.data.units.Units;
 import marten.aoe.dto.PointDTO;
 import marten.aoe.dto.TileDTO;
 import marten.aoe.engine.Action;
@@ -30,7 +31,7 @@ public class PathFinderTest {
                     this.index++;
                 }
             }}, players[0]);
-        engine.getMap().spawnUnit(players[0], "Dwarf", new PointDTO(13, 6));
+        engine.getMap().spawnUnit(players[0], Units.Worker, new PointDTO(13, 6));
         engine.performAction(players[0], new PointDTO(13, 6), Action.FIRST, new PointDTO(13, 7));
     }
 }

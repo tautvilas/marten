@@ -7,6 +7,7 @@ import marten.aoe.data.type.DamageType;
 import marten.aoe.data.type.UnitSize;
 import marten.aoe.data.type.UnitType;
 import marten.aoe.data.units.UnitDetails;
+import marten.aoe.data.units.Units;
 import marten.aoe.dto.UnitDTO;
 import marten.aoe.dto.depreciated.DamageDTO;
 import marten.aoe.dto.depreciated.DamageResistanceDTO;
@@ -40,7 +41,7 @@ public class Unit {
         return this.details;
     }
 
-    public final String getName() {
+    public final Units getName() {
         return this.details.getId();
     }
     /** @return the map, where this unit is located.*/
