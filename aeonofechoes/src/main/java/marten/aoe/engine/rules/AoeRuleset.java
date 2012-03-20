@@ -90,10 +90,12 @@ public class AoeRuleset implements Rules {
         for (Player player : playerList) {
             List<Unit> units = map.getAllUnits(player);
             for (Unit unit : units) {
-                if (unit.getLocation().hasLayer(TileLayers.CITY)) {
+                Tile location = unit.getLocation();
+                if (!location.isPowered(player)) {
+                    unit.applyDamage(new DamageDTO(2, DamageType.PSYCHOLOGICAL));
+                }
+                if (location.hasLayer(TileLayers.CITY)) {
                     player.setMoney(player.getMoney() + 5);
-                } else if (unit.getLocation().hasLayer(TileLayers.VILLAGE)) {
-                    player.setMoney(player.getMoney() + 2);
                 }
             }
         }

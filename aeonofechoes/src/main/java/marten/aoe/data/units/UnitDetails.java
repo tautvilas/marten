@@ -15,7 +15,7 @@ public class UnitDetails {
     private DamageDTO rangedDamage;
     private int attackRange;
     private int detectionRange= 4;
-    private int powerupRange = 0;
+    private int powerupRange = -1;
     private int defence = 1;
     public int getDefence() {
         return defence;
