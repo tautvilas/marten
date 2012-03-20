@@ -6,6 +6,7 @@ import java.io.ObjectOutputStream;
 import java.io.Serializable;
 
 import marten.aoe.data.type.UnitType;
+import marten.aoe.data.units.Units;
 import marten.aoe.dto.PlayerDTO;
 import marten.aoe.dto.PointDTO;
 import marten.aoe.dto.TileDTO;
@@ -18,7 +19,7 @@ public class DtoSizeTest implements ConsoleTest {
     public void run() {
         PointDTO point = new PointDTO(100, 100);
         PlayerDTO player = new PlayerDTO(0, "bastard", 5);
-        UnitDTO unit = new UnitDTO(0, "dwarf", player, 40, 50, 5, 10, false, UnitType.GROUND);
+        UnitDTO unit = new UnitDTO(0, Units.Worker, player, 40, 50, 5, 10, false, UnitType.GROUND);
         @SuppressWarnings("deprecation")
         TileDTO tile = new TileDTO("River", point, unit);
         @SuppressWarnings("deprecation")
