@@ -332,13 +332,18 @@ public class MapWidget extends BasicSceneGraphBranch<SceneGraphChild> implements
             this.tileSelection.setPosition(this.getTileDisplayCoordinates(tile
                     .getCoordinates()));
             if (this.selectedTile == null) {
-                tg.addChild(tileSelection);
+                this.tg.addChild(this.tileSelection);
+            } else if (this.selectedTile.equals(tile.getCoordinates())){
+                this.tg.removeChild(this.tileSelection);
+                this.selectedTile = null;
+                return;
             } else {
                 TileDTO oldTile = this.tiles.get(this.selectedTile);
                 if (oldTile.getUnit() != null) {
                     this.listener.performAction(this.selectedTile,
                             tile.getCoordinates());
                     this.selectedTile = null;
+                    this.tg.removeChild(this.tileSelection);
                     return;
                 }
             }
