@@ -11,7 +11,7 @@ import marten.aoe.engine.core.Map;
 import marten.aoe.engine.core.Player;
 import marten.aoe.engine.core.Unit;
 import marten.aoe.engine.loader.MapLoader;
-import marten.aoe.engine.rules.MinimalRuleset;
+import marten.aoe.engine.rules.AoeRuleset;
 import marten.aoe.engine.rules.Rules;
 
 /** The main access point to all functionality of the AoE engine.
@@ -41,7 +41,7 @@ public final class Engine {
         }
         this.playerList = playerList;
         this.validateNewMap();
-        this.ruleset = new MinimalRuleset();
+        this.ruleset = new AoeRuleset();
     }
 
     public void start() {

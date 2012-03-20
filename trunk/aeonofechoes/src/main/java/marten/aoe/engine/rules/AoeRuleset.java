@@ -16,7 +16,7 @@ import marten.aoe.engine.core.Player;
 import marten.aoe.engine.core.Tile;
 import marten.aoe.engine.core.Unit;
 
-public class MinimalRuleset implements Rules {
+public class AoeRuleset implements Rules {
 
     @Override
     public void gameStart(Map map, Player[] playerList) {
