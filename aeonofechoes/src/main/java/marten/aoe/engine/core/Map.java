@@ -128,28 +128,39 @@ public abstract class Map {
         boolean[][] currentVisibilityMatrix = new boolean[width][height];
         boolean[][] currentExplorationMatrix = new boolean[width][height];
         boolean[][] currentDetectionMatrix = new boolean[width][height];
+        boolean[][] currentPowerMatrix = new boolean[width][height];
         boolean[][] newVisibilityMatrix = new boolean[width][height];
         boolean[][] newExplorationMatrix = new boolean[width][height];
         boolean[][] newDetectionMatrix = new boolean[width][height];
+        boolean[][] newPowerMatrix = new boolean[width][height];
         for (int x = 0; x < width; x++) {
             for (int y = 0; y < height; y++) {
                 currentDetectionMatrix[x][y] = this.map[x][y].isDetected(player);
                 currentVisibilityMatrix[x][y] = this.map[x][y].isVisible(player);
-                newDetectionMatrix[x][y] = newVisibilityMatrix[x][y] = false;
+                currentPowerMatrix[x][y] = this.map[x][y].isPowered(player);
+                newDetectionMatrix[x][y] = newVisibilityMatrix[x][y] = newPowerMatrix[x][y] = false;
                 newExplorationMatrix[x][y] = currentExplorationMatrix[x][y] = this.map[x][y].isExplored(player);
             }
         }
         for (Unit unit : this.getAllUnits(player)) {
-            for (Tile tile : unit.getLocation().neighbors(1)) {
-                PointDTO coordinates = tile.getCoordinates();
-                newDetectionMatrix[coordinates.getX()][coordinates.getY()] = true;
+            Tile location = unit.getLocation();
+            for (Tile tile : location.neighbors(unit.getPowerupRange())) {
+                int x = tile.getCoordinates().getX();
+                int y = tile.getCoordinates().getY();
+                newPowerMatrix[x][y] = true;
             }
-            for (Tile tile : unit.getLocation().neighbors(unit.getDetectionRange())) {
-                PointDTO coordinates = tile.getCoordinates();
+            for (Tile tile : location.neighbors(1)) {
+                int x = tile.getCoordinates().getX();
+                int y = tile.getCoordinates().getY();
+                newDetectionMatrix[x][y] = true;
+            }
+            for (Tile tile : location.neighbors(unit.getDetectionRange())) {
+                int x = tile.getCoordinates().getX();
+                int y = tile.getCoordinates().getY();
                 if (unit.isObserving() || !tile.hasAnythingCloaked(player)) {
-                    newDetectionMatrix[coordinates.getX()][coordinates.getY()] = true;
+                    newDetectionMatrix[x][y] = true;
                 }
-                newExplorationMatrix[coordinates.getX()][coordinates.getY()] = newVisibilityMatrix[coordinates.getX()][coordinates.getY()] = true;
+                newExplorationMatrix[x][y] = newVisibilityMatrix[x][y] = true;
             }
         }
         for (int x = 0; x < width; x++) {
@@ -159,6 +170,12 @@ public abstract class Map {
                 }
                 if (currentVisibilityMatrix[x][y] && !newVisibilityMatrix[x][y]) {
                     this.map[x][y].setInvisible(player);
+                }
+                if (!currentPowerMatrix[x][y] && newPowerMatrix[x][y]) {
+                    this.map[x][y].setPowered(player);
+                }
+                if (currentPowerMatrix[x][y] && !newPowerMatrix[x][y]) {
+                    this.map[x][y].setUnpowered(player);
                 }
                 if (!currentExplorationMatrix[x][y] && newExplorationMatrix[x][y]) {
                     this.map[x][y].setExplored(player);

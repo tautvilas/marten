@@ -34,7 +34,11 @@ public class TerrainDrawer {
         if (!this.containsType(tileId)) {
             ImageData tileImage = TileImageFactory.getTile(tile, surrounds);
             if (tile.getVisibility()) {
-                this.context.addChild(this.cteateVisbileType(tileImage, tileId));
+                if (tile.isPowered()) {
+                    this.context.addChild(this.createPoweredType(tileImage, tileId));
+                } else {
+                    this.context.addChild(this.cteateVisbileType(tileImage, tileId));
+                }
             } else {
                 this.context.addChild(this.createFogType(tileImage, tileId));
             }
@@ -63,9 +67,11 @@ public class TerrainDrawer {
 
     private SimpleModel cteateVisbileType(ImageData tile, String tileId) {
         Texture terrain = TextureLoader.loadTexture(tile);
-        SimpleModel sm = new SimpleModel(new Appearance(terrain));
-        sm.setId(tileId);
+        Appearance fog = new Appearance(terrain);
+        fog.setColor(new Color(1.0, 0.8, 0.9));
+        SimpleModel sm = new SimpleModel(fog);
         terrainCache.put(tileId, sm);
+        sm.setId(tileId);
         return sm;
     }
 
@@ -76,6 +82,14 @@ public class TerrainDrawer {
         SimpleModel sm = new SimpleModel(fog);
         terrainCache.put(tileId, sm);
         sm.setId(tileId);
+        return sm;
+    }
+
+    private SimpleModel createPoweredType(ImageData tile, String tileId) {
+        Texture terrain = TextureLoader.loadTexture(tile);
+        SimpleModel sm = new SimpleModel(new Appearance(terrain));
+        sm.setId(tileId);
+        terrainCache.put(tileId, sm);
         return sm;
     }
 }

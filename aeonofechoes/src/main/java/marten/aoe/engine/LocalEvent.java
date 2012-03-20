@@ -24,5 +24,7 @@ public enum LocalEvent {
     /** This event is invoked whenever an object which was previously invisible due to cloaking is revealed.*/
     OBJECT_DETECTED,
     /** This event is invoked whenever an object which was previously visible cloaks and thus becomes invisible.*/
-    OBJECT_CLOAKED
+    OBJECT_CLOAKED,
+    TILE_POWERED,
+    TILE_UNPOWERED
 }

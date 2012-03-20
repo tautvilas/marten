@@ -12,6 +12,7 @@ public class UnitFactory {
         UnitDetails unit = null;
         if (id == Units.BASE) {
             unit = new UnitDetails(id, UnitType.BUILDING);
+            unit.setPowerupRange(3);
         } else {
             log.error("Unit " + id + " not defined");
             unit = new UnitDetails(id);
