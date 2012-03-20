@@ -39,6 +39,9 @@ public class TileImageFactory {
         if (!tile.getVisibility()) {
             tid += "_fog";
         }
+        if (!tile.isPowered()) {
+            tid += "_pow";
+        }
         return tid;
     }
 

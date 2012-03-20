@@ -110,12 +110,12 @@ public class Tile {
         if (player != Player.SYSTEM && !this.isExplored(player)) {
             ArrayList<TileLayerDTO> l = new ArrayList<TileLayerDTO>();
             l.add(new TileLayerDTO(TileLayers.SHROUD));
-            return new TileDTO(l, this.getCoordinates(), null, false);
+            return new TileDTO(l, this.getCoordinates(), null);
         }
         return new TileDTO(this.layers, this.getCoordinates(),
                 (this.getUnit() != null && this.isVisible(player) ? this
                         .getUnit().getDTO(player) : null),
-                this.isVisible(player));
+                this.isVisible(player), this.isPowered(player));
     }
 
     public final boolean isExplored(Player player) {

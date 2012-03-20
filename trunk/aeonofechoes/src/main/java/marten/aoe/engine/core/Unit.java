@@ -96,6 +96,9 @@ public class Unit {
     public final int getMovementAllowance () {
         return this.currentMovementAllowance;
     }
+    public int getPowerupRange() {
+        return this.details.getPowerupRange();
+    }
     /** Find out the maximum possible movement capacity of the unit*/
     public final int getMaximumMovementAllowance () {
         return this.details.getMaxMovementAllowance();

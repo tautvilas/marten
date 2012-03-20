@@ -12,9 +12,10 @@ public final class TileDTO implements Serializable {
     private final List<TileLayerDTO> layers;
     private final PointDTO point;
     private final boolean visible;
+    private final boolean powered;
 
     public TileDTO(List<TileLayerDTO> layers, PointDTO point, UnitDTO unit) {
-        this(layers, point, unit, true);
+        this(layers, point, unit, true, false);
     }
 
     @Deprecated
@@ -24,6 +25,7 @@ public final class TileDTO implements Serializable {
         this.unit = unit;
         this.point = point;
         this.visible = true;
+        this.powered = false;
     }
 
     @Deprecated
@@ -35,9 +37,10 @@ public final class TileDTO implements Serializable {
         this.unit = unit;
         this.point = point;
         this.visible = true;
+        this.powered = false;
     }
 
-    public TileDTO(List<TileLayerDTO> layers, PointDTO point, UnitDTO unit, boolean visible) {
+    public TileDTO(List<TileLayerDTO> layers, PointDTO point, UnitDTO unit, boolean visible, boolean powered) {
         if (layers.size() == 0) {
             throw new RuntimeException("Tile must have at least one layer");
         }
@@ -45,6 +48,7 @@ public final class TileDTO implements Serializable {
         this.unit = unit;
         this.point = point;
         this.visible = visible;
+        this.powered = powered;
     }
 
     public String getName() {
@@ -69,6 +73,10 @@ public final class TileDTO implements Serializable {
 
     public PointDTO getCoordinates() {
         return this.point;
+    }
+
+    public boolean isPowered() {
+        return this.powered;
     }
 
     public boolean getVisibility() {
