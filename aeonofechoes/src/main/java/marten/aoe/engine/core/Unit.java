@@ -142,12 +142,13 @@ public class Unit {
             this.currentHitPoints -= rolledDamage;
         }
         if (this.currentHitPoints <= 0) {
-            this.getLocation().removeUnit(Player.SYSTEM);
-            this.onDeath();
+            this.die();
         }
     }
     /** It is invoked whenever the health of the unit reaches 0 or below*/
-    public void onDeath() {};
+    public final void die() {
+        this.getLocation().removeUnit(Player.SYSTEM);
+    };
     /** @return brief descriptions of special features of the unit*/
     public String[] getSpecialFeatures() {return new String[0];};
     /***/

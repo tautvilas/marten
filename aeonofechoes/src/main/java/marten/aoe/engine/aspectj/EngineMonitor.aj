@@ -82,6 +82,9 @@ public final aspect EngineMonitor {
     pointcut onApplyDamage(Unit unit) :
         target(unit) && args(*) && execution(* Unit.applyDamage(..));
 
+    pointcut onDie(Unit unit) :
+        target(unit) && args() && execution(* Unit.die());
+
     // PUBLIC METHODS
     public void addListener(@NotNull Engine engine, @NotNull Player player,
             @NotNull EngineListener listener) {
@@ -340,6 +343,18 @@ public final aspect EngineMonitor {
                     .get(unit.getOwner())) {
                 listener.onLocalEvent(LocalEvent.UNIT_HURT, unit.getLocation()
                         .getDTO(unit.getOwner()));
+            }
+        }
+    }
+
+    before(Unit unit) : onDie(unit) {
+        Engine engine = unit.getOwner().getOwner();
+        for (Player p : engine.getAllPlayers()) {
+            for (EngineListener listener : engine.listeners.get(p)) {
+                if (unit.isDetected(p)) {
+                    listener.onLocalEvent(LocalEvent.UNIT_DEAD, unit.getLocation()
+                            .getDTO(unit.getOwner()));
+                }
             }
         }
     }
