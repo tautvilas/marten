@@ -36,6 +36,12 @@ public class UnitDrawer {
         PointDTO coords = tile.getCoordinates();
         if (unitDTO != null) {
             int id = unitDTO.getId();
+            if (unitDTO.getCurrentHitPoints() <= 0) {
+                UnitData data = this.units.get(id);
+                this.context.removeChild(data.widget);
+                this.units.remove(id);
+                return;
+            }
             if (!this.units.containsKey(id)) {
                 UnitWidget unit = new UnitWidget(tile.getUnit());
                 unit.setPosition(new Point(tileDisplayCoordinates.x + 64 / 2
