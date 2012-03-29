@@ -1,6 +1,7 @@
 package marten.aoe.engine.aspectj;
 
 import java.util.HashMap;
+import java.util.Set;
 
 import marten.aoe.aspectj.NotNull;
 import marten.aoe.dto.PointDTO;
@@ -273,11 +274,19 @@ public final aspect EngineMonitor {
     }
 
     before(Unit unit) : onDie(unit) {
-        for (Player p : this.listeners.keySet()) {
-            if (unit.isDetected(p)) {
-                this.listeners.get(p).onLocalEvent(LocalEvent.UNIT_DEAD,
-                        unit.getLocation().getDTO(unit.getOwner()));
-            }
+        for (Player p : unit.getPlayerDetection()) {
+            this.listeners.get(p).onLocalEvent(LocalEvent.UNIT_DEAD,
+                    unit.getLocation().getDTO(unit.getOwner()));
+        }
+    }
+
+    after(Unit unit) : onDie(unit) {
+        recalculateVisibility(unit.getPlayerDetection(), unit.getOwner().getOwner().getMap());
+    }
+
+    private void recalculateVisibility(Set<Player> players, Map map) {
+        for (Player p : players) {
+            map.recalculateVisibility(p);
         }
     }
 }

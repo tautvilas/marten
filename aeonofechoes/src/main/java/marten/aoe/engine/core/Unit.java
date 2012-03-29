@@ -158,6 +158,9 @@ public class Unit {
     public final void setDetected(Player player) {
         this.playerDetection.add(player);
     }
+    public Set<Player> getPlayerDetection() {
+        return this.playerDetection;
+    }
     public final void setUndetected(Player player) {
         this.playerDetection.remove(player);
     }
