@@ -190,6 +190,6 @@ public final class Engine {
     }
 
     public void removeListener(EngineListener engineListener, Player playerDTO) {
-        EngineMonitor.aspectOf().addListener(this, playerDTO, engineListener);
+        EngineMonitor.aspectOf().removeListener(this, playerDTO);
     }
 }
