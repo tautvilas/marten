@@ -14,9 +14,6 @@ import marten.aoe.engine.core.Player;
 import marten.aoe.engine.core.Tile;
 import marten.aoe.engine.core.Unit;
 
-import org.aspectj.lang.annotation.SuppressAjWarnings;
-
-@SuppressAjWarnings("adviceDidNotMatch")
 public final aspect EngineMonitor {
 
     private final java.util.Map<Player, EngineListener> listeners = new HashMap<Player, EngineListener>();
