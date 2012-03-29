@@ -23,9 +23,9 @@ public class UnitWidget extends TranslationGroup implements Widget, BoxedObject 
     private final BitmapFont font = FontCache.getFont(new Font("Courier New",
             Font.BOLD, 20));
     private final BitmapFont smallFont = FontCache.getFont(new Font(
-            "Courier New", Font.BOLD, 14));
+            "Courier New", Font.BOLD, 15));
     private final BitmapFont smallThinFont = FontCache.getFont(new Font(
-            "Courier New", Font.PLAIN, 14));
+            "Courier New", Font.BOLD, 15));
 
     public void update(UnitDTO dto) {
         this.updateMovePoints(dto);

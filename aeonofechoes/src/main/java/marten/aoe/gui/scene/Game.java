@@ -59,21 +59,21 @@ public class Game extends AgeScene implements MapWidgetListener {
 
     public Game(EngineFace engineFace, GameDetails details) {
         int appWidth = AppInfo.getDisplayWidth();
-        //int appHeight = AppInfo.getDisplayHeight();
+        // int appHeight = AppInfo.getDisplayHeight();
         this.params = details;
         this.engine = engineFace;
         try {
             this.map = new MapWidget(this.engine.getMap(),
-                    new Dimension(AppInfo.getDisplayWidth() - 180, AppInfo
-                            .getDisplayHeight()), this);
+                    new Dimension(AppInfo.getDisplayWidth() - 180,
+                            AppInfo.getDisplayHeight()), this);
         } catch (RemoteException e) {
             throw new RuntimeException(e);
         }
         flatland = new Flatland();
 
         flatland.addChild(map);
-        this.sidebar = new Sidebar(new Dimension(256, AppInfo
-                .getDisplayHeight()));
+        this.sidebar = new Sidebar(new Dimension(256,
+                AppInfo.getDisplayHeight()));
         sidebar.setPosition(new Point(AppInfo.getDisplayWidth() - 180, 0));
         Button endTurnButton = AoeButtonFactory.getEndTurnButton();
         endTurnButton
@@ -94,8 +94,8 @@ public class Game extends AgeScene implements MapWidgetListener {
             Button action = AoeButtonFactory.getActionButton("" + (i + 1));
             float width = action.getDimension().width;
             float height = action.getDimension().height;
-            action.setPosition(new Point(appWidth - 7 - width * 3 + i % 3 * width,
-                                         300 - i / 3 * height));
+            action.setPosition(new Point(appWidth - 7 - width * 3 + i % 3
+                    * width, 300 - i / 3 * height));
             final int act = i + 1;
             action.setAction(new Action() {
                 @Override
@@ -143,10 +143,10 @@ public class Game extends AgeScene implements MapWidgetListener {
         this.addController(mouseController);
         this.registerControllable(map);
         this.registerControllable(endTurnButton);
-//        flatland.compile();
+        // flatland.compile();
         try {
-            if (this.engine.getActivePlayer().getName().equals(
-                    GameInfo.nickname)) {
+            if (this.engine.getActivePlayer().getName()
+                    .equals(GameInfo.nickname)) {
                 this.turnNotify.setContent("Your turn");
                 this.turnNotify.setColor(new Color(0, 1, 0));
                 log.info("Game scene is initialized. Active player is '"
@@ -155,8 +155,6 @@ public class Game extends AgeScene implements MapWidgetListener {
                 this.turnNotify.setContent("Not your turn");
                 this.turnNotify.setColor(new Color(1, 0, 0));
             }
-            PlayerDTO player = this.engine.getActivePlayer();
-            this.moneyString.setContent(player.getMoney() + "");
         } catch (RemoteException e) {
             throw new RuntimeException(e);
         }
@@ -166,14 +164,16 @@ public class Game extends AgeScene implements MapWidgetListener {
     }
 
     private void updateMinimap() {
-        TextureSprite minimap = this.map.getMinimap(new Dimension(AppInfo.getDisplayWidth(), AppInfo.getDisplayHeight()));
+        TextureSprite minimap = this.map.getMinimap(new Dimension(AppInfo
+                .getDisplayWidth(), AppInfo.getDisplayHeight()));
         SymetricScaleGroup g = new SymetricScaleGroup(0.125);
         TranslationGroup tg = new TranslationGroup();
         tg.addChild(g);
         tg.setId("minimap");
         g.addChild(minimap);
         minimap.setId("minimap");
-        tg.setPosition(new Point(AppInfo.getDisplayWidth() - 150, AppInfo.getDisplayHeight() - 300));
+        tg.setPosition(new Point(AppInfo.getDisplayWidth() - 150, AppInfo
+                .getDisplayHeight() - 300));
         this.flatland.updateChild(tg, -1);
     }
 
@@ -193,13 +193,13 @@ public class Game extends AgeScene implements MapWidgetListener {
             map.ScrollUp(this.MAP_SCROLL_SPEED);
         }
         // check for new engine events
-        synchronized(this.events) {
-            while(!this.events.isEmpty()) {
+        synchronized (this.events) {
+            while (!this.events.isEmpty()) {
                 EngineEvent event = this.events.pop();
                 if (event == EngineEvent.TURN_END) {
                     try {
-                        if (engine.getActivePlayer().getName().equals(
-                                GameInfo.nickname)) {
+                        if (engine.getActivePlayer().getName()
+                                .equals(GameInfo.nickname)) {
                             turnNotify.setContent("Your turn");
                             turnNotify.setColor(new Color(0, 1, 0));
                         } else {
@@ -212,7 +212,10 @@ public class Game extends AgeScene implements MapWidgetListener {
                 } else if (event == EngineEvent.STATS_UPDATE) {
                     try {
                         PlayerDTO player = engine.getActivePlayer();
-                        moneyString.setContent(player.getMoney() + "");
+                        moneyString.setContent(String.format(
+                                "Energy: %d / %d (%d)", player.getEnergy(),
+                                player.getEnergyCapacity(),
+                                player.getEnergyRate()));
                     } catch (RemoteException e) {
                         e.printStackTrace();
                     }
@@ -256,14 +259,15 @@ public class Game extends AgeScene implements MapWidgetListener {
                         }
                     } else if (event == EngineEvent.STREAM_UPDATE) {
                         LinkedList<TileDTO> tiles = engine.popStream();
-                        log.debug("Received stream size: " + IoUtil.getSize(tiles) + "b");
+                        log.debug("Received stream size: "
+                                + IoUtil.getSize(tiles) + "b");
                         synchronized (updatedTiles) {
                             for (TileDTO tile : tiles) {
                                 updatedTiles.add(tile);
                             }
                         }
                     } else {
-                        synchronized(events) {
+                        synchronized (events) {
                             events.add(event);
                         }
                     }
