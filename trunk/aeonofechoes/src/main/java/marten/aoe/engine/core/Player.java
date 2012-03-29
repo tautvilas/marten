@@ -8,7 +8,9 @@ public final class Player {
     public static final Player SYSTEM = new Player(0, "System", null);
     private int team;
     private String name;
-    private int money = 0;
+    private int energy = 0;
+    private int energyRate = 0;
+    private int energyCapacity = 0;
     private Engine owner;
     public Player (int team, String name, Engine owner) {
         this.team = team;
@@ -26,7 +28,7 @@ public final class Player {
         return this.name;
     }
     public int getMoney() {
-        return this.money;
+        return this.energy;
     }
     public Engine getOwner() {
         return this.owner;
@@ -34,10 +36,16 @@ public final class Player {
     public void setOwner(Engine owner) {
         this.owner = owner;
     }
-    public void setMoney(int money) {
-        this.money = money;
+    public void setEnergy(int money) {
+        this.energy = money;
+    }
+    public void setEnergyCapacity(int capacity) {
+        this.energyCapacity = capacity;
+    }
+    public void setEnergyRate(int rate) {
+        this.energyRate = rate;
     }
     public PlayerDTO getDTO() {
-        return new PlayerDTO(team, name, money);
+        return new PlayerDTO(team, name, energy, energyRate, energyCapacity);
     }
 }

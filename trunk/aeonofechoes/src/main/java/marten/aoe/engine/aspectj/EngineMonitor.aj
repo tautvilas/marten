@@ -71,8 +71,8 @@ public final aspect EngineMonitor {
     pointcut onEngineStart(Engine engine) :
         target(engine) && args() && execution(* Engine.start());
 
-    pointcut onSetMoney(Player player) :
-        target(player) && args(*) && execution(* Player.setMoney(..));
+    pointcut onSetEnergy(Player player) :
+        target(player) && args(*) && execution(* Player.setEnergy(..));
 
     pointcut onApplyDamage(Unit unit) :
         target(unit) && args(*) && execution(* Unit.applyDamage(..));
@@ -262,7 +262,7 @@ public final aspect EngineMonitor {
         }
     }
 
-    after(Player player) : onSetMoney(player) {
+    after(Player player) : onSetEnergy(player) {
         this.listeners.get(player).onGlobalEvent(GlobalEvent.PLAYER_REFRESH);
     }
 

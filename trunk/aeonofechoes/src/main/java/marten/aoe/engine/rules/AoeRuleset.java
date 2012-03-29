@@ -24,7 +24,9 @@ public class AoeRuleset implements Rules {
         List<PointDTO> positions = meta.getStartingPositions();
         for (int i = 0; i < playerList.length; i++) {
             Player player = playerList[i];
-            player.setMoney(50);
+            player.setEnergyCapacity(100);
+            player.setEnergyRate(20);
+            player.setEnergy(100);
             PointDTO position = positions.get(i);
             map.spawnUnit(player, Units.BASE, position);
         }
@@ -56,7 +58,7 @@ public class AoeRuleset implements Rules {
             switch (action) {
             case FIRST:
                 if (player.getMoney() < 20) break;
-                player.setMoney(player.getMoney() - 20);
+                player.setEnergy(player.getMoney() - 20);
                 map.spawnUnit(player, Units.Worker, to);
                 break;
         }
@@ -88,6 +90,8 @@ public class AoeRuleset implements Rules {
     @Override
     public void turnEnd(Map map, Player[] playerList) {
         for (Player player : playerList) {
+            int energyRate = 0;
+            int energyCapacity = 0;
             List<Unit> units = map.getAllUnits(player);
             for (Unit unit : units) {
                 Tile location = unit.getLocation();
@@ -95,9 +99,25 @@ public class AoeRuleset implements Rules {
                     unit.applyDamage(new DamageDTO(2, DamageType.PSYCHOLOGICAL));
                 }
                 if (location.hasLayer(TileLayers.CITY)) {
-                    player.setMoney(player.getMoney() + 5);
+                    energyRate += 100;
+                }
+                if (unit.getDetails().getUnitType() == UnitType.BUILDING) {
+                    energyRate += 50;
+                    energyCapacity += 100;
+                } else {
+                    energyRate -= 20;
                 }
             }
+            int energy = energyRate + player.getMoney();
+            if (energyCapacity < energy) {
+                energy = energyCapacity;
+            }
+            if (energy < 0) {
+                energy = 0;
+            }
+            player.setEnergyRate(energyRate);
+            player.setEnergyCapacity(energyCapacity);
+            player.setEnergy(energy);
         }
     }
 
