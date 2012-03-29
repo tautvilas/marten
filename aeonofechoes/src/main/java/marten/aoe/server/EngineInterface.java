@@ -31,8 +31,19 @@ public class EngineInterface extends UnicastRemoteObject implements EngineFace {
     private boolean streaming = false;
     private static final long serialVersionUID = 1L;
 
-    public EngineInterface(Engine engine, Player player)
-            throws RemoteException {
+    public void publishEvent(TileDTO location, EngineEvent event) {
+        synchronized (EngineInterface.this.tiles) {
+            this.tiles.add(location);
+        }
+        if (!EngineInterface.this.streaming) {
+            synchronized (EngineInterface.this.events) {
+                this.events.add(event);
+                this.events.notifyAll();
+            }
+        }
+    }
+
+    public EngineInterface(Engine engine, Player player) throws RemoteException {
         super();
         this.engine = engine;
         this.player = player;
@@ -52,20 +63,12 @@ public class EngineInterface extends UnicastRemoteObject implements EngineFace {
                         || event == LocalEvent.UNIT_REFRESH
                         || event == LocalEvent.UNIT_HURT
                         || event == LocalEvent.OBJECT_DETECTED) {
-                    synchronized (EngineInterface.this.tiles) {
-                        EngineInterface.this.tiles.add(location);
-                    }
-                    if (!EngineInterface.this.streaming) {
-                        synchronized (EngineInterface.this.events) {
-                            EngineInterface.this.events
-                                    .add(EngineEvent.TILE_UPDATE);
-                            EngineInterface.this.events.notifyAll();
-                        }
-                    }
-                }else {
+                    EngineInterface.this.publishEvent(location, EngineEvent.TILE_UPDATE);
+                } else if (event == LocalEvent.UNIT_DEAD) {
+                    EngineInterface.this.publishEvent(location, EngineEvent.UNIT_DEAD);
+                } else {
                     EngineInterface.log.info(EngineInterface.this.player
-                            .getName()
-                            + " " + event);
+                            .getName() + " " + event);
                 }
             }
 
@@ -102,8 +105,7 @@ public class EngineInterface extends UnicastRemoteObject implements EngineFace {
                     }
                 } else {
                     EngineInterface.log.info(EngineInterface.this.player
-                            .getName()
-                            + " " + event);
+                            .getName() + " " + event);
                 }
             }
         }, this.player);
@@ -115,8 +117,8 @@ public class EngineInterface extends UnicastRemoteObject implements EngineFace {
     }
 
     @Override
-    public synchronized void performAction(PointDTO from, PointDTO to, int action)
-            throws RemoteException {
+    public synchronized void performAction(PointDTO from, PointDTO to,
+            int action) throws RemoteException {
         if (action == 1) {
             this.engine.performAction(this.player, from, Action.FIRST, to);
         } else if (action == 2) {
