@@ -85,13 +85,13 @@ public final aspect EngineMonitor {
     // PUBLIC METHODS
     public void addListener(@NotNull Engine engine, @NotNull Player player,
             @NotNull EngineListener listener) {
-        listeners.put(player, listener);
+        this.listeners.put(player, listener);
         listener.onGlobalEvent(GlobalEvent.MAP_INITIATED);
     }
 
     public void removeListener(@NotNull Engine engine, @NotNull Player player) {
-        listeners.get(player).onGlobalEvent(GlobalEvent.MAP_TERMINATED);
-        listeners.remove(player);
+        this.listeners.get(player).onGlobalEvent(GlobalEvent.MAP_TERMINATED);
+        this.listeners.remove(player);
     }
 
     // ADVICE
@@ -99,18 +99,18 @@ public final aspect EngineMonitor {
     }
 
     after(Engine engine) : onMapReloaded(engine) {
-        for (Player listeningPlayer : listeners.keySet()) {
+        for (Player listeningPlayer : this.listeners.keySet()) {
             boolean contains = false;
-            for (Player player : engine.getAllPlayers()) {
+            for (Player player : this.listeners.keySet()) {
                 contains |= (player == listeningPlayer);
             }
             if (contains) {
-                listeners.get(listeningPlayer).onGlobalEvent(
+                this.listeners.get(listeningPlayer).onGlobalEvent(
                         GlobalEvent.MAP_CHANGE);
             } else {
-                listeners.get(listeningPlayer).onGlobalEvent(
+                this.listeners.get(listeningPlayer).onGlobalEvent(
                         GlobalEvent.MAP_TERMINATED);
-                listeners.remove(listeningPlayer);
+                this.listeners.remove(listeningPlayer);
             }
         }
     }
@@ -118,39 +118,39 @@ public final aspect EngineMonitor {
     void around(Engine engine) : onTurnEnd(engine) {
         Player activePlayer = engine.getActivePlayer();
         int currentTurn = engine.getCurrentTurn();
-        for (EngineListener listener : listeners.values()) {
+        for (EngineListener listener : this.listeners.values()) {
             listener.onGlobalEvent(GlobalEvent.STREAM_START);
         }
         proceed(engine);
         if (activePlayer != engine.getActivePlayer()
                 || currentTurn != engine.getCurrentTurn()) {
-            for (EngineListener listener : listeners.values()) {
+            for (EngineListener listener : this.listeners.values()) {
                 listener.onGlobalEvent(GlobalEvent.TURN_END);
             }
         }
-        for (EngineListener listener : listeners.values()) {
+        for (EngineListener listener : this.listeners.values()) {
             listener.onGlobalEvent(GlobalEvent.STREAM_END);
         }
     }
 
     after(Unit unit) : onUnitTurnEnd(unit) {
-        for (Player player : listeners.keySet()) {
+        for (Player player : this.listeners.keySet()) {
             if (unit.getLocation().isVisible(player)) {
                 TileDTO tileData = unit.getMap()
                         .getTile(unit.getLocation().getCoordinates())
                         .getDTO(player);
-                listeners.get(player).onLocalEvent(LocalEvent.UNIT_REFRESH,
+                this.listeners.get(player).onLocalEvent(LocalEvent.UNIT_REFRESH,
                         tileData);
             }
         }
     }
 
     after(Map map, Tile tile) : onTileSwitch(map, tile) {
-        for (Player player : listeners.keySet()) {
+        for (Player player : this.listeners.keySet()) {
             if (tile.isVisible(player)) {
                 TileDTO tileData = map.getTile(tile.getCoordinates()).getDTO(
                         player);
-                listeners.get(player).onLocalEvent(LocalEvent.TILE_CHANGE,
+                this.listeners.get(player).onLocalEvent(LocalEvent.TILE_CHANGE,
                         tileData);
             }
         }
@@ -159,11 +159,11 @@ public final aspect EngineMonitor {
     after(Tile tile) returning (boolean success) : onUnitEntry(tile) {
         if (success) {
             Unit unit = tile.getUnit();
-            for (Player player : listeners.keySet()) {
+            for (Player player : this.listeners.keySet()) {
                 if (unit.isDetected(player)) {
                     TileDTO tileData = tile.getMap()
                             .getTile(tile.getCoordinates()).getDTO(player);
-                    listeners.get(player).onLocalEvent(LocalEvent.UNIT_ENTRY,
+                    this.listeners.get(player).onLocalEvent(LocalEvent.UNIT_ENTRY,
                             tileData);
                 }
             }
@@ -172,11 +172,11 @@ public final aspect EngineMonitor {
 
     after(Tile tile) returning (Unit unit) : onUnitExit(tile) {
         if (unit != null) {
-            for (Player player : listeners.keySet()) {
+            for (Player player : this.listeners.keySet()) {
                 if (unit.isDetected(player)) {
                     TileDTO tileData = tile.getMap()
                             .getTile(tile.getCoordinates()).getDTO(player);
-                    listeners.get(player).onLocalEvent(LocalEvent.UNIT_EXIT,
+                    this.listeners.get(player).onLocalEvent(LocalEvent.UNIT_EXIT,
                             tileData);
                 }
             }
@@ -184,14 +184,14 @@ public final aspect EngineMonitor {
     }
 
     void around(Engine engine) : onUnitActing(engine) {
-        for (EngineListener listener : listeners.values()) {
+        for (EngineListener listener : this.listeners.values()) {
             listener.onGlobalEvent(GlobalEvent.STREAM_START);
         }
         proceed(engine);
-        for (Player player : engine.getAllPlayers()) {
+        for (Player player : this.listeners.keySet()) {
             engine.getMap().recalculateVisibility(player);
         }
-        for (EngineListener listener : listeners.values()) {
+        for (EngineListener listener : this.listeners.values()) {
             listener.onGlobalEvent(GlobalEvent.STREAM_END);
         }
     }
@@ -199,38 +199,38 @@ public final aspect EngineMonitor {
     after(Tile tile, Player player) : onTileExplored(tile, player) {
         TileDTO tileData = tile.getMap().getTile(tile.getCoordinates())
                 .getDTO(player);
-        listeners.get(player).onLocalEvent(LocalEvent.TILE_EXPLORED, tileData);
+        this.listeners.get(player).onLocalEvent(LocalEvent.TILE_EXPLORED, tileData);
     }
 
     after(Tile tile, Player player) : onTileVisible(tile, player) {
         TileDTO tileData = tile.getMap().getTile(tile.getCoordinates())
                 .getDTO(player);
-        listeners.get(player).onLocalEvent(LocalEvent.TILE_VISIBLE, tileData);
+        this.listeners.get(player).onLocalEvent(LocalEvent.TILE_VISIBLE, tileData);
     }
 
     after(Tile tile, Player player) : onTileInvisible(tile, player) {
         TileDTO tileData = tile.getMap().getTile(tile.getCoordinates())
                 .getDTO(player);
-        listeners.get(player).onLocalEvent(LocalEvent.TILE_INVISIBLE, tileData);
+        this.listeners.get(player).onLocalEvent(LocalEvent.TILE_INVISIBLE, tileData);
     }
 
     after(Tile tile, Player player) : onTilePowered(tile, player) {
         TileDTO tileData = tile.getMap().getTile(tile.getCoordinates())
                 .getDTO(player);
-        listeners.get(player).onLocalEvent(LocalEvent.TILE_POWERED, tileData);
+        this.listeners.get(player).onLocalEvent(LocalEvent.TILE_POWERED, tileData);
     }
 
     after(Tile tile, Player player) : onTileUnpowered(tile, player) {
         TileDTO tileData = tile.getMap().getTile(tile.getCoordinates())
                 .getDTO(player);
-        listeners.get(player).onLocalEvent(LocalEvent.TILE_UNPOWERED, tileData);
+        this.listeners.get(player).onLocalEvent(LocalEvent.TILE_UNPOWERED, tileData);
     }
 
     after(Tile tile, Player player) : onObjectDetected(tile, player) {
         if (tile.isVisible(player)) {
             TileDTO tileData = tile.getMap().getTile(tile.getCoordinates())
                     .getDTO(player);
-            listeners.get(player).onLocalEvent(LocalEvent.OBJECT_DETECTED,
+            this.listeners.get(player).onLocalEvent(LocalEvent.OBJECT_DETECTED,
                     tileData);
         }
     }
@@ -239,47 +239,46 @@ public final aspect EngineMonitor {
         if (tile.isVisible(player)) {
             TileDTO tileData = tile.getMap().getTile(tile.getCoordinates())
                     .getDTO(player);
-            listeners.get(player).onLocalEvent(LocalEvent.OBJECT_CLOAKED,
+            this.listeners.get(player).onLocalEvent(LocalEvent.OBJECT_CLOAKED,
                     tileData);
         }
     }
 
     before(Engine engine) : onEngineStart(engine) {
-        for (Player p : engine.getAllPlayers()) {
-            listeners.get(p).onGlobalEvent(GlobalEvent.STREAM_START);
+        for (Player p : this.listeners.keySet()) {
+            this.listeners.get(p).onGlobalEvent(GlobalEvent.STREAM_START);
         }
     }
 
     after(Engine engine) : onEngineStart(engine) {
-        for (Player p : engine.getAllPlayers()) {
-            listeners.get(p).onGlobalEvent(GlobalEvent.STREAM_END);
+        for (Player p : this.listeners.keySet()) {
+            this.listeners.get(p).onGlobalEvent(GlobalEvent.STREAM_END);
         }
     }
 
     after(Map map, Player player, PointDTO location) : onUnitSpawned(map, player, location) {
         TileDTO tileData = map.getTile(location).getDTO(player);
-        listeners.get(player).onLocalEvent(LocalEvent.UNIT_ENTRY, tileData);
-        for (Player p : map.getOwner().getAllPlayers()) {
+        this.listeners.get(player).onLocalEvent(LocalEvent.UNIT_ENTRY, tileData);
+        for (Player p : this.listeners.keySet()) {
             map.recalculateVisibility(p);
         }
     }
 
     after(Player player) : onSetMoney(player) {
-        listeners.get(player).onGlobalEvent(GlobalEvent.PLAYER_REFRESH);
+        this.listeners.get(player).onGlobalEvent(GlobalEvent.PLAYER_REFRESH);
     }
 
     after(Unit unit) : onApplyDamage(unit) {
         if (unit.getLocation() != null) {
-            listeners.get(unit.getOwner()).onLocalEvent(LocalEvent.UNIT_HURT,
+            this.listeners.get(unit.getOwner()).onLocalEvent(LocalEvent.UNIT_HURT,
                     unit.getLocation().getDTO(unit.getOwner()));
         }
     }
 
     before(Unit unit) : onDie(unit) {
-        Engine engine = unit.getOwner().getOwner();
-        for (Player p : engine.getAllPlayers()) {
+        for (Player p : this.listeners.keySet()) {
             if (unit.isDetected(p)) {
-                listeners.get(p).onLocalEvent(LocalEvent.UNIT_DEAD,
+                this.listeners.get(p).onLocalEvent(LocalEvent.UNIT_DEAD,
                         unit.getLocation().getDTO(unit.getOwner()));
             }
         }
