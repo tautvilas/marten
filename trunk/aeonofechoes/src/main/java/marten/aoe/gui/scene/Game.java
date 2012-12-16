@@ -16,7 +16,6 @@ import marten.age.graphics.primitives.Dimension;
 import marten.age.graphics.primitives.Point;
 import marten.age.graphics.text.BitmapString;
 import marten.age.graphics.text.FontCache;
-import marten.age.graphics.transform.SymetricScaleGroup;
 import marten.age.graphics.transform.TranslationGroup;
 import marten.age.widget.Action;
 import marten.age.widget.Button;
@@ -117,7 +116,6 @@ public class Game extends AgeScene implements MapWidgetListener {
             }
         });
         flatland.addChild(new FpsCounter());
-        this.updateMinimap();
 
         KeyboardController keyboardController = new KeyboardController();
         keyboardController.addListener(new KeyboardListener() {
@@ -164,15 +162,14 @@ public class Game extends AgeScene implements MapWidgetListener {
     }
 
     private void updateMinimap() {
-        TextureSprite minimap = this.map.getMinimap(new Dimension(AppInfo
-                .getDisplayWidth(), AppInfo.getDisplayHeight()));
-        SymetricScaleGroup g = new SymetricScaleGroup(0.125);
+        TextureSprite minimap = this.map.getMinimap(new Dimension(150, 150));
+//        SymetricScaleGroup g = new SymetricScaleGroup(0.125);
         TranslationGroup tg = new TranslationGroup();
-        tg.addChild(g);
+//        tg.addChild(g);
         tg.setId("minimap");
-        g.addChild(minimap);
+        tg.addChild(minimap);
         minimap.setId("minimap");
-        tg.setPosition(new Point(AppInfo.getDisplayWidth() - 150, AppInfo
+        tg.setPosition(new Point(AppInfo.getDisplayWidth() - 155, AppInfo
                 .getDisplayHeight() - 300));
         this.flatland.updateChild(tg, -1);
     }
