@@ -7,10 +7,12 @@ import java.util.Collection;
 import java.util.HashMap;
 
 import marten.age.control.MouseListener;
+import marten.age.core.AppInfo;
 import marten.age.graphics.BasicSceneGraphBranch;
 import marten.age.graphics.SceneGraphBranch;
 import marten.age.graphics.SceneGraphChild;
 import marten.age.graphics.appearance.Color;
+import marten.age.graphics.flat.Flatland;
 import marten.age.graphics.flat.sprite.TextureSprite;
 import marten.age.graphics.image.ImageData;
 import marten.age.graphics.layout.BoxedObject;
@@ -352,7 +354,16 @@ public class MapWidget extends BasicSceneGraphBranch<SceneGraphChild> implements
     }
 
     public TextureSprite getMinimap(Dimension dimension) {
-        Texture texture = TextureLoader.loadTexture(this.tg, dimension);
+        System.out.println(this.dimension.height + " " + AppInfo.getDisplayHeight());
+        Point position = this.tg.getPosition();
+        float zoomy = this.dimension.height / (this.size.height * this.TILE_HEIGHT);
+        float zoom = Math.min(zoomy,
+                this.dimension.width / (this.size.width * this.TILE_WIDTH ));
+        Flatland flatland = new Flatland(zoom);
+        this.tg.setPosition(new Point(0, this.dimension.height * (1 - 1 / zoomy)));
+         flatland.addChild(this.tg);
+        Texture texture = TextureLoader.loadTexture(flatland, dimension);
+        this.tg.setPosition(position);
         return new TextureSprite(texture);
     }
 

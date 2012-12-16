@@ -8,9 +8,16 @@ import org.lwjgl.opengl.GL11;
 
 public class Flatland extends Root {
 
+    private float zoom = 1;
+
     @SuppressWarnings("unused")
     private static org.apache.log4j.Logger log = Logger
             .getLogger(Flatland.class);
+
+    public Flatland(float zoom) {
+        this();
+        this.zoom = zoom;
+    }
 
     public Flatland() {
         GL11.glDisable(GL11.GL_LIGHTING);
@@ -28,7 +35,7 @@ public class Flatland extends Root {
         GL11.glLoadIdentity();
         GL11.glOrtho(0, AppInfo.getDisplayWidth(), AppInfo.getDisplayHeight(),
                 0, 0, 1);
-        GL11.glScalef(1, -1, 1);
+        GL11.glScalef(1 * this.zoom, -1 * this.zoom, 1);
         GL11.glTranslatef(0, -AppInfo.getDisplayHeight(), 0);
         GL11.glMatrixMode(GL11.GL_MODELVIEW);
 //        GL11.glScissor(0, 0, 500, AppInfo.getDisplayHeight());
