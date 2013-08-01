@@ -3,6 +3,7 @@ package marten.aoe.gui.scene;
 import java.awt.Font;
 import java.rmi.RemoteException;
 import java.util.LinkedList;
+import java.util.List;
 
 import marten.age.control.KeyboardController;
 import marten.age.control.KeyboardListener;
@@ -285,6 +286,30 @@ public class Game extends AgeScene implements MapWidgetListener {
         this.updateMinimap();
         try {
             this.engine.performAction(from, to, Game.this.selectedAction);
+        } catch (RemoteException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    public void selectTile(PointDTO coords) {
+        try {
+            this.engine.selectUnit(coords);
+        } catch (RemoteException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    public void hoverTile(PointDTO coords) {
+        try {
+            List<PointDTO> path = this.engine.getPath(coords);
+            if (path == null) {
+                this.map.clearPath();
+            } else {
+                this.map.drawPath(path);
+            }
+//            this.map.drawPath(path);
         } catch (RemoteException e) {
             e.printStackTrace();
         }

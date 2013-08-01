@@ -22,6 +22,7 @@ public class TileImageFactory {
 
     public static void addLayer(String[] priorities, String name,
             String imagePath) {
+//        log.info("Tile layer aded " + imagePath);
         TileImageFactory.priorities.put(name, new LayerPriorities(name,
                 priorities));
         ImageCache.loadImage(imagePath, name);
