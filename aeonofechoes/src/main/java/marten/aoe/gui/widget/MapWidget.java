@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.List;
 
 import marten.age.control.MouseListener;
 import marten.age.core.AppInfo;
@@ -24,6 +25,7 @@ import marten.age.graphics.text.FontCache;
 import marten.age.graphics.texture.Texture;
 import marten.age.graphics.texture.TextureLoader;
 import marten.age.graphics.transform.TranslationGroup;
+import marten.aoe.data.tiles.TileLayerDTO;
 import marten.aoe.dto.MapDTO;
 import marten.aoe.dto.PointDTO;
 import marten.aoe.dto.TileDTO;
@@ -43,6 +45,7 @@ public class MapWidget extends BasicSceneGraphBranch<SceneGraphChild> implements
     private final int TILE_HEIGHT = 72;
 
     private PointDTO selectedTile = null;
+    private PointDTO hoveredTile = null;
     private MapWidgetListener listener;
 
     private final BitmapFont font = FontCache.getFont(new Font("Courier New",
@@ -53,6 +56,7 @@ public class MapWidget extends BasicSceneGraphBranch<SceneGraphChild> implements
     private TextureSprite tileSelection = null;
     private Dimension dimension;
     private Dimension size;
+    private List<PointDTO> path = null;
 
     private TerrainDrawer terrainDrawer;
     private UnitDrawer unitDrawer = new UnitDrawer(this.tg);
@@ -115,6 +119,27 @@ public class MapWidget extends BasicSceneGraphBranch<SceneGraphChild> implements
                 coords.setPosition(this.getTileDisplayCoordinates(tile
                         .getCoordinates()));
                 // tg.addChild(coords);
+            }
+        }
+    }
+
+    public void clearPath() {
+        if (this.path == null) return;
+        for (PointDTO location : this.path) {
+            TileDTO tile = this.getTile(location);
+            tile.removeLayer("Path");
+            this.updateTile(tile);
+        }
+    }
+
+    public void drawPath(List<PointDTO> path) {
+        this.clearPath();
+        this.path = path;
+        for (PointDTO location : path) {
+            TileDTO tile = this.getTile(location);
+            if (!tile.hasLayer("Path")) {
+                tile.addLayer(new TileLayerDTO("Path"));
+                this.updateTile(tile);
             }
         }
     }
@@ -317,7 +342,9 @@ public class MapWidget extends BasicSceneGraphBranch<SceneGraphChild> implements
     @Override
     public void mouseMove(Point coords) {
         TileDTO tile = tileHit(coords);
-        if (tile != null) {
+        if (tile != null && (this.hoveredTile == null || !this.hoveredTile.equals(tile.getCoordinates()))) {
+            this.listener.hoverTile(tile.getCoordinates());
+            this.hoveredTile = tile.getCoordinates();
             tileHighlight.setPosition(this.getTileDisplayCoordinates(tile
                     .getCoordinates()));
         }
@@ -335,6 +362,7 @@ public class MapWidget extends BasicSceneGraphBranch<SceneGraphChild> implements
                     .getCoordinates()));
             if (this.selectedTile == null) {
                 this.tg.addChild(this.tileSelection);
+                this.listener.selectTile(tile.getCoordinates());
             } else if (this.selectedTile.equals(tile.getCoordinates())){
                 this.tg.removeChild(this.tileSelection);
                 this.selectedTile = null;

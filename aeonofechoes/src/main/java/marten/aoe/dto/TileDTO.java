@@ -59,6 +59,36 @@ public final class TileDTO implements Serializable {
         return this.layers;
     }
 
+    public TileLayerDTO getLayer(String name) {
+        for (TileLayerDTO layer : this.layers) {
+            if (layer.getName().equals(name)) {
+                return layer;
+            }
+        }
+        return null;
+    }
+
+    public void removeLayer(String name) {
+        TileLayerDTO layer = null;
+        do {
+            layer = this.getLayer(name);
+            this.layers.remove(layer);
+        } while(layer != null);
+    }
+
+    public void addLayer(TileLayerDTO layer) {
+        this.layers.add(layer);
+    }
+
+    public boolean hasLayer(String title) {
+        for (TileLayerDTO layer : this.layers) {
+            if (layer.getName().equals(title)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     public String[] getLayerIds() {
         String[] ids = new String[this.layers.size()];
         for (int i = 0; i < this.layers.size(); i++) {

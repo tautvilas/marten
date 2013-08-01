@@ -3,6 +3,7 @@ package marten.aoe.server;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.LinkedList;
+import java.util.List;
 
 import marten.aoe.dto.MapDTO;
 import marten.aoe.dto.PlayerDTO;
@@ -63,9 +64,11 @@ public class EngineInterface extends UnicastRemoteObject implements EngineFace {
                         || event == LocalEvent.UNIT_REFRESH
                         || event == LocalEvent.UNIT_HURT
                         || event == LocalEvent.OBJECT_DETECTED) {
-                    EngineInterface.this.publishEvent(location, EngineEvent.TILE_UPDATE);
+                    EngineInterface.this.publishEvent(location,
+                            EngineEvent.TILE_UPDATE);
                 } else if (event == LocalEvent.UNIT_DEAD) {
-                    EngineInterface.this.publishEvent(location, EngineEvent.UNIT_DEAD);
+                    EngineInterface.this.publishEvent(location,
+                            EngineEvent.UNIT_DEAD);
                 } else {
                     EngineInterface.log.info(EngineInterface.this.player
                             .getName() + " " + event);
@@ -178,4 +181,15 @@ public class EngineInterface extends UnicastRemoteObject implements EngineFace {
     public PlayerDTO getPlayer() throws RemoteException {
         return this.player.getDTO();
     }
+
+    @Override
+    public List<PointDTO> getPath(PointDTO destination) throws RemoteException {
+        return this.engine.getPath(destination);
+    }
+
+    @Override
+    public void selectUnit(PointDTO location) throws RemoteException {
+        this.engine.selectUnit(this.player, location);
+    }
+
 }

@@ -201,4 +201,8 @@ public abstract class Map {
     public void selectUnit(Player player, PointDTO location) {
         this.pathCache = new PathFinder(this, this.map[location.getX()][location.getY()]);
     }
+
+    public PathFinder getPathFinder() {
+        return this.pathCache;
+    }
 }
